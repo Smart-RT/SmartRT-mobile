@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/screens/public_screens/authentications/loginPage.dart';
-import 'package:smart_rt/screens/public_screens/authentications/welcomePage.dart';
+import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
+import 'package:smart_rt/screens/public_screens/authentications/register_page.dart';
+import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 import 'package:smart_rt/screens/public_screens/test_screen.dart';
 import 'package:smart_rt/screens/public_screens/test_screen2.dart';
 
@@ -15,6 +16,10 @@ class Routes {
       case LoginPage.id:
         return MaterialPageRoute(builder: (context) {
           return const LoginPage();
+        });
+      case RegisterPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const RegisterPage();
         });
       case TestScreen.id:
         return MaterialPageRoute(builder: (context) {

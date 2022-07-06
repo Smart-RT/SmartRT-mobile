@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:smart_rt/screens/public_screens/authentications/loginPage.dart';
+import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 
 class WelcomePage extends StatefulWidget {
   static const String id = 'WelcomePage';
@@ -23,32 +23,30 @@ class _WelcomePageState extends State<WelcomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
                   width: double.infinity,
-                  child:
-                      Lottie.asset('assets/lotties/welcome/welcome-group.json'),
+                  child: Lottie.asset(
+                      'assets/lotties/welcome/welcome-smile.json',
+                      fit: BoxFit.fitWidth),
                 ),
-                const Text(
-                  'Selamat Datang !',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                    color: Colors.brown,
-                    letterSpacing: 1,
-                  ),
+                Text(
+                  '- SMART RT -',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 RichText(
-                  text: TextSpan(
+                  textAlign: TextAlign.center,
+                  text: const TextSpan(
                     style: TextStyle(
                       fontSize: 17.0,
-                      color: Colors.brown[400],
+                      color: Color(0xffb4a290),
                     ),
-                    children: const <TextSpan>[
+                    children: <TextSpan>[
                       TextSpan(
                           text:
                               'Kelola dan tingkatkan kualitas Rukun Tetangga anda dengan '),
@@ -76,15 +74,16 @@ class _WelcomePageState extends State<WelcomePage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      side: const BorderSide(width: 3, color: Colors.brown),
+                      side:
+                          const BorderSide(width: 3, color: Color(0xffb4a290)),
                     ),
                     onPressed: () {},
                     child: const Text(
-                      'DAFTAR BUAT AKUN',
+                      'BUAT AKUN',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.brown,
+                        // fontSize: 15,
+                        color: Color(0xffb4a290),
                       ),
                     ),
                   ),
@@ -102,8 +101,12 @@ class _WelcomePageState extends State<WelcomePage> {
                       TextSpan(text: 'Sudah mempunyai akun? '),
                       TextSpan(
                         text: ' Masuk Sekarang',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        recognizer: TapGestureRecognizer()..onTap = () {
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xffb4a290),
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
                             Navigator.pushNamed(context, LoginPage.id);
                           },
                       ),

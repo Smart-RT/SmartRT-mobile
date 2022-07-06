@@ -11,25 +11,81 @@ ThemeData getThemeData() {
     // or simply save your changes to "hot reload" in a Flutter IDE).
     // Notice that the counter didn't reset back to zero; the application
     // is not restarted.
-    primarySwatch: Colors.brown,
-    fontFamily: 'Rubik'
+
+    // Define the default brightness and colors.
+    brightness: Brightness.light,
+    backgroundColor: const Color(0xff311c0a),
+    scaffoldBackgroundColor: const Color(0xffd5c7b9),
+    // primaryColor: Color(0xff311c0a),
+    primarySwatch: const MaterialColor(
+      0xff311c0a,
+      <int, Color>{
+        50: Color(0xfff1e9de),
+        100: Color(0xffd5c7b9),
+        200: Color(0xffb4a290),
+        300: Color(0xff947e67),
+        400: Color(0xff7c6449),
+        500: Color(0xff644a2c),
+        600: Color(0xff5a4126),
+        700: Color(0xff4c361e),
+        800: Color(0xff3f2916),
+        900: Color(0xff311c0a)
+      },
+    ),
+
+    // Define the default font family.
+    fontFamily: 'Rubik',
+
+    // Define the default `TextTheme`. Use this to specify the default
+    // text styling for headlines, titles, bodies of text, and more.
+    textTheme: const TextTheme(
+      headline1: TextStyle(
+        fontSize: 32.0,
+        fontWeight: FontWeight.bold,
+        color: Color(0xff311c0a),
+        letterSpacing: 2,
+      ),
+      headline2: TextStyle(
+        fontSize: 32.0,
+        fontWeight: FontWeight.bold,
+        color: Color(0xffb4a290),
+        letterSpacing: 2,
+      ),
+      bodyText1: TextStyle(
+        fontSize: 15.0,
+        color: Color(0xff311c0a),
+      ),
+      bodyText2: TextStyle(
+        fontSize: 15.0,
+        color: Color(0xffb4a290),
+      ),
+    ),
+
+    // Define the default 'InputDecoration'. Use this to specify the default
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      floatingLabelStyle: const TextStyle(
+        color: Color(0xff311c0a),
+        fontSize: 20,
+      ),
+      labelStyle: const TextStyle(
+        color: Color(0xff311c0a),
+      ),
+      fillColor: const Color(0xff311c0a),
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          width: 3,
+          color: Color(0xff311c0a),
+        ),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          width: 3,
+          color: Color(0xff311c0a),
+        ),
+        borderRadius: BorderRadius.circular(5),
+      ),
+    ),
   );
-
-
-  // MaterialColor(
-  //       0xff47237B,
-  //       <int, Color>{
-                  //   0xAARRGGBB => A = Opacity, R = Red, G = Green, B = Blue  
-  //         50: Color(0xffBAADCE),
-  //         100: Color(0xffA391BD),
-  //         200: Color(0xff8C76AD),
-  //         300: Color(0xff755A9C),
-  //         400: Color(0xff5E3F8C),
-  //         500: Color(0xff47237B),
-  //         600: Color(0xff3E1F6C),
-  //         700: Color(0xff351A5C),
-  //         800: Color(0xff2C164D),
-  //         900: Color(0xff24123D)
-  //       },
-  //     )
 }

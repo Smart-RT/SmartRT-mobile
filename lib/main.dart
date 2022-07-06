@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/theme.dart';
 import 'package:smart_rt/routes/routes.dart';
-import 'package:smart_rt/screens/public_screens/authentications/welcomePage.dart';
-import 'package:smart_rt/screens/public_screens/test_screen.dart';
+import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
