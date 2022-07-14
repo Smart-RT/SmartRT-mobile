@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
+import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 
 class WelcomePage extends StatefulWidget {
   static const String id = 'WelcomePage';
@@ -19,7 +20,7 @@ class _WelcomePageState extends State<WelcomePage> {
       body: Container(
         padding: EdgeInsets.all(25),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Column(
@@ -67,24 +68,17 @@ class _WelcomePageState extends State<WelcomePage> {
               children: [
                 Container(
                   width: double.infinity,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      side:
-                          const BorderSide(width: 3, color: Color(0xffb4a290)),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      'BUAT AKUN',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        // fontSize: 15,
-                        color: Color(0xffb4a290),
-                      ),
+                  child: ElevatedButton(
+                    style: Theme.of(context).elevatedButtonTheme.style!.copyWith(backgroundColor: MaterialStateProperty.all(Color(0xffb4a290))),
+                    onPressed: () {
+                      Navigator.pushNamed(context, RegisterPage1.id);
+                    },
+                    child: Text(
+                      'DAFTAR SEKARANG',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
