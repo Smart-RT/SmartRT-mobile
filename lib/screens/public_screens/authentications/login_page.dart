@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
+import 'package:smart_rt/constants/size.dart';
+import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:dio/dio.dart';
 import 'package:smart_rt/utilities/net_util.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'LoginPage';
@@ -25,11 +30,21 @@ class _LoginPageState extends State<LoginPage> {
 
   void doLogin() async {
     try {
-      var response = await NetUtil.dioClient.post('/users/login', data: {
-        "phone": _noTelpController.text,
-        "password": _kataSandiController.text
+      var response = await NetUtil().dioClient.post('/users/login', data: {
+        "noTelp": _noTelpController.text,
+        "kataSandi": _kataSandiController.text
       });
       debugPrint(response.toString());
+      await ApplicationProvider.storage
+          .write(key: 'jwt', value: response.data['token']);
+      await ApplicationProvider.storage
+          .write(key: 'refreshToken', value: response.data['refreshToken']);
+      ApplicationProvider.currentUserJWT = response.data['token'];
+      ApplicationProvider.currentUserRefreshToken =
+          response.data['refreshToken'];
+      context.read<ApplicationProvider>().notifyListeners();
+      // Pindahin ke halaman home.
+
     } on DioError catch (e) {
       if (e.response != null) {
         debugPrint(e.response!.data.toString());
@@ -44,10 +59,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: smartRTPrimaryColor,
       body: Container(
         height: double.infinity,
-        padding: const EdgeInsets.all(25),
+        padding: paddingScreen,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Form(
@@ -70,16 +85,14 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         '- SMART RT -',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2,
+                        style: smartRTTitleText_Secondary,
                       ),
                     ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      SB_height15,
                       TextFormField(
                         controller: _noTelpController,
                         keyboardType: TextInputType.number,
@@ -91,38 +104,33 @@ class _LoginPageState extends State<LoginPage> {
                             return 'Nomor Telepon tidak boleh kosong';
                           }
                         },
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: smartRTTextLarge_Secondary,
                         decoration: InputDecoration(
                           labelText: 'Nomor Telepon',
                           floatingLabelStyle: Theme.of(context)
                               .inputDecorationTheme
                               .floatingLabelStyle!
                               .copyWith(
-                                color: Color(0xffb4a290),
+                                color: smartRTSecondaryColor,
                               ),
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
+                          labelStyle: smartRTTextLarge_Secondary,
                           enabledBorder: Theme.of(context)
                               .inputDecorationTheme
                               .enabledBorder!
                               .copyWith(
-                                borderSide: const BorderSide(
-                                  color: Color(
-                                    0xffb4a290,
-                                  ),
-                                ),
+                                borderSide:
+                                    BorderSide(color: smartRTSecondaryColor),
                               ),
                           focusedBorder: Theme.of(context)
                               .inputDecorationTheme
                               .focusedBorder!
                               .copyWith(
                                 borderSide:
-                                    const BorderSide(color: Color(0xffb4a290)),
+                                    BorderSide(color: smartRTSecondaryColor),
                               ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      SB_height15,
                       TextFormField(
                         controller: _kataSandiController,
                         validator: (value) {
@@ -130,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                             return 'Kata Sandi tidak boleh kosong';
                           }
                         },
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: smartRTTextLarge_Secondary,
                         obscureText: _isObscure,
                         enableSuggestions: false,
                         autocorrect: false,
@@ -141,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                               _isObscure
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              color: Color(0xffb4a290),
+                              color: smartRTSecondaryColor,
                             ),
                             onPressed: () {
                               setState(() {
@@ -153,25 +161,22 @@ class _LoginPageState extends State<LoginPage> {
                               .inputDecorationTheme
                               .floatingLabelStyle!
                               .copyWith(
-                                color: Color(0xffb4a290),
+                                color: smartRTSecondaryColor,
                               ),
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
+                          labelStyle: smartRTTextLarge_Secondary,
                           enabledBorder: Theme.of(context)
                               .inputDecorationTheme
                               .enabledBorder!
                               .copyWith(
-                                borderSide: const BorderSide(
-                                  color: Color(
-                                    0xffb4a290,
-                                  ),
-                                ),
+                                borderSide:
+                                    BorderSide(color: smartRTSecondaryColor),
                               ),
                           focusedBorder: Theme.of(context)
                               .inputDecorationTheme
                               .focusedBorder!
                               .copyWith(
-                                borderSide: const BorderSide(
-                                  color: Color(0xffb4a290),
+                                borderSide: BorderSide(
+                                  color: smartRTSecondaryColor,
                                 ),
                               ),
                         ),
@@ -223,23 +228,15 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      SB_height15,
                       RichText(
                         text: TextSpan(
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: Colors.brown[400],
-                          ),
+                          style: smartRTTextSmall_Secondary,
                           children: [
                             const TextSpan(text: 'Tidak mempunyai akun? '),
                             TextSpan(
                               text: ' Daftar Sekarang',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xffb4a290),
-                              ),
+                              style: smartRTTextSmallBold_Secondary,
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   gotoRegister();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_rt/constants/colors.dart';
 
 ThemeData getThemeData() {
   return ThemeData(
@@ -14,8 +15,8 @@ ThemeData getThemeData() {
 
       // Define the default brightness and colors.
       brightness: Brightness.light,
-      backgroundColor: const Color(0xff311c0a),
-      scaffoldBackgroundColor: const Color(0xffd5c7b9),
+      backgroundColor: smartRTPrimaryColor,
+      scaffoldBackgroundColor: smartRTSecondaryColor,
       // primaryColor: Color(0xff311c0a),
       primarySwatch: const MaterialColor(
         0xff311c0a,
@@ -38,66 +39,67 @@ ThemeData getThemeData() {
 
       // Define the default `TextTheme`. Use this to specify the default
       // text styling for headlines, titles, bodies of text, and more.
-      textTheme: const TextTheme(
+      textTheme: TextTheme(
         headline1: TextStyle(
           fontSize: 32.0,
           fontWeight: FontWeight.bold,
-          color: Color(0xff311c0a),
+          color: smartRTPrimaryColor,
           letterSpacing: 2,
         ),
         headline2: TextStyle(
           fontSize: 32.0,
           fontWeight: FontWeight.bold,
-          color: Color(0xffb4a290),
+          color: smartRTSecondaryColor,
           letterSpacing: 2,
         ),
         bodyText1: TextStyle(
           fontSize: 15.0,
-          color: Color(0xff311c0a),
+          color: smartRTPrimaryColor,
         ),
         bodyText2: TextStyle(
           fontSize: 15.0,
-          color: Color(0xffb4a290),
+          color: smartRTSecondaryColor,
         ),
+        
       ),
 
       // Define the default 'InputDecoration'. Use this to specify the default
       inputDecorationTheme: InputDecorationTheme(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-        floatingLabelStyle: const TextStyle(
-          color: Color(0xff311c0a),
+        floatingLabelStyle: TextStyle(
+          color: smartRTPrimaryColor,
           fontSize: 20,
         ),
-        labelStyle: const TextStyle(
-          color: Color(0xff311c0a),
+        labelStyle: TextStyle(
+          color: smartRTPrimaryColor,
         ),
-        fillColor: const Color(0xff311c0a),
+        fillColor: smartRTPrimaryColor,
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
+          borderSide:  BorderSide(
             width: 2,
-            color: Color(0xff311c0a),
+            color: smartRTPrimaryColor,
           ),
           borderRadius: BorderRadius.circular(5),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
+          borderSide: BorderSide(
             width: 2,
-            color: Color(0xff311c0a),
+            color: smartRTPrimaryColor,
           ),
           borderRadius: BorderRadius.circular(5),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
-            color: Colors.red,
+            color: smartRTErrorColor,
           ),
           borderRadius: BorderRadius.circular(5),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 2,
-            color: Colors.red,
+            color: smartRTErrorColor,
           ),
           borderRadius: BorderRadius.circular(5),
         ),
@@ -106,7 +108,7 @@ ThemeData getThemeData() {
       // Define the default style of 'Elevated Button'
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          primary: Color(0xff311c0a),
+          primary: smartRTPrimaryColor,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),

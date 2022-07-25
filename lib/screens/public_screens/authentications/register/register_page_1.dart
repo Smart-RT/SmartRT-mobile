@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/constants/size.dart';
+import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_2.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_x.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -18,12 +21,10 @@ class _RegisterPage1State extends State<RegisterPage1> {
   final _tanggalLahirController = TextEditingController();
   String _genderSelectedValue= '';
 
-
   final List<String> genderItems = [
     'Laki-Laki',
     'Perempuan',
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
       body: Form(
         key: _formKey,
         child: Container(
-          padding: EdgeInsets.all(25),
+          padding: paddingScreen,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -43,18 +44,16 @@ class _RegisterPage1State extends State<RegisterPage1> {
                 children: [
                   Text(
                     'Tentang Saya',
-                    style: Theme.of(context).textTheme.headline1,
+                    style: smartRTTitleText_Primary,
                   ),
                   Text(
                     'Pastikan anda mengisi dengan data yang valid dan sesuai dengan KTP',
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: smartRTTextNormal_Primary,
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                  SB_height15,
                   TextFormField(
                     autocorrect: false,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: smartRTTextNormal_Primary,
                     decoration: const InputDecoration(
                       labelText: 'Nama Lengkap',
                     ),
@@ -65,11 +64,9 @@ class _RegisterPage1State extends State<RegisterPage1> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  SB_height15,
                   DropdownButtonFormField2(
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: smartRTTextNormal_Primary,
                     decoration: InputDecoration(
                       isDense: true,
                       contentPadding: EdgeInsets.zero,
@@ -80,11 +77,11 @@ class _RegisterPage1State extends State<RegisterPage1> {
                     isExpanded: true,
                     hint: Text(
                       'Jenis Kelamin',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: smartRTTextNormal_Primary,
                     ),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_drop_down,
-                      color: Color(0xff311c0a),
+                      color: smartRTPrimaryColor,
                     ),
                     iconSize: 30,
                     buttonHeight: 60,
@@ -97,7 +94,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                               value: item,
                               child: Text(
                                 item,
-                                style:  Theme.of(context).textTheme.bodyText1,
+                                style:  smartRTTextNormal_Primary,
                               ),
                             ))
                         .toList(),
@@ -115,13 +112,11 @@ class _RegisterPage1State extends State<RegisterPage1> {
                       _genderSelectedValue = value.toString();
                     },
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  SB_height15,
                   DateTimePicker(
                     type: DateTimePickerType.date,
-                    dateMask: 'd MMM, yyyy',
-                    style: Theme.of(context).textTheme.bodyText1,
+                    dateMask: 'yyyy/MM/dd',
+                    style: smartRTTextNormal_Primary,
                     firstDate: DateTime(1900),
                     lastDate: DateTime.now(),
                     dateLabelText: 'Tanggal Lahir',
@@ -134,9 +129,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                     onSaved: (val) => print(val),
                     controller: _tanggalLahirController,
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  SB_height15,
                 ],
               ),
               Container(
@@ -150,10 +143,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                   },
                   child: Text(
                     'SELANJUTNYA',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(fontWeight: FontWeight.bold),
+                    style: smartRTTextLargeBold_Secondary,
                   ),
                 ),
               ),

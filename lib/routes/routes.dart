@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
+import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_x.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_2.dart';
@@ -31,6 +32,12 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return RegisterPage2(
             args: settings.arguments as RegisterPage2Arguments,
+          );
+        });
+        case OTPPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return OTPPage(
+             args: settings.arguments as OTPPageArguments,
           );
         });
       case TestScreen.id:

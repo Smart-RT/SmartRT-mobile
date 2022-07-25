@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "56321185909",
+    "project_id": "smart-rt-a2abb",
+    "storage_bucket": "smart-rt-a2abb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56321185909:android:20c8b252e13832edc1403c",
+        "android_client_info": {
+          "package_name": "com.example.smart_rt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56321185909-sl0gh2csqdoevrq2shh1oh3i5mnbde9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChfBxiY_GfGqLy21M_EUegvk2duiMqlOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56321185909-sl0gh2csqdoevrq2shh1oh3i5mnbde9t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "56321185909-je0np6cimob2nbg2nsvjmv70tvu7n9it.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartRt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

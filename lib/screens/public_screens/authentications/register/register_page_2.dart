@@ -1,5 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/constants/size.dart';
+import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 
 class RegisterPage2Arguments {
@@ -30,21 +35,33 @@ class _RegisterPage2State extends State<RegisterPage2> {
 
   void doRegister() async {
     try {
-      var response = await NetUtil.dioClient.post('/users/register', data: {
-        "phone": _noTelpController.text,
-        "password": _kataSandiController.text,
-        "full_name": widget.args.namaLengkap,
-        "gender": widget.args.jenisKelamin,
-        "born_date": widget.args.tanggalLahir
+      var response = await NetUtil().dioClient.post('/users/register', data: {
+        "noTelp": _noTelpController.text,
+        "kataSandi": _kataSandiController.text,
+        "namaLengkap": widget.args.namaLengkap,
+        "jenisKelamin": widget.args.jenisKelamin,
+        "tanggalLahir": widget.args.tanggalLahir
       });
 
-      debugPrint(response.toString());
 
+      debugPrint(response.toString());
+      gotoOTP();
     } on DioError catch (e) {
       if (e.response != null) {
         debugPrint(e.response!.data.toString());
       }
     }
+  }
+
+  void gotoOTP() {
+    OTPPageArguments argsForOTPPage = OTPPageArguments(
+        namaLengkap: widget.args.namaLengkap,
+        jenisKelamin: widget.args.jenisKelamin,
+        tanggalLahir: widget.args.tanggalLahir,
+        kataSandi: _kataSandiController.text,
+        noTelp: _noTelpController.text);
+    Navigator.pushReplacementNamed(context, OTPPage.id,
+        arguments: argsForOTPPage);
   }
 
   @override
@@ -56,7 +73,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
       body: Form(
         key: _formKey,
         child: Container(
-          padding: EdgeInsets.all(25),
+          padding: paddingScreen,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -65,11 +82,11 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 children: [
                   Text(
                     'Akun Anda',
-                    style: Theme.of(context).textTheme.headline1,
+                    style: smartRTTitleText_Primary,
                   ),
                   Text(
                     'Pastikan anda mengisi dengan no telp yang valid dan kata sandi yang tidak mudah ditebak orang lain',
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: smartRTTextNormal_Primary,
                   ),
                   const SizedBox(
                     height: 25,
@@ -77,7 +94,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                   TextFormField(
                     autocorrect: false,
                     keyboardType: TextInputType.number,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: smartRTTextNormal_Primary,
                     decoration: const InputDecoration(
                       labelText: 'Nomor Telepon',
                     ),
@@ -88,42 +105,35 @@ class _RegisterPage2State extends State<RegisterPage2> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  SB_height15,
                   TextFormField(
                     obscureText: _isObscure,
                     enableSuggestions: false,
                     autocorrect: false,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: smartRTTextNormal_Primary,
                     decoration: InputDecoration(
-                        labelText: 'Kata Sandi',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isObscure
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Color(0xff311c0a),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isObscure = !_isObscure;
-                            });
-                          },
+                      labelText: 'Kata Sandi',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isObscure ? Icons.visibility : Icons.visibility_off,
+                          color: smartRTPrimaryColor,
                         ),
-                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        },
                       ),
-                    
+                      labelStyle: smartRTTextNormal_Primary,
+                    ),
                     controller: _kataSandiController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Kata Sandi tidak boleh kosong';
                       }
-                    },  
+                    },
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  SB_height15,
                 ],
               ),
               Container(
@@ -136,10 +146,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                   },
                   child: Text(
                     'DAFTAR',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(fontWeight: FontWeight.bold),
+                    style: smartRTTextLargeBold_Secondary,
                   ),
                 ),
               ),

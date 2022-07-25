@@ -1,11 +1,14 @@
 import 'dart:developer';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_rt/providers/application_provider.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/theme.dart';
 import 'package:smart_rt/routes/routes.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   bool isDebugging = true;
@@ -13,6 +16,13 @@ void main() {
     debugPrint = (String? message, {int? wrapWidth}) => log('Debug: $message');
     debugPrint('[Main.Dart] => loadApp');
   }
+
+  // Baca Storage...
+  await ApplicationProvider.loadApp();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const SmartRTApp());
 }
@@ -28,13 +38,19 @@ class _SmartRTAppState extends State<SmartRTApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: getThemeData(),
-      home: const WelcomePage(),
-      initialRoute: WelcomePage.id,
-      onGenerateRoute: Routes.generateRoute,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ((context) => ApplicationProvider())),
+      ],
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: getThemeData(),
+          home: const WelcomePage(),
+          initialRoute: WelcomePage.id,
+          onGenerateRoute: Routes.generateRoute,
+        );
+      },
     );
   }
 }
-
