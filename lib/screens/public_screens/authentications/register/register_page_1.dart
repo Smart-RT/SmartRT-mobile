@@ -4,7 +4,6 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_2.dart';
-import 'package:smart_rt/screens/public_screens/authentications/register/register_page_x.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 class RegisterPage1 extends StatefulWidget {
@@ -44,7 +43,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                 children: [
                   Text(
                     'Tentang Saya',
-                    style: smartRTTitleText_Primary,
+                    style: smartRTTextTitle_Primary,
                   ),
                   Text(
                     'Pastikan anda mengisi dengan data yang valid dan sesuai dengan KTP',

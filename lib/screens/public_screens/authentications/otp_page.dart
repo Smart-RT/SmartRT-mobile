@@ -178,7 +178,7 @@ class _OTPPageState extends State<OTPPage> {
                       SB_height15,
                       Text(
                         '- VERIFIKASI -',
-                        style: smartRTTitleText_Primary,
+                        style: smartRTTextTitle_Primary,
                         textAlign: TextAlign.center,
                       ),
                       RichText(

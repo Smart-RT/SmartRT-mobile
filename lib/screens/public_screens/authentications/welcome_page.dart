@@ -49,7 +49,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 Text(
                   '- SMART RT -',
                   textAlign: TextAlign.center,
-                  style: smartRTTitleText_Secondary,
+                  style: smartRTTextTitle_Secondary,
                 ),
                 SB_height15,
                 RichText(

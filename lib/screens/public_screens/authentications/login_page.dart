@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         '- SMART RT -',
                         textAlign: TextAlign.center,
-                        style: smartRTTitleText_Secondary,
+                        style: smartRTTextTitle_Secondary,
                       ),
                     ],
                   ),
@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                               .style!
                               .copyWith(
                                   backgroundColor: MaterialStateProperty.all(
-                                      Color(0xffb4a290))),
+                                      smartRTSecondaryColor)),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               doLogin();
@@ -221,10 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             'MASUK',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(fontWeight: FontWeight.bold),
+                            style: smartRTTextLargeBold_Primary,
                           ),
                         ),
                       ),

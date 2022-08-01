@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/constants/style.dart';
 
 ThemeData getThemeData() {
   return ThemeData(
@@ -40,27 +41,7 @@ ThemeData getThemeData() {
       // Define the default `TextTheme`. Use this to specify the default
       // text styling for headlines, titles, bodies of text, and more.
       textTheme: TextTheme(
-        headline1: TextStyle(
-          fontSize: 32.0,
-          fontWeight: FontWeight.bold,
-          color: smartRTPrimaryColor,
-          letterSpacing: 2,
-        ),
-        headline2: TextStyle(
-          fontSize: 32.0,
-          fontWeight: FontWeight.bold,
-          color: smartRTSecondaryColor,
-          letterSpacing: 2,
-        ),
-        bodyText1: TextStyle(
-          fontSize: 15.0,
-          color: smartRTPrimaryColor,
-        ),
-        bodyText2: TextStyle(
-          fontSize: 15.0,
-          color: smartRTSecondaryColor,
-        ),
-        
+        titleMedium: smartRTTextTitleCard_Primary,
       ),
 
       // Define the default 'InputDecoration'. Use this to specify the default

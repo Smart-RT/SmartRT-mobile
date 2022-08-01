@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 
-final TextStyle smartRTTitleText_Primary = TextStyle(
+final TextStyle smartRTTextTitle_Primary = TextStyle(
   fontSize: 32.0,
   fontWeight: FontWeight.bold,
   color: smartRTPrimaryColor,
   letterSpacing: 2,
 );
 
-final TextStyle smartRTTitleText_Secondary = TextStyle(
+final TextStyle smartRTTextTitle_Secondary = TextStyle(
   fontSize: 32.0,
   fontWeight: FontWeight.bold,
   color: smartRTSecondaryColor,
@@ -59,6 +59,17 @@ final TextStyle smartRTTextNormalBold_Secondary = TextStyle(
   fontWeight: FontWeight.bold
 );
 
+final TextStyle smartRTTextNormal_Tertiary = TextStyle(
+  fontSize: 15.0,
+  color: smartRTTertiaryColor,
+);
+
+final TextStyle smartRTTextNormalBold_Tertiary = TextStyle(
+  fontSize: 15.0,
+  color: smartRTTertiaryColor,
+  fontWeight: FontWeight.bold
+);
+
 final TextStyle smartRTTextLarge_Primary = TextStyle(
   fontSize: 17.0,
   color: smartRTPrimaryColor,
@@ -78,5 +89,11 @@ final TextStyle smartRTTextLarge_Secondary = TextStyle(
 final TextStyle smartRTTextLargeBold_Secondary = TextStyle(
   fontSize: 17.0,
   color: smartRTSecondaryColor,
+  fontWeight: FontWeight.bold
+);
+
+final TextStyle smartRTTextTitleCard_Primary = TextStyle(
+  fontSize: 20.0,
+  color: smartRTPrimaryColor,
   fontWeight: FontWeight.bold
 );

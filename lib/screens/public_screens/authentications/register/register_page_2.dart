@@ -82,7 +82,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 children: [
                   Text(
                     'Akun Anda',
-                    style: smartRTTitleText_Primary,
+                    style: smartRTTextTitle_Primary,
                   ),
                   Text(
                     'Pastikan anda mengisi dengan no telp yang valid dan kata sandi yang tidak mudah ditebak orang lain',
