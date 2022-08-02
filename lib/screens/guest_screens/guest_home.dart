@@ -212,28 +212,31 @@ class _GuestHomeState extends State<GuestHome> {
           Container(
             width: double.infinity,
             height: 155,
-            child: Card(
-              color: smartRTCardColor,
-              shadowColor: smartRTShadowColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Padding(
-                padding: paddingCard,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.domain_add,
-                      color: smartRTSecondaryColor,
-                      size: 65,
-                    ),
-                    Text(
-                      'Gabung Wilayah',
-                      style: smartRTTextLargeBold_Secondary,
-                    )
-                  ],
+            child: GestureDetector(
+              onTap: () {/** ... */},
+              child: Card(
+                color: smartRTCardColor,
+                shadowColor: smartRTShadowColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Padding(
+                  padding: paddingCard,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.domain_add,
+                        color: smartRTSecondaryColor,
+                        size: 65,
+                      ),
+                      Text(
+                        'Gabung Wilayah',
+                        style: smartRTTextLargeBold_Secondary,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
