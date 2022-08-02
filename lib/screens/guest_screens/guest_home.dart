@@ -247,17 +247,214 @@ class _GuestHomeState extends State<GuestHome> {
     Text(
       'Index 2: School',
     ),
-    Padding(
-      padding: paddingScreen,
-      child: Container(
-        child: ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) => ListItem(),
+    ListView(
+      children: <Widget>[
+        Card(
+          color: smartRTSecondaryColor,
+          child: ListTile(
+            leading: Icon(
+              Icons.image,
+              size: 72,
+            ),
+            title: Text(
+              '[Judul Berita]',
+              style: smartRTTextLargeBold_Primary,
+            ),
+            subtitle: Text(
+              'Senin, 1 Agustus 2022\n\nFirst blood, literally. Meski secara biologis keduanya tak bisa menghasilkan janin, namun rutinitas majikan dan budak ini bakal terus berjalan hingga Taku mengumpulkan kawanan lainnya.',
+              style: smartRTTextNormal_Primary,
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ),
-      ),
+        Card(
+          color: smartRTSecondaryColor,
+          child: ListTile(
+            leading: Icon(
+              Icons.image,
+              size: 72,
+            ),
+            title: Text(
+              '[Judul Berita]',
+              style: smartRTTextLargeBold_Primary,
+            ),
+            subtitle: Text(
+              'Senin, 1 Agustus 2022\n\nFirst blood, literally. Meski secara biologis keduanya tak bisa menghasilkan janin, namun rutinitas majikan dan budak ini bakal terus berjalan hingga Taku mengumpulkan kawanan lainnya.',
+              style: smartRTTextNormal_Primary,
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+        Card(
+          color: smartRTSecondaryColor,
+          child: ListTile(
+            leading: Icon(
+              Icons.image,
+              size: 72,
+            ),
+            title: Text(
+              '[Judul Berita]',
+              style: smartRTTextLargeBold_Primary,
+            ),
+            subtitle: Text(
+              'Senin, 1 Agustus 2022\n\nFirst blood, literally. Meski secara biologis keduanya tak bisa menghasilkan janin, namun rutinitas majikan dan budak ini bakal terus berjalan hingga Taku mengumpulkan kawanan lainnya.',
+              style: smartRTTextNormal_Primary,
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+      ],
     ),
-    Text(
-      'Index 2: School',
+    Column(
+      children: [
+        Container(
+          color: smartRTPrimaryColor,
+          width: double.infinity,
+          height: 175,
+          child: Row(
+            children: [
+              Expanded(
+                  child: Icon(
+                Icons.account_circle,
+                size: 100,
+                color: smartRTSecondaryColor,
+              )),
+              Expanded(
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '[Nama Lengkap]',
+                        style: smartRTTextLargeBold_Secondary,
+                      ),
+                      Text(
+                        '[Jabatan]',
+                        style: smartRTTextLarge_Secondary,
+                      ),
+                      Text(
+                        '[Alamat Rumah]',
+                        style: smartRTTextLarge_Secondary,
+                      ),
+                    ],
+                  ))
+            ],
+          ),
+        ),
+        Container(
+          height: 500,
+          child: ListView(
+            children: <Widget>[
+              Card(
+                color: smartRTSecondaryColor,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.account_circle,
+                    color: smartRTPrimaryColor,
+                  ),
+                  title: Text(
+                    'Edit Profile',
+                    style: smartRTTextLargeBold_Primary,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: smartRTPrimaryColor,
+                  ),
+                ),
+              ),
+              Card(
+                color: smartRTSecondaryColor,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.domain_add,
+                    color: smartRTPrimaryColor,
+                  ),
+                  title: Text(
+                    'Join Wilayah',
+                    style: smartRTTextLargeBold_Primary,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: smartRTPrimaryColor,
+                  ),
+                ),
+              ),
+              Card(
+                color: smartRTSecondaryColor,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.accessibility_new_rounded,
+                    color: smartRTPrimaryColor,
+                  ),
+                  title: Text(
+                    'Daftar menjadi Ketua RT',
+                    style: smartRTTextLargeBold_Primary,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: smartRTPrimaryColor,
+                  ),
+                ),
+              ),
+              Card(
+                color: smartRTSecondaryColor,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.accessibility_new_rounded,
+                    color: smartRTPrimaryColor,
+                  ),
+                  title: Text(
+                    'Update Jabatan',
+                    style: smartRTTextLargeBold_Primary,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: smartRTPrimaryColor,
+                  ),
+                ),
+              ),
+              Card(
+                color: smartRTSecondaryColor,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.analytics,
+                    color: smartRTPrimaryColor,
+                  ),
+                  title: Text(
+                    'Performa Saya',
+                    style: smartRTTextLargeBold_Primary,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: smartRTPrimaryColor,
+                  ),
+                ),
+              ),
+              Card(
+                color: smartRTSecondaryColor,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: smartRTPrimaryColor,
+                  ),
+                  title: Text(
+                    'Keluarkan AKun',
+                    style: smartRTTextLargeBold_Primary,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: smartRTPrimaryColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     ),
   ];
 
@@ -343,9 +540,21 @@ class ListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Title(color: smartRTPrimaryColor, child: Text('Judul Berita', style: smartRTTextLargeBold_Primary,),),
-                    Text('First blood, literally. Meski secara biologis keduanya tak bisa menghasilkan janin, namun rutinitas majikan dan budak ini bakal terus berjalan hingga Taku mengumpulkan kawanan lainnya.', maxLines: 3,),
-                    Text('Senin, 01 Agustus 2022', textAlign: TextAlign.right,)
+                    Title(
+                      color: smartRTPrimaryColor,
+                      child: Text(
+                        'Judul Berita',
+                        style: smartRTTextLargeBold_Primary,
+                      ),
+                    ),
+                    Text(
+                      'First blood, literally. Meski secara biologis keduanya tak bisa menghasilkan janin, namun rutinitas majikan dan budak ini bakal terus berjalan hingga Taku mengumpulkan kawanan lainnya.',
+                      maxLines: 3,
+                    ),
+                    Text(
+                      'Senin, 01 Agustus 2022',
+                      textAlign: TextAlign.right,
+                    )
                   ],
                 ),
               ),
