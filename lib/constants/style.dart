@@ -15,6 +15,20 @@ final TextStyle smartRTTextTitle_Secondary = TextStyle(
   letterSpacing: 2,
 );
 
+final TextStyle smartRTTextTitle_Success = TextStyle(
+  fontSize: 32.0,
+  fontWeight: FontWeight.bold,
+  color: smartRTSuccessColor,
+  letterSpacing: 2,
+);
+
+final TextStyle smartRTTextTitle_Error = TextStyle(
+  fontSize: 32.0,
+  fontWeight: FontWeight.bold,
+  color: smartRTErrorColor,
+  letterSpacing: 2,
+);
+
 final TextStyle smartRTTextSmall_Primary = TextStyle(
   fontSize: 12.0,
   color: smartRTPrimaryColor,
@@ -89,6 +103,28 @@ final TextStyle smartRTTextLarge_Secondary = TextStyle(
 final TextStyle smartRTTextLargeBold_Secondary = TextStyle(
   fontSize: 17.0,
   color: smartRTSecondaryColor,
+  fontWeight: FontWeight.bold
+);
+
+final TextStyle smartRTTextLarge_Success = TextStyle(
+  fontSize: 17.0,
+  color: smartRTSuccessColor,
+);
+
+final TextStyle smartRTTextLargeBold_Success = TextStyle(
+  fontSize: 17.0,
+  color: smartRTSuccessColor,
+  fontWeight: FontWeight.bold
+);
+
+final TextStyle smartRTTextLarge_Error = TextStyle(
+  fontSize: 17.0,
+  color: smartRTErrorColor,
+);
+
+final TextStyle smartRTTextLargeBold_Error = TextStyle(
+  fontSize: 17.0,
+  color: smartRTErrorColor,
   fontWeight: FontWeight.bold
 );
 
