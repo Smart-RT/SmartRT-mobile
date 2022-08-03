@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/screens/guest_screens/guest_home.dart';
+import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/theme.dart';
@@ -47,8 +48,8 @@ class _SmartRTAppState extends State<SmartRTApp> {
         return MaterialApp(
           title: 'Flutter Demo',
           theme: getThemeData(),
-          home: const GuestHome(),
-          initialRoute: GuestHome.id,
+          home: const ListJanjiTemuPage(),
+          initialRoute: ListJanjiTemuPage.id,
           // home: const WelcomePage(),
           // initialRoute: WelcomePage.id,
           onGenerateRoute: Routes.generateRoute,
