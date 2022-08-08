@@ -1,8 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
@@ -16,7 +14,7 @@ class BuatJanjiTemuPage extends StatefulWidget {
 }
 
 class _BuatJanjiTemuPageState extends State<BuatJanjiTemuPage> {
-  String _areaSelectedItem= '';
+  String _areaSelectedItem = '';
   final List<String> _areaItems = [
     'XXX',
     'YYY',
@@ -113,6 +111,7 @@ class _BuatJanjiTemuPageState extends State<BuatJanjiTemuPage> {
                 ),
                 SB_height15,
                 TextFormField(
+                  maxLines: 10,
                   autocorrect: false,
                   style: smartRTTextNormal_Primary,
                   decoration: const InputDecoration(
@@ -125,6 +124,19 @@ class _BuatJanjiTemuPageState extends State<BuatJanjiTemuPage> {
                   },
                 ),
                 SB_height15,
+                Container(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'TAMBAHKAN LAMPIRAN',
+                      style: smartRTTextLargeBold_Primary,
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: smartRTPrimaryColor, width: 2)
+                    ),
+                  ),
+                ),
               ],
             ),
             Container(
