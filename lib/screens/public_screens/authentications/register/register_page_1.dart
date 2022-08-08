@@ -76,7 +76,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                     isExpanded: true,
                     hint: Text(
                       'Jenis Kelamin',
-                      style: smartRTTextNormal_Primary,
+                      style: smartRTTextLargeBold_Primary,
                     ),
                     icon: Icon(
                       Icons.arrow_drop_down,

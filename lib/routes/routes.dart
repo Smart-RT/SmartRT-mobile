@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/screens/guest_screens/guest_home.dart';
+import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_2.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/test_screen.dart';
 import 'package:smart_rt/screens/public_screens/test_screen2.dart';
@@ -54,6 +55,10 @@ class Routes {
       case ListJanjiTemuPage.id:
         return MaterialPageRoute(builder: (context) {
           return const ListJanjiTemuPage();
+        });
+      case BuatJanjiTemuPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const BuatJanjiTemuPage();
         });
       case TestScreen.id:
         return MaterialPageRoute(builder: (context) {

@@ -52,9 +52,7 @@ ThemeData getThemeData() {
           color: smartRTPrimaryColor,
           fontSize: 20,
         ),
-        labelStyle: TextStyle(
-          color: smartRTPrimaryColor,
-        ),
+        labelStyle: smartRTTextLargeBold_Primary,
         fillColor: smartRTPrimaryColor,
         enabledBorder: OutlineInputBorder(
           borderSide:  BorderSide(

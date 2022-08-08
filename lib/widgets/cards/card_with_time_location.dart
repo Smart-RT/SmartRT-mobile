@@ -8,11 +8,13 @@ class CardWithTimeLocation extends StatelessWidget {
   const CardWithTimeLocation(
       {Key? key,
       required this.title,
+      required this.subtitle,
       required this.dateTime,
       required this.location})
       : super(key: key);
 
   final String title;
+  final String subtitle;
   final String dateTime;
   final String location;
 
@@ -23,7 +25,8 @@ class CardWithTimeLocation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: smartRTTextLargeBold_Primary,),
+          Text(title, style: smartRTTextLargeBold_Primary, textAlign: TextAlign.justify, maxLines: 1, overflow: TextOverflow.ellipsis,),
+          Text(subtitle, style: smartRTTextNormal_Primary, textAlign: TextAlign.justify, maxLines: 3, overflow: TextOverflow.ellipsis,),
           SB_height15,
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -31,7 +34,7 @@ class CardWithTimeLocation extends StatelessWidget {
             children: [
               Icon(Icons.access_time, size: 15,),
               SB_width25,
-              Text(location, style: smartRTTextNormal_Primary,),
+              Text(dateTime, style: smartRTTextNormal_Primary,),
             ],
           ),
            Row(
