@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
@@ -99,20 +100,25 @@ class SayaPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Card(
-                color: smartRTSecondaryColor,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.accessibility_new_rounded,
-                    color: smartRTPrimaryColor,
-                  ),
-                  title: Text(
-                    'Daftar menjadi Ketua RT',
-                    style: smartRTTextLargeBold_Primary,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: smartRTPrimaryColor,
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, DaftarKetuaPage.id);
+                },
+                child: Card(
+                  color: smartRTSecondaryColor,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.accessibility_new_rounded,
+                      color: smartRTPrimaryColor,
+                    ),
+                    title: Text(
+                      'Daftar menjadi Ketua RT',
+                      style: smartRTTextLargeBold_Primary,
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: smartRTPrimaryColor,
+                    ),
                   ),
                 ),
               ),

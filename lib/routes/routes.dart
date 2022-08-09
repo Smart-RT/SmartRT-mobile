@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
+import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
+import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
+import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
@@ -64,6 +68,22 @@ class Routes {
       case UbahProfilPage.id:
         return MaterialPageRoute(builder: (context) {
           return const UbahProfilPage();
+        });
+      case DaftarKetuaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DaftarKetuaPage();
+        });
+      case DaftarKetuaFormPage1.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DaftarKetuaFormPage1();
+        });
+      case DaftarKetuaFormPage2.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DaftarKetuaFormPage2();
+        });
+      case DaftarKetuaFormPage3.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DaftarKetuaFormPage3();
         });
       case TestScreen.id:
         return MaterialPageRoute(builder: (context) {
