@@ -10,6 +10,7 @@ import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/test_screen.dart';
 import 'package:smart_rt/screens/public_screens/test_screen2.dart';
+import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
 
 class Routes {
@@ -59,6 +60,10 @@ class Routes {
       case BuatJanjiTemuPage.id:
         return MaterialPageRoute(builder: (context) {
           return const BuatJanjiTemuPage();
+        });
+      case UbahProfilPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const UbahProfilPage();
         });
       case TestScreen.id:
         return MaterialPageRoute(builder: (context) {

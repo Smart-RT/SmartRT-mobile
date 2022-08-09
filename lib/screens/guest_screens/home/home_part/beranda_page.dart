@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 
 class BerandaPage extends StatelessWidget {
@@ -217,11 +218,13 @@ class BerandaPage extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            width: double.infinity,
-            height: 155,
-            child: GestureDetector(
-              onTap: () {/** ... */},
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, GabungWilayahPage.id);
+            },
+            child: Container(
+              width: double.infinity,
+              height: 155,
               child: Card(
                 color: smartRTCardColor,
                 shadowColor: smartRTShadowColor,
