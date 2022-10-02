@@ -12,6 +12,10 @@ import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dar
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_bantuan_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatanku_page.dart';
 import 'package:smart_rt/screens/public_screens/test_screen.dart';
 import 'package:smart_rt/screens/public_screens/test_screen2.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
@@ -84,6 +88,22 @@ class Routes {
       case DaftarKetuaFormPage3.id:
         return MaterialPageRoute(builder: (context) {
           return const DaftarKetuaFormPage3();
+        });
+      case KesehatankuPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const KesehatankuPage();
+        });
+      case RiwayatKesehatankuPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const RiwayatKesehatankuPage();
+        });
+      case RiwayatBantuanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const RiwayatBantuanPage();
+        });
+      case DetailRiwayatBantuanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DetailRiwayatBantuanPage();
         });
       case TestScreen.id:
         return MaterialPageRoute(builder: (context) {
