@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatanku_page.dart';
 
@@ -133,7 +134,7 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  /**.... */
+                  Navigator.pushNamed(context, FormLaporKesehatanPage1.id);
                 },
                 child: Text(
                   'LAPOR KESEHATAN',

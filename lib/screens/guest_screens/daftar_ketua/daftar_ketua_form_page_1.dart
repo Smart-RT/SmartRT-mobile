@@ -143,7 +143,6 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                 //     color: smartRTShadowColor,
                 //   ),
                 // ),
-              
               ],
             ),
             Container(
