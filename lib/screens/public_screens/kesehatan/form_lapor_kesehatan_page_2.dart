@@ -83,7 +83,7 @@ class _FormLaporKesehatanPage2State extends State<FormLaporKesehatanPage2> {
                       .toList(),
                   validator: (value) {
                     if (value == null) {
-                      return 'Jenis Kelamin tidak boleh kosong';
+                      return 'Tidak boleh kosong';
                     }
                   },
                   onChanged: (value) {

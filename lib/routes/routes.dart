@@ -15,6 +15,7 @@ import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.
 import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page_1.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page_2.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/form_minta_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatanku_page.dart';
@@ -114,6 +115,10 @@ class Routes {
       case FormLaporKesehatanPage2.id:
         return MaterialPageRoute(builder: (context) {
           return const FormLaporKesehatanPage2();
+        });
+      case FormMintaBantuanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const FormMintaBantuanPage();
         });
       case TestScreen.id:
         return MaterialPageRoute(builder: (context) {
