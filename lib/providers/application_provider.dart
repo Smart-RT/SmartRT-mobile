@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:smart_rt/models/user.dart';
 
 class ApplicationProvider extends ChangeNotifier {
   // Buat Flutter Storage
@@ -13,9 +14,9 @@ class ApplicationProvider extends ChangeNotifier {
   void updateListener() => notifyListeners();
 
   // Misal Nanti mode akan diisi dengan warga / RT
-  String mode = 'warga';
+  Role mode = Role.None;
 
-  void changeApplicationMode(String newMode) {
+  void changeApplicationMode(Role newMode) {
     mode = newMode;
     notifyListeners();
   }

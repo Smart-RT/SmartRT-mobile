@@ -46,6 +46,8 @@ dependencies:
   pin_code_fields: ^7.4.0
   flutter_secure_storage: ^5.0.2
   syncfusion_flutter_calendar: ^20.3.47
+  syncfusion_flutter_charts: ^20.3.48
+  flutter_spinkit: ^5.1.0
 
 
 dev_dependencies:

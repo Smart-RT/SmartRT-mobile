@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
@@ -124,31 +125,36 @@ class BerandaPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                width: 165,
-                height: 155,
-                child: Card(
-                  color: smartRTCardColor,
-                  shadowColor: smartRTShadowColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Padding(
-                    padding: paddingCard,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.group,
-                          color: smartRTSecondaryColor,
-                          size: 65,
-                        ),
-                        Text(
-                          'Arisan',
-                          style: smartRTTextLargeBold_Secondary,
-                        )
-                      ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, ArisanPage.id);
+                },
+                child: Container(
+                  width: 165,
+                  height: 155,
+                  child: Card(
+                    color: smartRTCardColor,
+                    shadowColor: smartRTShadowColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Padding(
+                      padding: paddingCard,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.group,
+                            color: smartRTSecondaryColor,
+                            size: 65,
+                          ),
+                          Text(
+                            'Arisan',
+                            style: smartRTTextLargeBold_Secondary,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

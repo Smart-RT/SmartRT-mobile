@@ -13,9 +13,15 @@ final SizedBox SB_height50 = SizedBox(
 );
 
 
+final SizedBox SB_width15 = SizedBox(
+  width: 15,
+);
+
 final SizedBox SB_width25 = SizedBox(
   width: 25,
 );
+
+
 
 
 final EdgeInsets paddingScreen = EdgeInsets.all(25);

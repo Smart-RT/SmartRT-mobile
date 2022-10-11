@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/providers/application_provider.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'firebase_options.dart';
@@ -43,15 +45,18 @@ class _SmartRTAppState extends State<SmartRTApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: ((context) => ApplicationProvider())),
+        ChangeNotifierProvider(create: ((context) => AuthProvider())),
       ],
       builder: (context, child) {
         return MaterialApp(
           title: 'Flutter Demo',
           theme: getThemeData(),
-          home: const GuestHome(),
-          initialRoute: GuestHome.id,
-          // home: const WelcomePage(),
-          // initialRoute: WelcomePage.id,
+          // home: const BerandaAdminPage(),
+          // initialRoute: BerandaAdminPage.id,
+          // home: const GuestHome(),
+          // initialRoute: GuestHome.id,
+          home: const WelcomePage(),
+          initialRoute: WelcomePage.id,
           onGenerateRoute: Routes.generateRoute,
         );
       },

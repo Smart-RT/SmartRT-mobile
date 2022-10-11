@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_akun/buat_akun_admin_page.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
+import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
+import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
+import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
@@ -119,6 +126,34 @@ class Routes {
       case FormMintaBantuanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const FormMintaBantuanPage();
+        });
+      case ArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const ArisanPage();
+        });
+      case DetailDanInformasiArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DetailDanInformasiArisanPage();
+        });
+      case BerandaAdminPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const BerandaAdminPage();
+        });
+      case ListRequestRolePage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const ListRequestRolePage();
+        });
+      case DaftarWilayahSurabayaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DaftarWilayahSurabayaPage();
+        });
+      case DaftarAkunPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DaftarAkunPage();
+        });
+      case BuatAkunAdminPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const BuatAkunAdminPage();
         });
       case TestScreen.id:
         return MaterialPageRoute(builder: (context) {

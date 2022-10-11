@@ -6,13 +6,17 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:dio/dio.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_rt/widgets/dialogs/loading_dialog.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'LoginPage';
@@ -28,26 +32,42 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
 
-  void doLogin() async {
-    try {
-      var response = await NetUtil().dioClient.post('/users/login', data: {
-        "noTelp": _noTelpController.text,
-        "kataSandi": _kataSandiController.text
-      });
-      debugPrint(response.toString());
-      await ApplicationProvider.storage
-          .write(key: 'jwt', value: response.data['token']);
-      await ApplicationProvider.storage
-          .write(key: 'refreshToken', value: response.data['refreshToken']);
-      ApplicationProvider.currentUserJWT = response.data['token'];
-      ApplicationProvider.currentUserRefreshToken =
-          response.data['refreshToken'];
-      context.read<ApplicationProvider>().notifyListeners();
-      // Pindahin ke halaman home.
+  void doLogin(BuildContext context) async {
+    // ini dipindahin ke Auth provider....
+    // try {
+    //   var response = await NetUtil().dioClient.post('/users/login', data: {
+    //     "noTelp": _noTelpController.text,
+    //     "kataSandi": _kataSandiController.text
+    //   });
+    //   debugPrint(response.toString());
+    //   await ApplicationProvider.storage
+    //       .write(key: 'jwt', value: response.data['token']);
+    //   await ApplicationProvider.storage
+    //       .write(key: 'refreshToken', value: response.data['refreshToken']);
+    //   ApplicationProvider.currentUserJWT = response.data['token'];
+    //   ApplicationProvider.currentUserRefreshToken =
+    //       response.data['refreshToken'];
+    //   context.read<ApplicationProvider>().notifyListeners();
+    //   // Pindahin ke halaman home.
 
-    } on DioError catch (e) {
-      if (e.response != null) {
-        debugPrint(e.response!.data.toString());
+    // } on DioError catch (e) {
+    //   if (e.response != null) {
+    //     debugPrint(e.response!.data.toString());
+    //   }
+    // }
+    LoadingDialog.show(context);
+    bool loginSuccess = await context.read<AuthProvider>().login(
+        context: context,
+        phone: _noTelpController.text,
+        password: _kataSandiController.text);
+    LoadingDialog.hide(context);
+
+    if (loginSuccess) {
+      // kita ambil dlu user dari providernya kasi ! untuk bilangin kalau itu ga bakal null
+      User currentUser = AuthProvider.currentUser!;
+      // Kita arahin sesuai rolenya
+      if(currentUser.user_role == Role.Guest){
+        Navigator.pushReplacementNamed(context, GuestHome.id);
       }
     }
   }
@@ -197,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                                       smartRTSecondaryColor)),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              doLogin();
+                              doLogin(context);
                             }
                             // Dio dio = Dio(BaseOptions(baseUrl: backendURL));
                             // Response<dynamic> response = await dio.get("/users");
