@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:smart_rt/constants/colors.dart';
@@ -19,6 +21,13 @@ class AuthProvider extends ApplicationProvider {
           .dioClient
           .post("/users/login", data: {"noTelp": phone, "kataSandi": password});
       User user = User.fromData(resp.data);
+      await ApplicationProvider.storage.write(key: 'jwt', value: user.token);
+      await ApplicationProvider.storage
+          .write(key: 'refreshToken', value: user.refresh_token);
+      await ApplicationProvider.storage
+          .write(key: 'user', value: jsonEncode(user.toJson()));
+      // ApplicationProvider.currentUserJWT = user.token;
+      // ApplicationProvider.currentUserRefreshToken = user.refresh_token;
       currentUser = user;
       debugPrint(
           'IDnya: ${user.id}, Namanya: ${user.full_name} berjenis kelamin : ${user.gender}');

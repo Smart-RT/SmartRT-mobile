@@ -34,6 +34,7 @@ class User {
   String? photo_profile_img;
   bool is_health = true;
   int total_serving_as_neighbourhood_head = 0;
+  String token = "";
   String refresh_token = "";
   DateTime created_at = DateTime.now();
   int? created_by;
@@ -51,7 +52,7 @@ class User {
     rw_num = userData['rw_num'];
     gender = userData['gender'];
     born_at = userData['born_at'];
-    
+
     if (userData['born_date'] != null) {
       born_date = DateTime.parse(userData['born_date']);
     }
@@ -73,12 +74,49 @@ class User {
     total_serving_as_neighbourhood_head =
         userData['total_serving_as_neighbourhood_head'];
 
+    token = data['token'];
     refresh_token = data['refreshToken'];
 
     if (userData['created_at'] != null) {
       created_at = DateTime.parse(userData['created_at']);
     }
     created_by = userData['created_by'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "user": {
+        "id": id,
+        "nik": nik,
+        "kk_num": kk_num,
+        "full_name": full_name,
+        "address": address,
+        "rt_num": rt_num,
+        "sub_district_id": sub_district_id,
+        "urban_village": urban_village,
+        "rw_num": rw_num,
+        "gender": gender,
+        "born_at": born_at,
+        "born_date": born_date.toString(),
+        "religion": religion,
+        "is_married": (is_married ?? false) ? 1 : 0,
+        "profession": profession,
+        "phone": phone,
+        "user_role": Role.values.indexOf(user_role) + 1,
+        "area_id": area_id,
+        "is_lottery_club_member": is_lottery_club_member ? 1 : 0,
+        "task_rating": task_rating,
+        "sign_img": sign_img,
+        "photo_profile_img": photo_profile_img,
+        "is_health": is_health ? 1 : 0,
+        "total_serving_as_neighbourhood_head":
+            total_serving_as_neighbourhood_head,
+        "created_at": created_at.toString(),
+        "created_by": created_by
+      },
+      "token": token,
+      "refreshToken": refresh_token
+    };
   }
 
   Role roleFromId(int id) {

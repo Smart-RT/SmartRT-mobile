@@ -1,10 +1,12 @@
 import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
+import 'package:smart_rt/screens/guest_screens/home/home_part/beranda_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,14 @@ class _SmartRTAppState extends State<SmartRTApp> {
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
       ],
       builder: (context, child) {
+        String? routeStart;
+        Role roleUser = AuthProvider.currentUser?.user_role ?? Role.None;
+        if (roleUser == Role.Admin) {
+          routeStart = BerandaAdminPage.id;
+        } else {
+          routeStart = GuestHome.id;
+        }
+
         return MaterialApp(
           title: 'Flutter Demo',
           theme: getThemeData(),
@@ -55,8 +65,8 @@ class _SmartRTAppState extends State<SmartRTApp> {
           // initialRoute: BerandaAdminPage.id,
           // home: const GuestHome(),
           // initialRoute: GuestHome.id,
-          home: const WelcomePage(),
-          initialRoute: WelcomePage.id,
+          // home: const WelcomePage(),
+          initialRoute: routeStart,
           onGenerateRoute: Routes.generateRoute,
         );
       },
