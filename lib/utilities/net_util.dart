@@ -7,7 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 
 class NetUtil {
   // buat Base Options untuk Dio Client dan Dio Refresh Token
@@ -69,15 +71,34 @@ class NetUtil {
         // Kalau dapat error 400 akan masuk sini... ini tergantung nanti backend
         // Kirim response apa kalau JWT Error
         String? errorMessage = error.response!.data;
-        if (errorMessage ==
-            'Context creation failed: TokenExpiredError: jwt expired') {
-          //Kalau JWT Expired Masuk sini
 
+        debugPrint(errorMessage);
+        if (errorMessage == 'Token Expired') {
+          //Kalau JWT Expired Masuk sini
           // Ambil Refresh token baru
-          // Response<dynamic> response = await dioRefreshToken.post('/refreshToken');
+          Response<dynamic> response = await dioRefreshToken.post(
+              '/users/refreshToken/${AuthProvider.currentUser!.id}',
+              data: {
+                "refreshTokenUser": ApplicationProvider.currentUserRefreshToken
+              });
+
+          User user = User.fromData(response.data);
+          AuthProvider.currentUser = user;
+          await ApplicationProvider.storage
+              .write(key: 'jwt', value: user.token);
+          await ApplicationProvider.storage
+              .write(key: 'refreshToken', value: user.refresh_token);
+          await ApplicationProvider.storage
+              .write(key: 'user', value: jsonEncode(user.toJson()));
+          // debugPrint(user.token);
+          // debugPrint(user.refresh_token);
           // Setelah itu kalau dapat tokennya coba request ulang
           // Request Ulang
-          return handler.resolve(await dioClient.request(
+
+          Map<String, dynamic> newHeader =
+              error.response!.requestOptions.headers;
+          newHeader['Authorization'] = user.token;
+          Response<dynamic> retryResponse = await dioClient.request(
             error.requestOptions.path,
             data: error.requestOptions.data,
             queryParameters: error.requestOptions.queryParameters,
@@ -86,7 +107,7 @@ class NetUtil {
                 contentType: error.requestOptions.contentType,
                 extra: error.requestOptions.extra,
                 followRedirects: error.requestOptions.followRedirects,
-                headers: error.requestOptions.headers,
+                headers: newHeader,
                 listFormat: error.requestOptions.listFormat,
                 maxRedirects: error.requestOptions.maxRedirects,
                 method: error.requestOptions.method,
@@ -98,12 +119,38 @@ class NetUtil {
                 responseType: error.requestOptions.responseType,
                 sendTimeout: error.requestOptions.sendTimeout,
                 validateStatus: error.requestOptions.validateStatus),
-          ));
+          );
+          return handler.resolve(retryResponse);
         }
       }
       handler.next(error);
     });
+
+    QueuedInterceptorsWrapper refreshTokenInterceptorWrapper =
+        QueuedInterceptorsWrapper(onRequest: (options, handler) {
+      if (isDebugging) {
+        // Kalau lagi debug munculin hasil respon ke console
+        debugPrint('''[dioRefreshToken Interceptor Request Debug] => {
+        header: ${options.headers}
+        data  : ${options.data} 
+        }''');
+      }
+      handler.next(options);
+    }, onResponse: (response, handler) {
+      // Ini saat data diterima
+      if (isDebugging) {
+        // Kalau lagi debug munculin hasil respon ke console
+        debugPrint('''[dioRefreshToken Interceptor Response Debug] => {
+        header: ${response.headers}
+        data  : ${response.data} 
+        }''');
+      }
+      handler.next(response);
+    }, onError: (error, handler) async {
+      return handler.next(error);
+    });
     dioClient.interceptors.add(clientInterceptorWrapper);
+    dioRefreshToken.interceptors.add(refreshTokenInterceptorWrapper);
   }
 
   static final NetUtil _singleton = NetUtil._instance();

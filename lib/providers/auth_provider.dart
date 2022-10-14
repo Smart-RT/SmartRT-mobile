@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/models/user.dart';
@@ -26,11 +29,46 @@ class AuthProvider extends ApplicationProvider {
           .write(key: 'refreshToken', value: user.refresh_token);
       await ApplicationProvider.storage
           .write(key: 'user', value: jsonEncode(user.toJson()));
-      // ApplicationProvider.currentUserJWT = user.token;
-      // ApplicationProvider.currentUserRefreshToken = user.refresh_token;
+      ApplicationProvider.currentUserJWT = user.token;
+      ApplicationProvider.currentUserRefreshToken = user.refresh_token;
       currentUser = user;
       debugPrint(
           'IDnya: ${user.id}, Namanya: ${user.full_name} berjenis kelamin : ${user.gender}');
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return false;
+    }
+  }
+
+  Future<void> logout() async {
+    AuthProvider.currentUser = null;
+    AuthProvider.isLoggedIn = false;
+    ApplicationProvider.currentUserJWT = '';
+    ApplicationProvider.currentUserRefreshToken = '';
+    await ApplicationProvider.storage.delete(key: 'jwt');
+    await ApplicationProvider.storage.delete(key: 'refreshToken');
+    await ApplicationProvider.storage.delete(key: 'user');
+  }
+
+  Future<bool> uploadProfilePicture({
+    required BuildContext context,
+    required CroppedFile file,
+  }) async {
+    try {
+      MultipartFile multipart = await MultipartFile.fromFile(file.path,
+          filename: file.path.split('/').last,
+          contentType: MediaType('image', file.path.split('/').last.split('.').last));
+      var formData = FormData.fromMap({"profilePicture": multipart});
+      
+      Response<dynamic> resp = await NetUtil()
+          .dioClient
+          .patch("/users/uploadProfilePicture/${currentUser!.id}", data: formData);
       return true;
     } on DioError catch (e) {
       if (e.response != null) {

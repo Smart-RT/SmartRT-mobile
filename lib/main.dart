@@ -55,13 +55,13 @@ class _SmartRTAppState extends State<SmartRTApp> {
         if (roleUser == Role.Admin) {
           routeStart = BerandaAdminPage.id;
         } else {
-          routeStart = GuestHome.id;
+          routeStart = WelcomePage.id;
         }
 
         return MaterialApp(
           title: 'Flutter Demo',
           theme: getThemeData(),
-          // home: const BerandaAdminPage(),
+          // home: const BerandaAdminPage(),we
           // initialRoute: BerandaAdminPage.id,
           // home: const GuestHome(),
           // initialRoute: GuestHome.id,

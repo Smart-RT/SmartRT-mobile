@@ -6,6 +6,7 @@ import 'package:smart_rt/screens/guest_screens/home/home_part/beranda_page.dart'
 import 'package:smart_rt/screens/guest_screens/home/home_part/keuangan_page.dart';
 import 'package:smart_rt/screens/guest_screens/home/home_part/pengumuman_page.dart';
 import 'package:smart_rt/screens/guest_screens/home/home_part/saya_page.dart';
+import 'package:smart_rt/screens/guest_screens/home/home_part/tugas_page.dart';
 
 class GuestHome extends StatefulWidget {
   static const String id = 'GuestHome';
@@ -19,9 +20,7 @@ class _GuestHomeState extends State<GuestHome> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     BerandaPage(),
-    Text(
-      'Index 2: School',
-    ),
+    TugasSayaPage(),
     PengumumanPage(),
     KeuanganPage(),
     SayaPage(),
