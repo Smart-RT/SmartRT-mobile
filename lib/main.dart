@@ -54,7 +54,11 @@ class _SmartRTAppState extends State<SmartRTApp> {
         Role roleUser = AuthProvider.currentUser?.user_role ?? Role.None;
         if (roleUser == Role.Admin) {
           routeStart = BerandaAdminPage.id;
-        } else {
+        }
+        else if(roleUser == Role.Guest){
+          routeStart = GuestHome.id;
+        } 
+        else {
           routeStart = WelcomePage.id;
         }
 

@@ -84,7 +84,7 @@ class _BuatJanjiTemuPageState extends State<BuatJanjiTemuPage> {
                       .toList(),
                   validator: (value) {
                     if (value == null) {
-                      return 'Jenis Kelamin tidak boleh kosong';
+                      return 'Tidak boleh kosong';
                     }
                   },
                   onChanged: (value) {

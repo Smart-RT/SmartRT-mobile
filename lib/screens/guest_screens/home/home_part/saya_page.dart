@@ -7,6 +7,7 @@ import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
 
@@ -71,6 +72,28 @@ class SayaPage extends StatelessWidget {
                     ),
                     title: Text(
                       'Ubah Profil',
+                      style: smartRTTextLargeBold_Primary,
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: smartRTPrimaryColor,
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, TandaTanganSayaPage.id);
+                },
+                child: Card(
+                  color: smartRTSecondaryColor,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.border_color_rounded,
+                      color: smartRTPrimaryColor,
+                    ),
+                    title: Text(
+                      'Tanda Tangan Saya',
                       style: smartRTTextLargeBold_Primary,
                     ),
                     trailing: Icon(

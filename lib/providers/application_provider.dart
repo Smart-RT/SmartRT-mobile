@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/utilities/net_util.dart';
 
 class ApplicationProvider extends ChangeNotifier {
   // Buat Flutter Storage
@@ -39,7 +41,14 @@ class ApplicationProvider extends ChangeNotifier {
     if (user != null && user != "") {
       AuthProvider.currentUser = User.fromData(jsonDecode(user));
       AuthProvider.isLoggedIn = true;
-      debugPrint("USER dari Storage: ${AuthProvider.currentUser!.id}");
+
+      // debugPrint("USER dari Storage: ${AuthProvider.currentUser!.token}");
+      // Response<dynamic> resp = await NetUtil().dioClient.get('/users/myProfile',
+      //     options: Options(headers: {
+      //       "Authorization": "bearer ${AuthProvider.currentUser!.token}"
+      //     }));
+      // User u = User.fromData(resp.data);
+      // AuthProvider.currentUser = u;
     }
     // currentUserJWT = jwt ?? '';
     // currentUserRefreshToken = refreshToken ?? '';

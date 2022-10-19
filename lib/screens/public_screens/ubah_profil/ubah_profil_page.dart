@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +13,10 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class UbahProfilPage extends StatefulWidget {
   static const String id = 'UbahProfilPage';
@@ -23,30 +27,44 @@ class UbahProfilPage extends StatefulWidget {
 }
 
 class _UbahProfilPageState extends State<UbahProfilPage> {
+  final TextEditingController _fullNameUserController = TextEditingController();
+  final TextEditingController _bornDateUserController = TextEditingController();
+  final TextEditingController _addressUserController = TextEditingController();
+  late String _genderUserSelected;
+
   final ImagePicker _picker = ImagePicker();
 
-  final int? _IDUser = AuthProvider.currentUser!.id;
-  String? _profilePictureUser = AuthProvider.currentUser!.photo_profile_img;
-  String _fullNameUser = AuthProvider.currentUser!.full_name;
-  String _genderUser = AuthProvider.currentUser!.gender;
-  String _bornDateUser =
-      DateFormat.yMMMd().format(AuthProvider.currentUser!.born_date);
-  String _addressUser = AuthProvider.currentUser!.address ?? '-';
-  final String _phoneUser = AuthProvider.currentUser!.phone;
+  late int? _IDUser;
+  late String? _profilePictureUser;
+  late String _fullNameUser;
+  late String _genderUser;
+  late String _bornDateUser;
+  late String _addressUser;
+  late String _phoneUser;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    User u = AuthProvider.currentUser!;
+
+    _IDUser = u.id;
+    _profilePictureUser = u.photo_profile_img;
+    _fullNameUser = u.full_name;
+    _genderUser = u.gender;
+    _bornDateUser = u.born_date.toString();
+    _addressUser = u.address ?? '-';
+    _phoneUser = u.phone;
+
+    _genderUserSelected = u.gender;
+
+    _bornDateUserController.text = u.born_date.toString();
+  }
 
   final List<String> genderItems = [
     'Laki-Laki',
     'Perempuan',
   ];
-
-  final SignatureController _controller = SignatureController(
-    penStrokeWidth: 5,
-    penColor: Colors.black,
-    exportBackgroundColor: Colors.white,
-    exportPenColor: Colors.black,
-    onDrawStart: () => print('onDrawStart called!'),
-    onDrawEnd: () => print('onDrawEnd called!'),
-  );
 
   void _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -64,6 +82,12 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<AuthProvider>().user;
+    _fullNameUser = user!.full_name;
+    _genderUser = user.gender;
+    _bornDateUser = user.born_date.toString();
+    _addressUser= user.address ?? '';
+    _profilePictureUser = user.photo_profile_img;
     return Scaffold(
       appBar: AppBar(
         title: Text('Ubah Profil'),
@@ -95,7 +119,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                               : CircleAvatar(
                                   radius: 70,
                                   backgroundImage: NetworkImage(
-                                      '${backendURL}/public/uploads/users/${_IDUser}/${_profilePictureUser}'),
+                                      '${backendURL}/public/uploads/users/${_IDUser}/profile_picture/${_profilePictureUser}'),
                                 ),
                         ),
                         Positioned(
@@ -139,55 +163,76 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                     Card(
                       color: smartRTSecondaryColor,
                       child: GestureDetector(
-                        onTap: () => showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            backgroundColor: smartRTSecondaryColor,
-                            title: Text(
-                              'Nama Lengkap',
-                              style: smartRTTextTitleCard_Primary,
-                            ),
-                            content: Text(
-                              'Pastikan nama anda sesuai dengan KTP demi mempermudah pengurusan data administrasi dan sebagainya.',
-                              style: smartRTTextNormal_Primary.copyWith(
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            actions: <Widget>[
-                              TextFormField(
-                                initialValue: _fullNameUser,
-                                autocorrect: false,
-                                style: smartRTTextNormal_Primary,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Nama tidak boleh kosong';
-                                  }
-                                },
+                        onTap: () {
+                          _fullNameUserController.text = _fullNameUser;
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              backgroundColor: smartRTSecondaryColor,
+                              title: Text(
+                                'Nama Lengkap',
+                                style: smartRTTextTitleCard_Primary,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Batal'),
-                                    child: Text(
-                                      'Batal',
-                                      style: smartRTTextLarge_Primary,
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Selesai'),
-                                    child: Text(
-                                      'Selesai',
-                                      style: smartRTTextLargeBold_Primary,
-                                    ),
-                                  ),
-                                ],
+                              content: Text(
+                                'Pastikan nama anda sesuai dengan KTP demi mempermudah pengurusan data administrasi dan sebagainya.',
+                                style: smartRTTextNormal_Primary.copyWith(
+                                    fontWeight: FontWeight.normal),
                               ),
-                            ],
-                          ),
-                        ),
+                              actions: <Widget>[
+                                TextFormField(
+                                  controller: _fullNameUserController,
+                                  autocorrect: false,
+                                  style: smartRTTextNormal_Primary,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Nama tidak boleh kosong';
+                                    }
+                                  },
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Batal'),
+                                      child: Text(
+                                        'Batal',
+                                        style: smartRTTextLarge_Primary,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        debugPrint(
+                                            _fullNameUserController.text);
+                                        if (_fullNameUserController.text ==
+                                                null ||
+                                            _fullNameUserController
+                                                .text.isEmpty) {
+                                          SmartRTSnackbar.show(context,
+                                              message:
+                                                  'Nama Lengkap tidak boleh kosong',
+                                              backgroundColor:
+                                                  smartRTErrorColor);
+                                        } else {
+                                          setState(() {
+                                            _fullNameUser =
+                                                _fullNameUserController.text;
+                                          });
+                                          Navigator.pop(context, 'Selesai');
+                                        }
+                                      },
+                                      child: Text(
+                                        'Selesai',
+                                        style: smartRTTextLargeBold_Primary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                         child: ListTile(
                           title: Row(
                             children: [
@@ -234,7 +279,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                             ),
                             actions: <Widget>[
                               DropdownButtonFormField2(
-                                value: _genderUser,
+                                value: _genderUserSelected,
                                 style: smartRTTextLarge_Primary,
                                 decoration: InputDecoration(
                                   isDense: true,
@@ -275,11 +320,11 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                 },
                                 onChanged: (value) {
                                   setState(() {
-                                    _genderUser = value.toString();
+                                    _genderUserSelected = value.toString();
                                   });
                                 },
                                 onSaved: (value) {
-                                  _genderUser = value.toString();
+                                  _genderUserSelected = value.toString();
                                 },
                               ),
                               Row(
@@ -287,16 +332,24 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Batal'),
+                                    onPressed: () {
+                                      setState(() {
+                                        _genderUserSelected = _genderUser;
+                                      });
+                                      Navigator.pop(context, 'Batal');
+                                    },
                                     child: Text(
                                       'Batal',
                                       style: smartRTTextLarge_Primary,
                                     ),
                                   ),
                                   TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Selesai'),
+                                    onPressed: () {
+                                      setState(() {
+                                        _genderUser = _genderUserSelected;
+                                      });
+                                      Navigator.pop(context, 'Selesai');
+                                    },
                                     child: Text(
                                       'Selesai',
                                       style: smartRTTextLargeBold_Primary,
@@ -338,60 +391,71 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                     Card(
                       color: smartRTSecondaryColor,
                       child: GestureDetector(
-                        onTap: () => showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            backgroundColor: smartRTSecondaryColor,
-                            title: Text(
-                              'Tanggal Lahir',
-                              style: smartRTTextTitleCard_Primary,
-                            ),
-                            content: Text(
-                              'Pastikan tanggal lahir anda sesuai dengan KTP demi mempermudah pengurusan data administrasi dan sebagainya.',
-                              style: smartRTTextNormal_Primary.copyWith(
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            actions: <Widget>[
-                              DateTimePicker(
-                                type: DateTimePickerType.date,
-                                dateMask: 'yyyy/MM/dd',
-                                style: smartRTTextNormal_Primary,
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime.now(),
-                                onChanged: (val) => print(val),
-                                validator: (val) {
-                                  if (val == null || val.isEmpty) {
-                                    return "Tanggal Lahir tidak boleh kosong";
-                                  }
-                                },
-                                onSaved: (val) => print(val),
-                                // controller: _tanggalLahirController,
+                        onTap: () {
+                          _bornDateUserController.text =
+                              _bornDateUser.toString();
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              backgroundColor: smartRTSecondaryColor,
+                              title: Text(
+                                'Tanggal Lahir',
+                                style: smartRTTextTitleCard_Primary,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Batal'),
-                                    child: Text(
-                                      'Batal',
-                                      style: smartRTTextLarge_Primary,
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Selesai'),
-                                    child: Text(
-                                      'Selesai',
-                                      style: smartRTTextLargeBold_Primary,
-                                    ),
-                                  ),
-                                ],
+                              content: Text(
+                                'Pastikan tanggal lahir anda sesuai dengan KTP demi mempermudah pengurusan data administrasi dan sebagainya.',
+                                style: smartRTTextNormal_Primary.copyWith(
+                                    fontWeight: FontWeight.normal),
                               ),
-                            ],
-                          ),
-                        ),
+                              actions: <Widget>[
+                                DateTimePicker(
+                                  controller: _bornDateUserController,
+                                  // initialValue: _bornDateUser,
+                                  type: DateTimePickerType.date,
+                                  dateMask: 'MMM dd, yyyy',
+                                  style: smartRTTextNormal_Primary,
+                                  firstDate: DateTime(1900),
+                                  lastDate: DateTime.now(),
+                                  onChanged: (val) => print(val),
+                                  validator: (val) {
+                                    if (val == null || val.isEmpty) {
+                                      return "Tanggal Lahir tidak boleh kosong";
+                                    }
+                                  },
+                                  onSaved: (val) => print(val),
+                                  // controller: _tanggalLahirController,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Batal'),
+                                      child: Text(
+                                        'Batal',
+                                        style: smartRTTextLarge_Primary,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _bornDateUser =
+                                              _bornDateUserController.text;
+                                        });
+                                        Navigator.pop(context, 'Selesai');
+                                      },
+                                      child: Text(
+                                        'Selesai',
+                                        style: smartRTTextLargeBold_Primary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                         child: ListTile(
                           title: Row(
                             children: [
@@ -404,7 +468,8 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                               ),
                               Expanded(
                                 child: Text(
-                                  _bornDateUser,
+                                  DateFormat.yMMMd().format(DateTime.parse(
+                                      _bornDateUserController.text)),
                                   style: smartRTTextLarge_Primary.copyWith(
                                       fontWeight: FontWeight.normal),
                                   textAlign: TextAlign.right,
@@ -422,30 +487,101 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                     ),
                     Card(
                       color: smartRTSecondaryColor,
-                      child: ListTile(
-                        title: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
+                      child: GestureDetector(
+                        onTap: () {
+                          _addressUserController.text =
+                              _addressUser == '-' ? '' : _addressUser;
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              backgroundColor: smartRTSecondaryColor,
+                              title: Text(
                                 'Alamat Rumah',
-                                style: smartRTTextLarge_Primary.copyWith(
+                                style: smartRTTextTitleCard_Primary,
+                              ),
+                              content: Text(
+                                'Pastikan alamat anda sesuai dengan KTP demi mempermudah pengurusan data administrasi dan sebagainya.',
+                                style: smartRTTextNormal_Primary.copyWith(
                                     fontWeight: FontWeight.normal),
                               ),
+                              actions: <Widget>[
+                                TextFormField(
+                                  controller: _addressUserController,
+                                  autocorrect: false,
+                                  style: smartRTTextNormal_Primary,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Alamat tidak boleh kosong';
+                                    }
+                                  },
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Batal'),
+                                      child: Text(
+                                        'Batal',
+                                        style: smartRTTextLarge_Primary,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        if (_addressUserController.text ==
+                                                null ||
+                                            _addressUserController
+                                                .text.isEmpty) {
+                                          SmartRTSnackbar.show(context,
+                                              message:
+                                                  'Alamat tidak boleh kosong',
+                                              backgroundColor:
+                                                  smartRTErrorColor);
+                                        } else {
+                                          setState(() {
+                                            _addressUser =
+                                                _addressUserController.text;
+                                          });
+                                          Navigator.pop(context, 'Selesai');
+                                        }
+                                      },
+                                      child: Text(
+                                        'Selesai',
+                                        style: smartRTTextLargeBold_Primary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            Expanded(
-                              child: Text(
-                                _addressUser,
-                                style: smartRTTextLarge_Primary.copyWith(
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.right,
+                          );
+                        },
+                        child: ListTile(
+                          title: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Alamat Rumah',
+                                  style: smartRTTextLarge_Primary.copyWith(
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                          color: smartRTPrimaryColor,
-                          size: 15,
+                              Expanded(
+                                child: Text(
+                                  _addressUser,
+                                  style: smartRTTextLarge_Primary.copyWith(
+                                      fontWeight: FontWeight.normal),
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                            ],
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: smartRTPrimaryColor,
+                            size: 15,
+                          ),
                         ),
                       ),
                     ),
@@ -476,130 +612,6 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                           Icons.arrow_forward_ios,
                           color: smartRTDisabledColor,
                           size: 15,
-                        ),
-                      ),
-                    ),
-                    // Card(
-                    //   color: smartRTSecondaryColor,
-                    //   child: ListTile(
-                    //     title: Row(
-                    //       children: [
-                    //         Expanded(
-                    //           child: Text(
-                    //             'Kata Sandi',
-                    //             style: smartRTTextLarge_Primary.copyWith(
-                    //                 fontWeight: FontWeight.normal),
-                    //           ),
-                    //         ),
-                    //         Expanded(
-                    //           child: Text(
-                    //             '[Kata Sandi]',
-                    //             style: smartRTTextLarge_Primary.copyWith(
-                    //                 fontWeight: FontWeight.normal),
-                    //             textAlign: TextAlign.right,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     trailing: Icon(
-                    //       Icons.arrow_forward_ios,
-                    //       color: smartRTPrimaryColor,
-                    //       size: 15,
-                    //     ),
-                    //   ),
-                    // ),
-                    Card(
-                      color: smartRTSecondaryColor,
-                      child: GestureDetector(
-                        onTap: () => showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            backgroundColor: smartRTSecondaryColor,
-                            title: Text(
-                              'Tanda Tangan',
-                              style: smartRTTextTitleCard_Primary,
-                            ),
-                            content: Text(
-                              'Tanda tangan akan digunakan ketika mengurus dokumen yang membutuhkan tanda tangan anda.',
-                              style: smartRTTextNormal_Primary.copyWith(
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            actions: <Widget>[
-                              Signature(
-                                controller: _controller,
-                                height: 150,
-                                backgroundColor: Colors.white,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'Hapus'),
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.restart_alt_rounded,
-                                                size: 15,
-                                                color: smartRTPrimaryColor),
-                                            Text(
-                                              'Hapus',
-                                              style: smartRTTextLarge_Primary,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SB_width15,
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'Batal'),
-                                        child: Text(
-                                          'Batal',
-                                          style: smartRTTextLarge_Primary,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Simpan'),
-                                    child: Text(
-                                      'Simpan',
-                                      style: smartRTTextLargeBold_Primary,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        child: ListTile(
-                          title: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Tanda Tangan',
-                                  style: smartRTTextLarge_Primary.copyWith(
-                                      fontWeight: FontWeight.normal),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  '',
-                                  style: smartRTTextLarge_Primary.copyWith(
-                                      fontWeight: FontWeight.normal),
-                                  textAlign: TextAlign.right,
-                                ),
-                              ),
-                            ],
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: smartRTPrimaryColor,
-                            size: 15,
-                          ),
                         ),
                       ),
                     ),
@@ -655,7 +667,9 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                 ),
               ),
               onPressed: () {
-                /**.... */
+                context
+            .read<AuthProvider>()
+            .updateProfile(context: context, fullName: _fullNameUser, address: _addressUser, bornDate: DateTime.parse(_bornDateUserController.text),gender: _genderUser);
               },
               child: Text(
                 'SIMPAN',

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,19 @@ class AuthProvider extends ApplicationProvider {
   static User? currentUser;
   static bool isLoggedIn = false;
 
+  User? get user => currentUser;
+  set user(User? value) {
+    currentUser = value;
+  }
+
+  void saveUserDataToStorage() async {
+    await ApplicationProvider.storage.write(key: 'jwt', value: user!.token);
+    await ApplicationProvider.storage
+        .write(key: 'refreshToken', value: user!.refresh_token);
+    await ApplicationProvider.storage
+        .write(key: 'user', value: jsonEncode(user!.toJson()));
+  }
+
   Future<bool> login(
       {required BuildContext context,
       required String phone,
@@ -24,16 +38,45 @@ class AuthProvider extends ApplicationProvider {
           .dioClient
           .post("/users/login", data: {"noTelp": phone, "kataSandi": password});
       User user = User.fromData(resp.data);
-      await ApplicationProvider.storage.write(key: 'jwt', value: user.token);
-      await ApplicationProvider.storage
-          .write(key: 'refreshToken', value: user.refresh_token);
-      await ApplicationProvider.storage
-          .write(key: 'user', value: jsonEncode(user.toJson()));
+      saveUserDataToStorage();
       ApplicationProvider.currentUserJWT = user.token;
       ApplicationProvider.currentUserRefreshToken = user.refresh_token;
       currentUser = user;
       debugPrint(
           'IDnya: ${user.id}, Namanya: ${user.full_name} berjenis kelamin : ${user.gender}');
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return false;
+    }
+  }
+
+  Future<bool> updateProfile(
+      {required BuildContext context,
+      required String fullName,
+      required String gender,
+      required DateTime bornDate,
+      required String address}) async {
+    try {
+      Response<dynamic> resp = await NetUtil()
+          .dioClient
+          .patch('/users/updateProfile/${currentUser!.id}', data: {
+        "full_name": fullName,
+        "gender": gender,
+        "born_date": bornDate,
+        "address": address
+      });
+      currentUser!.full_name = fullName;
+      currentUser!.gender = gender;
+      currentUser!.born_date = bornDate;
+      currentUser!.address = address;
+      notifyListeners();
+      saveUserDataToStorage();
       return true;
     } on DioError catch (e) {
       if (e.response != null) {
@@ -63,12 +106,44 @@ class AuthProvider extends ApplicationProvider {
     try {
       MultipartFile multipart = await MultipartFile.fromFile(file.path,
           filename: file.path.split('/').last,
-          contentType: MediaType('image', file.path.split('/').last.split('.').last));
+          contentType:
+              MediaType('image', file.path.split('/').last.split('.').last));
       var formData = FormData.fromMap({"profilePicture": multipart});
-      
-      Response<dynamic> resp = await NetUtil()
-          .dioClient
-          .patch("/users/uploadProfilePicture/${currentUser!.id}", data: formData);
+
+      Response<dynamic> resp = await NetUtil().dioClient.patch(
+          "/users/uploadProfilePicture/${currentUser!.id}",
+          data: formData);
+      currentUser!.photo_profile_img = resp.data;
+      notifyListeners();
+      saveUserDataToStorage();
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return false;
+    }
+  }
+
+  Future<bool> uploadSignatureImage({
+    required BuildContext context,
+    required Uint8List file,
+  }) async {
+    try {
+      MultipartFile multipart = await MultipartFile.fromBytes(file,
+          filename: 'Signature.png', contentType: MediaType('image', 'png'));
+      var formData = FormData.fromMap({"signatureImage": multipart});
+
+      Response<dynamic> resp = await NetUtil().dioClient.patch(
+          "/users/uploadSignatureImage/${currentUser!.id}",
+          data: formData);
+
+      currentUser!.sign_img = resp.data;
+      notifyListeners();
+      saveUserDataToStorage();
       return true;
     } on DioError catch (e) {
       if (e.response != null) {

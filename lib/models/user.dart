@@ -40,7 +40,13 @@ class User {
   int? created_by;
 
   User.fromData(Map<String, dynamic> data) {
-    Map<String, dynamic> userData = data['user'];
+    Map<String, dynamic> userData = data;
+    if (data['user'] != null) {
+      userData = data['user'];
+      token = data['token'];
+      refresh_token = data['refreshToken'];
+    }
+
     id = userData['id'];
     nik = userData['nik'];
     kk_num = userData['kk_num'];
@@ -73,9 +79,6 @@ class User {
     is_health = userData['is_health'] == 1 ? true : false;
     total_serving_as_neighbourhood_head =
         userData['total_serving_as_neighbourhood_head'];
-
-    token = data['token'];
-    refresh_token = data['refreshToken'];
 
     if (userData['created_at'] != null) {
       created_at = DateTime.parse(userData['created_at']);

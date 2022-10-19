@@ -26,6 +26,8 @@ import 'package:smart_rt/screens/public_screens/kesehatan/form_minta_bantuan_pag
 import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatanku_page.dart';
+import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_canvas_page.dart';
+import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/test_screen.dart';
 import 'package:smart_rt/screens/public_screens/test_screen2.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
@@ -82,6 +84,14 @@ class Routes {
       case UbahProfilPage.id:
         return MaterialPageRoute(builder: (context) {
           return const UbahProfilPage();
+        });
+      case TandaTanganSayaCanvasPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const TandaTanganSayaCanvasPage();
+        });
+      case TandaTanganSayaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const TandaTanganSayaPage();
         });
       case DaftarKetuaPage.id:
         return MaterialPageRoute(builder: (context) {
