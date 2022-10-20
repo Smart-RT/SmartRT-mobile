@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/buat_akun_admin_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
@@ -39,6 +40,7 @@ class Routes {
     switch (settings.name) {
       case WelcomePage.id:
         return MaterialPageRoute(builder: (context) {
+          ApplicationProvider.context = context;
           return const WelcomePage();
         });
       case LoginPage.id:
@@ -63,6 +65,7 @@ class Routes {
         });
       case GuestHome.id:
         return MaterialPageRoute(builder: (context) {
+          ApplicationProvider.context = context;
           return const GuestHome();
         });
       case GabungWilayahPage.id:
@@ -147,6 +150,7 @@ class Routes {
         });
       case BerandaAdminPage.id:
         return MaterialPageRoute(builder: (context) {
+          ApplicationProvider.context = context;
           return const BerandaAdminPage();
         });
       case ListRequestRolePage.id:

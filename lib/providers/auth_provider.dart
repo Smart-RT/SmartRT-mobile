@@ -38,10 +38,10 @@ class AuthProvider extends ApplicationProvider {
           .dioClient
           .post("/users/login", data: {"noTelp": phone, "kataSandi": password});
       User user = User.fromData(resp.data);
-      saveUserDataToStorage();
       ApplicationProvider.currentUserJWT = user.token;
       ApplicationProvider.currentUserRefreshToken = user.refresh_token;
       currentUser = user;
+      saveUserDataToStorage();
       debugPrint(
           'IDnya: ${user.id}, Namanya: ${user.full_name} berjenis kelamin : ${user.gender}');
       return true;
@@ -114,6 +114,30 @@ class AuthProvider extends ApplicationProvider {
           "/users/uploadProfilePicture/${currentUser!.id}",
           data: formData);
       currentUser!.photo_profile_img = resp.data;
+      notifyListeners();
+      saveUserDataToStorage();
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return false;
+    }
+  }
+
+  Future<bool> reqGabungWilayah({
+    required BuildContext context,
+    required String request_code,
+  }) async {
+    try {
+
+      Response<dynamic> resp = await NetUtil().dioClient.post('/users/reqUserRole', data: {
+        "request_role": 3,
+        "request_code": request_code,
+      });
       notifyListeners();
       saveUserDataToStorage();
       return true;

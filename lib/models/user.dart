@@ -129,4 +129,20 @@ class User {
       return Role.None;
     }
   }
+
+  String initialName(){
+    // J
+    String initName = '';
+    if (full_name == '')  {
+      return '';
+    }else if(full_name.contains(' ')){
+      List<String> nama = full_name.toUpperCase().split(' ');
+      return '${nama[0][0]}${nama[1][0]}';
+    } else if(full_name.length < 2){
+      return full_name.toUpperCase();
+    }
+    else{
+      return '${full_name[0]}${full_name[1]}'.toUpperCase();
+    }
+  }
 }

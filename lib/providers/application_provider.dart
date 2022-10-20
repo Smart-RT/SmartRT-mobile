@@ -5,9 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/utilities/net_util.dart';
 
 class ApplicationProvider extends ChangeNotifier {
+  // Buat static context
+  static BuildContext? context;
+
   // Buat Flutter Storage
   static final storage = FlutterSecureStorage();
 
@@ -33,6 +35,14 @@ class ApplicationProvider extends ChangeNotifier {
     ]);
   }
 
+  void initApp(BuildContext? context) async {
+    // Nanti kalau mau inisialisasi firebase disini
+    // Buat sistem notifikasi
+    await Future.wait([]);
+    // Kalau udah notify listener
+    notifyListeners();
+  }
+
   static Future<void> loadDataUser() async {
     String? jwt = await ApplicationProvider.storage.read(key: 'jwt');
     String? refreshToken =
@@ -50,7 +60,7 @@ class ApplicationProvider extends ChangeNotifier {
       // User u = User.fromData(resp.data);
       // AuthProvider.currentUser = u;
     }
-    // currentUserJWT = jwt ?? '';
-    // currentUserRefreshToken = refreshToken ?? '';
+    currentUserJWT = jwt ?? '';
+    currentUserRefreshToken = refreshToken ?? '';
   }
 }

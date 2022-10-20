@@ -83,11 +83,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<AuthProvider>().user;
-    _fullNameUser = user!.full_name;
-    _genderUser = user.gender;
-    _bornDateUser = user.born_date.toString();
-    _addressUser= user.address ?? '';
-    _profilePictureUser = user.photo_profile_img;
+    _profilePictureUser = user!.photo_profile_img;
     return Scaffold(
       appBar: AppBar(
         title: Text('Ubah Profil'),
@@ -667,9 +663,16 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                 ),
               ),
               onPressed: () {
-                context
-            .read<AuthProvider>()
-            .updateProfile(context: context, fullName: _fullNameUser, address: _addressUser, bornDate: DateTime.parse(_bornDateUserController.text),gender: _genderUser);
+                context.read<AuthProvider>().updateProfile(
+                    context: context,
+                    fullName: _fullNameUser,
+                    address: _addressUser,
+                    bornDate: DateTime.parse(_bornDateUserController.text),
+                    gender: _genderUser);
+                Navigator.pop(context);
+                SmartRTSnackbar.show(context,
+                    message: 'Update Profile Berhasil',
+                    backgroundColor: smartRTSuccessColor);
               },
               child: Text(
                 'SIMPAN',

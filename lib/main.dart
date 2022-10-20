@@ -41,6 +41,26 @@ class SmartRTApp extends StatefulWidget {
 }
 
 class _SmartRTAppState extends State<SmartRTApp> {
+  String? routeStart;
+
+  @override
+  void initState() {
+    Role roleUser = AuthProvider.currentUser?.user_role ?? Role.None;
+    if (roleUser == Role.Admin) {
+      routeStart = BerandaAdminPage.id;
+    } else if (roleUser == Role.Guest) {
+      routeStart = GuestHome.id;
+    } else {
+      routeStart = WelcomePage.id;
+    }
+    Future.delayed(Duration(milliseconds: 500), () {
+      ApplicationProvider.context!
+          .read<ApplicationProvider>()
+          .initApp(ApplicationProvider.context!);
+    });
+    super.initState();
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -50,18 +70,6 @@ class _SmartRTAppState extends State<SmartRTApp> {
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
       ],
       builder: (context, child) {
-        String? routeStart;
-        Role roleUser = AuthProvider.currentUser?.user_role ?? Role.None;
-        if (roleUser == Role.Admin) {
-          routeStart = BerandaAdminPage.id;
-        }
-        else if(roleUser == Role.Guest){
-          routeStart = GuestHome.id;
-        } 
-        else {
-          routeStart = WelcomePage.id;
-        }
-
         return MaterialApp(
           title: 'Flutter Demo',
           theme: getThemeData(),

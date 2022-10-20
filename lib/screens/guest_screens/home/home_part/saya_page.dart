@@ -2,7 +2,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
@@ -10,6 +12,7 @@ import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_pa
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
+import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
 
 class SayaPage extends StatelessWidget {
   const SayaPage({
@@ -26,12 +29,23 @@ class SayaPage extends StatelessWidget {
           height: 125,
           child: Row(
             children: [
-              Expanded(
-                  child: Icon(
-                Icons.account_circle,
-                size: 100,
-                color: smartRTSecondaryColor,
-              )),
+              Expanded(child: 
+                CircleAvatarLoader(
+                            radius: 50,
+                            photoPathUrl:
+                                '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
+                            photo:
+                                context.watch<AuthProvider>().user?.photo_profile_img,
+                            initials:
+                                context.watch<AuthProvider>().user!.initialName(),
+                          )
+              ),
+              // Expanded(
+              //     child: Icon(
+              //   Icons.account_circle,
+              //   size: 100,
+              //   color: smartRTSecondaryColor,
+              // )),
               Expanded(
                   flex: 2,
                   child: Column(
@@ -39,16 +53,19 @@ class SayaPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '[Nama Lengkap]',
+                        AuthProvider.currentUser!.full_name,
                         style: smartRTTextLargeBold_Secondary,
                       ),
                       Text(
-                        '[Jabatan]',
+                        AuthProvider.currentUser!.user_role.name,
                         style: smartRTTextLarge_Secondary,
                       ),
-                      Text(
-                        '[Alamat Rumah]',
-                        style: smartRTTextLarge_Secondary,
+                      Visibility(
+                        visible: AuthProvider.currentUser!.address == null || AuthProvider.currentUser!.address == '' ? false : true,
+                        child: Text(
+                          AuthProvider.currentUser!.address.toString(),
+                          style: smartRTTextLarge_Secondary,
+                        ),
                       ),
                     ],
                   ))

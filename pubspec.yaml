@@ -54,6 +54,7 @@ dependencies:
   intl: ^0.17.0
   signature: ^5.2.1
   file_picker: ^5.2.1
+  cached_network_image: ^3.2.1
 
 
 dev_dependencies:
