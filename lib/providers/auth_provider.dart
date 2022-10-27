@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/models/user_role_request.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/utilities/net_util.dart';
@@ -138,6 +139,33 @@ class AuthProvider extends ApplicationProvider {
         "request_role": 3,
         "request_code": request_code,
       });
+    currentUser!.user_role_requests.insert(0,UserRoleRequests.fromData(resp.data));
+      notifyListeners();
+      saveUserDataToStorage();
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return false;
+    }
+  }
+
+  Future<bool> updateUserRoleRequest({
+    required BuildContext context,
+    required int user_role_requests_id,
+    required bool isAccepted,
+  }) async {
+    try {
+
+      Response<dynamic> resp = await NetUtil().dioClient.patch('/users/updateUserRoleRequest', data: {
+        "user_role_requests_id": user_role_requests_id,
+        "isAccepted": isAccepted,
+      });
+      currentUser!.user_role_requests[0] = UserRoleRequests.fromData( resp.data);
       notifyListeners();
       saveUserDataToStorage();
       return true;

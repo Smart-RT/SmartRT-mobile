@@ -1,3 +1,5 @@
+import 'package:smart_rt/models/user_role_request.dart';
+
 enum Role {
   Admin,
   Guest,
@@ -38,6 +40,7 @@ class User {
   String refresh_token = "";
   DateTime created_at = DateTime.now();
   int? created_by;
+  List<UserRoleRequests> user_role_requests = [];
 
   User.fromData(Map<String, dynamic> data) {
     Map<String, dynamic> userData = data;
@@ -84,6 +87,13 @@ class User {
       created_at = DateTime.parse(userData['created_at']);
     }
     created_by = userData['created_by'];
+
+    if (userData['user_role_requests'] != null) {
+      user_role_requests.clear();
+      user_role_requests.addAll(userData['user_role_requests'].map<UserRoleRequests>((request) {
+        return UserRoleRequests.fromData(request);
+      })) ;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -130,18 +140,17 @@ class User {
     }
   }
 
-  String initialName(){
+  String initialName() {
     // J
     String initName = '';
-    if (full_name == '')  {
+    if (full_name == '') {
       return '';
-    }else if(full_name.contains(' ')){
+    } else if (full_name.contains(' ')) {
       List<String> nama = full_name.toUpperCase().split(' ');
       return '${nama[0][0]}${nama[1][0]}';
-    } else if(full_name.length < 2){
+    } else if (full_name.length < 2) {
       return full_name.toUpperCase();
-    }
-    else{
+    } else {
       return '${full_name[0]}${full_name[1]}'.toUpperCase();
     }
   }

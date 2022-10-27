@@ -56,10 +56,6 @@ class SayaPage extends StatelessWidget {
                         AuthProvider.currentUser!.full_name,
                         style: smartRTTextLargeBold_Secondary,
                       ),
-                      Text(
-                        AuthProvider.currentUser!.user_role.name,
-                        style: smartRTTextLarge_Secondary,
-                      ),
                       Visibility(
                         visible: AuthProvider.currentUser!.address == null || AuthProvider.currentUser!.address == '' ? false : true,
                         child: Text(
@@ -67,6 +63,11 @@ class SayaPage extends StatelessWidget {
                           style: smartRTTextLarge_Secondary,
                         ),
                       ),
+                      Text(
+                        AuthProvider.currentUser!.user_role.name,
+                        style: smartRTTextLarge_Secondary,
+                      ),
+                      
                     ],
                   ))
             ],
