@@ -13,10 +13,9 @@ class SubDistricts {
   WilayahSurabaya wilayah = WilayahSurabaya.Lainnya;
 
   SubDistricts.fromData(Map<String, dynamic> data) {
-    Map<String, dynamic> subDistrictData = data['sub_districts'];
-    id = subDistrictData['id'];
-    name = subDistrictData['name'];
-    wilayah = wilayahFromId(subDistrictData['wilayah']);
+    id = data['id'];
+    name = data['name'];
+    wilayah = wilayahFromId(data['wilayah']);
   }
 
   Map<String, dynamic> toJson() {

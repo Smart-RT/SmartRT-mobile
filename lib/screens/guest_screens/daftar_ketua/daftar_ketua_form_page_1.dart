@@ -1,10 +1,16 @@
+import 'package:dio/dio.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/sub_districts.dart';
+import 'package:smart_rt/models/urban_villages.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
+import 'package:smart_rt/utilities/net_util.dart';
 
 class DaftarKetuaFormPage1 extends StatefulWidget {
   static const String id = 'DaftarKetuaFormPage1';
@@ -15,8 +21,51 @@ class DaftarKetuaFormPage1 extends StatefulWidget {
 }
 
 class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
+  String _kecamatanSelectedValue = '';
+  String _kelurahanSelectedValue = '';
+
+  final List<SubDistricts> _listKecamatan = [];
+  final List<UrbanVillages> _listKelurahan = [];
+
+  final TextEditingController textEditingControllerKecamatan =
+      TextEditingController();
+  final TextEditingController textEditingControllerKelurahan =
+      TextEditingController();
+
+  Future<void> loadKecamatan() async {
+    Response<dynamic> resp =
+        await NetUtil().dioClient.get("/addresses/subDistricts");
+
+    setState(() {
+      _listKecamatan.addAll(resp.data.map<SubDistricts>((request) {
+        return SubDistricts.fromData(request);
+      }));
+    });
+    print(_listKecamatan);
+  }
+
+  Future<void> loadKelurahan() async {
+    Response<dynamic> resp =
+        await NetUtil().dioClient.get("/addresses/urbanVillages");
+
+    setState(() {
+      _listKelurahan.addAll(resp.data.map<UrbanVillages>((request) {
+        return UrbanVillages.fromData(request);
+      }));
+    });
+    print(_listKelurahan);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadKecamatan();
+    loadKelurahan();
+  }
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Ketua RT ( 1 / 3 )'),
@@ -41,7 +90,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                 SB_height30,
                 TextFormField(
                   autocorrect: false,
-                  initialValue: '[Nama Lengkap]',
+                  initialValue: AuthProvider.currentUser!.full_name,
                   style: smartRTTextNormal_Primary,
                   decoration: const InputDecoration(
                     labelText: 'Nama Lengkap',
@@ -61,7 +110,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                 SB_height30,
                 TextFormField(
                   autocorrect: false,
-                  initialValue: '[Alamat Rumah]',
+                  initialValue: AuthProvider.currentUser!.address,
                   style: smartRTTextNormal_Primary,
                   decoration: const InputDecoration(
                     labelText: 'Alamat Rumah',
@@ -73,31 +122,195 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                   },
                 ),
                 SB_height15,
-                TextFormField(
-                  autocorrect: false,
-                  initialValue: '[Kecamatan]',
-                  style: smartRTTextNormal_Primary,
-                  decoration: const InputDecoration(
-                    labelText: 'Kecamatan',
+                DropdownButtonFormField2(
+                  style: smartRTTextLargeBold_Primary,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
+                  dropdownMaxHeight: 200,
+                  searchController: textEditingControllerKecamatan,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      controller: textEditingControllerKecamatan,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'Search for an item...',
+                        hintStyle: smartRTTextLargeBold_Primary,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    debugPrint(item.toString());
+                    List<String> ids = _listKecamatan
+                        .where(
+                          (element) => element.name
+                              .toUpperCase()
+                              .contains(searchValue.toUpperCase()),
+                        )
+                        .map(
+                          (e) => e.id.toString(),
+                        )
+                        .toList();
+                    return ids.contains(item.value.toString());
+                  },
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      textEditingControllerKecamatan.clear();
+                    }
+                  },
+                  isExpanded: true,
+                  hint: Text(
+                    'Kecamatan',
+                    style: smartRTTextLargeBold_Primary,
+                  ),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: smartRTPrimaryColor,
+                  ),
+                  iconSize: 30,
+                  buttonHeight: 60,
+                  buttonPadding: const EdgeInsets.only(left: 25, right: 10),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  items: _listKecamatan
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item.id.toString(),
+                            child: Text(
+                              item.name,
+                              style: smartRTTextNormal_Primary,
+                            ),
+                          ))
+                      .toList(),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null) {
                       return 'Kecamatan tidak boleh kosong';
                     }
                   },
+                  onChanged: (value) {
+                    setState(() {
+                      _kecamatanSelectedValue = value.toString();
+                    });
+                  },
+                  onSaved: (value) {
+                    _kecamatanSelectedValue = value.toString();
+                  },
                 ),
                 SB_height15,
-                TextFormField(
-                  autocorrect: false,
-                  initialValue: '[Kelurahan]',
-                  style: smartRTTextNormal_Primary,
-                  decoration: const InputDecoration(
-                    labelText: 'Kelurahan',
+                DropdownButtonFormField2(
+                  style: smartRTTextLargeBold_Primary,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
+                  dropdownMaxHeight: 200,
+                  searchController: textEditingControllerKelurahan,
+                  searchInnerWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      controller: textEditingControllerKelurahan,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'Search for an item...',
+                        hintStyle: smartRTTextLargeBold_Primary,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    debugPrint(item.toString());
+                    List<String> ids = _listKelurahan
+                        .where(
+                          (element) => element.name
+                              .toUpperCase()
+                              .contains(searchValue.toUpperCase()),
+                        )
+                        .map(
+                          (e) => e.id.toString(),
+                        )
+                        .toList();
+                    return ids.contains(item.value.toString());
+                  },
+                  onMenuStateChange: (isOpen) {
+                    if (!isOpen) {
+                      textEditingControllerKelurahan.clear();
+                    }
+                  },
+                  isExpanded: true,
+                  hint: Text(
+                    'Kelurahan',
+                    style: smartRTTextLargeBold_Primary,
+                  ),
+                  disabledHint: Text(
+                    'Kelurahan',
+                    style: smartRTTextLargeBold_Primary.copyWith(
+                        color: smartRTDisabledColor),
+                  ),
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                  ),
+                  iconDisabledColor: smartRTDisabledColor,
+                  iconEnabledColor: smartRTPrimaryColor,
+                  iconSize: 30,
+                  buttonHeight: 60,
+                  buttonPadding: const EdgeInsets.only(left: 25, right: 10),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  items: _listKelurahan
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item.id.toString(),
+                            child: Text(
+                              item.name,
+                              style: smartRTTextNormal_Primary,
+                            ),
+                          ))
+                      .toList(),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null) {
                       return 'Kelurahan tidak boleh kosong';
                     }
+                  },
+                  onChanged: _kecamatanSelectedValue.isNotEmpty
+                      ? (value) {
+                          setState(() {
+                            _kelurahanSelectedValue = value.toString();
+                          });
+                        }
+                      : null,
+                  onSaved: (value) {
+                    _kelurahanSelectedValue = value.toString();
                   },
                 ),
                 SB_height15,
