@@ -7,9 +7,27 @@ import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
 
+class DaftarKetuaFormPage2Arguments {
+  String namaLengkap;
+  String alamat;
+  String kecamatan;
+  String kelurahan;
+  String noRT;
+  String noRW;
+
+  DaftarKetuaFormPage2Arguments(
+      {required this.namaLengkap,
+      required this.alamat,
+      required this.kecamatan,
+      required this.kelurahan,
+      required this.noRT,
+      required this.noRW});
+}
+
 class DaftarKetuaFormPage2 extends StatefulWidget {
   static const String id = 'DaftarKetuaFormPage2';
-  const DaftarKetuaFormPage2({Key? key}) : super(key: key);
+  DaftarKetuaFormPage2Arguments args;
+  DaftarKetuaFormPage2({Key? key, required this.args}) : super(key: key);
 
   @override
   State<DaftarKetuaFormPage2> createState() => _DaftarKetuaFormPage2State();

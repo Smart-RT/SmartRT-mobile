@@ -106,7 +106,9 @@ class Routes {
         });
       case DaftarKetuaFormPage2.id:
         return MaterialPageRoute(builder: (context) {
-          return const DaftarKetuaFormPage2();
+          return DaftarKetuaFormPage2(
+            args: settings.arguments as DaftarKetuaFormPage2Arguments,
+          );
         });
       case DaftarKetuaFormPage3.id:
         return MaterialPageRoute(builder: (context) {
