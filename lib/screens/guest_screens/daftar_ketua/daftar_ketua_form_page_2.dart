@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
+import 'package:provider/provider.dart';
 
 class DaftarKetuaFormPage2Arguments {
   String namaLengkap;
@@ -34,8 +41,30 @@ class DaftarKetuaFormPage2 extends StatefulWidget {
 }
 
 class _DaftarKetuaFormPage2State extends State<DaftarKetuaFormPage2> {
+  final ImagePicker _picker = ImagePicker();
+  CroppedFile? croppedImageKTP;
+  CroppedFile? croppedImageKTPSelfie;
+
+  void _pickImage(String type) async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      if (type == 'KTP') {
+        croppedImageKTP = await ImageCropper().cropImage(
+            sourcePath: image.path,
+            aspectRatioPresets: [CropAspectRatioPreset.ratio16x9]);
+      } else {
+        croppedImageKTPSelfie = await ImageCropper().cropImage(
+            sourcePath: image.path,
+            aspectRatioPresets: [CropAspectRatioPreset.ratio16x9]);
+      }
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Ketua RT ( 2 / 3 )'),
@@ -58,24 +87,113 @@ class _DaftarKetuaFormPage2State extends State<DaftarKetuaFormPage2> {
                   textAlign: TextAlign.justify,
                 ),
                 SB_height30,
-                Text('Foto KTP', style: smartRTTextTitleCard_Primary,),
+                Text(
+                  'Foto KTP',
+                  style: smartRTTextTitleCard_Primary,
+                ),
                 SB_height15,
                 AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: Container(
-                    color: smartRTShadowColor,
-                  ),
+                  child: croppedImageKTP == null
+                      ? GestureDetector(
+                          onTap: () {
+                            _pickImage('KTP');
+                          },
+                          child: Container(
+                            color: smartRTShadowColor,
+                            child: Icon(
+                              Icons.add_circle_outlined,
+                              size: 50,
+                              color: smartRTPrimaryColor,
+                            ),
+                          ),
+                        )
+                      : Stack(
+                          children: [
+                            Image.file(File(croppedImageKTP!.path)),
+                            Positioned(
+                                bottom: 1,
+                                right: 1,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _pickImage('KTP');
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Icon(
+                                        Icons.image,
+                                        size: 45,
+                                        color: smartRTPrimaryColor,
+                                      ),
+                                      Positioned(
+                                        top: 1,
+                                        right: 1,
+                                        child: Icon(
+                                          Icons.change_circle,
+                                          size: 20,
+                                          color: smartRTTertiaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                          ],
+                        ),
                 ),
                 SB_height30,
-                Text('Foto Selfie dengan KTP', style: smartRTTextTitleCard_Primary,),
+                Text(
+                  'Foto Selfie dengan KTP',
+                  style: smartRTTextTitleCard_Primary,
+                ),
                 SB_height15,
                 AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: Container(
-                    color: smartRTShadowColor,
-                  ),
+                  child: croppedImageKTPSelfie == null
+                      ? GestureDetector(
+                          onTap: () {
+                            _pickImage('KTPSelfie');
+                          },
+                          child: Container(
+                            color: smartRTShadowColor,
+                            child: Icon(
+                              Icons.add_circle_outlined,
+                              size: 50,
+                              color: smartRTPrimaryColor,
+                            ),
+                          ),
+                        )
+                      : Stack(
+                          children: [
+                            Image.file(File(croppedImageKTPSelfie!.path)),
+                            Positioned(
+                                bottom: 1,
+                                right: 1,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _pickImage('KTPSelfie');
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Icon(
+                                        Icons.image,
+                                        size: 45,
+                                        color: smartRTPrimaryColor,
+                                      ),
+                                      Positioned(
+                                        top: 1,
+                                        right: 1,
+                                        child: Icon(
+                                          Icons.change_circle,
+                                          size: 20,
+                                          color: smartRTTertiaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                          ],
+                        ),
                 ),
-                
               ],
             ),
             Container(
@@ -94,6 +212,5 @@ class _DaftarKetuaFormPage2State extends State<DaftarKetuaFormPage2> {
         ),
       ),
     );
-  
   }
 }
