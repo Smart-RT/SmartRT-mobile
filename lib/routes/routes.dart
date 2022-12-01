@@ -9,6 +9,7 @@ import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_pa
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
+import 'package:smart_rt/screens/guest_screens/daftar_ketua/pdf_screen.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
@@ -170,6 +171,10 @@ class Routes {
       case BuatAkunAdminPage.id:
         return MaterialPageRoute(builder: (context) {
           return const BuatAkunAdminPage();
+        });
+      case PDFScreen.id:
+        return MaterialPageRoute(builder: (context) {
+          return const PDFScreen();
         });
       case TestScreen.id:
         return MaterialPageRoute(builder: (context) {
