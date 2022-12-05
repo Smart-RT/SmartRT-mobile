@@ -13,6 +13,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class DaftarKetuaFormPage2Arguments {
   String namaLengkap;
@@ -200,7 +201,25 @@ class _DaftarKetuaFormPage2State extends State<DaftarKetuaFormPage2> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, DaftarKetuaFormPage3.id);
+                  if (croppedImageKTP != null &&
+                      croppedImageKTPSelfie != null) {
+                    DaftarKetuaFormPage3Arguments argsForDaftarKetuaPage3 =
+                        DaftarKetuaFormPage3Arguments(
+                            namaLengkap: widget.args.namaLengkap,
+                            alamat: widget.args.alamat,
+                            kecamatan: widget.args.kecamatan,
+                            kelurahan: widget.args.kelurahan,
+                            noRT: widget.args.noRT,
+                            noRW: widget.args.noRW,
+                            croppedImageKTP: croppedImageKTP!,
+                            croppedImageKTPSelfie: croppedImageKTPSelfie!);
+                    Navigator.pushNamed(context, DaftarKetuaFormPage3.id, arguments: argsForDaftarKetuaPage3);
+                  } else {
+                    SmartRTSnackbar.show(context,
+                        message:
+                            'Foto KTP dan Selfie dengan KTP tidak boleh kosong!',
+                        backgroundColor: smartRTErrorColor);
+                  }
                 },
                 child: Text(
                   'SELANJUTNYA',

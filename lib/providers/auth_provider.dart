@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -129,17 +130,77 @@ class AuthProvider extends ApplicationProvider {
     }
   }
 
+  Future<bool> daftarReqKetuaRT({
+    required BuildContext context,
+    required CroppedFile ktp,
+    required CroppedFile ktpSelfie,
+    required FilePickerResult fileLampiran,
+    required String namaLengkap,
+    required String alamat,
+    required String sub_district_id,
+    required String urban_village_id,
+    required String rt_num,
+    required String rw_num,
+  }) async {
+    try {
+      MultipartFile multipartKTP = await MultipartFile.fromFile(ktp.path,
+          filename: ktp.path.split('/').last,
+          contentType:
+              MediaType('image', ktp.path.split('/').last.split('.').last));
+
+      MultipartFile multipartKTPSelfie = await MultipartFile.fromFile(
+          ktpSelfie.path,
+          filename: ktpSelfie.path.split('/').last,
+          contentType: MediaType(
+              'image', ktpSelfie.path.split('/').last.split('.').last));
+
+      MultipartFile multipartFileLampiran = await MultipartFile.fromFile(
+          fileLampiran.files.first.path!,
+          filename: fileLampiran.files.first.path!.split('/').last,
+          contentType: MediaType('application', 'pdf'));
+
+      var formData = FormData.fromMap({
+        "ktp": multipartKTP,
+        "ktpSelfie": multipartKTPSelfie,
+        "fileLampiran": multipartFileLampiran,
+        "namaLengkap": namaLengkap,
+        "address": alamat,
+        "sub_district_id": sub_district_id,
+        "urban_village_id": urban_village_id,
+        "rt_num": rt_num,
+        "rw_num": rw_num,
+        "request_role": 7,
+      });
+
+      Response<dynamic> resp =
+          await NetUtil().dioClient.post('/users/reqUserRole', data: formData);
+
+      notifyListeners();
+      saveUserDataToStorage();
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return false;
+    }
+  }
+
   Future<bool> reqGabungWilayah({
     required BuildContext context,
     required String request_code,
   }) async {
     try {
-
-      Response<dynamic> resp = await NetUtil().dioClient.post('/users/reqUserRole', data: {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.post('/users/reqUserRole', data: {
         "request_role": 3,
         "request_code": request_code,
       });
-    currentUser!.user_role_requests.insert(0,UserRoleRequests.fromData(resp.data));
+      currentUser!.user_role_requests
+          .insert(0, UserRoleRequests.fromData(resp.data));
       notifyListeners();
       saveUserDataToStorage();
       return true;
@@ -160,12 +221,13 @@ class AuthProvider extends ApplicationProvider {
     required bool isAccepted,
   }) async {
     try {
-
-      Response<dynamic> resp = await NetUtil().dioClient.patch('/users/updateUserRoleRequest', data: {
+      Response<dynamic> resp = await NetUtil()
+          .dioClient
+          .patch('/users/updateUserRoleRequest', data: {
         "user_role_requests_id": user_role_requests_id,
         "isAccepted": isAccepted,
       });
-      currentUser!.user_role_requests[0] = UserRoleRequests.fromData( resp.data);
+      currentUser!.user_role_requests[0] = UserRoleRequests.fromData(resp.data);
       notifyListeners();
       saveUserDataToStorage();
       return true;

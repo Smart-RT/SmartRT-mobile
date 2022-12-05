@@ -113,7 +113,9 @@ class Routes {
         });
       case DaftarKetuaFormPage3.id:
         return MaterialPageRoute(builder: (context) {
-          return const DaftarKetuaFormPage3();
+          return DaftarKetuaFormPage3(
+            args: settings.arguments as DaftarKetuaFormPage3Arguments,
+          );
         });
       case KesehatankuPage.id:
         return MaterialPageRoute(builder: (context) {

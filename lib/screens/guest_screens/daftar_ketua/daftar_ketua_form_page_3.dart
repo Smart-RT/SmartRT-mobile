@@ -1,17 +1,47 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/pdf_screen.dart';
+import 'package:smart_rt/utilities/net_util.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
+
+class DaftarKetuaFormPage3Arguments {
+  String namaLengkap;
+  String alamat;
+  String kecamatan;
+  String kelurahan;
+  String noRT;
+  String noRW;
+  CroppedFile croppedImageKTP;
+  CroppedFile croppedImageKTPSelfie;
+
+  DaftarKetuaFormPage3Arguments({
+    required this.namaLengkap,
+    required this.alamat,
+    required this.kecamatan,
+    required this.kelurahan,
+    required this.noRT,
+    required this.noRW,
+    required this.croppedImageKTP,
+    required this.croppedImageKTPSelfie,
+  });
+}
 
 class DaftarKetuaFormPage3 extends StatefulWidget {
   static const String id = 'DaftarKetuaFormPage3';
-  const DaftarKetuaFormPage3({Key? key}) : super(key: key);
+  DaftarKetuaFormPage3Arguments args;
+  DaftarKetuaFormPage3({Key? key, required this.args}) : super(key: key);
 
   @override
   State<DaftarKetuaFormPage3> createState() => _DaftarKetuaFormPage3State();
@@ -20,6 +50,23 @@ class DaftarKetuaFormPage3 extends StatefulWidget {
 class _DaftarKetuaFormPage3State extends State<DaftarKetuaFormPage3> {
   FilePickerResult? _fileLampiran;
   PlatformFile? _file;
+
+  void daftarReqKetuaRT() async {
+    bool isSuccess = await context
+        .read<AuthProvider>()
+        .daftarReqKetuaRT(context: context, 
+          alamat: widget.args.alamat,
+          namaLengkap: widget.args.namaLengkap,
+          rt_num: widget.args.noRT,
+          rw_num: widget.args.noRW,
+          sub_district_id: widget.args.kecamatan,
+          urban_village_id: widget.args.kelurahan,
+          ktp: widget.args.croppedImageKTP,
+          ktpSelfie: widget.args.croppedImageKTPSelfie,
+          fileLampiran: _fileLampiran!
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,7 +182,15 @@ class _DaftarKetuaFormPage3State extends State<DaftarKetuaFormPage3> {
             Container(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {/** ... */},
+                onPressed: () {
+                  if (_fileLampiran != null) {
+                    daftarReqKetuaRT();
+                  } else {
+                    SmartRTSnackbar.show(context,
+                        message: 'File Lampiran tidak boleh kosong!',
+                        backgroundColor: smartRTErrorColor);
+                  }
+                },
                 child: Text(
                   'DAFTAR',
                   style: smartRTTextLargeBold_Secondary,
