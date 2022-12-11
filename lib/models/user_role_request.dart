@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:smart_rt/models/sub_districts.dart';
+import 'package:smart_rt/models/urban_villages.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
 
 class UserRoleRequests {
@@ -11,6 +14,10 @@ class UserRoleRequests {
   String? selfie_ktp_img;
   String? file_lampiran;
   int request_role = -1;
+  int? rt_num;
+  int? rw_num;
+  SubDistricts? sub_district_id;
+  UrbanVillages? urban_village_id;
   DateTime created_at = DateTime.now();
   DateTime? accepted_at;
   DateTime? rejected_at;
@@ -27,6 +34,15 @@ class UserRoleRequests {
     selfie_ktp_img = userRoleRequestData['selfie_ktp_img'];
     file_lampiran = userRoleRequestData['file_lampiran'];
     request_role = userRoleRequestData['request_role'];
+    rt_num = userRoleRequestData['rt_num'];
+    rw_num = userRoleRequestData['rw_num'];
+
+    if (userRoleRequestData['sub_district_id'] != null) {    
+      sub_district_id = SubDistricts.fromData(userRoleRequestData['sub_district_id']);
+    }
+    if (userRoleRequestData['urban_village_id'] != null) {    
+      urban_village_id = UrbanVillages.fromData(userRoleRequestData['urban_village_id']);
+    }
 
     if (userRoleRequestData['created_at'] != null) {
       created_at = DateTime.parse(userRoleRequestData['created_at']);
@@ -52,6 +68,10 @@ class UserRoleRequests {
         "selfie_ktp_img": selfie_ktp_img,
         "file_lampiran": file_lampiran,
         "request_role": request_role,
+        "rt_num": rt_num,
+        "rw_num": rw_num,
+        "sub_district_id": sub_district_id,
+        "urban_village_id": urban_village_id,
         "created_at": created_at.toString(),
         "accepted_at": accepted_at.toString(),
         "rejected_at": rejected_at.toString()

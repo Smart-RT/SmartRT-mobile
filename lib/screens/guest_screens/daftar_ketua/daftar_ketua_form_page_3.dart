@@ -52,19 +52,21 @@ class _DaftarKetuaFormPage3State extends State<DaftarKetuaFormPage3> {
   PlatformFile? _file;
 
   void daftarReqKetuaRT() async {
-    bool isSuccess = await context
-        .read<AuthProvider>()
-        .daftarReqKetuaRT(context: context, 
-          alamat: widget.args.alamat,
-          namaLengkap: widget.args.namaLengkap,
-          rt_num: widget.args.noRT,
-          rw_num: widget.args.noRW,
-          sub_district_id: widget.args.kecamatan,
-          urban_village_id: widget.args.kelurahan,
-          ktp: widget.args.croppedImageKTP,
-          ktpSelfie: widget.args.croppedImageKTPSelfie,
-          fileLampiran: _fileLampiran!
-        );
+    bool isSuccess = await context.read<AuthProvider>().daftarReqKetuaRT(
+        context: context,
+        alamat: widget.args.alamat,
+        namaLengkap: widget.args.namaLengkap,
+        rt_num: widget.args.noRT,
+        rw_num: widget.args.noRW,
+        sub_district_id: widget.args.kecamatan,
+        urban_village_id: widget.args.kelurahan,
+        ktp: widget.args.croppedImageKTP,
+        ktpSelfie: widget.args.croppedImageKTPSelfie,
+        fileLampiran: _fileLampiran!);
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, DaftarKetuaPage.id);
   }
 
   @override

@@ -21,6 +21,10 @@ class _GabungWilayahPageState extends State<GabungWilayahPage> {
   List<UserRoleRequests> listUserRoleRequests =
       AuthProvider.currentUser!.user_role_requests;
   bool userRoleActive = false;
+  int? request_role;
+  String? _reqRoleWords;
+  String? _dataWords;
+  String? _roleConfirmater;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,6 +32,18 @@ class _GabungWilayahPageState extends State<GabungWilayahPage> {
     if (listUserRoleRequests.isNotEmpty) {
       userRoleActive =
           listUserRoleRequests[0].confirmater_id == null ? true : false;
+      request_role = listUserRoleRequests[0].request_role;
+      if (request_role == 3) {
+        _reqRoleWords = "gabung wilayah";
+        _dataWords =
+            "Tanggal Permintaan : ${DateFormat.yMMMMd().format(DateTime.parse(listUserRoleRequests[0].created_at.toString()))}\nKode Wilayah : ${listUserRoleRequests[0].request_code}";
+        _roleConfirmater = "Ketua RT dari kode wilayah tersebut";
+      } else if (request_role == 7) {
+        _reqRoleWords = "mengubah jabatan menjadi Ketua RT";
+        _dataWords =
+            "Tanggal Permintaan : ${DateFormat.yMMMMd().format(DateTime.parse(listUserRoleRequests[0].created_at.toString()))}\n\nWilayah :  \nRT/RW ${listUserRoleRequests[0].rt_num}/${listUserRoleRequests[0].rw_num}, ${listUserRoleRequests[0].urban_village_id!.name}, Kec. ${listUserRoleRequests[0].sub_district_id!.name}";
+        _roleConfirmater = "Admin";
+      }
     }
   }
 
@@ -49,27 +65,24 @@ class _GabungWilayahPageState extends State<GabungWilayahPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Gabung Wilayah',
-                          style: smartRTTextTitle_Primary,
-                        ),
-                        SB_height15,
-                        Text(
-                          'Anda telah melakukan permintaan gabung wilayah dengan data sebagai berikut.\n\nTanggal Permintaan : ${DateFormat.yMMMMd().format(DateTime.parse(listUserRoleRequests[0].created_at.toString()))}\nKode Wilayah : ${listUserRoleRequests[0].request_code} \n\nSilahkan menunggu permintaan anda di konfirmasi oleh Ketua RT dari kode wilayah tersebut atau anda dapat membatalkan permintaan tersebut dengan cara menekan tombol BATALKAN di bawah halaman ini.',
+                          'Maaf anda tidak dapat melakukan permintaan gabung wilayah dikarenakan terdapat permintaan yang masih aktif.\n\nAnda telah melakukan permintaan ${_reqRoleWords} dengan data sebagai berikut.\n\n${_dataWords}\n\nSilahkan menunggu permintaan anda di konfirmasi oleh ${_roleConfirmater} atau anda dapat membatalkan permintaan tersebut dengan cara menekan tombol BATALKAN di bawah halaman ini.',
                           style: smartRTTextNormal_Primary,
                           textAlign: TextAlign.justify,
                         ),
-                        
                       ],
                     ),
                     Container(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          await context.read<AuthProvider>().updateUserRoleRequest(
-                            context: context,
-                            user_role_requests_id: listUserRoleRequests[0].id,
-                            isAccepted: false,
-                          );
+                          await context
+                              .read<AuthProvider>()
+                              .updateUserRoleRequest(
+                                context: context,
+                                user_role_requests_id:
+                                    listUserRoleRequests[0].id,
+                                isAccepted: false,
+                              );
                           setState(() {
                             userRoleActive = false;
                           });
@@ -112,7 +125,7 @@ class _GabungWilayahPageState extends State<GabungWilayahPage> {
                     Container(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () async{
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             await context.read<AuthProvider>().reqGabungWilayah(
                                 context: context,

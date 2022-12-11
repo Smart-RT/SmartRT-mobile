@@ -8,6 +8,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/models/sub_districts.dart';
+import 'package:smart_rt/models/urban_villages.dart';
 import 'package:smart_rt/models/user_role_request.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/models/user.dart';
@@ -174,6 +176,11 @@ class AuthProvider extends ApplicationProvider {
 
       Response<dynamic> resp =
           await NetUtil().dioClient.post('/users/reqUserRole', data: formData);
+        
+      currentUser!.user_role_requests
+          .insert(0, UserRoleRequests.fromData(resp.data));
+      currentUser!.full_name = namaLengkap;
+      currentUser!.address = alamat;
 
       notifyListeners();
       saveUserDataToStorage();
@@ -227,6 +234,8 @@ class AuthProvider extends ApplicationProvider {
         "user_role_requests_id": user_role_requests_id,
         "isAccepted": isAccepted,
       });
+      // resp.data['sub_district_id'] = SubDistricts.fromData(resp.data['sub_district_id']);
+      // resp.data['urban_village_id'] = UrbanVillages.fromData(resp.data['urban_village_id']);
       currentUser!.user_role_requests[0] = UserRoleRequests.fromData(resp.data);
       notifyListeners();
       saveUserDataToStorage();
