@@ -1,6 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 
+
+final TextStyle smartRTTextTitle = TextStyle(
+  fontSize: 32.0,
+  fontWeight: FontWeight.bold,
+  color: smartRTPrimaryColor,
+  letterSpacing: 2,
+  fontFamily: 'Rubik',
+);
+
+final TextStyle smartRTTextSmall = TextStyle(
+  fontSize: 12.0,
+  color: smartRTPrimaryColor,
+  fontFamily: 'Rubik',
+);
+
+final TextStyle smartRTTextNormal = TextStyle(
+  fontSize: 15.0,
+  color: smartRTPrimaryColor,
+  fontFamily: 'Rubik',
+);
+
+final TextStyle smartRTTextLarge = TextStyle(
+  fontSize: 17.0,
+  color: smartRTPrimaryColor,
+  fontFamily: 'Rubik',
+);
+
+final TextStyle smartRTTextTitleCard = TextStyle(
+  fontSize: 20.0,
+  color: smartRTPrimaryColor,
+  fontWeight: FontWeight.bold,
+    fontFamily: 'Rubik',
+);
+
+
+// NTAR BAWAH DI HAPUS
+
+
+
+
 final TextStyle smartRTTextTitle_Primary = TextStyle(
   fontSize: 32.0,
   fontWeight: FontWeight.bold,
@@ -62,6 +102,12 @@ final TextStyle smartRTTextSmallBold_Secondary = TextStyle(
 final TextStyle smartRTTextNormal_Primary = TextStyle(
   fontSize: 15.0,
   color: smartRTPrimaryColor,
+  fontFamily: 'Rubik',
+);
+
+final TextStyle smartRTTextNormal_Error2 = TextStyle(
+  fontSize: 15.0,
+  color: smartRTErrorColor2,
   fontFamily: 'Rubik',
 );
 

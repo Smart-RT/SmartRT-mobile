@@ -12,7 +12,15 @@ import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.da
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/pdf_screen.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
+import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_2.dart';
+import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_0.dart';
+import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/list_anggota_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_riwayat_arisan_saya_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
@@ -145,6 +153,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const FormMintaBantuanPage();
         });
+
+      // ARISAN
       case ArisanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const ArisanPage();
@@ -153,6 +163,40 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const DetailDanInformasiArisanPage();
         });
+      case DaftarArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DaftarArisanPage();
+        });
+       case PeraturanDanTataCaraArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const PeraturanDanTataCaraArisanPage();
+        });
+      case ListAnggotaArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const ListAnggotaArisanPage();
+        });
+      case CreatePeriodeArisanPage0.id:
+        return MaterialPageRoute(builder: (context) {
+          return const CreatePeriodeArisanPage0();
+        });
+      case CreatePeriodeArisanPage1.id:
+        return MaterialPageRoute(builder: (context) {
+          return const CreatePeriodeArisanPage1();
+        });
+      case CreatePeriodeArisanPage2.id:
+        return MaterialPageRoute(builder: (context) {
+          return const CreatePeriodeArisanPage2();
+        });
+      case RiwayatArisanSayaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const RiwayatArisanSayaPage();
+        });
+      case DetailRiwayatArisanSayaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DetailRiwayatArisanSayaPage();
+        });
+      // ---
+
       case BerandaAdminPage.id:
         return MaterialPageRoute(builder: (context) {
           ApplicationProvider.context = context;

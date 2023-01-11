@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/screens/public_screens/arisan/list_anggota_arisan_page.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class DetailDanInformasiArisanPage extends StatefulWidget {
@@ -33,6 +34,19 @@ class _DetailDanInformasiArisanPageState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'PERIODE ARISAN KE-1',
+                        style: smartRTTextTitleCard_Primary,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  SB_height30,
+                  // status
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -40,31 +54,34 @@ class _DetailDanInformasiArisanPageState
                         style: smartRTTextNormalBold_Primary,
                       ),
                       Text(
-                        'Berjalan',
+                        'Berlangsung',
                         style: smartRTTextNormalBold_Primary.copyWith(
                             color: smartRTSuccessColor),
                       ),
                     ],
                   ),
                   SB_height15,
+
+                  // jumlah pertemuan
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Periode Arisan Ke-',
+                        'Jumlah pertemuan',
                         style: smartRTTextNormalBold_Primary,
                       ),
                       Text(
-                        '1',
+                        '12x',
                         style: smartRTTextNormal_Primary,
                       ),
                     ],
                   ),
+                  // lama periode
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Lama per Periode',
+                        'Lama Periode',
                         style: smartRTTextNormalBold_Primary,
                       ),
                       Text(
@@ -73,6 +90,7 @@ class _DetailDanInformasiArisanPageState
                       ),
                     ],
                   ),
+                  // tanggal mulai
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -86,6 +104,7 @@ class _DetailDanInformasiArisanPageState
                       ),
                     ],
                   ),
+                  // tanggal berakhir
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -100,6 +119,7 @@ class _DetailDanInformasiArisanPageState
                     ],
                   ),
                   SB_height15,
+                  // jumlah anggota
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -113,6 +133,7 @@ class _DetailDanInformasiArisanPageState
                       ),
                     ],
                   ),
+                  // jumlah tagihan per pertemuan
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -121,160 +142,128 @@ class _DetailDanInformasiArisanPageState
                         style: smartRTTextNormalBold_Primary,
                       ),
                       Text(
-                        'IDR 100.000,00',
+                        'IDR 10.000,00',
                         style: smartRTTextNormal_Primary,
                       ),
                     ],
                   ),
+                  // nominal uang hadiah
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Nominal Uang yang Diberikan',
+                        'Hadiah Pemenang Undian',
                         style: smartRTTextNormalBold_Primary,
                       ),
                       Text(
-                        'IDR 1.000.000,00',
+                        'IDR 120.000,00',
                         style: smartRTTextNormal_Primary,
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total Kas Seluruh Periode',
-                        style: smartRTTextNormalBold_Primary,
-                      ),
-                      Text(
-                        'IDR 100.000.000,00',
-                        style: smartRTTextNormal_Primary,
-                      ),
-                    ],
-                  ),
-                  SB_height50,
+                  SB_height30,
+                  Divider(height: 10, thickness: 2),
+                  SB_height30,
                   Text(
-                    'JADWAL SELANJUTNYA',
+                    'PERTEMUAN SELANJUTNYA',
                     style: smartRTTextLargeBold_Primary,
                   ),
-                  SB_height15,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Tanggal Pertemuan Selanjutnya',
-                        style: smartRTTextNormalBold_Primary,
-                      ),
-                      Text(
-                        '1 Februari 2022',
-                        style: smartRTTextNormal_Primary,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Waktu Pertemuan Selanjutnya',
-                        style: smartRTTextNormalBold_Primary,
-                      ),
-                      Text(
-                        '10:00 AM',
-                        style: smartRTTextNormal_Primary,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Tempat Pertemuan Selanjutnya',
-                        style: smartRTTextNormalBold_Primary,
-                      ),
-                      Text(
-                        '',
-                        style: smartRTTextNormal_Primary,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '',
-                        style: smartRTTextNormalBold_Primary,
-                      ),
-                      Text(
-                        'Rumah Pak RT\n Jl. Kalijudan Taruna V no 4',
-                        style: smartRTTextNormal_Primary,
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
-                  ),
-                  SB_height50,
                   Text(
-                    'PERATURAN DAN TATA CARA ARISAN',
-                    style: smartRTTextLargeBold_Primary,
+                    'Pertemuan Ke-1',
+                    style: smartRTTextNormalBold_Primary,
                   ),
                   SB_height15,
+                  // tanggal dan waktu pertemuan selanjutnya
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text('1.', style: smartRTTextNormal_Primary),
+                      Text(
+                        'Tanggal / Waktu',
+                        style: smartRTTextNormalBold_Primary,
                       ),
-                       Expanded(
-                        flex: 10,
-                        child: Text('Anggota arisan dapat melihat jadwal pertemuan yang telah terjadwalkan dan hadir sesuai jadwal tersebut (Pastikan kehadiran anda telah dicentang oleh pengurus arisan pada aplikasi ini).', style: smartRTTextNormal_Primary, textAlign: TextAlign.justify,),
+                      Text(
+                        '1 Januari 2023 / 19.00 WIB',
+                        style: smartRTTextNormal_Primary,
+                      ),
+                    ],
+                  ),
+                  // lokasi pertemuan selanjutnya
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Lokasi',
+                        style: smartRTTextNormalBold_Primary,
+                      ),
+                      Text(
+                        'Rumah Pak RT (No 1)',
+                        style: smartRTTextNormal_Primary,
                       ),
                     ],
                   ),
                   SB_height15,
+                  // status pemenang
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text('2.', style: smartRTTextNormal_Primary),
+                      Text(
+                        'Sudah pernah menang undian?',
+                        style: smartRTTextNormalBold_Primary,
                       ),
-                       Expanded(
-                        flex: 10,
-                        child: Text('Bayarlah tagihan setiap pertemuan arisan sesuai dengan nominal yang telah ditentukan. Anda dapat membayar dengan melalui aplikasi atau langsung melalui bendahara (pastikan setelah anda membayar, status pembayaran anda menjadi lunas)', style: smartRTTextNormal_Primary, textAlign: TextAlign.justify,),
+                      Text(
+                        'Belum',
+                        style: smartRTTextNormal_Primary,
+                      ),
+                    ],
+                  ),
+                  // status tagihan anda
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Status Tagihan Anda',
+                        style: smartRTTextNormalBold_Primary,
+                      ),
+                      Text(
+                        'Belum Bayar',
+                        style: smartRTTextNormal_Error2,
                       ),
                     ],
                   ),
                   SB_height15,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text('3.', style: smartRTTextNormal_Primary),
+                  Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {},
+                      child: Text(
+                        'Bayar Sekarang',
+                        style: smartRTTextLargeBold_Secondary,
                       ),
-                       Expanded(
-                        flex: 10,
-                        child: Text('Setelah proses absensi dan pembayaran selesai, maka akan memasuki tahap pengambilan nama pemenang pada pertemuan ini. Daftar nama yang akan berada dalam pengundian adalah nama anggota yang belum pernah menjadi pemenang dalam periode ini, anggota yang tidak memiliki tunggakan dalam pembayaran tagihan arisan, dan anggota yang hadir pada pertemuan saat ini. Nama pemenang dapat dilihat oleh para anggota di hasil pertemuan saat ini.', style: smartRTTextNormal_Primary, textAlign: TextAlign.justify,),
-                      ),
-                    ],
-                  ),
-                  SB_height15,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text('4.', style: smartRTTextNormal_Primary),
-                      ),
-                       Expanded(
-                        flex: 10,
-                        child: Text('Anggota yang terpilih menjadi pemenang akan menerima sejumlah uang pada E-Dompet Saya sesuai dengan nominal yang telah ditentukan pada periode ini. (Anggota yang telah menjadi pemenang tetap wajib menjalankan tanggung jawabnya dengan hadir serta melunasi tagihan di pertemuan-pertemuan selanjutnya. Jika tidak maka dapat di blacklist dari arisan periode selanjutnya.)', style: smartRTTextNormal_Primary, textAlign: TextAlign.justify,),
-                      ),
-                    ],
+                    ),
                   ),
                 ],
               ),
             ),
             Divider(height: 10, thickness: 2),
+            GestureDetector(
+              onTap: (){
+                Navigator.pushNamed(context, ListAnggotaArisanPage.id);
+              },
+              child: ListTile(
+                title: Text(
+                  'Lihat Anggota',
+                  style: smartRTTextLargeBold_Primary,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: smartRTPrimaryColor,
+                ),
+              ),
+            ),
+            Divider(height: 10, thickness: 2),
             ListTile(
               title: Text(
-                'Lihat Anggota Periode Ini',
+                'Lihat Tagihan dan Absen Kehadiran Saya',
                 style: smartRTTextLargeBold_Primary,
               ),
               trailing: Icon(
@@ -283,28 +272,17 @@ class _DetailDanInformasiArisanPageState
               ),
             ),
             Divider(height: 10, thickness: 2),
-            ListTile(
-              title: Text(
-                'Lihat Semua Transaksi Arisan Periode Ini',
-                style: smartRTTextLargeBold_Primary,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: smartRTPrimaryColor,
-              ),
-            ),
-            Divider(height: 10, thickness: 2),
-            ListTile(
-              title: Text(
-                'Lihat Riwayat Semua Periode Arisan',
-                style: smartRTTextLargeBold_Primary,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: smartRTPrimaryColor,
-              ),
-            ),
-            Divider(height: 10, thickness: 2),
+            // ListTile(
+            //   title: Text(
+            //     'Lihat Riwayat Pertemuan Periode Ini',
+            //     style: smartRTTextLargeBold_Primary,
+            //   ),
+            //   trailing: Icon(
+            //     Icons.arrow_forward_ios,
+            //     color: smartRTPrimaryColor,
+            //   ),
+            // ),
+            // Divider(height: 10, thickness: 2),
           ],
         ),
       ),

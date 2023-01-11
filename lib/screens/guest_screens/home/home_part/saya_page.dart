@@ -1,10 +1,8 @@
 import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
@@ -64,7 +62,7 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        AuthProvider.currentUser!.user_role.name,
+                        AuthProvider.currentUser!.user_role.name.replaceAll("_", " "),
                         style: smartRTTextLarge_Secondary,
                       ),
                       

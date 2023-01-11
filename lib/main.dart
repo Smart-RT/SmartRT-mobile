@@ -50,6 +50,8 @@ class _SmartRTAppState extends State<SmartRTApp> {
       routeStart = BerandaAdminPage.id;
     } else if (roleUser == Role.Guest) {
       routeStart = GuestHome.id;
+    } else if (roleUser == Role.Ketua_RT) {
+      routeStart = GuestHome.id;
     } else {
       routeStart = WelcomePage.id;
     }
