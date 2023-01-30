@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengaturan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
@@ -22,7 +24,7 @@ class _ArisanPageState extends State<ArisanPage> {
   // bool isPeriodeArisanActive = true;
   // int countPertemuanPeriodeArisanActive = 1;
 
-  int status = 3;
+  int status = 4;
   Map<int, dynamic> listPage = {
     // Role 3-6, lottery_clubs belum terbuat
     1: {
@@ -61,7 +63,10 @@ class _ArisanPageState extends State<ArisanPage> {
       "subTitle": "Mohon menunggu periode selanjutnya!",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
-        {"menuTitle": "Riwayat Arisan Saya", "nextPageDestination": RiwayatArisanSayaPage.id},
+        {
+          "menuTitle": "Riwayat Arisan Saya",
+          "nextPageDestination": RiwayatArisanSayaPage.id
+        },
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
           "nextPageDestination": PeraturanDanTataCaraArisanPage.id
@@ -82,42 +87,53 @@ class _ArisanPageState extends State<ArisanPage> {
           "menuTitle": "Buat Periode Arisan Sekarang!",
           "nextPageDestination": CreatePeriodeArisanPage1.id
         },
-        {"menuTitle": "Riwayat Arisan Wilayah", "nextPageDestination": ""},
+        {
+          "menuTitle": "Riwayat Arisan Wilayah",
+          "nextPageDestination": RiwayatArisanSayaPage.id,
+        },
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
           "nextPageDestination": PeraturanDanTataCaraArisanPage.id
         },
-        {"menuTitle": "Pengaturan Arisan", "nextPageDestination": ""},
+        {
+          "menuTitle": "Pengaturan Arisan",
+          "nextPageDestination": PengaturanArisanPage.id,
+        }
       ]
     },
     // lottery_clubs sudah terbuat, lottery_clubs_periods aktif namun sudah berjalan, bukan member, role 3
     5: {
-      "preTitle":
-          "Periode Arisan telah Berjalan",
+      "preTitle": "Periode Arisan telah Berjalan",
       "preTitleStyleColor": smartRTErrorColor,
       "title": "",
       "titleStyleColor": smartRTPrimaryColor,
-      "subTitle": "Maaf, anda tidak dapat bergabung pada periode ini dikarenakan telah berjalan. Harap menunggu Periode Selanjutnya!",
+      "subTitle":
+          "Maaf, anda tidak dapat bergabung pada periode ini dikarenakan telah berjalan. Harap menunggu Periode Selanjutnya!",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
-        {"menuTitle": "Riwayat Arisan Saya", "nextPageDestination": ""},
+        {
+          "menuTitle": "Riwayat Arisan Saya",
+          "nextPageDestination": "",
+        },
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
-          "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+          "nextPageDestination": PeraturanDanTataCaraArisanPage.id,
         },
       ]
     },
     // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah di publish, member, role 3
     6: {
-      "preTitle":
-          "TANGGAL PERTEMUAN SELANJUTNYA",
+      "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
       "preTitleStyleColor": smartRTSuccessColor,
       "title": "1 JANUARI 2024",
       "titleStyleColor": smartRTSuccessColor,
       "subTitle": "PK. 19:00 WIB di Rumah Pak RT",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
-        {"menuTitle": "Informasi dan Tagihan Periode Saat Ini", "nextPageDestination": ""},
+        {
+          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
+          "nextPageDestination": ""
+        },
         {"menuTitle": "Riwayat Periode Sebelumnya", "nextPageDestination": ""},
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
@@ -127,15 +143,18 @@ class _ArisanPageState extends State<ArisanPage> {
     },
     // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, belum di publish, member, role 3
     7: {
-      "preTitle":
-          "TANGGAL PERTEMUAN SELANJUTNYA",
+      "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
       "preTitleStyleColor": smartRTErrorColor,
       "title": "BELUM ADA",
       "titleStyleColor": smartRTErrorColor,
-      "subTitle": "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
+      "subTitle":
+          "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
-        {"menuTitle": "Informasi dan Tagihan Periode Saat Ini", "nextPageDestination": ""},
+        {
+          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
+          "nextPageDestination": ""
+        },
         {"menuTitle": "Riwayat Periode Sebelumnya", "nextPageDestination": ""},
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
@@ -145,15 +164,17 @@ class _ArisanPageState extends State<ArisanPage> {
     },
     // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah di publish, member, role 4-6
     8: {
-     "preTitle":
-          "TANGGAL PERTEMUAN SELANJUTNYA",
+      "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
       "preTitleStyleColor": smartRTSuccessColor,
       "title": "1 JANUARI 2024",
       "titleStyleColor": smartRTSuccessColor,
       "subTitle": "PK. 19:00 WIB di Rumah Pak RT",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
-        {"menuTitle": "Informasi dan Tagihan Periode Saat Ini", "nextPageDestination": ""},
+        {
+          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
+          "nextPageDestination": ""
+        },
         {"menuTitle": "Riwayat Arisan Wilayah", "nextPageDestination": ""},
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
@@ -163,15 +184,18 @@ class _ArisanPageState extends State<ArisanPage> {
     },
     // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, belum di publish, member, role 4-6
     9: {
-      "preTitle":
-          "TANGGAL PERTEMUAN SELANJUTNYA",
+      "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
       "preTitleStyleColor": smartRTErrorColor,
       "title": "BELUM ADA",
       "titleStyleColor": smartRTErrorColor,
-      "subTitle": "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
+      "subTitle":
+          "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
-        {"menuTitle": "Informasi dan Tagihan Periode Saat Ini", "nextPageDestination": ""},
+        {
+          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
+          "nextPageDestination": ""
+        },
         {"menuTitle": "Riwayat Arisan Wilayah", "nextPageDestination": ""},
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
@@ -181,19 +205,22 @@ class _ArisanPageState extends State<ArisanPage> {
     },
     // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, belum di publish, member, role 7
     10: {
-      "preTitle":
-          "TANGGAL PERTEMUAN SELANJUTNYA",
+      "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
       "preTitleStyleColor": smartRTErrorColor,
       "title": "BELUM ADA",
       "titleStyleColor": smartRTErrorColor,
-      "subTitle": "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
+      "subTitle":
+          "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
         {
           "menuTitle": "Buat Pertemuan Arisan Selanjutnya Sekarang!",
           "nextPageDestination": ""
         },
-        {"menuTitle": "Informasi dan Tagihan Periode Saat Ini", "nextPageDestination": ""},
+        {
+          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
+          "nextPageDestination": ""
+        },
         {"menuTitle": "Riwayat Arisan Wilayah", "nextPageDestination": ""},
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
@@ -204,15 +231,18 @@ class _ArisanPageState extends State<ArisanPage> {
     },
     // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah di publish, member, role 7
     11: {
-      "preTitle":
-          "TANGGAL PERTEMUAN SELANJUTNYA",
+      "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
       "preTitleStyleColor": smartRTErrorColor,
       "title": "BELUM ADA",
       "titleStyleColor": smartRTErrorColor,
-      "subTitle": "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
+      "subTitle":
+          "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
-        {"menuTitle": "Informasi dan Tagihan Periode Saat Ini", "nextPageDestination": ""},
+        {
+          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
+          "nextPageDestination": ""
+        },
         {"menuTitle": "Riwayat Arisan Wilayah", "nextPageDestination": ""},
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
@@ -221,7 +251,6 @@ class _ArisanPageState extends State<ArisanPage> {
         {"menuTitle": "Pengaturan Arisan", "nextPageDestination": ""},
       ]
     },
-    
   };
 
   @override

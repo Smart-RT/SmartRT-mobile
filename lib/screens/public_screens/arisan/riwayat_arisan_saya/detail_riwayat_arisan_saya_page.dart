@@ -172,12 +172,18 @@ class _DetailRiwayatArisanSayaPageState
                       ],
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                       flex: 3,
-                      child: Icon(
-                        Icons.check,
-                        color: Color.fromARGB(255, 0, 255, 13),
-                      )),
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.check,
+                            color: Color.fromARGB(255, 0, 255, 13),
+                          ),
+                          Text('01-01-21', style: smartRTTextSmall,),
+                          Text('Offline', style: smartRTTextSmall,),
+                        ],
+                      ),),
                   const Expanded(
                       flex: 3,
                       child: Icon(

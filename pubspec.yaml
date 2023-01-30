@@ -57,6 +57,7 @@ dependencies:
   cached_network_image: ^3.2.1
   dependencies:
   flutter_pdfview: ^1.2.1
+  toggle_switch: ^2.0.1
 
 
 dev_dependencies:

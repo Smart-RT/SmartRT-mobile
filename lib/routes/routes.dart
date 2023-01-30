@@ -18,6 +18,7 @@ import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/cre
 import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/list_anggota_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengaturan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_riwayat_arisan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
@@ -194,6 +195,10 @@ class Routes {
       case DetailRiwayatArisanSayaPage.id:
         return MaterialPageRoute(builder: (context) {
           return const DetailRiwayatArisanSayaPage();
+        });
+      case PengaturanArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const PengaturanArisanPage();
         });
       // ---
 
