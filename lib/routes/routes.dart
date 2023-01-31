@@ -22,6 +22,13 @@ import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengatu
 import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_riwayat_arisan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_riwayat_arisan_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_anggota_periode_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_absensi_pertemuan_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_iuran_arisan_pertemuan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_pertemuan_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_pertemuan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/riwayat_arisan_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
@@ -168,7 +175,7 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const DaftarArisanPage();
         });
-       case PeraturanDanTataCaraArisanPage.id:
+      case PeraturanDanTataCaraArisanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const PeraturanDanTataCaraArisanPage();
         });
@@ -199,6 +206,34 @@ class Routes {
       case PengaturanArisanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const PengaturanArisanPage();
+        });
+      case RiwayatArisanWilayahPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const RiwayatArisanWilayahPage();
+        });
+      case DetailRiwayatArisanWilayah.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DetailRiwayatArisanWilayah();
+        });
+      case LihatSemuaPertemuanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LihatSemuaPertemuanPage();
+        });
+      case LihatSemuaAnggotaArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LihatSemuaAnggotaArisanPage();
+        });
+      case DetailPertemuanArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DetailPertemuanArisanPage();
+        });
+      case LihatAbsensiPertemuanArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LihatAbsensiPertemuanArisanPage();
+        });
+      case LihatIuranArisanPertemuanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LihatIuranArisanPertemuanPage();
         });
       // ---
 

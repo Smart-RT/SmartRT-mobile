@@ -6,6 +6,7 @@ import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_aris
 import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengaturan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/riwayat_arisan_wilayah_page.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 import 'package:smart_rt/widgets/parts/header_arisan.dart';
 
@@ -89,7 +90,7 @@ class _ArisanPageState extends State<ArisanPage> {
         },
         {
           "menuTitle": "Riwayat Arisan Wilayah",
-          "nextPageDestination": RiwayatArisanSayaPage.id,
+          "nextPageDestination": RiwayatArisanWilayahPage.id,
         },
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",

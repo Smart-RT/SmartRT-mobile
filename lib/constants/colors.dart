@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 final Color smartRTActiveColor = Color.fromARGB(255, 167, 191, 216);
 final Color smartRTActiveColor2 = Color.fromARGB(255, 34, 0, 255);
 final Color smartRTSuccessColor = Color(0xffacd8a7);
+final Color smartRTSuccessColor2 = Color.fromARGB(255, 0, 255, 4);
 final Color smartRTErrorColor = Color(0xffffa590);
 final Color smartRTErrorColor2 = Color.fromARGB(255, 255, 47, 0);
 

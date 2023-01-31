@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
@@ -17,7 +16,7 @@ class KeuanganPage extends StatelessWidget {
         Container(
           color: smartRTPrimaryColor,
           width: double.infinity,
-          height: 125,
+          // height: 125,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -30,12 +29,18 @@ class KeuanganPage extends StatelessWidget {
                   children: [
                     Text(
                       'DOMPET SAYA',
-                      style: smartRTTextLargeBold_Success,
+                      style: smartRTTextLarge.copyWith(
+                          color: smartRTSuccessColor,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
                     ),
+                    SB_height15,
                     Text(
                       'IDR 0,00',
-                      style: smartRTTextTitle_Success,
-                    )
+                      style: smartRTTextTitleCard.copyWith(
+                          color: smartRTSuccessColor),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               )),
@@ -47,12 +52,18 @@ class KeuanganPage extends StatelessWidget {
                   children: [
                     Text(
                       'HUTANG',
-                      style: smartRTTextLargeBold_Error,
+                      style: smartRTTextLarge.copyWith(
+                          color: smartRTErrorColor,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
                     ),
+                    SB_height15,
                     Text(
                       'IDR 0,00',
-                      style: smartRTTextTitle_Error,
-                    )
+                      style: smartRTTextTitleCard.copyWith(
+                          color: smartRTErrorColor),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               )),
@@ -118,7 +129,6 @@ class KeuanganPage extends StatelessWidget {
             ],
           ),
         )
-      
       ],
     );
   }

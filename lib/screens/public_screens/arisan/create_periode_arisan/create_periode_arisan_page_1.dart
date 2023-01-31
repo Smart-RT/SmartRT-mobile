@@ -28,160 +28,168 @@ class _CreatePeriodeArisanPage1State extends State<CreatePeriodeArisanPage1> {
       appBar: AppBar(
         title: Text(''),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              Padding(
-                padding: paddingScreen,
-                child: const ExplainPart(
-                    title: 'Pilih Anggota',
-                    notes:
-                        'Anda hanya daoat merubah anggota ketika belum ada jadwal pertemuan yang di publish pada periode ini. Minimal anda harus memiliki 6 anggota dalam setiap periodenya (Semua pengurus pada wilayah anda wajib mengikuti arisan sebagai panutan warga).'),
-              ),
-              Divider(
-                color: smartRTPrimaryColor,
-                height: 2,
-              ),
-              ListTile(
-                leading: CircleAvatarLoader(
-                  radius: 50,
-                  photoPathUrl:
-                      '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
-                  photo: context.watch<AuthProvider>().user?.photo_profile_img,
-                  initials: 'XX',
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: paddingScreen,
+                  child: const ExplainPart(
+                      title: 'Pilih Anggota',
+                      notes:
+                          'Anda hanya daoat merubah anggota ketika belum ada jadwal pertemuan yang di publish pada periode ini. Minimal anda harus memiliki 6 anggota dalam setiap periodenya (Semua pengurus pada wilayah anda wajib mengikuti arisan sebagai panutan warga).'),
                 ),
-                title: Text('Nama Lengkap'),
-                subtitle: Text('Alamat'),
-                trailing: Checkbox(
-                  checkColor: Colors.white,
-                  value: isChecked,
-                  onChanged: (bool? value) {},
+                Divider(
+                  color: smartRTPrimaryColor,
+                  height: 2,
                 ),
-              ),
-              Divider(
-                color: smartRTPrimaryColor,
-                height: 2,
-              ),
-              ListTile(
-                leading: CircleAvatarLoader(
-                  radius: 50,
-                  photoPathUrl:
-                      '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
-                  photo: context.watch<AuthProvider>().user?.photo_profile_img,
-                  initials: 'XX',
+                ListTile(
+                  leading: CircleAvatarLoader(
+                    radius: 50,
+                    photoPathUrl:
+                        '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
+                    photo:
+                        context.watch<AuthProvider>().user?.photo_profile_img,
+                    initials: 'XX',
+                  ),
+                  title: Text('Nama Lengkap'),
+                  subtitle: Text('Alamat'),
+                  trailing: Checkbox(
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {},
+                  ),
                 ),
-                title: Text('Nama Lengkap'),
-                subtitle: Text('Alamat'),
-                trailing: Checkbox(
-                  checkColor: Colors.white,
-                  value: isChecked,
-                  onChanged: (bool? value) {},
+                Divider(
+                  color: smartRTPrimaryColor,
+                  height: 2,
                 ),
-              ),
-              Divider(
-                color: smartRTPrimaryColor,
-                height: 2,
-              ),
-              ListTile(
-                leading: CircleAvatarLoader(
-                  radius: 50,
-                  photoPathUrl:
-                      '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
-                  photo: context.watch<AuthProvider>().user?.photo_profile_img,
-                  initials: 'XX',
+                ListTile(
+                  leading: CircleAvatarLoader(
+                    radius: 50,
+                    photoPathUrl:
+                        '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
+                    photo:
+                        context.watch<AuthProvider>().user?.photo_profile_img,
+                    initials: 'XX',
+                  ),
+                  title: Text('Nama Lengkap'),
+                  subtitle: Text('Alamat'),
+                  trailing: Checkbox(
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {},
+                  ),
                 ),
-                title: Text('Nama Lengkap'),
-                subtitle: Text('Alamat'),
-                trailing: Checkbox(
-                  checkColor: Colors.white,
-                  value: isChecked,
-                  onChanged: (bool? value) {},
+                Divider(
+                  color: smartRTPrimaryColor,
+                  height: 2,
                 ),
-              ),
-              Divider(
-                color: smartRTPrimaryColor,
-                height: 2,
-              ),
-              ListTile(
-                leading: CircleAvatarLoader(
-                  radius: 50,
-                  photoPathUrl:
-                      '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
-                  photo: context.watch<AuthProvider>().user?.photo_profile_img,
-                  initials: 'XX',
+                ListTile(
+                  leading: CircleAvatarLoader(
+                    radius: 50,
+                    photoPathUrl:
+                        '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
+                    photo:
+                        context.watch<AuthProvider>().user?.photo_profile_img,
+                    initials: 'XX',
+                  ),
+                  title: Text('Nama Lengkap'),
+                  subtitle: Text('Alamat'),
+                  trailing: Checkbox(
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {},
+                  ),
                 ),
-                title: Text('Nama Lengkap'),
-                subtitle: Text('Alamat'),
-                trailing: Checkbox(
-                  checkColor: Colors.white,
-                  value: isChecked,
-                  onChanged: (bool? value) {},
+                Divider(
+                  color: smartRTPrimaryColor,
+                  height: 2,
                 ),
-              ),
-              Divider(
-                color: smartRTPrimaryColor,
-                height: 2,
-              ),
-              ListTile(
-                leading: CircleAvatarLoader(
-                  radius: 50,
-                  photoPathUrl:
-                      '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
-                  photo: context.watch<AuthProvider>().user?.photo_profile_img,
-                  initials: 'XX',
+                ListTile(
+                  leading: CircleAvatarLoader(
+                    radius: 50,
+                    photoPathUrl:
+                        '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
+                    photo:
+                        context.watch<AuthProvider>().user?.photo_profile_img,
+                    initials: 'XX',
+                  ),
+                  title: Text('Nama Lengkap'),
+                  subtitle: Text('Alamat'),
+                  trailing: Checkbox(
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {},
+                  ),
                 ),
-                title: Text('Nama Lengkap'),
-                subtitle: Text('Alamat'),
-                trailing: Checkbox(
-                  checkColor: Colors.white,
-                  value: isChecked,
-                  onChanged: (bool? value) {},
+                Divider(
+                  color: smartRTPrimaryColor,
+                  height: 2,
                 ),
-              ),
-              Divider(
-                color: smartRTPrimaryColor,
-                height: 2,
-              ),
-              ListTile(
-                leading: CircleAvatarLoader(
-                  radius: 50,
-                  photoPathUrl:
-                      '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
-                  photo: context.watch<AuthProvider>().user?.photo_profile_img,
-                  initials: 'XX',
+                ListTile(
+                  leading: CircleAvatarLoader(
+                    radius: 50,
+                    photoPathUrl:
+                        '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
+                    photo:
+                        context.watch<AuthProvider>().user?.photo_profile_img,
+                    initials: 'XX',
+                  ),
+                  title: Text('Nama Lengkap'),
+                  subtitle: Text('Alamat'),
+                  trailing: Checkbox(
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {},
+                  ),
                 ),
-                title: Text('Nama Lengkap'),
-                subtitle: Text('Alamat'),
-                trailing: Checkbox(
-                  checkColor: Colors.white,
-                  value: isChecked,
-                  onChanged: (bool? value) {},
+                Divider(
+                  color: smartRTPrimaryColor,
+                  height: 2,
                 ),
-              ),
-              Divider(
-                color: smartRTPrimaryColor,
-                height: 2,
-              ),
-            ],
-          ),
-          Padding(
-            padding: paddingScreen,
-            child: Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
-                  Navigator.pushNamed(context, CreatePeriodeArisanPage2.id);
-                },
-                child: Text(
-                  'SELANJUTNYA',
-                  style: smartRTTextLargeBold_Secondary,
+                ListTile(
+                  leading: CircleAvatarLoader(
+                    radius: 50,
+                    photoPathUrl:
+                        '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
+                    photo:
+                        context.watch<AuthProvider>().user?.photo_profile_img,
+                    initials: 'XX',
+                  ),
+                  title: Text('Nama Lengkap'),
+                  subtitle: Text('Alamat'),
+                  trailing: Checkbox(
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {},
+                  ),
+                ),
+                Divider(
+                  color: smartRTPrimaryColor,
+                  height: 2,
+                ),
+              ],
+            ),
+            Padding(
+              padding: paddingScreen,
+              child: Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Navigator.pushNamed(context, CreatePeriodeArisanPage2.id);
+                  },
+                  child: Text(
+                    'SELANJUTNYA',
+                    style: smartRTTextLargeBold_Secondary,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

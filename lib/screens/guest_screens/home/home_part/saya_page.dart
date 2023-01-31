@@ -27,17 +27,14 @@ class SayaPage extends StatelessWidget {
           height: 125,
           child: Row(
             children: [
-              Expanded(child: 
-                CircleAvatarLoader(
-                            radius: 50,
-                            photoPathUrl:
-                                '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
-                            photo:
-                                context.watch<AuthProvider>().user?.photo_profile_img,
-                            initials:
-                                context.watch<AuthProvider>().user!.initialName(),
-                          )
-              ),
+              Expanded(
+                  child: CircleAvatarLoader(
+                radius: 50,
+                photoPathUrl:
+                    '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
+                photo: context.watch<AuthProvider>().user?.photo_profile_img,
+                initials: context.watch<AuthProvider>().user!.initialName(),
+              )),
               // Expanded(
               //     child: Icon(
               //   Icons.account_circle,
@@ -55,17 +52,20 @@ class SayaPage extends StatelessWidget {
                         style: smartRTTextLargeBold_Secondary,
                       ),
                       Visibility(
-                        visible: AuthProvider.currentUser!.address == null || AuthProvider.currentUser!.address == '' ? false : true,
+                        visible: AuthProvider.currentUser!.address == null ||
+                                AuthProvider.currentUser!.address == ''
+                            ? false
+                            : true,
                         child: Text(
                           AuthProvider.currentUser!.address.toString(),
                           style: smartRTTextLarge_Secondary,
                         ),
                       ),
                       Text(
-                        AuthProvider.currentUser!.user_role.name.replaceAll("_", " "),
+                        AuthProvider.currentUser!.user_role.name
+                            .replaceAll("_", " "),
                         style: smartRTTextLarge_Secondary,
                       ),
-                      
                     ],
                   ))
             ],
@@ -76,7 +76,7 @@ class SayaPage extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pushNamed(context, UbahProfilPage.id);
                 },
                 child: Card(
@@ -98,7 +98,7 @@ class SayaPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pushNamed(context, TandaTanganSayaPage.id);
                 },
                 child: Card(
@@ -120,7 +120,7 @@ class SayaPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pushNamed(context, GabungWilayahPage.id);
                 },
                 child: Card(
@@ -142,7 +142,7 @@ class SayaPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pushNamed(context, DaftarKetuaPage.id);
                 },
                 child: Card(
@@ -164,7 +164,7 @@ class SayaPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pushNamed(context, ReqUpdateRolePage.id);
                 },
                 child: Card(
@@ -203,7 +203,7 @@ class SayaPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: ()async{
+                onTap: () async {
                   await context.read<AuthProvider>().logout();
                   Navigator.pushReplacementNamed(context, WelcomePage.id);
                 },
