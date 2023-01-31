@@ -18,8 +18,11 @@ import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/cre
 import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/list_anggota_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengaturan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_sebelumnya_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_selanjutnya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_riwayat_arisan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_riwayat_arisan_wilayah_page.dart';
@@ -234,6 +237,18 @@ class Routes {
       case LihatIuranArisanPertemuanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const LihatIuranArisanPertemuanPage();
+        });
+      case PembayaranIuranArisan.id:
+        return MaterialPageRoute(builder: (context) {
+          return const PembayaranIuranArisan();
+        });
+      case DetailPertemuanSelanjutnyaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DetailPertemuanSelanjutnyaPage();
+        });
+      case DetailPertemuanSebelumnyaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DetailPertemuanSebelumnyaPage();
         });
       // ---
 

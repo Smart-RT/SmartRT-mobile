@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/widgets/cards/card_list_pertemuan_arisan.dart';
-import 'package:smart_rt/widgets/cards/card_periode_arisan.dart';
-import 'package:smart_rt/widgets/cards/card_riwayat_arisan_wilayah.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
-
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_pertemuan_arisan_page.dart';
 
 class LihatSemuaPertemuanPage extends StatefulWidget {

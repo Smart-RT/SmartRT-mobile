@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
 import 'package:smart_rt/widgets/cards/card_periode_arisan.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
@@ -42,7 +43,7 @@ class _DetailRiwayatArisanSayaPageState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Tanggal Pertemuan Pertama',
+                    'Pertemuan Pertama',
                     style: smartRTTextLarge,
                   ),
                   Text(
@@ -55,7 +56,7 @@ class _DetailRiwayatArisanSayaPageState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Tanggal Pertemuan Terakhir',
+                    'Pertemuan Terakhir',
                     style: smartRTTextLarge,
                   ),
                   Text(
@@ -132,22 +133,24 @@ class _DetailRiwayatArisanSayaPageState
                     ),
                   ),
                   Expanded(
-                      flex: 3,
+                      flex: 4,
                       child: Text(
                         'Iuran',
                         style: smartRTTextLarge.copyWith(
                           color: smartRTPrimaryColor,
                           fontWeight: FontWeight.bold,
                         ),
+                        textAlign: TextAlign.center,
                       )),
                   Expanded(
-                      flex: 3,
+                      flex: 4,
                       child: Text(
                         'Absensi',
                         style: smartRTTextLarge.copyWith(
                           color: smartRTPrimaryColor,
                           fontWeight: FontWeight.bold,
                         ),
+                        textAlign: TextAlign.center,
                       )),
                 ],
               ),
@@ -165,7 +168,7 @@ class _DetailRiwayatArisanSayaPageState
                           style: smartRTTextNormal.copyWith(
                               fontWeight: FontWeight.bold),
                         ),
-                        Text('21 Januari 2021 Pk 12.00 WIB',
+                        Text('21 Januari 2021 \nPk 12.00 WIB',
                             style: smartRTTextNormal),
                         Text('Lokasi di Rumah Pak RT',
                             style: smartRTTextNormal),
@@ -173,22 +176,29 @@ class _DetailRiwayatArisanSayaPageState
                     ),
                   ),
                   Expanded(
-                      flex: 3,
-                      child: Column(
-                        children: [
-                          const Icon(
-                            Icons.check,
-                            color: Color.fromARGB(255, 0, 255, 13),
-                          ),
-                          Text('01-01-21', style: smartRTTextSmall,),
-                          Text('Offline', style: smartRTTextSmall,),
-                        ],
-                      ),),
-                  const Expanded(
-                      flex: 3,
+                    flex: 4,
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.check,
+                          color: smartRTSuccessColor2,
+                        ),
+                        Text(
+                          '01-01-21',
+                          style: smartRTTextSmall,
+                        ),
+                        Text(
+                          'Offline',
+                          style: smartRTTextSmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      flex: 4,
                       child: Icon(
                         Icons.check,
-                        color: Color.fromARGB(255, 0, 255, 13),
+                        color: smartRTSuccessColor2,
                       )),
                 ],
               ),
@@ -206,24 +216,30 @@ class _DetailRiwayatArisanSayaPageState
                           style: smartRTTextNormal.copyWith(
                               fontWeight: FontWeight.bold),
                         ),
-                        Text('21 Januari 2021 Pk 12.00 WIB',
+                        Text('21 Januari 2021 \nPk 12.00 WIB',
                             style: smartRTTextNormal),
                         Text('Lokasi di Rumah Pak RT',
                             style: smartRTTextNormal),
                       ],
                     ),
                   ),
-                  const Expanded(
-                      flex: 3,
-                      child: Icon(
-                        Icons.close,
-                        color: Color.fromARGB(255, 255, 0, 0),
+                  Expanded(
+                      flex: 4,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, PembayaranIuranArisan.id);
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: smartRTErrorColor2,
+                        ),
                       )),
-                  const Expanded(
-                      flex: 3,
+                  Expanded(
+                      flex: 4,
                       child: Icon(
                         Icons.check,
-                        color: Color.fromARGB(255, 0, 255, 13),
+                        color: smartRTSuccessColor2,
                       )),
                 ],
               ),

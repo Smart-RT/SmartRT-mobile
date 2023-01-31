@@ -3,24 +3,19 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_pertemuan_page.dart';
-import 'package:smart_rt/widgets/cards/card_periode_arisan.dart';
-
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_iuran_arisan_pertemuan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_absensi_pertemuan_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_anggota_periode_arisan_page.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
-class DetailPertemuanArisanPage extends StatefulWidget {
-  static const String id = 'DetailPertemuanArisanPage';
-  const DetailPertemuanArisanPage({Key? key}) : super(key: key);
+class DetailPertemuanSebelumnyaPage extends StatefulWidget {
+  static const String id = 'DetailPertemuanSebelumnyaPage';
+  const DetailPertemuanSebelumnyaPage({Key? key}) : super(key: key);
 
   @override
-  State<DetailPertemuanArisanPage> createState() =>
-      _DetailPertemuanArisanPageState();
+  State<DetailPertemuanSebelumnyaPage> createState() =>
+      _DetailPertemuanSebelumnyaPageState();
 }
 
-class _DetailPertemuanArisanPageState extends State<DetailPertemuanArisanPage> {
+class _DetailPertemuanSebelumnyaPageState
+    extends State<DetailPertemuanSebelumnyaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,24 +75,11 @@ class _DetailPertemuanArisanPageState extends State<DetailPertemuanArisanPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Jumlah Anggota Hadir',
+                        'Iuran Arisan',
                         style: smartRTTextLarge,
                       ),
                       Text(
-                        '10 Orang',
-                        style: smartRTTextLarge,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Pemenang Pertama',
-                        style: smartRTTextLarge,
-                      ),
-                      Text(
-                        'XXX',
+                        'Rp 30.000,00',
                         style: smartRTTextLarge,
                       ),
                     ],
@@ -106,11 +88,39 @@ class _DetailPertemuanArisanPageState extends State<DetailPertemuanArisanPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Pemenang Kedua',
+                        'Status Iuran',
                         style: smartRTTextLarge,
                       ),
                       Text(
-                        'XXX',
+                        'Belum bayar',
+                        style: smartRTTextLarge.copyWith(
+                            color: smartRTErrorColor2),
+                      ),
+                    ],
+                  ),
+                  SB_height15,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Pemenang 1',
+                        style: smartRTTextLarge,
+                      ),
+                      Text(
+                        '-',
+                        style: smartRTTextLarge,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Pemenang 2',
+                        style: smartRTTextLarge,
+                      ),
+                      Text(
+                        '-',
                         style: smartRTTextLarge,
                       ),
                     ],
@@ -123,15 +133,8 @@ class _DetailPertemuanArisanPageState extends State<DetailPertemuanArisanPage> {
               thickness: 2,
             ),
             ListTileArisan(
-                title: 'Lihat Absensi',
-                onTapDestination: LihatAbsensiPertemuanArisanPage.id),
-            Divider(
-              height: 25,
-              thickness: 2,
-            ),
-            ListTileArisan(
-                title: 'Lihat Iuran Arisan',
-                onTapDestination: LihatIuranArisanPertemuanPage.id),
+                title: 'Bayar Iuran Sekarang',
+                onTapDestination: PembayaranIuranArisan.id),
             Divider(
               height: 25,
               thickness: 2,
