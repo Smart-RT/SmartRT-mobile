@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
+import 'package:smart_rt/screens/public_screens/arisan/create_pertemuan_arisan/create_pertemuan_selanjutnya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengaturan_arisan_page.dart';
@@ -28,7 +29,7 @@ class _ArisanPageState extends State<ArisanPage> {
   // bool isPeriodeArisanActive = true;
   // int countPertemuanPeriodeArisanActive = 1;
 
-  int status = 8;
+  int status = 11;
   Map<int, dynamic> listPage = {
     // Role 3-6, lottery_clubs belum terbuat
     1: {
@@ -182,8 +183,8 @@ class _ArisanPageState extends State<ArisanPage> {
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
         {
-          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
-          "nextPageDestination": ""
+          "menuTitle": "Detail Pertemuan Selanjutnya",
+          "nextPageDestination": DetailPertemuanSelanjutnyaPage.id
         },
         {
           "menuTitle": "Riwayat Arisan Wilayah",
@@ -206,10 +207,13 @@ class _ArisanPageState extends State<ArisanPage> {
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
         {
-          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
-          "nextPageDestination": ""
+          "menuTitle": "Detail Pertemuan Sebelumnya",
+          "nextPageDestination": DetailPertemuanSebelumnyaPage.id
         },
-        {"menuTitle": "Riwayat Arisan Wilayah", "nextPageDestination": ""},
+        {
+          "menuTitle": "Riwayat Arisan Wilayah",
+          "nextPageDestination": RiwayatArisanWilayahPage.id
+        },
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
           "nextPageDestination": PeraturanDanTataCaraArisanPage.id
@@ -227,41 +231,52 @@ class _ArisanPageState extends State<ArisanPage> {
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
         {
-          "menuTitle": "Buat Pertemuan Arisan Selanjutnya Sekarang!",
-          "nextPageDestination": ""
+          "menuTitle": "Buat Pertemuan Selanjutnya",
+          "nextPageDestination": CreatePertemuanSelanjutnyaPage.id
         },
         {
-          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
-          "nextPageDestination": ""
+          "menuTitle": "Detail Pertemuan Sebelumnya",
+          "nextPageDestination": DetailPertemuanSebelumnyaPage.id
         },
-        {"menuTitle": "Riwayat Arisan Wilayah", "nextPageDestination": ""},
+        {
+          "menuTitle": "Riwayat Arisan Wilayah",
+          "nextPageDestination": RiwayatArisanWilayahPage.id
+        },
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
           "nextPageDestination": PeraturanDanTataCaraArisanPage.id
         },
-        {"menuTitle": "Pengaturan Arisan", "nextPageDestination": ""},
+        {
+          "menuTitle": "Pengaturan Arisan",
+          "nextPageDestination": PengaturanArisanPage.id
+        },
       ]
     },
     // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah di publish, member, role 7
     11: {
       "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
-      "preTitleStyleColor": smartRTErrorColor,
-      "title": "BELUM ADA",
-      "titleStyleColor": smartRTErrorColor,
-      "subTitle":
-          "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
+      "preTitleStyleColor": smartRTSuccessColor,
+      "title": "1 JANUARI 2024",
+      "titleStyleColor": smartRTSuccessColor,
+      "subTitle": "PK. 19:00 WIB di Rumah Pak RT",
       "subTitleStyleColor": smartRTSecondaryColor,
       "listMenu": [
         {
-          "menuTitle": "Informasi dan Tagihan Periode Saat Ini",
-          "nextPageDestination": ""
+          "menuTitle": "Detail Pertemuan",
+          "nextPageDestination": DetailPertemuanSelanjutnyaPage.id
         },
-        {"menuTitle": "Riwayat Arisan Wilayah", "nextPageDestination": ""},
+        {
+          "menuTitle": "Riwayat Arisan Wilayah",
+          "nextPageDestination": RiwayatArisanWilayahPage.id
+        },
         {
           "menuTitle": "Peraturan dan Tata Cara Arisan",
           "nextPageDestination": PeraturanDanTataCaraArisanPage.id
         },
-        {"menuTitle": "Pengaturan Arisan", "nextPageDestination": ""},
+        {
+          "menuTitle": "Pengaturan Arisan",
+          "nextPageDestination": PengaturanArisanPage.id
+        },
       ]
     },
   };
