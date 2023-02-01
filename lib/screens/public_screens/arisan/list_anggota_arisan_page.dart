@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
-import 'package:provider/provider.dart';
-import 'package:smart_rt/providers/auth_provider.dart';
 
 class ListAnggotaArisanPage extends StatefulWidget {
   static const String id = 'ListAnggotaArisanPage';

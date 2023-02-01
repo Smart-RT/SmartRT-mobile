@@ -3,8 +3,6 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
-import 'package:smart_rt/widgets/cards/card_periode_arisan.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
 class DetailRiwayatArisanSayaPage extends StatefulWidget {
   static const String id = 'DetailRiwayatArisanSayaPage';

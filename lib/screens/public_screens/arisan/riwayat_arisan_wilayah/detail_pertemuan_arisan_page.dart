@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_pertemuan_page.dart';
-import 'package:smart_rt/widgets/cards/card_periode_arisan.dart';
-
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_iuran_arisan_pertemuan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_absensi_pertemuan_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_anggota_periode_arisan_page.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
 class DetailPertemuanArisanPage extends StatefulWidget {

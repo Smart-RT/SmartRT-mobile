@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/widgets/cards/card_periode_arisan.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class PengaturanArisanPage extends StatefulWidget {

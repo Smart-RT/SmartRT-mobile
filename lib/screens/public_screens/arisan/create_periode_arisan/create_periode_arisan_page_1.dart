@@ -7,7 +7,6 @@ import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/cre
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
 import 'package:smart_rt/widgets/parts/explain_part.dart';
 import 'package:provider/provider.dart';
-
 import 'package:smart_rt/providers/auth_provider.dart';
 
 class CreatePeriodeArisanPage1 extends StatefulWidget {

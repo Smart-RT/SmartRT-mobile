@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_riwayat_arisan_saya_page.dart';
-import 'package:smart_rt/widgets/cards/card_riwayat_arisan_wilayah.dart';
 
 class PembayaranIuranArisan extends StatefulWidget {
   static const String id = 'PembayaranIuranArisan';

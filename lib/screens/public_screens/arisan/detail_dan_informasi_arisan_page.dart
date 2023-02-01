@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/screens/public_screens/arisan/list_anggota_arisan_page.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class DetailDanInformasiArisanPage extends StatefulWidget {
   static const String id = 'DetailDanInformasiArisanPage';
@@ -246,7 +243,7 @@ class _DetailDanInformasiArisanPageState
             ),
             Divider(height: 10, thickness: 2),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, ListAnggotaArisanPage.id);
               },
               child: ListTile(
