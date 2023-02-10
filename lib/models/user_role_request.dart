@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/models/sub_districts.dart';
-import 'package:smart_rt/models/urban_villages.dart';
+import 'package:smart_rt/models/sub_district.dart';
+import 'package:smart_rt/models/urban_village.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
 
 class UserRoleRequests {
@@ -16,8 +16,8 @@ class UserRoleRequests {
   int request_role = -1;
   int? rt_num;
   int? rw_num;
-  SubDistricts? sub_district_id;
-  UrbanVillages? urban_village_id;
+  SubDistrict? sub_district_id;
+  UrbanVillage? urban_village_id;
   DateTime created_at = DateTime.now();
   DateTime? accepted_at;
   DateTime? rejected_at;
@@ -37,11 +37,13 @@ class UserRoleRequests {
     rt_num = userRoleRequestData['rt_num'];
     rw_num = userRoleRequestData['rw_num'];
 
-    if (userRoleRequestData['sub_district_id'] != null) {    
-      sub_district_id = SubDistricts.fromData(userRoleRequestData['sub_district_id']);
+    if (userRoleRequestData['sub_district_id'] != null) {
+      sub_district_id =
+          SubDistrict.fromData(userRoleRequestData['sub_district_id']);
     }
-    if (userRoleRequestData['urban_village_id'] != null) {    
-      urban_village_id = UrbanVillages.fromData(userRoleRequestData['urban_village_id']);
+    if (userRoleRequestData['urban_village_id'] != null) {
+      urban_village_id =
+          UrbanVillage.fromData(userRoleRequestData['urban_village_id']);
     }
 
     if (userRoleRequestData['created_at'] != null) {

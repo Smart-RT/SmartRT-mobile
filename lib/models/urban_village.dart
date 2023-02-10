@@ -1,9 +1,9 @@
-class UrbanVillages {
+class UrbanVillage {
   int id = -1;
   String name = "";
   int idKecamatan = -1;
 
-  UrbanVillages.fromData(Map<String, dynamic> data) {
+  UrbanVillage.fromData(Map<String, dynamic> data) {
     id = data['id'];
     name = data['name'];
     idKecamatan = data['kecamatan']['id'];
@@ -11,7 +11,7 @@ class UrbanVillages {
 
   Map<String, dynamic> toJson() {
     return {
-      "urbanVillages": {
+      "urbanVillage": {
         "id": id,
         "name": name,
         "idKecamatan": idKecamatan,

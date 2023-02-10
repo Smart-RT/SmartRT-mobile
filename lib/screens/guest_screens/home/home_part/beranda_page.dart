@@ -3,18 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
 import 'package:smart_rt/widgets/cards/card_big_icon_text_home.dart';
 
-class BerandaPage extends StatelessWidget {
-  const BerandaPage({
-    Key? key,
-  }) : super(key: key);
+class BerandaPage extends StatefulWidget {
+  const BerandaPage({super.key});
 
   @override
+  State<BerandaPage> createState() => _BerandaPageState();
+}
+
+class _BerandaPageState extends State<BerandaPage> {
+  @override
+  User user = AuthProvider.currentUser!;
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
@@ -44,7 +51,11 @@ class BerandaPage extends StatelessWidget {
                     icon: Icons.group,
                     title: 'Arisan',
                     onTap: () {
-                      Navigator.pushNamed(context, ArisanPage.id);
+                      if (user.area?.lottery_club_id == null) {
+                        Navigator.pushNamed(context, DaftarArisanPage.id);
+                      } else {
+                        Navigator.pushNamed(context, ArisanPage.id);
+                      }
                     }),
               ],
             ),

@@ -6,8 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/sub_districts.dart';
-import 'package:smart_rt/models/urban_villages.dart';
+import 'package:smart_rt/models/sub_district.dart';
+import 'package:smart_rt/models/urban_village.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
 import 'package:smart_rt/utilities/net_util.dart';
@@ -25,9 +25,9 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
   String _kecamatanSelectedValue = '';
   String? _kelurahanSelectedValue = '';
 
-  final List<SubDistricts> _listKecamatan = [];
-  final List<UrbanVillages> _listKelurahan = [];
-  List<UrbanVillages> _listKelurahanFiltered = [];
+  final List<SubDistrict> _listKecamatan = [];
+  final List<UrbanVillage> _listKelurahan = [];
+  List<UrbanVillage> _listKelurahanFiltered = [];
 
   final textEditingControllerKecamatan = TextEditingController();
   final textEditingControllerKelurahan = TextEditingController();
@@ -41,8 +41,8 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
         await NetUtil().dioClient.get("/addresses/subDistricts");
 
     setState(() {
-      _listKecamatan.addAll(resp.data.map<SubDistricts>((request) {
-        return SubDistricts.fromData(request);
+      _listKecamatan.addAll(resp.data.map<SubDistrict>((request) {
+        return SubDistrict.fromData(request);
       }));
     });
   }
@@ -52,8 +52,8 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
         await NetUtil().dioClient.get("/addresses/urbanVillages");
 
     setState(() {
-      _listKelurahan.addAll(resp.data.map<UrbanVillages>((request) {
-        return UrbanVillages.fromData(request);
+      _listKelurahan.addAll(resp.data.map<UrbanVillage>((request) {
+        return UrbanVillage.fromData(request);
       }));
     });
   }

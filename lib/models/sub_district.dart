@@ -1,18 +1,11 @@
-enum WilayahSurabaya{
-  Pusat,
-  Timur,
-  Barat,
-  Utara,
-  Selatan,
-  Lainnya
-}
+enum WilayahSurabaya { Pusat, Timur, Barat, Utara, Selatan, Lainnya }
 
-class SubDistricts {
+class SubDistrict {
   int id = -1;
   String name = "";
   WilayahSurabaya wilayah = WilayahSurabaya.Lainnya;
 
-  SubDistricts.fromData(Map<String, dynamic> data) {
+  SubDistrict.fromData(Map<String, dynamic> data) {
     id = data['id'];
     name = data['name'];
     wilayah = wilayahFromId(data['wilayah']);
@@ -20,7 +13,7 @@ class SubDistricts {
 
   Map<String, dynamic> toJson() {
     return {
-      "subDistricts": {
+      "subDistrict": {
         "id": id,
         "name": name,
         "wilayah": WilayahSurabaya.values.indexOf(wilayah),

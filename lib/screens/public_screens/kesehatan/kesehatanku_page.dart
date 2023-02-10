@@ -24,149 +24,155 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
       appBar: AppBar(
         title: Text('Kesehatanku'),
       ),
-      body: Padding(
-        padding: paddingScreen,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: paddingCard,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: smartRTPrimaryColor,
-                boxShadow: [
-                  BoxShadow(
-                      color: smartRTShadowColor,
-                      spreadRadius: 5,
-                      blurRadius: 25),
-                ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: paddingScreen,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: paddingCard,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: smartRTPrimaryColor,
+                  boxShadow: [
+                    BoxShadow(
+                        color: smartRTShadowColor,
+                        spreadRadius: 5,
+                        blurRadius: 25),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Kesehatanku Sekarang',
+                      style: smartRTTextLargeBold_Secondary,
+                    ),
+                    Text(
+                      'Sehat',
+                      style: smartRTTextTitle_Success,
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Kesehatanku Sekarang',
+              SB_height15,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, RiwayatKesehatankuPage.id);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: paddingCard,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: smartRTPrimaryColor,
+                    boxShadow: [
+                      BoxShadow(
+                          color: smartRTShadowColor,
+                          spreadRadius: 5,
+                          blurRadius: 25),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Riwayat Kesehatanku',
+                        style: smartRTTextNormal_Secondary,
+                      ),
+                      Icon(
+                        Icons.list,
+                        color: smartRTSecondaryColor,
+                        size: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SB_height15,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, RiwayatBantuanPage.id);
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: paddingCard,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: smartRTPrimaryColor,
+                    boxShadow: [
+                      BoxShadow(
+                          color: smartRTShadowColor,
+                          spreadRadius: 5,
+                          blurRadius: 25),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Riwayat Bantuan',
+                        style: smartRTTextNormal_Secondary,
+                      ),
+                      Icon(
+                        Icons.list,
+                        color: smartRTSecondaryColor,
+                        size: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SB_height30,
+              Text(
+                'Anda Kurang Sehat ?',
+                style: smartRTTextTitle_Primary,
+              ),
+              Text(
+                'Laporkan kesehatan anda segera agar dapat mengakses fitur sesuai dengan kondisi kesehatan anda sekarang.',
+                style: smartRTTextNormal_Primary,
+                textAlign: TextAlign.justify,
+              ),
+              SB_height30,
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, FormLaporKesehatanPage1.id);
+                  },
+                  child: Text(
+                    'LAPOR KESEHATAN',
                     style: smartRTTextLargeBold_Secondary,
                   ),
-                  Text(
-                    'Sehat',
-                    style: smartRTTextTitle_Success,
+                ),
+              ),
+              SB_height30,
+              Text(
+                'Butuh Bantuan ?',
+                style: smartRTTextTitle_Primary,
+              ),
+              Text(
+                'Anda dapat meminta bantuan untuk memenuhi keperluan anda ketika kondisi kesehatan anda kurang baik. Hal tersebut bertujuan agar kepulihan kesehatan anda dapat lebih maksimal serta meminimkan penularan jika mempunyai penyakit menular.',
+                style: smartRTTextNormal_Primary,
+                textAlign: TextAlign.justify,
+              ),
+              SB_height30,
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, FormMintaBantuanPage.id);
+                  },
+                  child: Text(
+                    'MINTA BANTUAN',
+                    style: smartRTTextLargeBold_Secondary,
                   ),
-                ],
-              ),
-            ),
-            SB_height15,
-            GestureDetector(
-              onTap: (){Navigator.pushNamed(context, RiwayatKesehatankuPage.id);},
-              child: Container(
-                width: double.infinity,
-                padding: paddingCard,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: smartRTPrimaryColor,
-                  boxShadow: [
-                    BoxShadow(
-                        color: smartRTShadowColor,
-                        spreadRadius: 5,
-                        blurRadius: 25),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Riwayat Kesehatanku',
-                      style: smartRTTextNormal_Secondary,
-                    ),
-                    Icon(
-                      Icons.list,
-                      color: smartRTSecondaryColor,
-                      size: 20,
-                    ),
-                  ],
                 ),
               ),
-            ),
-            SB_height15,
-            GestureDetector(
-              onTap: (){Navigator.pushNamed(context, RiwayatBantuanPage.id);},
-              child: Container(
-                width: double.infinity,
-                padding: paddingCard,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: smartRTPrimaryColor,
-                  boxShadow: [
-                    BoxShadow(
-                        color: smartRTShadowColor,
-                        spreadRadius: 5,
-                        blurRadius: 25),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Riwayat Bantuan',
-                      style: smartRTTextNormal_Secondary,
-                    ),
-                    Icon(
-                      Icons.list,
-                      color: smartRTSecondaryColor,
-                      size: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SB_height30,
-            Text(
-              'Anda Kurang Sehat ?',
-              style: smartRTTextTitle_Primary,
-            ),
-            Text(
-              'Laporkan kesehatan anda segera agar dapat mengakses fitur sesuai dengan kondisi kesehatan anda sekarang.',
-              style: smartRTTextNormal_Primary,
-              textAlign: TextAlign.justify,
-            ),
-            SB_height30,
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, FormLaporKesehatanPage1.id);
-                },
-                child: Text(
-                  'LAPOR KESEHATAN',
-                  style: smartRTTextLargeBold_Secondary,
-                ),
-              ),
-            ),
-            SB_height30,
-            Text(
-              'Butuh Bantuan ?',
-              style: smartRTTextTitle_Primary,
-            ),
-            Text(
-              'Anda dapat meminta bantuan untuk memenuhi keperluan anda ketika kondisi kesehatan anda kurang baik. Hal tersebut bertujuan agar kepulihan kesehatan anda dapat lebih maksimal serta meminimkan penularan jika mempunyai penyakit menular.',
-              style: smartRTTextNormal_Primary,
-              textAlign: TextAlign.justify,
-            ),
-            SB_height30,
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, FormMintaBantuanPage.id);
-                },
-                child: Text(
-                  'MINTA BANTUAN',
-                  style: smartRTTextLargeBold_Secondary,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -25,25 +25,49 @@ class CardWithTimeLocation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: smartRTTextLargeBold_Primary, textAlign: TextAlign.justify, maxLines: 1, overflow: TextOverflow.ellipsis,),
-          Text(subtitle, style: smartRTTextNormal_Primary, textAlign: TextAlign.justify, maxLines: 3, overflow: TextOverflow.ellipsis,),
+          Text(
+            title,
+            style: smartRTTextLargeBold_Primary,
+            textAlign: TextAlign.justify,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            subtitle,
+            style: smartRTTextNormal_Primary,
+            textAlign: TextAlign.justify,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ),
           SB_height15,
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.access_time, size: 15,),
+              Icon(
+                Icons.access_time,
+                size: 15,
+              ),
               SB_width25,
-              Text(dateTime, style: smartRTTextNormal_Primary,),
+              Text(
+                dateTime,
+                style: smartRTTextNormal_Primary,
+              ),
             ],
           ),
-           Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.location_pin, size: 15,),
+              Icon(
+                Icons.location_pin,
+                size: 15,
+              ),
               SB_width25,
-              Text(location, style: smartRTTextNormal_Primary,),
+              Text(
+                location,
+                style: smartRTTextNormal_Primary,
+              ),
             ],
           ),
         ],

@@ -1,3 +1,4 @@
+import 'package:smart_rt/models/area.dart';
 import 'package:smart_rt/models/user_role_request.dart';
 
 enum Role {
@@ -23,19 +24,19 @@ class User {
   int? rw_num;
   String gender = "Laki-Laki";
   String? born_at;
-  DateTime born_date = DateTime.now();
+  DateTime? born_date = DateTime.now();
   int? religion;
   bool? is_married;
   String? profession;
   String phone = "";
   Role user_role = Role.None;
-  int? area_id;
+  Area? area;
   bool is_lottery_club_member = false;
   int? task_rating;
   String? sign_img;
   String? photo_profile_img;
   bool is_health = true;
-  int total_serving_as_neighbourhood_head = 0;
+  int? total_serving_as_neighbourhood_head = 0;
   String token = "";
   String refresh_token = "";
   DateTime created_at = DateTime.now();
@@ -55,29 +56,54 @@ class User {
     kk_num = userData['kk_num'];
     full_name = userData['full_name'];
     address = userData['address'];
-    rt_num = userData['rt_num'];
-    sub_district_id = userData['sub_district_id'];
-    urban_village = userData['urban_village'];
-    rw_num = userData['rw_num'];
+    if (userData['rt_num'] != null) {
+      rt_num = userData['rt_num'];
+    }
+    if (userData['sub_district_id'] != null) {
+      sub_district_id = userData['sub_district_id'];
+    }
+    if (userData['urban_village'] != null) {
+      urban_village = userData['urban_village'];
+    }
+    if (userData['rw_num'] != null) {
+      rw_num = userData['rw_num'];
+    }
     gender = userData['gender'];
-    born_at = userData['born_at'];
+    if (userData['born_at'] != null) {
+      born_at = userData['born_at'];
+    }
 
     if (userData['born_date'] != null) {
       born_date = DateTime.parse(userData['born_date']);
     }
+    if (userData['religion'] != null) {
+      religion = userData['religion'];
+    }
+    if (userData['is_married'] != null) {
+      is_married = userData['is_married'] == 1 ? true : false;
+    }
+    if (userData['religion'] != null) {
+      profession = userData['profession'];
+    }
 
-    religion = userData['religion'];
-    is_married = userData['is_married'] == 1 ? true : false;
-    profession = userData['profession'];
     phone = userData['phone'];
 
     user_role = roleFromId(userData['user_role']);
 
-    area_id = userData['area_id'];
-    is_lottery_club_member =
-        userData['is_lottery_club_member'] == 1 ? true : false;
-    task_rating = userData['task_rating'];
-    sign_img = userData['sign_img'];
+    if (userData['area'] != null) {
+      area = Area.fromData(userData['area']);
+    }
+    if (userData['is_lottery_club_member'] != null) {
+      is_lottery_club_member =
+          userData['is_lottery_club_member'] == 1 ? true : false;
+    }
+    if (userData['task_rating'] != null) {
+      task_rating = userData['task_rating'];
+    }
+    if (userData['sign_img'] != null) {
+      sign_img = userData['sign_img'];
+    }
+
     photo_profile_img = userData['photo_profile_img'];
     is_health = userData['is_health'] == 1 ? true : false;
     total_serving_as_neighbourhood_head =
@@ -86,13 +112,16 @@ class User {
     if (userData['created_at'] != null) {
       created_at = DateTime.parse(userData['created_at']);
     }
-    created_by = userData['created_by'];
+    if (userData['created_by'] != null) {
+      created_by = userData['created_by'];
+    }
 
     if (userData['user_role_requests'] != null) {
       user_role_requests.clear();
-      user_role_requests.addAll(userData['user_role_requests'].map<UserRoleRequests>((request) {
+      user_role_requests.addAll(
+          userData['user_role_requests'].map<UserRoleRequests>((request) {
         return UserRoleRequests.fromData(request);
-      })) ;
+      }));
     }
   }
 
@@ -116,7 +145,7 @@ class User {
         "profession": profession,
         "phone": phone,
         "user_role": Role.values.indexOf(user_role) + 1,
-        "area_id": area_id,
+        "area": area == null ? area : area!.toJson(),
         "is_lottery_club_member": is_lottery_club_member ? 1 : 0,
         "task_rating": task_rating,
         "sign_img": sign_img,

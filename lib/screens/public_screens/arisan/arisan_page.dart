@@ -21,13 +21,13 @@ class ArisanPage extends StatefulWidget {
 }
 
 class _ArisanPageState extends State<ArisanPage> {
-  // int roleUser = 3;
+  // int roleUser = 4;
   // bool isArisanCreated = true;
   // bool isArisanMember = false;
   // bool isPeriodeArisanActive = true;
   // int countPertemuanPeriodeArisanActive = 1;
 
-  int status = 11;
+  int status = 4;
   Map<int, dynamic> listPage = {
     // Role 3-6, lottery_clubs belum terbuat
     1: {

@@ -338,6 +338,13 @@ class _DaftarArisanPageState extends State<DaftarArisanPage> {
             Container(
               width: double.infinity,
               child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                ),
                 onPressed: () async {
                   /**
                            * Ketika di tekan maka akan manggil back end untuk insert ke lottery_clubs dan kembali ke halaman arisan_page
