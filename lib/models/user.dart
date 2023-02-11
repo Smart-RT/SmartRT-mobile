@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:smart_rt/models/area.dart';
 import 'package:smart_rt/models/user_role_request.dart';
 
@@ -163,6 +164,8 @@ class User {
 
   Role roleFromId(int id) {
     try {
+      debugPrint('VALUE : ' + id.toString());
+      debugPrint('ROLE : ' + Role.values.elementAt(id - 1).toString());
       return Role.values.elementAt(id - 1);
     } catch (e) {
       return Role.None;

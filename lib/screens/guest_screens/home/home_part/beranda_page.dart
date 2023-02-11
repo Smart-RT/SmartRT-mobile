@@ -51,7 +51,32 @@ class _BerandaPageState extends State<BerandaPage> {
                     icon: Icons.group,
                     title: 'Arisan',
                     onTap: () {
-                      if (user.area?.lottery_club_id == null) {
+                      if (user.area == null) {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text(
+                              'Hai Sobat Pintar,',
+                              style: smartRTTextTitleCard,
+                            ),
+                            content: Text(
+                              'Anda baru dapat menggunakan fitur ini jika anda telah bergabung dengan wilayah anda!',
+                              style: smartRTTextNormal.copyWith(
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'OK'),
+                                child: Text(
+                                  'OK',
+                                  style: smartRTTextNormal.copyWith(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (user.area?.lottery_club_id == null) {
                         Navigator.pushNamed(context, DaftarArisanPage.id);
                       } else {
                         Navigator.pushNamed(context, ArisanPage.id);

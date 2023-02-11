@@ -1,3 +1,4 @@
+import 'package:smart_rt/models/lottery_club.dart';
 import 'package:smart_rt/models/user.dart';
 
 class Area {
@@ -8,7 +9,7 @@ class Area {
   int sub_district_id = 0;
   int urban_village_id = 0;
   int is_lottery_club_period_active = 0;
-  int? lottery_club_id;
+  LotteryClub? lottery_club_id;
   User? ketua_id;
   User? wakil_ketua_id;
   String wakil_ketua_code = 'XXX';
@@ -26,7 +27,9 @@ class Area {
     sub_district_id = data['sub_district_id'];
     urban_village_id = data['urban_village_id'];
     is_lottery_club_period_active = data['is_lottery_club_period_active'];
-    lottery_club_id = data['lottery_club_id'];
+    if (data['lottery_club_id'] != null) {
+      lottery_club_id = LotteryClub.fromData(data['lottery_club_id']);
+    }
     if (data['ketua_id'] != null) {
       ketua_id = User.fromData(data['ketua_id']);
     }
@@ -54,7 +57,8 @@ class Area {
       "sub_district_id": sub_district_id,
       "urban_village_id": urban_village_id,
       "is_lottery_club_period_active": is_lottery_club_period_active,
-      "lottery_club_id": lottery_club_id,
+      "lottery_club_id":
+          lottery_club_id == null ? lottery_club_id : lottery_club_id!.toJson(),
       "ketua_id": ketua_id!.toJson(),
       "wakil_ketua_id":
           wakil_ketua_id == null ? wakil_ketua_id : wakil_ketua_id!.toJson(),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_pertemuan_arisan/create_pertemuan_selanjutnya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
@@ -21,13 +23,10 @@ class ArisanPage extends StatefulWidget {
 }
 
 class _ArisanPageState extends State<ArisanPage> {
-  // int roleUser = 4;
-  // bool isArisanCreated = true;
-  // bool isArisanMember = false;
-  // bool isPeriodeArisanActive = true;
-  // int countPertemuanPeriodeArisanActive = 1;
+  User user = AuthProvider.currentUser!;
 
   int status = 4;
+
   Map<int, dynamic> listPage = {
     // Role 3-6, lottery_clubs belum terbuat
     1: {

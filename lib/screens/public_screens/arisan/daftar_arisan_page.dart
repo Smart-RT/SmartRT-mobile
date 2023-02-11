@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/providers/arisan_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 
 class DaftarArisanPage extends StatefulWidget {
   static const String id = 'DaftarArisanPage';
@@ -346,9 +349,12 @@ class _DaftarArisanPageState extends State<DaftarArisanPage> {
                   ),
                 ),
                 onPressed: () async {
-                  /**
-                           * Ketika di tekan maka akan manggil back end untuk insert ke lottery_clubs dan kembali ke halaman arisan_page
-                           */
+                  bool bukaArisanSukses = await context
+                      .read<ArisanProvider>()
+                      .bukaArisan(context: context);
+                  if (bukaArisanSukses) {
+                    Navigator.popAndPushNamed(context, ArisanPage.id);
+                  }
                 },
                 child: Text(
                   'DAFTAR SEKARANG',

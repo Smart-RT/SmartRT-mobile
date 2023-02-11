@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
+import 'package:smart_rt/providers/arisan_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
@@ -48,9 +49,9 @@ class _SmartRTAppState extends State<SmartRTApp> {
     Role roleUser = AuthProvider.currentUser?.user_role ?? Role.None;
     if (roleUser == Role.Admin) {
       routeStart = BerandaAdminPage.id;
-    } else if (roleUser == Role.Guest) {
-      routeStart = GuestHome.id;
-    } else if (roleUser == Role.Ketua_RT) {
+    } else if (roleUser == Role.Guest || roleUser == Role.Ketua_RT) {
+      debugPrint('MASOK SINI BANG');
+      debugPrint(roleUser.toString());
       routeStart = GuestHome.id;
     } else {
       routeStart = WelcomePage.id;
@@ -70,6 +71,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
       providers: [
         ChangeNotifierProvider(create: ((context) => ApplicationProvider())),
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
+        ChangeNotifierProvider(create: ((context) => ArisanProvider())),
       ],
       builder: (context, child) {
         return MaterialApp(

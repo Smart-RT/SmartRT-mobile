@@ -33,28 +33,6 @@ class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
 
   void doLogin(BuildContext context) async {
-    // ini dipindahin ke Auth provider....
-    // try {
-    //   var response = await NetUtil().dioClient.post('/users/login', data: {
-    //     "noTelp": _noTelpController.text,
-    //     "kataSandi": _kataSandiController.text
-    //   });
-    //   debugPrint(response.toString());
-    //   await ApplicationProvider.storage
-    //       .write(key: 'jwt', value: response.data['token']);
-    //   await ApplicationProvider.storage
-    //       .write(key: 'refreshToken', value: response.data['refreshToken']);
-    //   ApplicationProvider.currentUserJWT = response.data['token'];
-    //   ApplicationProvider.currentUserRefreshToken =
-    //       response.data['refreshToken'];
-    //   context.read<ApplicationProvider>().notifyListeners();
-    //   // Pindahin ke halaman home.
-
-    // } on DioError catch (e) {
-    //   if (e.response != null) {
-    //     debugPrint(e.response!.data.toString());
-    //   }
-    // }
     LoadingDialog.show(context);
     bool loginSuccess = await context.read<AuthProvider>().login(
         context: context,
@@ -63,10 +41,9 @@ class _LoginPageState extends State<LoginPage> {
     LoadingDialog.hide(context);
 
     if (loginSuccess) {
-      // kita ambil dlu user dari providernya kasi ! untuk bilangin kalau itu ga bakal null
       User currentUser = AuthProvider.currentUser!;
-      // Kita arahin sesuai rolenya
-      if(currentUser.user_role == Role.Guest){
+      if (currentUser.user_role == Role.Guest ||
+          currentUser.user_role == Role.Ketua_RT) {
         Navigator.pushReplacementNamed(context, GuestHome.id);
       }
     }
