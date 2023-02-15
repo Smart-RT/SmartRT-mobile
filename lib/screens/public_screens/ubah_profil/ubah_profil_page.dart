@@ -614,44 +614,6 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                   ],
                 ),
               ),
-              // TextFormField(
-              //   autocorrect: false,
-              //   style: smartRTTextNormal_Primary,
-              //   decoration: const InputDecoration(
-              //     labelText: 'Nama Lengkap',
-              //   ),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Nama Lengkap tidak boleh kosong';
-              //     }
-              //   },
-              // ),
-              // SB_height15,
-              // TextFormField(
-              //   autocorrect: false,
-              //   style: smartRTTextNormal_Primary,
-              //   decoration: const InputDecoration(
-              //     labelText: 'Nomor Telepon',
-              //   ),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Nomor Telepon tidak boleh kosong';
-              //     }
-              //   },
-              // ),
-              // SB_height15,
-              // TextFormField(
-              //   autocorrect: false,
-              //   style: smartRTTextNormal_Primary,
-              //   decoration: const InputDecoration(
-              //     labelText: 'Alamat Rumah',
-              //   ),
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Nomor Telepon tidak boleh kosong';
-              //     }
-              //   },
-              // ),
             ],
           ),
           Container(

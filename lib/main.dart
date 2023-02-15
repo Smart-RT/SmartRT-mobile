@@ -50,8 +50,6 @@ class _SmartRTAppState extends State<SmartRTApp> {
     if (roleUser == Role.Admin) {
       routeStart = BerandaAdminPage.id;
     } else if (roleUser == Role.Guest || roleUser == Role.Ketua_RT) {
-      debugPrint('MASOK SINI BANG');
-      debugPrint(roleUser.toString());
       routeStart = GuestHome.id;
     } else {
       routeStart = WelcomePage.id;
@@ -77,11 +75,6 @@ class _SmartRTAppState extends State<SmartRTApp> {
         return MaterialApp(
           title: 'Flutter Demo',
           theme: getThemeData(),
-          // home: const BerandaAdminPage(),we
-          // initialRoute: BerandaAdminPage.id,
-          // home: const GuestHome(),
-          // initialRoute: GuestHome.id,
-          // home: const WelcomePage(),
           initialRoute: routeStart,
           onGenerateRoute: Routes.generateRoute,
         );

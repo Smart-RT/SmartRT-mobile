@@ -76,8 +76,6 @@ class _BerandaPageState extends State<BerandaPage> {
                             ],
                           ),
                         );
-                      } else if (user.area?.lottery_club_id == null) {
-                        Navigator.pushNamed(context, DaftarArisanPage.id);
                       } else {
                         Navigator.pushNamed(context, ArisanPage.id);
                       }

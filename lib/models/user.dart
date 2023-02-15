@@ -3,14 +3,14 @@ import 'package:smart_rt/models/area.dart';
 import 'package:smart_rt/models/user_role_request.dart';
 
 enum Role {
-  Admin,
-  Guest,
-  Warga,
-  Bendahara,
-  Sekretaris,
-  Wakil_RT,
-  Ketua_RT,
-  None
+  Admin, //0
+  Guest, //1
+  Warga, //2
+  Bendahara, //3
+  Sekretaris, //4
+  Wakil_RT, //5
+  Ketua_RT, //6
+  None //7
 }
 
 class User {
@@ -164,8 +164,6 @@ class User {
 
   Role roleFromId(int id) {
     try {
-      debugPrint('VALUE : ' + id.toString());
-      debugPrint('ROLE : ' + Role.values.elementAt(id - 1).toString());
       return Role.values.elementAt(id - 1);
     } catch (e) {
       return Role.None;

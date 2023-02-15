@@ -49,6 +49,7 @@ class ApplicationProvider extends ChangeNotifier {
         await ApplicationProvider.storage.read(key: 'refreshToken');
     String? user = await ApplicationProvider.storage.read(key: 'user');
     if (user != null && user != "") {
+      debugPrint(user);
       AuthProvider.currentUser = User.fromData(jsonDecode(user));
       AuthProvider.isLoggedIn = true;
 

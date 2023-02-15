@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:smart_rt/models/area.dart';
 import 'package:smart_rt/models/user.dart';
 
@@ -10,24 +11,22 @@ class LotteryClub {
   int? created_by;
 
   LotteryClub.fromData(Map<String, dynamic> data) {
-    id = data['id'];
-    area_id = data['area_id'];
-    last_period = data['last_period'];
-    kas_amount = data['kas_amount'];
+    id = int.parse(data['id'].toString());
+    area_id = int.parse(data['area_id'].toString());
+    last_period = int.parse(data['last_period'].toString());
+    kas_amount = int.parse(data['kas_amount'].toString());
     created_at = DateTime.parse(data['created_at']);
-    created_by = data['created_by'];
+    created_by = int.parse(data['created_by'].toString());
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "LotteryClub": {
-        "id": id.toString(),
-        "area_id": area_id.toString(),
-        "last_period": last_period.toString(),
-        "kas_amount": kas_amount.toString(),
-        "created_at": created_at.toString(),
-        "created_by": created_by.toString(),
-      }
+      "id": id.toString(),
+      "area_id": area_id.toString(),
+      "last_period": last_period.toString(),
+      "kas_amount": kas_amount.toString(),
+      "created_at": created_at.toString(),
+      "created_by": created_by.toString(),
     };
   }
 }

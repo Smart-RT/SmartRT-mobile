@@ -5,7 +5,7 @@ import 'package:smart_rt/models/user.dart';
 class LotteryClubPeriodDetail {
   int id = -1;
   LotteryClubPeriod? lottery_club_period_id;
-  LotteryClub? lottery_club_id;
+  int? lottery_club_id;
   int total_attendance = 0;
   User? winner_1_id;
   User? winner_2_id;
@@ -13,26 +13,41 @@ class LotteryClubPeriodDetail {
   int is_offline_meet = 0;
   String? meet_at;
   DateTime meet_date = DateTime.now();
-  DateTime created_by = DateTime.now();
-  User? created_at;
-  DateTime updated_by = DateTime.now();
-  User? updated_at;
+  DateTime created_at = DateTime.now();
+  int? created_by;
+  DateTime? updated_at;
+  int? updated_by;
 
   LotteryClubPeriodDetail.fromData(Map<String, dynamic> data) {
-    id = data['id'];
-    lottery_club_period_id = data['lottery_club_period_id'];
-    lottery_club_id = data['lottery_club_id'];
-    total_attendance = data['total_attendance'];
-    winner_1_id = data['winner_1_id'];
-    winner_2_id = data['winner_2_id'];
+    id = int.parse(data['id'].toString());
+    lottery_club_period_id =
+        LotteryClubPeriod.fromData(data['lottery_club_period_id']);
+    lottery_club_id = int.parse(data['lottery_club_id'].toString());
+    if (data['total_attendance'] != null) {
+      total_attendance = int.parse(data['total_attendance'].toString());
+    }
+    if (data['winner_1_id'] != null) {
+      winner_1_id = data['winner_1_id'];
+    }
+    if (data['winner_2_id'] != null) {
+      winner_2_id = data['winner_2_id'];
+    }
     status = data['status'];
-    is_offline_meet = data['is_offline_meet'];
-    meet_at = data['meet_at'];
-    meet_date = data['meet_date'];
+    is_offline_meet = int.parse(data['is_offline_meet'].toString());
+    if (data['meet_at'] != null) {
+      meet_at = data['meet_at'];
+    }
+    meet_date = DateTime.parse(data['meet_date']);
+
     created_by = data['created_by'];
-    created_at = data['created_at'];
-    updated_by = data['updated_by'];
-    updated_at = data['updated_at'];
+    created_at = DateTime.parse(data['created_at']);
+
+    if (data['updated_by'] != null) {
+      updated_by = data['updated_by'];
+    }
+    if (data['updated_at'] != null) {
+      updated_at = DateTime.parse(data['updated_at']);
+    }
   }
 
   Map<String, dynamic> toJson() {

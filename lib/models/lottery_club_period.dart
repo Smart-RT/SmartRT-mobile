@@ -4,8 +4,8 @@ import 'package:smart_rt/models/user.dart';
 
 class LotteryClubPeriod {
   int id = -1;
-  Area? area_id;
-  LotteryClub? lottery_club_id;
+  int? area_id;
+  int? lottery_club_id;
   int period = 0;
   int income_amount = 0;
   int expense_amount = 0;
@@ -22,33 +22,44 @@ class LotteryClubPeriod {
   DateTime started_at = DateTime.now();
   DateTime ended_at = DateTime.now();
   DateTime created_at = DateTime.now();
-  User? created_by;
+  int? created_by;
   DateTime updated_at = DateTime.now();
-  User? updated_by;
+  int? updated_by;
 
   LotteryClubPeriod.fromData(Map<String, dynamic> data) {
-    id = data['id'];
-    area_id = data['area_id'];
-    lottery_club_id = data['lottery_club_id'];
-    period = data['period'];
-    income_amount = data['income_amount'];
-    expense_amount = data['expense_amount'];
-    kas_period_amount = data['kas_period_amount'];
-    bill_amount = data['bill_amount'];
-    winner_bill_amount = data['winner_bill_amount'];
-    total_already_not_be_a_winner = data['total_already_not_be_a_winner'];
-    meet_ctr = data['meet_ctr'];
-    year_limit = data['year_limit'];
-    total_members = data['total_members'];
-    total_meets = data['total_meets'];
-    default_meet_location = data['default_meet_location'];
-    default_meet_date = data['default_meet_date'];
-    started_at = data['started_at'];
-    ended_at = data['ended_at'];
-    created_at = data['created_at'];
-    created_by = data['created_by'];
-    updated_at = data['updated_at'];
-    updated_by = data['updated_by'];
+    id = int.parse(data['id'].toString());
+    area_id = int.parse(data['area_id'].toString());
+    lottery_club_id = int.parse(data['lottery_club_id'].toString());
+    period = int.parse(data['period'].toString());
+    income_amount = int.parse(data['income_amount'].toString());
+    expense_amount = int.parse(data['expense_amount'].toString());
+    kas_period_amount = int.parse(data['kas_period_amount'].toString());
+    bill_amount = int.parse(data['bill_amount'].toString());
+    winner_bill_amount = int.parse(data['winner_bill_amount'].toString());
+    total_already_not_be_a_winner =
+        int.parse(data['total_already_not_be_a_winner'].toString());
+    meet_ctr = int.parse(data['meet_ctr'].toString());
+    year_limit = int.parse(data['year_limit'].toString());
+    total_members = int.parse(data['total_members'].toString());
+    total_meets = int.parse(data['total_meets'].toString());
+    if (data['default_meet_location'] != null) {
+      default_meet_location = data['default_meet_location'];
+    }
+    if (data['default_meet_date'] != null) {
+      default_meet_date = DateTime.parse(data['default_meet_date']);
+    }
+    started_at = DateTime.parse(data['started_at']);
+    if (data['ended_at'] != null) {
+      ended_at = DateTime.parse(data['ended_at']);
+    }
+    created_at = DateTime.parse(data['created_at']);
+    created_by = int.parse(data['created_by'].toString());
+    if (data['updated_at'] != null) {
+      updated_at = DateTime.parse(data['updated_at']);
+    }
+    if (data['updated_by'] != null) {
+      updated_by = int.parse(data['updated_by'].toString());
+    }
   }
 
   Map<String, dynamic> toJson() {

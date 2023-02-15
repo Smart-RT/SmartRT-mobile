@@ -197,7 +197,9 @@ class Routes {
         });
       case CreatePeriodeArisanPage2.id:
         return MaterialPageRoute(builder: (context) {
-          return const CreatePeriodeArisanPage2();
+          return CreatePeriodeArisanPage2(
+            args: settings.arguments as CreatePeriodeArisanPage2Arguments,
+          );
         });
       case RiwayatArisanSayaPage.id:
         return MaterialPageRoute(builder: (context) {

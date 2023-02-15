@@ -278,4 +278,28 @@ class AuthProvider extends ApplicationProvider {
       return false;
     }
   }
+
+  Future<List<User>> getListUserWilayah({
+    required BuildContext context,
+  }) async {
+    try {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.post('/users/listUserWilayah');
+      List<User> listUserWilayah = [];
+      if (resp.data != null) {
+        listUserWilayah.addAll(resp.data.map<User>((request) {
+          return User.fromData(request);
+        }));
+      }
+      return listUserWilayah;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return [];
+    }
+  }
 }
