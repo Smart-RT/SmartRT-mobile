@@ -1,7 +1,3 @@
-import 'package:smart_rt/models/area.dart';
-import 'package:smart_rt/models/lottery_club.dart';
-import 'package:smart_rt/models/user.dart';
-
 class LotteryClubPeriod {
   int id = -1;
   int? area_id;

@@ -6,29 +6,35 @@ import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 
 class CardRiwayatArisanWilayah extends StatelessWidget {
-  const CardRiwayatArisanWilayah({
-    Key? key,
-    required this.periodeKe,
-    required this.status,
-    required this.totalPertemuan,
-    required this.totalAnggota,
-    required this.iuran,
-    required this.onTapDestination,
-  }) : super(key: key);
+  const CardRiwayatArisanWilayah(
+      {Key? key,
+      required this.periodeKe,
+      required this.status,
+      required this.statusTextColor,
+      required this.totalPertemuan,
+      required this.totalAnggota,
+      required this.iuran,
+      this.onTapDestination,
+      this.onTap})
+      : super(key: key);
 
   final String periodeKe;
   final String status;
+  final Color statusTextColor;
   final String totalPertemuan;
   final String totalAnggota;
   final String iuran;
-  final String onTapDestination;
+  final String? onTapDestination;
+
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, onTapDestination);
-      },
+      onTap: onTap ??
+          () {
+            Navigator.pushNamed(context, onTapDestination!);
+          },
       child: Card(
         color: smartRTPrimaryColor,
         child: Padding(
@@ -50,8 +56,7 @@ class CardRiwayatArisanWilayah extends StatelessWidget {
                   ),
                   Text(
                     status,
-                    style:
-                        smartRTTextNormal.copyWith(color: smartRTSuccessColor2),
+                    style: smartRTTextNormal.copyWith(color: statusTextColor),
                   ),
                 ],
               ),

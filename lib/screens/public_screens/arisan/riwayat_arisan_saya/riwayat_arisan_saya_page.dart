@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_riwayat_arisan_saya_page.dart';
@@ -38,12 +39,14 @@ class _RiwayatArisanSayaPageState extends State<RiwayatArisanSayaPage> {
               child: Column(
                 children: [
                   CardRiwayatArisanWilayah(
-                      periodeKe: '1',
-                      status: 'selesai',
-                      totalPertemuan: '12x (1 tahun)',
-                      totalAnggota: '10',
-                      iuran: 'Rp 10.000,00',
-                      onTapDestination: DetailRiwayatArisanSayaPage.id),
+                    periodeKe: '1',
+                    status: 'selesai',
+                    statusTextColor: smartRTSecondaryColor,
+                    totalPertemuan: '12x (1 tahun)',
+                    totalAnggota: '10',
+                    iuran: 'Rp 10.000,00',
+                    onTap: () {},
+                  ),
                 ],
               ),
             ),

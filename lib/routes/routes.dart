@@ -12,6 +12,7 @@ import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.da
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/pdf_screen.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/absen_anggota_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_2.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_0.dart';
@@ -219,7 +220,9 @@ class Routes {
         });
       case DetailRiwayatArisanWilayah.id:
         return MaterialPageRoute(builder: (context) {
-          return const DetailRiwayatArisanWilayah();
+          return DetailRiwayatArisanWilayah(
+            args: settings.arguments as DetailRiwayatArisanWilayahArguments,
+          );
         });
       case LihatSemuaPertemuanPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -227,7 +230,9 @@ class Routes {
         });
       case LihatSemuaAnggotaArisanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return const LihatSemuaAnggotaArisanPage();
+          return LihatSemuaAnggotaArisanPage(
+            args: settings.arguments as LihatSemuaAnggotaArisanPageArguments,
+          );
         });
       case DetailPertemuanArisanPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -256,6 +261,12 @@ class Routes {
       case CreatePertemuanSelanjutnyaPage.id:
         return MaterialPageRoute(builder: (context) {
           return const CreatePertemuanSelanjutnyaPage();
+        });
+      case AbsenAnggotaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return AbsenAnggotaPage(
+            args: settings.arguments as AbsenAnggotaPageArguments,
+          );
         });
       // ---
 

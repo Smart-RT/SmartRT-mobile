@@ -4,11 +4,12 @@ import 'package:smart_rt/constants/style.dart';
 
 class ListTileArisan extends StatelessWidget {
   const ListTileArisan(
-      {Key? key, required this.title, required this.onTapDestination})
+      {Key? key, required this.title, this.onTapDestination, this.onTap})
       : super(key: key);
 
   final String title;
-  final String onTapDestination;
+  final GestureTapCallback? onTap;
+  final String? onTapDestination;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,10 @@ class ListTileArisan extends StatelessWidget {
         Icons.arrow_forward_ios,
         color: smartRTPrimaryColor,
       ),
-      onTap: (){Navigator.pushNamed(context, onTapDestination);},
+      onTap: onTap ??
+          () {
+            Navigator.pushNamed(context, onTapDestination!);
+          },
     );
   }
 }

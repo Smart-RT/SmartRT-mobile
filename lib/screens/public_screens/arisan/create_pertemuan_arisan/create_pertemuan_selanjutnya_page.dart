@@ -37,7 +37,7 @@ class _CreatePertemuanSelanjutnyaPageState
     int idPeriodeTerakhir = resp.data;
     resp = await NetUtil()
         .dioClient
-        .get('/lotteryClubs/getPeriodDetailUnpublish/${idPeriodeTerakhir}');
+        .get('/lotteryClubs/getPeriodDetail/Unpublished/${idPeriodeTerakhir}');
 
     dataPertemuan = LotteryClubPeriodDetail.fromData(resp.data);
 
