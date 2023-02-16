@@ -27,8 +27,8 @@ class _RiwayatArisanWilayahPageState extends State<RiwayatArisanWilayahPage> {
     Response<dynamic> resp = await NetUtil()
         .dioClient
         .get('/lotteryClubs/getListPeriodeArisan/${user.area!.id}');
-    listPeriodeArisan!.clear();
-    listPeriodeArisan!.addAll((resp.data).map<LotteryClubPeriod>((request) {
+    listPeriodeArisan.clear();
+    listPeriodeArisan.addAll((resp.data).map<LotteryClubPeriod>((request) {
       return LotteryClubPeriod.fromData(request);
     }));
     setState(() {});
