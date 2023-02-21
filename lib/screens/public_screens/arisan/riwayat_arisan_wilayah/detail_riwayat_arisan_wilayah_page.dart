@@ -6,6 +6,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/lottery_club_period.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_pertemuan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_anggota_periode_arisan_page.dart';
+import 'package:smart_rt/utilities/currency_format.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
 class DetailRiwayatArisanWilayahArguments {
@@ -53,8 +54,10 @@ class _DetailRiwayatArisanWilayahState
     jumlahPertemuan =
         '${dataPeriodeArisan!.total_meets.toString()}x (${yearLimit})';
     jumlahAnggota = '${dataPeriodeArisan!.total_members} orang';
-    iuranPertemuan = 'IDR ${dataPeriodeArisan!.bill_amount},00';
-    hadiahPemenang = 'IDR ${dataPeriodeArisan!.winner_bill_amount},00';
+    iuranPertemuan =
+        CurrencyFormat.convertToIdr(dataPeriodeArisan!.bill_amount, 2);
+    hadiahPemenang =
+        CurrencyFormat.convertToIdr(dataPeriodeArisan!.winner_bill_amount, 2);
     status = dataPeriodeArisan!.meet_ctr < dataPeriodeArisan!.total_meets
         ? 'Berlangsung'
         : 'Selesai';
@@ -209,8 +212,16 @@ class _DetailRiwayatArisanWilayahState
               thickness: 2,
             ),
             ListTileArisan(
-                title: 'Lihat Semua Pertemuan',
-                onTapDestination: LihatSemuaPertemuanPage.id),
+              title: 'Lihat Semua Pertemuan',
+              onTap: () async {
+                LihatSemuaPertemuanPageArguments arguments =
+                    LihatSemuaPertemuanPageArguments(
+                        idPeriode: dataPeriodeArisan!.id.toString(),
+                        periodeKe: periodeKe);
+                Navigator.pushNamed(context, LihatSemuaPertemuanPage.id,
+                    arguments: arguments);
+              },
+            ),
             Divider(
               height: 25,
               thickness: 2,

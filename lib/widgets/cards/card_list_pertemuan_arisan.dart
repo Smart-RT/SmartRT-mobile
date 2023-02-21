@@ -8,25 +8,32 @@ import 'package:smart_rt/constants/style.dart';
 class CardListPertemuanArisan extends StatelessWidget {
   const CardListPertemuanArisan({
     Key? key,
+    required this.status,
     required this.pertemuanKe,
     required this.jumlahAnggotaHadir,
     required this.tempatPelaksanaan,
     required this.tanggalPelaksanaan,
-    required this.onTapDestination,
+    required this.waktuPelaksanaan,
+    this.onTapDestination,
+    this.onTap,
   }) : super(key: key);
 
+  final String status;
   final String pertemuanKe;
   final String jumlahAnggotaHadir;
   final String tempatPelaksanaan;
+  final String waktuPelaksanaan;
   final String tanggalPelaksanaan;
-  final String onTapDestination;
+  final String? onTapDestination;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, onTapDestination);
-      },
+      onTap: onTap ??
+          () {
+            Navigator.pushNamed(context, onTapDestination!);
+          },
       child: Card(
         color: smartRTPrimaryColor,
         child: Padding(
@@ -39,9 +46,17 @@ class CardListPertemuanArisan extends StatelessWidget {
                 style: smartRTTextTitleCard.copyWith(
                     fontWeight: FontWeight.bold, color: smartRTSecondaryColor),
               ),
+              Text(
+                'Status : ${status}',
+                style: smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
+              ),
               SB_height15,
               Text(
                 'Tanggal : ${tanggalPelaksanaan}',
+                style: smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
+              ),
+              Text(
+                'Waktu : ${waktuPelaksanaan}',
                 style: smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
               ),
               Text(

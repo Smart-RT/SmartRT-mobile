@@ -21,6 +21,7 @@ import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/list_anggota_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page_2.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengaturan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_sebelumnya_page.dart';
@@ -226,7 +227,9 @@ class Routes {
         });
       case LihatSemuaPertemuanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return const LihatSemuaPertemuanPage();
+          return LihatSemuaPertemuanPage(
+            args: settings.arguments as LihatSemuaPertemuanPageArguments,
+          );
         });
       case LihatSemuaAnggotaArisanPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -236,7 +239,9 @@ class Routes {
         });
       case DetailPertemuanArisanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return const DetailPertemuanArisanPage();
+          return DetailPertemuanArisanPage(
+            args: settings.arguments as DetailPertemuanArisanPageArguments,
+          );
         });
       case LihatAbsensiPertemuanArisanPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -248,7 +253,8 @@ class Routes {
         });
       case PembayaranIuranArisan.id:
         return MaterialPageRoute(builder: (context) {
-          return const PembayaranIuranArisan();
+          return PembayaranIuranArisan(
+              args: settings.arguments as PembayaranIuranArisanArguments);
         });
       case DetailPertemuanSelanjutnyaPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -267,6 +273,11 @@ class Routes {
           return AbsenAnggotaPage(
             args: settings.arguments as AbsenAnggotaPageArguments,
           );
+        });
+      case PembayaranIuranArisanPage2.id:
+        return MaterialPageRoute(builder: (context) {
+          return PembayaranIuranArisanPage2(
+              args: settings.arguments as PembayaranIuranArisanPage2Arguments);
         });
       // ---
 

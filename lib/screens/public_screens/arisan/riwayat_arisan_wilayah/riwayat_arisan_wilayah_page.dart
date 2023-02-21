@@ -7,6 +7,7 @@ import 'package:smart_rt/models/lottery_club_period.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_riwayat_arisan_wilayah_page.dart';
+import 'package:smart_rt/utilities/currency_format.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/cards/card_riwayat_arisan_wilayah.dart';
 
@@ -81,7 +82,8 @@ class _RiwayatArisanWilayahPageState extends State<RiwayatArisanWilayahPage> {
                         '${listPeriodeArisan[index].total_meets}x (${listPeriodeArisan[index].year_limit == 0 ? '6 bulan' : '${listPeriodeArisan[index].year_limit.toString()} tahun'})',
                     totalAnggota:
                         '${listPeriodeArisan[index].total_members} orang',
-                    iuran: 'IDR ${listPeriodeArisan[index].bill_amount},00',
+                    iuran: CurrencyFormat.convertToIdr(
+                        listPeriodeArisan[index].bill_amount, 2),
                     onTap: () async {
                       DetailRiwayatArisanWilayahArguments args =
                           DetailRiwayatArisanWilayahArguments(

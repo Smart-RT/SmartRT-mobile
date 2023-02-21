@@ -20,17 +20,19 @@ class LotteryClubPeriodDetail {
 
   LotteryClubPeriodDetail.fromData(Map<String, dynamic> data) {
     id = int.parse(data['id'].toString());
-    lottery_club_period_id =
-        LotteryClubPeriod.fromData(data['lottery_club_period_id']);
+    if (data['lottery_club_period_id'] != null) {
+      lottery_club_period_id =
+          LotteryClubPeriod.fromData(data['lottery_club_period_id']);
+    }
     lottery_club_id = int.parse(data['lottery_club_id'].toString());
     if (data['total_attendance'] != null) {
       total_attendance = int.parse(data['total_attendance'].toString());
     }
     if (data['winner_1_id'] != null) {
-      winner_1_id = data['winner_1_id'];
+      winner_1_id = User.fromData(data['winner_1_id']);
     }
     if (data['winner_2_id'] != null) {
-      winner_2_id = data['winner_2_id'];
+      winner_2_id = User.fromData(data['winner_2_id']);
     }
     status = data['status'];
     is_offline_meet = int.parse(data['is_offline_meet'].toString());

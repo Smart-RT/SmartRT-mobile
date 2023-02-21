@@ -5,11 +5,14 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/lottery_club_period_detail.dart';
+import 'package:smart_rt/models/lottery_club_period_detail_bill.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/absen_anggota_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page_2.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_iuran_arisan_pertemuan_page.dart';
+import 'package:smart_rt/utilities/currency_format.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
@@ -34,6 +37,32 @@ class _DetailPertemuanSelanjutnyaPageState
   String pertemuanKe = '';
   String periodeKe = '';
 
+  void bayarIuranAction() async {
+    Response<dynamic> resp = await NetUtil()
+        .dioClient
+        .get('/lotteryClubs/getDataTagihan/${dataPertemuan!.id}');
+    LotteryClubPeriodDetailBill dataPembayaran =
+        LotteryClubPeriodDetailBill.fromData(resp.data);
+
+    if (dataPembayaran.payment_type == null ||
+        dataPembayaran.payment_type == '') {
+      PembayaranIuranArisanArguments args = PembayaranIuranArisanArguments(
+        periodeKe: periodeKe,
+        pertemuanKe: pertemuanKe,
+        pertemuanID: dataPertemuan!.id.toString(),
+      );
+      Navigator.pushNamed(context, PembayaranIuranArisan.id, arguments: args);
+    } else if (dataPembayaran.midtrans_transaction_status == 'pending') {
+      PembayaranIuranArisanPage2Arguments args =
+          PembayaranIuranArisanPage2Arguments(
+              periodeKe: periodeKe,
+              pertemuanKe: pertemuanKe,
+              dataPembayaran: dataPembayaran!);
+      Navigator.popAndPushNamed(context, PembayaranIuranArisanPage2.id,
+          arguments: args);
+    }
+  }
+
   void getData() async {
     Response<dynamic> resp = await NetUtil().dioClient.get(
         '/lotteryClubs/getLastPeriodeID/${user.area!.lottery_club_id!.id.toString()}');
@@ -49,12 +78,15 @@ class _DetailPertemuanSelanjutnyaPageState
       tempatPertemuan = dataPertemuan!.meet_at.toString();
       pertemuanKe = dataPertemuan!.lottery_club_period_id!.meet_ctr.toString();
       periodeKe = dataPertemuan!.lottery_club_period_id!.period.toString();
-      iuranArisan =
-          dataPertemuan!.lottery_club_period_id!.bill_amount.toString();
+      iuranArisan = CurrencyFormat.convertToIdr(
+          dataPertemuan!.lottery_club_period_id!.bill_amount, 2);
 
-      resp = await NetUtil().dioClient.get(
-          '/lotteryClubs/getStatusPembayaran/${dataPertemuan!.id.toString()}');
-      statusPembayaran = resp.data.toString();
+      resp = await NetUtil()
+          .dioClient
+          .get('/lotteryClubs/getDataTagihan/${dataPertemuan!.id.toString()}');
+      LotteryClubPeriodDetailBill dataPembayaran =
+          LotteryClubPeriodDetailBill.fromData(resp.data);
+      statusPembayaran = dataPembayaran.status.toString();
       debugPrint('hahahaha ${resp.data.toString()}');
     }
 
@@ -148,7 +180,7 @@ class _DetailPertemuanSelanjutnyaPageState
                         style: smartRTTextLarge,
                       ),
                       Text(
-                        'IDR ${iuranArisan},00',
+                        iuranArisan,
                         style: smartRTTextLarge,
                       ),
                     ],
@@ -181,8 +213,11 @@ class _DetailPertemuanSelanjutnyaPageState
               thickness: 2,
             ),
             ListTileArisan(
-                title: 'Bayar Iuran Sekarang',
-                onTapDestination: PembayaranIuranArisan.id),
+              title: 'Bayar Iuran Sekarang',
+              onTap: () async {
+                bayarIuranAction();
+              },
+            ),
             Divider(
               height: 25,
               thickness: 2,
