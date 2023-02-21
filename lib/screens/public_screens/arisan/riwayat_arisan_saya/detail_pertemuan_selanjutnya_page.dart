@@ -57,7 +57,7 @@ class _DetailPertemuanSelanjutnyaPageState
           PembayaranIuranArisanPage2Arguments(
               periodeKe: periodeKe,
               pertemuanKe: pertemuanKe,
-              dataPembayaran: dataPembayaran!);
+              dataPembayaran: dataPembayaran);
       Navigator.popAndPushNamed(context, PembayaranIuranArisanPage2.id,
           arguments: args);
     }
