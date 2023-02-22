@@ -10,6 +10,8 @@ class CircleAvatarLoader extends StatelessWidget {
   final double radius;
   final String? allURL;
   final double? fontSizeInitial;
+  final Color? initialColor;
+  final Color? initialBackgroundColor;
   final double fontHeight;
   CircleAvatarLoader(
       {this.photo,
@@ -18,6 +20,8 @@ class CircleAvatarLoader extends StatelessWidget {
       this.radius = 20.0,
       this.allURL,
       this.fontSizeInitial,
+      this.initialBackgroundColor,
+      this.initialColor,
       this.fontHeight = 2.3});
 
   @override
@@ -50,14 +54,16 @@ class CircleAvatarLoader extends StatelessWidget {
       },
       errorWidget: (context, url, error) {
         return CircleAvatar(
-          backgroundColor: smartRTSecondaryColor,
+          backgroundColor: initialBackgroundColor ?? smartRTSecondaryColor,
+          radius: radius,
           child: Center(
             child: Text(
               '$initials',
-              style: smartRTTextTitle_Primary,
+              style: smartRTTextTitle.copyWith(
+                  color: initialColor ?? smartRTPrimaryColor,
+                  fontSize: fontSizeInitial ?? smartRTTextTitle.fontSize),
             ),
           ),
-          radius: radius,
         );
       },
     );

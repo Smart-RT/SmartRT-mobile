@@ -5,6 +5,7 @@ import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/arisan_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/providers/health_provider.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/guest_screens/home/home_part/beranda_page.dart';
@@ -49,10 +50,10 @@ class _SmartRTAppState extends State<SmartRTApp> {
     Role roleUser = AuthProvider.currentUser?.user_role ?? Role.None;
     if (roleUser == Role.Admin) {
       routeStart = BerandaAdminPage.id;
-    } else if (roleUser == Role.Guest || roleUser == Role.Ketua_RT) {
-      routeStart = GuestHome.id;
-    } else {
+    } else if (roleUser == Role.None) {
       routeStart = WelcomePage.id;
+    } else {
+      routeStart = GuestHome.id;
     }
     Future.delayed(Duration(milliseconds: 500), () {
       ApplicationProvider.context!
@@ -70,6 +71,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
         ChangeNotifierProvider(create: ((context) => ApplicationProvider())),
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
         ChangeNotifierProvider(create: ((context) => ArisanProvider())),
+        ChangeNotifierProvider(create: ((context) => HealthProvider())),
       ],
       builder: (context, child) {
         return MaterialApp(

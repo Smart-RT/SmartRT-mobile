@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:smart_rt/models/area.dart';
-import 'package:smart_rt/models/user.dart';
-
 class LotteryClub {
   int id = -1;
   int? area_id;

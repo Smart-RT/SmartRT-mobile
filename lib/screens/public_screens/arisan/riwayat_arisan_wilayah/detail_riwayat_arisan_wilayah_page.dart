@@ -6,7 +6,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/lottery_club_period.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_pertemuan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_anggota_periode_arisan_page.dart';
-import 'package:smart_rt/utilities/currency_format.dart';
+import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
 class DetailRiwayatArisanWilayahArguments {

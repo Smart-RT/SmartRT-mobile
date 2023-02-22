@@ -8,7 +8,7 @@ import 'package:smart_rt/screens/public_screens/arisan/absen_anggota_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_iuran_arisan_pertemuan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_absensi_pertemuan_arisan_page.dart';
-import 'package:smart_rt/utilities/currency_format.dart';
+import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 import 'package:intl/intl.dart';

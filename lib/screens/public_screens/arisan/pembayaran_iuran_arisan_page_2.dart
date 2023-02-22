@@ -7,7 +7,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/lottery_club_period_detail_bill.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
-import 'package:smart_rt/utilities/currency_format.dart';
+import 'package:smart_rt/utilities/string/currency_format.dart';
 
 class PembayaranIuranArisanPage2Arguments {
   LotteryClubPeriodDetailBill dataPembayaran;

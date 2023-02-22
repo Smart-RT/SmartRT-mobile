@@ -7,7 +7,7 @@ import 'package:smart_rt/models/lottery_club_period.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_riwayat_arisan_wilayah_page.dart';
-import 'package:smart_rt/utilities/currency_format.dart';
+import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/cards/card_riwayat_arisan_wilayah.dart';
 

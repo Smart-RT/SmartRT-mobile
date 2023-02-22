@@ -13,6 +13,7 @@ class ListTileUserWithCB extends StatelessWidget {
     required this.initialName,
     required this.isChecked,
     required this.onChanged,
+    this.isDisabled,
   }) : super(key: key);
 
   final String fullName;
@@ -21,6 +22,7 @@ class ListTileUserWithCB extends StatelessWidget {
   final String photo;
   final String initialName;
   final bool isChecked;
+  final bool? isDisabled;
   final ValueChanged<bool?>? onChanged;
 
   @override
@@ -31,21 +33,35 @@ class ListTileUserWithCB extends StatelessWidget {
         photoPathUrl: photoPathURL,
         photo: photo,
         initials: initialName,
+        initialColor:
+            (isDisabled ?? false) ? smartRTDisabledColor : smartRTPrimaryColor,
       ),
-      title: Text(fullName),
-      subtitle: Text(address),
-      trailing: Checkbox(
-        checkColor: MaterialStateColor.resolveWith(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.disabled)) {
-              return smartRTSuccessColor;
-            }
-            return smartRTSuccessColor2;
-          },
-        ),
-        value: isChecked,
-        onChanged: onChanged,
-      ),
+      title: (isDisabled ?? false)
+          ? Text(
+              fullName,
+              style: TextStyle(color: smartRTDisabledColor),
+            )
+          : Text(fullName),
+      subtitle: (isDisabled ?? false)
+          ? Text(
+              address,
+              style: TextStyle(color: smartRTDisabledColor),
+            )
+          : Text(address),
+      trailing: (isDisabled ?? false)
+          ? const Text('')
+          : Checkbox(
+              checkColor: MaterialStateColor.resolveWith(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.disabled)) {
+                    return smartRTSuccessColor;
+                  }
+                  return smartRTSuccessColor2;
+                },
+              ),
+              value: isChecked,
+              onChanged: onChanged,
+            ),
     );
   }
 }

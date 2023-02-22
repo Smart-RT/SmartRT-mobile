@@ -36,7 +36,7 @@ class User {
   int? task_rating;
   String? sign_img;
   String? photo_profile_img;
-  bool is_health = true;
+  int is_health = 1;
   int? total_serving_as_neighbourhood_head = 0;
   String token = "";
   String refresh_token = "";
@@ -106,7 +106,7 @@ class User {
     }
 
     photo_profile_img = userData['photo_profile_img'];
-    is_health = userData['is_health'] == 1 ? true : false;
+    is_health = int.parse(userData['is_health'].toString());
     total_serving_as_neighbourhood_head =
         userData['total_serving_as_neighbourhood_head'];
 
@@ -151,7 +151,7 @@ class User {
         "task_rating": task_rating,
         "sign_img": sign_img,
         "photo_profile_img": photo_profile_img,
-        "is_health": is_health ? 1 : 0,
+        "is_health": is_health.toString(),
         "total_serving_as_neighbourhood_head":
             total_serving_as_neighbourhood_head,
         "created_at": created_at.toString(),

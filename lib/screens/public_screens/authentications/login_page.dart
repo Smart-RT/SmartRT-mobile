@@ -42,8 +42,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (loginSuccess) {
       User currentUser = AuthProvider.currentUser!;
-      if (currentUser.user_role == Role.Guest ||
-          currentUser.user_role == Role.Ketua_RT) {
+      if (currentUser.user_role != Role.Admin) {
         Navigator.pushReplacementNamed(context, GuestHome.id);
       }
     }

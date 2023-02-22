@@ -7,7 +7,6 @@ class ExplainPart extends StatelessWidget {
     Key? key,
     required this.title,
     required this.notes,
-    
   }) : super(key: key);
 
   final String title;
@@ -22,11 +21,11 @@ class ExplainPart extends StatelessWidget {
           title,
           style: smartRTTextTitle,
         ),
+        SB_height15,
         Text(
           notes,
           style: smartRTTextNormal_Primary,
         ),
-        
       ],
     );
   }
