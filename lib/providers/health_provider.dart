@@ -12,6 +12,7 @@ class HealthProvider extends ChangeNotifier {
     required BuildContext context,
     required int reported_id_for,
     required int area_reported_id,
+    required int disease_group_id,
     required int disease_level,
     required String disease_notes,
     required String type,
@@ -21,6 +22,7 @@ class HealthProvider extends ChangeNotifier {
           await NetUtil().dioClient.post('/health/userReporting', data: {
         "reported_id_for": reported_id_for,
         "area_reported_id": area_reported_id,
+        "disease_group_id": disease_group_id,
         "disease_level": disease_level,
         "disease_notes": disease_notes,
       });
@@ -29,6 +31,29 @@ class HealthProvider extends ChangeNotifier {
         notifyListeners();
         context.read<AuthProvider>().saveUserDataToStorage();
       }
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return false;
+    }
+  }
+
+  Future<bool> sayaSehat({
+    required BuildContext context,
+  }) async {
+    try {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.patch('/health/userReported/sayaSehat');
+
+      AuthProvider.currentUser!.is_health = 1;
+      notifyListeners();
+      context.read<AuthProvider>().saveUserDataToStorage();
+
       return true;
     } on DioError catch (e) {
       if (e.response != null) {

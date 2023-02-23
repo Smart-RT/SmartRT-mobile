@@ -2,11 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/providers/health_provider.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_choose_user_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page_1.dart';
@@ -15,6 +17,7 @@ import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.d
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatanku_page.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_primary.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_button.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class KesehatankuPage extends StatefulWidget {
   static const String id = 'KesehatankuPage';
@@ -32,6 +35,26 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
   void getData() async {
     statusKesehatanku = user.is_health == 0 ? 'KURANG SEHAT' : 'SEHAT';
     statusColor = user.is_health == 0 ? smartRTErrorColor : smartRTSuccessColor;
+  }
+
+  void updateSayaSehat() async {
+    bool isSukses = await context.read<HealthProvider>().sayaSehat(
+          context: context,
+        );
+
+    if (!isSukses) {
+      // ignore: use_build_context_synchronously
+      SmartRTSnackbar.show(context,
+          message: 'Gagal! Cobalah beberapa saat lagi!',
+          backgroundColor: smartRTErrorColor);
+    } else {
+      // ignore: use_build_context_synchronously
+      SmartRTSnackbar.show(context,
+          message: 'Berhasil!', backgroundColor: smartRTSuccessColor);
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
+      Navigator.popAndPushNamed(context, KesehatankuPage.id);
+    }
   }
 
   @override
@@ -103,19 +126,91 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                 thickness: 5,
               ),
               SB_height30,
-              CardListTileWithButton(
-                title: 'Anda Kurang Sehat?',
-                subtitle:
-                    'Laporkan kesehatan anda segera agar dapat mengakses fitur sesuai dengan kondisi kesehatan anda sekarang.',
-                buttonText: 'LAPOR KESEHATANKU',
-                onTapButton: () {
-                  FormLaporKesehatanPageArguments args =
-                      FormLaporKesehatanPageArguments(
-                          type: 'Diri Sendiri', dataUserTerlaporkan: user);
-                  Navigator.pushNamed(context, FormLaporKesehatanPage.id,
-                      arguments: args);
-                },
-              ),
+              user.is_health == 0
+                  ? Column(
+                      children: [
+                        CardListTileWithButton(
+                          title: 'Anda sudah Sehat?',
+                          subtitle:
+                              'Jika anda sudah merasa sehat, anda dapat memulihkan status anda menjadi "Sehat" dengan menekan tombol "SAYA SUDAH SEHAT".',
+                          buttonText: 'SAYA SUDAH SEHAT',
+                          onTapButton: () {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: Text(
+                                  'Hai Sobat Pintar,',
+                                  style: smartRTTextTitleCard,
+                                ),
+                                content: Text(
+                                  'Apakah anda yakin sudah sehat?\nSetelah status anda kembali menjadi Sehat, anda sudah tidak dapat meminta bantuan.',
+                                  style: smartRTTextNormal.copyWith(
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                actions: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'Tidak'),
+                                        child: Text(
+                                          'Tidak',
+                                          style: smartRTTextNormal.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: smartRTErrorColor2),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          updateSayaSehat();
+                                        },
+                                        child: Text(
+                                          'SAYA YAKIN',
+                                          style: smartRTTextNormal.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        SB_height30,
+                        const Divider(
+                          thickness: 5,
+                        ),
+                        SB_height30,
+                        CardListTileWithButton(
+                          title: 'Butuh Bantuan?',
+                          subtitle:
+                              'Anda dapat meminta bantuan untuk memenuhi keperluan anda ketika kondisi kesehatan anda kurang baik. Hal tersebut bertujuan agar kepulihan kesehatan anda dapat lebih maksimal serta meminimkan penularan jika mempunyai penyakit menular.',
+                          buttonText: 'MINTA BANTUAN',
+                          onTapButton: () {
+                            Navigator.pushNamed(
+                                context, FormMintaBantuanPage.id);
+                          },
+                        ),
+                      ],
+                    )
+                  : CardListTileWithButton(
+                      title: 'Anda Kurang Sehat?',
+                      subtitle:
+                          'Laporkan kesehatan anda segera agar dapat mengakses fitur sesuai dengan kondisi kesehatan anda sekarang.',
+                      buttonText: 'LAPOR KESEHATANKU',
+                      onTapButton: () {
+                        FormLaporKesehatanPageArguments args =
+                            FormLaporKesehatanPageArguments(
+                                type: 'Diri Sendiri',
+                                dataUserTerlaporkan: user);
+                        Navigator.pushNamed(context, FormLaporKesehatanPage.id,
+                            arguments: args);
+                      },
+                    ),
               SB_height30,
               const Divider(
                 thickness: 5,
@@ -135,33 +230,6 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                 thickness: 5,
               ),
               SB_height30,
-              Column(
-                children: [
-                  Text(
-                    'Butuh Bantuan?',
-                    style: smartRTTextTitle_Primary,
-                  ),
-                  SB_height15,
-                  Text(
-                    'Anda dapat meminta bantuan untuk memenuhi keperluan anda ketika kondisi kesehatan anda kurang baik. Hal tersebut bertujuan agar kepulihan kesehatan anda dapat lebih maksimal serta meminimkan penularan jika mempunyai penyakit menular.',
-                    style: smartRTTextNormal_Primary,
-                    textAlign: TextAlign.justify,
-                  ),
-                  SB_height30,
-                  Container(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, FormMintaBantuanPage.id);
-                      },
-                      child: Text(
-                        'MINTA BANTUAN',
-                        style: smartRTTextLargeBold_Secondary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),

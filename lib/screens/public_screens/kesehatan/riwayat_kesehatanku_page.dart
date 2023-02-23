@@ -1,12 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/syncfusion_calendar/meeting_data_source.dart';
+import 'package:smart_rt/models/health/user_health_report.dart';
+import 'package:smart_rt/models/syncfusion_calendar/event_data_source.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/utilities/net_util.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class RiwayatKesehatankuPage extends StatefulWidget {
@@ -19,15 +22,38 @@ class RiwayatKesehatankuPage extends StatefulWidget {
 
 class _RiwayatKesehatankuPageState extends State<RiwayatKesehatankuPage> {
   User user = AuthProvider.currentUser!;
-  List<Meeting> _getDataSource() {
-    final List<Meeting> meetings = <Meeting>[];
-    final DateTime today = DateTime.now();
-    final DateTime startTime =
-        DateTime(today.year, today.month, today.day, 9, 0, 0);
-    final DateTime endTime = startTime.add(const Duration(hours: 2));
-    meetings.add(Meeting('Conference', startTime, endTime,
-        Color.fromARGB(255, 216, 255, 233), false));
-    return meetings;
+  List<UserHealthReport> listRiwayatSakit = <UserHealthReport>[];
+  List<Event> listSakit = <Event>[];
+
+  void getData() async {
+    Response<dynamic> resp =
+        await NetUtil().dioClient.get('/health/userReported');
+    listRiwayatSakit!.addAll((resp.data).map<UserHealthReport>((request) {
+      return UserHealthReport.fromData(request);
+    }));
+    for (var i = 0; i < listRiwayatSakit.length; i++) {
+      DateTime startTime = listRiwayatSakit[i].created_at;
+      DateTime endTime = listRiwayatSakit[i].healed_at ?? DateTime.now();
+      Color bg = listRiwayatSakit[i].disease_level == 1
+          ? smartRTSickLevel1Color
+          : listRiwayatSakit[i].disease_level == 2
+              ? smartRTSickLevel2Color
+              : smartRTSickLevel3Color;
+      listSakit.add(Event(
+          '${listRiwayatSakit[i].disease_group!.name}\nDetail : ${listRiwayatSakit[i].disease_notes}\n\n',
+          startTime,
+          endTime,
+          bg,
+          true));
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
   }
 
   @override
@@ -39,10 +65,16 @@ class _RiwayatKesehatankuPageState extends State<RiwayatKesehatankuPage> {
         body: Column(
           children: [
             Expanded(
-              flex: 3,
               child: SfCalendar(
                 minDate: user.created_at,
                 maxDate: DateTime.now(),
+                todayHighlightColor: smartRTTertiaryColor,
+                initialSelectedDate: DateTime.now(),
+                selectionDecoration: BoxDecoration(
+                  border: Border.all(color: smartRTTertiaryColor, width: 2),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  shape: BoxShape.rectangle,
+                ),
                 headerStyle: CalendarHeaderStyle(
                   textAlign: TextAlign.center,
                   backgroundColor: smartRTTertiaryColor,
@@ -55,11 +87,13 @@ class _RiwayatKesehatankuPageState extends State<RiwayatKesehatankuPage> {
                     dateTextStyle: smartRTTextLarge),
                 backgroundColor: smartRTQuaternaryColor,
                 view: CalendarView.month,
-                dataSource: MeetingDataSource(_getDataSource()),
-                monthViewSettings: MonthViewSettings(showAgenda: false),
+                dataSource: EventDataSource(listSakit),
+                monthViewSettings: MonthViewSettings(
+                    showAgenda: true,
+                    agendaViewHeight: 300,
+                    agendaItemHeight: 75),
               ),
             ),
-            Expanded(flex: 2, child: Text('')),
           ],
         ));
   }

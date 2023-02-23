@@ -20,10 +20,12 @@ class CardListTileWithButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           title,
           style: smartRTTextTitle_Primary,
+          textAlign: TextAlign.left,
         ),
         SB_height15,
         Text(
