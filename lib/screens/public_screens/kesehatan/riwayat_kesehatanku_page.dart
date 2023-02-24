@@ -28,7 +28,7 @@ class _RiwayatKesehatankuPageState extends State<RiwayatKesehatankuPage> {
   void getData() async {
     Response<dynamic> resp =
         await NetUtil().dioClient.get('/health/userReported');
-    listRiwayatSakit!.addAll((resp.data).map<UserHealthReport>((request) {
+    listRiwayatSakit.addAll((resp.data).map<UserHealthReport>((request) {
       return UserHealthReport.fromData(request);
     }));
     for (var i = 0; i < listRiwayatSakit.length; i++) {

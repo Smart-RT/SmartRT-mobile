@@ -75,7 +75,7 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(item.name,
                   style:
-                      smartRTTextLarge.copyWith(fontWeight: FontWeight.bold)),
+                      smartRTTextNormal.copyWith(fontWeight: FontWeight.bold)),
             ),
           ),
           //If it's last item, we will not add Divider after it.
@@ -222,7 +222,7 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
                 scrollbarThickness: 6,
                 scrollbarAlwaysShow: true,
                 value: _tingkatBahayaItems[0].value,
-                style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
                   isDense: true,
                   contentPadding: EdgeInsets.zero,
@@ -275,7 +275,7 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
                 scrollbarRadius: const Radius.circular(40),
                 scrollbarThickness: 6,
                 scrollbarAlwaysShow: true,
-                style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
                   isDense: true,
                   contentPadding: EdgeInsets.zero,

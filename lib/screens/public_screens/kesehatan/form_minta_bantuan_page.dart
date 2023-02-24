@@ -1,11 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
+import 'package:smart_rt/utilities/net_util.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class FormMintaBantuanPage extends StatefulWidget {
   static const String id = 'FormMintaBantuanPage';
@@ -16,17 +16,55 @@ class FormMintaBantuanPage extends StatefulWidget {
 }
 
 class _FormMintaBantuanPageState extends State<FormMintaBantuanPage> {
+  final _catatanKebutuhanController = TextEditingController();
   String _TingkatKebutuhanSelectedItem = '';
-  final List<String> _TingkatKebutuhanItems = [
-    'Genting / Butuh Secepatnya',
-    'Santai / Tidak Butuh Cepat',
+  final List<DropdownMenuItem> _TingkatKebutuhanItems = const [
+    DropdownMenuItem(value: '1', child: Text('Tidak Butuh Cepat')),
+    DropdownMenuItem(value: '2', child: Text('Butuh Cepat')),
   ];
-   String _JenisKebutuhanSelectedItem = '';
-  final List<String> _JenisKebutuhanItems = [
-    'Obat-obatan',
-    'Kebutuhan Pangan',
-    'Lainnya'
+  String _JenisKebutuhanSelectedItem = '';
+  final List<DropdownMenuItem> _JenisKebutuhanItems = const [
+    DropdownMenuItem(value: '1', child: Text('Obat-obatan')),
+    DropdownMenuItem(value: '2', child: Text('Kebutuhan Pangan')),
+    DropdownMenuItem(value: '3', child: Text('Lainnya')),
   ];
+
+  void mintaBantuan() async {
+    if (_catatanKebutuhanController.text != '') {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.post('/health/healthTaskHelp', data: {
+        "urgent_level": _TingkatKebutuhanSelectedItem,
+        "notes": _catatanKebutuhanController.text,
+        "help_type": _JenisKebutuhanSelectedItem,
+      });
+      if (resp.statusCode.toString() == '200') {
+        SmartRTSnackbar.show(context,
+            message: resp.data, backgroundColor: smartRTSuccessColor);
+        Navigator.pop(context);
+      } else {
+        SmartRTSnackbar.show(context,
+            message: resp.data, backgroundColor: smartRTErrorColor);
+      }
+    } else {
+      SmartRTSnackbar.show(context,
+          message: 'Pastikan tidak ada yang kosong !',
+          backgroundColor: smartRTErrorColor);
+    }
+  }
+
+  void getData() async {
+    _TingkatKebutuhanSelectedItem = _TingkatKebutuhanItems[0].value.toString();
+    _JenisKebutuhanSelectedItem = _JenisKebutuhanItems[0].value.toString();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,138 +73,141 @@ class _FormMintaBantuanPageState extends State<FormMintaBantuanPage> {
       ),
       body: Padding(
         padding: paddingScreen,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DropdownButtonFormField2(
-                  style: smartRTTextNormal_Primary,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: EdgeInsets.zero,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  hint: Text(
-                    'Tingkat Kebutuhan',
-                    style: smartRTTextLargeBold_Primary,
-                  ),
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: smartRTPrimaryColor,
-                  ),
-                  iconSize: 30,
-                  buttonHeight: 60,
-                  buttonPadding: const EdgeInsets.only(left: 25, right: 10),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  items: _TingkatKebutuhanItems
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: smartRTTextNormal_Primary,
-                            ),
-                          ))
-                      .toList(),
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Tingkat Kebutuhan tidak boleh kosong';
-                    }
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      _TingkatKebutuhanSelectedItem = value.toString();
-                      
-                    });
-                  },
-                  onSaved: (value) {
-                    _TingkatKebutuhanSelectedItem = value.toString();
-                  },
-                ),
-                SB_height30,
-                DropdownButtonFormField2(
-                  style: smartRTTextNormal_Primary,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: EdgeInsets.zero,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  isExpanded: true,
-                  hint: Text(
-                    'Jenis Kebutuhan',
-                    style: smartRTTextLargeBold_Primary,
-                  ),
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: smartRTPrimaryColor,
-                  ),
-                  iconSize: 30,
-                  buttonHeight: 60,
-                  buttonPadding: const EdgeInsets.only(left: 25, right: 10),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  items: _JenisKebutuhanItems
-                      .map((item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: smartRTTextNormal_Primary,
-                            ),
-                          ))
-                      .toList(),
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Jenis Kebutuhan tidak boleh kosong';
-                    }
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      _JenisKebutuhanSelectedItem = value.toString();
-                      
-                    });
-                  },
-                  onSaved: (value) {
-                    _JenisKebutuhanSelectedItem = value.toString();
-                  },
-                ),
-                SB_height15,
-                TextFormField(
-                  autocorrect: false,
-                  style: smartRTTextNormal_Primary,
-                  decoration: const InputDecoration(
-                    labelText: 'Catatan Kebutuhan',
-                  ),
-                  maxLines: 10,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Catatan Kebutuhan tidak boleh kosong';
-                    }
-                  },
-                ),
-              ],
-            ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  /** */
-                },
-                child: Text(
-                  'SUBMIT',
-                  style: smartRTTextLargeBold_Secondary,
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Tingkat Kebutuhan',
+                style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
               ),
-            ),
-          ],
+              SB_height5,
+              DropdownButtonFormField2(
+                value: _TingkatKebutuhanItems[0].value,
+                dropdownMaxHeight: 200,
+                scrollbarRadius: const Radius.circular(40),
+                scrollbarThickness: 6,
+                scrollbarAlwaysShow: true,
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+                decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.zero,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                isExpanded: true,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: smartRTPrimaryColor,
+                ),
+                iconSize: 30,
+                buttonHeight: 60,
+                buttonPadding: const EdgeInsets.only(left: 10, right: 10),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                items: _TingkatKebutuhanItems.map((item) =>
+                    DropdownMenuItem<String>(
+                        value: item.value, child: item.child)).toList(),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Tingkat Kebutuhan tidak boleh kosong';
+                  }
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _TingkatKebutuhanSelectedItem = value.toString();
+                  });
+                },
+                onSaved: (value) {
+                  _TingkatKebutuhanSelectedItem = value.toString();
+                },
+              ),
+              SB_height30,
+              Text(
+                'Jenis Kebutuhan',
+                style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
+              ),
+              SB_height5,
+              DropdownButtonFormField2(
+                value: _JenisKebutuhanItems[0].value,
+                dropdownMaxHeight: 200,
+                scrollbarRadius: const Radius.circular(40),
+                scrollbarThickness: 6,
+                scrollbarAlwaysShow: true,
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+                decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.zero,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                isExpanded: true,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: smartRTPrimaryColor,
+                ),
+                iconSize: 30,
+                buttonHeight: 60,
+                buttonPadding: const EdgeInsets.only(left: 10, right: 10),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                items: _JenisKebutuhanItems.map((item) =>
+                    DropdownMenuItem<String>(
+                        value: item.value, child: item.child)).toList(),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Jenis Kebutuhan tidak boleh kosong';
+                  }
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _JenisKebutuhanSelectedItem = value.toString();
+                  });
+                },
+                onSaved: (value) {
+                  _JenisKebutuhanSelectedItem = value.toString();
+                },
+              ),
+              SB_height15,
+              TextFormField(
+                controller: _catatanKebutuhanController,
+                autocorrect: false,
+                style: smartRTTextNormal_Primary,
+                decoration: const InputDecoration(
+                  labelText: 'Catatan Kebutuhan',
+                ),
+                maxLines: 10,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Catatan Kebutuhan tidak boleh kosong';
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0),
+          ))),
+          onPressed: () {
+            mintaBantuan();
+          },
+          child: Text(
+            'MINTA BANTUAN',
+            style: smartRTTextLargeBold_Secondary,
+          ),
         ),
       ),
     );
