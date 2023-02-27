@@ -1,8 +1,12 @@
 import 'package:smart_rt/models/health/disease_group.dart';
+import 'package:smart_rt/models/user.dart';
 
 class UserHealthReport {
   int id = -1;
   int reported_id_for = -1; //user_id
+  User? reported_data_user;
+  User? created_by_data_user;
+  User? confirmation_by_data_user;
   int area_reported_id = -1;
   DiseaseGroup? disease_group;
   int disease_level = 0;
@@ -17,6 +21,16 @@ class UserHealthReport {
   UserHealthReport.fromData(Map<String, dynamic> data) {
     id = int.parse(data['id'].toString());
     reported_id_for = int.parse(data['reported_id_for'].toString());
+    if (data['reported_data_user'] != null) {
+      reported_data_user = User.fromData(data['reported_data_user']);
+    }
+    if (data['created_by_data_user'] != null) {
+      created_by_data_user = User.fromData(data['created_by_data_user']);
+    }
+    if (data['confirmation_by_data_user'] != null) {
+      confirmation_by_data_user =
+          User.fromData(data['confirmation_by_data_user']);
+    }
     area_reported_id = int.parse(data['area_reported_id'].toString());
     if (data['disease_group_id'] != null) {
       disease_group = DiseaseGroup.fromData(data['disease_group_id']);
@@ -43,6 +57,9 @@ class UserHealthReport {
     return {
       "id": id.toString(),
       "reported_id_for": reported_id_for.toString(),
+      "reported_data_user": reported_data_user,
+      "created_by_data_user": created_by_data_user,
+      "confirmation_by_data_user": confirmation_by_data_user,
       "area_reported_id": area_reported_id.toString(),
       "disease_group": disease_group,
       "disease_level": disease_level.toString(),

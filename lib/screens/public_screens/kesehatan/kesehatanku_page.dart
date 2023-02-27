@@ -10,7 +10,7 @@ import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_c
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_minta_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
-import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatanku_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_primary.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_button.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
@@ -63,9 +63,7 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Kesehatanku'),
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: paddingScreen,
@@ -105,16 +103,58 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                   CardListTilePrimary(
                     title: 'Riwayat Kesehatanku',
                     onTap: () {
-                      Navigator.pushNamed(context, RiwayatKesehatankuPage.id);
+                      RiwayatKesehatanArguments arguments =
+                          RiwayatKesehatanArguments(
+                              type: 'Riwayat Kesehatanku');
+                      Navigator.pushNamed(context, RiwayatKesehatanPage.id,
+                          arguments: arguments);
                     },
                   ),
                   SB_height15,
                   CardListTilePrimary(
                     title: 'Riwayat Bantuan',
                     onTap: () {
-                      Navigator.pushNamed(context, RiwayatBantuanPage.id);
+                      RiwayatBantuanArguments arguments =
+                          RiwayatBantuanArguments(type: 'Tidak');
+                      Navigator.pushNamed(context, RiwayatBantuanPage.id,
+                          arguments: arguments);
                     },
                   ),
+                  (user.user_role == Role.Ketua_RT ||
+                          user.user_role == Role.Wakil_RT ||
+                          user.user_role == Role.Sekretaris)
+                      ? Column(
+                          children: [
+                            SB_height30,
+                            const Divider(
+                              thickness: 5,
+                            ),
+                            SB_height30,
+                            CardListTilePrimary(
+                              title: 'Riwayat Kesehatan Wilayah',
+                              onTap: () async {
+                                RiwayatKesehatanArguments arguments =
+                                    RiwayatKesehatanArguments(
+                                        type: 'Riwayat Kesehatan Wilayah');
+                                Navigator.pushNamed(
+                                    context, RiwayatKesehatanPage.id,
+                                    arguments: arguments);
+                              },
+                            ),
+                            SB_height15,
+                            CardListTilePrimary(
+                              title: 'Riwayat Permintaan Bantuan Wilayah',
+                              onTap: () async {
+                                RiwayatBantuanArguments arguments =
+                                    RiwayatBantuanArguments(type: 'Semua');
+                                Navigator.pushNamed(
+                                    context, RiwayatBantuanPage.id,
+                                    arguments: arguments);
+                              },
+                            ),
+                          ],
+                        )
+                      : const SizedBox(),
                 ],
               ),
               SB_height30,
@@ -212,15 +252,27 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                 thickness: 5,
               ),
               SB_height30,
-              CardListTileWithButton(
-                  title: 'Tetangga tampak kurang sehat?',
-                  subtitle:
-                      'Laporkan kesehatan tetangga anda segera agar dapat penanganan dari pengurus RT secara tepat dan cepat.',
-                  buttonText: 'LAPORKAN TETANGGA',
-                  onTapButton: () async {
-                    Navigator.pushNamed(
-                        context, FormLaporKesehatanChooseUserPage.id);
-                  }),
+              (user.user_role == Role.Ketua_RT ||
+                      user.user_role == Role.Wakil_RT ||
+                      user.user_role == Role.Sekretaris)
+                  ? CardListTileWithButton(
+                      title: 'Warga tidak sehat?',
+                      subtitle:
+                          'Buat laporan kesehatan warga anda segera agar warga anda dapat penanganan dari pengurus RT secara tepat dan cepat.',
+                      buttonText: 'BUAT LAPOORAN',
+                      onTapButton: () async {
+                        Navigator.pushNamed(
+                            context, FormLaporKesehatanChooseUserPage.id);
+                      })
+                  : CardListTileWithButton(
+                      title: 'Tetangga tampak kurang sehat?',
+                      subtitle:
+                          'Laporkan kesehatan tetangga anda segera agar dapat penanganan dari pengurus RT secara tepat dan cepat.',
+                      buttonText: 'LAPORKAN TETANGGA',
+                      onTapButton: () async {
+                        Navigator.pushNamed(
+                            context, FormLaporKesehatanChooseUserPage.id);
+                      }),
               SB_height30,
               const Divider(
                 thickness: 5,

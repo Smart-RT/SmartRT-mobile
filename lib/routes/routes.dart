@@ -44,12 +44,13 @@ import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_pa
 import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_bantuan_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_choose_user_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_minta_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
-import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatanku_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_canvas_page.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/test_screen.dart';
@@ -139,17 +140,31 @@ class Routes {
             args: settings.arguments as DaftarKetuaFormPage3Arguments,
           );
         });
+
+      // === KESEHATAN
+      case FormLaporKesehatanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return FormLaporKesehatanPage(
+              args: settings.arguments as FormLaporKesehatanPageArguments);
+        });
+      case FormLaporKesehatanChooseUserPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const FormLaporKesehatanChooseUserPage();
+        });
       case KesehatankuPage.id:
         return MaterialPageRoute(builder: (context) {
           return const KesehatankuPage();
         });
-      case RiwayatKesehatankuPage.id:
+      case RiwayatKesehatanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return const RiwayatKesehatankuPage();
+          return RiwayatKesehatanPage(
+              args: settings.arguments as RiwayatKesehatanArguments);
         });
       case RiwayatBantuanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return const RiwayatBantuanPage();
+          return RiwayatBantuanPage(
+            args: settings.arguments as RiwayatBantuanArguments,
+          );
         });
       case DetailRiwayatBantuanPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -160,8 +175,14 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const FormMintaBantuanPage();
         });
+      case DetailRiwayatKesehatanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return DetailRiwayatKesehatanPage(
+            args: settings.arguments as DetailRiwayatKesehatanArguments,
+          );
+        });
 
-      // ARISAN
+      // === ARISAN
       case ArisanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const ArisanPage();
@@ -272,15 +293,7 @@ class Routes {
           return PembayaranIuranArisanPage2(
               args: settings.arguments as PembayaranIuranArisanPage2Arguments);
         });
-      case FormLaporKesehatanPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return FormLaporKesehatanPage(
-              args: settings.arguments as FormLaporKesehatanPageArguments);
-        });
-      case FormLaporKesehatanChooseUserPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return const FormLaporKesehatanChooseUserPage();
-        });
+
       // ---
 
       case BerandaAdminPage.id:

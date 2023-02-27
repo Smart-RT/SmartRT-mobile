@@ -14,9 +14,15 @@ import 'package:smart_rt/widgets/cards/card_with_status.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_status_color.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+class RiwayatBantuanArguments {
+  String type;
+  RiwayatBantuanArguments({required this.type});
+}
+
 class RiwayatBantuanPage extends StatefulWidget {
   static const String id = 'RiwayatBantuanPage';
-  const RiwayatBantuanPage({Key? key}) : super(key: key);
+  RiwayatBantuanArguments args;
+  RiwayatBantuanPage({Key? key, required this.args}) : super(key: key);
 
   @override
   State<RiwayatBantuanPage> createState() => _RiwayatBantuanPageState();
@@ -26,25 +32,57 @@ class _RiwayatBantuanPageState extends State<RiwayatBantuanPage> {
   List<HealthTaskHelp> listPermohonan = [];
   List<HealthTaskHelp> listDiproses = [];
   List<HealthTaskHelp> listTelahBerlalu = [];
+  String type = '';
+  String appbarTitle = 'Riwayat Bantuanku';
 
   void getData() async {
-    Response<dynamic> resp =
-        await NetUtil().dioClient.get('/health/healthTaskHelp/list/0');
-    listPermohonan.addAll((resp.data).map<HealthTaskHelp>((request) {
-      return HealthTaskHelp.fromData(request);
-    }));
+    type = widget.args.type;
 
-    resp = await NetUtil().dioClient.get('/health/healthTaskHelp/list/1');
-    listDiproses.addAll((resp.data).map<HealthTaskHelp>((request) {
-      return HealthTaskHelp.fromData(request);
-    }));
+    Response<dynamic> resp;
+    if (type == 'Semua') {
+      appbarTitle = 'Riwayat Bantuan Wilayah';
+      resp = await NetUtil()
+          .dioClient
+          .get('/health/healthTaskHelp/list/0/is-all/yes');
+      listPermohonan.addAll((resp.data).map<HealthTaskHelp>((request) {
+        return HealthTaskHelp.fromData(request);
+      }));
 
-    resp = await NetUtil()
-        .dioClient
-        .get('/health/healthTaskHelp/list/telahBerlalu');
-    listTelahBerlalu.addAll((resp.data).map<HealthTaskHelp>((request) {
-      return HealthTaskHelp.fromData(request);
-    }));
+      resp = await NetUtil()
+          .dioClient
+          .get('/health/healthTaskHelp/list/1/is-all/yes');
+      listDiproses.addAll((resp.data).map<HealthTaskHelp>((request) {
+        return HealthTaskHelp.fromData(request);
+      }));
+
+      resp = await NetUtil()
+          .dioClient
+          .get('/health/healthTaskHelp/list/telahBerlalu/is-all/yes');
+      listTelahBerlalu.addAll((resp.data).map<HealthTaskHelp>((request) {
+        return HealthTaskHelp.fromData(request);
+      }));
+    } else {
+      resp = await NetUtil()
+          .dioClient
+          .get('/health/healthTaskHelp/list/0/is-all/no');
+      listPermohonan.addAll((resp.data).map<HealthTaskHelp>((request) {
+        return HealthTaskHelp.fromData(request);
+      }));
+
+      resp = await NetUtil()
+          .dioClient
+          .get('/health/healthTaskHelp/list/1/is-all/no');
+      listDiproses.addAll((resp.data).map<HealthTaskHelp>((request) {
+        return HealthTaskHelp.fromData(request);
+      }));
+
+      resp = await NetUtil()
+          .dioClient
+          .get('/health/healthTaskHelp/list/telahBerlalu/is-all/no');
+      listTelahBerlalu.addAll((resp.data).map<HealthTaskHelp>((request) {
+        return HealthTaskHelp.fromData(request);
+      }));
+    }
 
     setState(() {});
   }
@@ -73,7 +111,7 @@ class _RiwayatBantuanPageState extends State<RiwayatBantuanPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Riwayat Bantuan'),
+          title: Text(appbarTitle),
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
@@ -113,7 +151,8 @@ class _RiwayatBantuanPageState extends State<RiwayatBantuanPage> {
                         onTap: () {
                           DetailRiwayatBantuanPageArguments arguments =
                               DetailRiwayatBantuanPageArguments(
-                                  dataBantuanID: listPermohonan[index].id);
+                                  dataBantuanID: listPermohonan[index].id,
+                                  type: type);
                           Navigator.pushNamed(
                               context, DetailRiwayatBantuanPage.id,
                               arguments: arguments);
@@ -151,7 +190,8 @@ class _RiwayatBantuanPageState extends State<RiwayatBantuanPage> {
                         onTap: () {
                           DetailRiwayatBantuanPageArguments arguments =
                               DetailRiwayatBantuanPageArguments(
-                                  dataBantuanID: listDiproses[index].id);
+                                  dataBantuanID: listDiproses[index].id,
+                                  type: type);
                           Navigator.pushNamed(
                               context, DetailRiwayatBantuanPage.id,
                               arguments: arguments);
@@ -189,7 +229,8 @@ class _RiwayatBantuanPageState extends State<RiwayatBantuanPage> {
                         onTap: () {
                           DetailRiwayatBantuanPageArguments arguments =
                               DetailRiwayatBantuanPageArguments(
-                                  dataBantuanID: listTelahBerlalu[index].id);
+                                  dataBantuanID: listTelahBerlalu[index].id,
+                                  type: type);
                           Navigator.pushNamed(
                               context, DetailRiwayatBantuanPage.id,
                               arguments: arguments);

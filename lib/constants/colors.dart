@@ -16,8 +16,8 @@ final Color smartRTDisabledColor = Color.fromARGB(255, 112, 103, 96);
 final Color smartRTShadowColor = Colors.black12;
 final Color smartRTCardColor = Color(0xff311c0a);
 
-final Color smartRTSickLevel1Color = Color.fromARGB(255, 162, 154, 0);
-final Color smartRTSickLevel2Color = Color.fromARGB(255, 255, 140, 0);
+final Color smartRTSickLevel1Color = Color.fromARGB(255, 2, 105, 10);
+final Color smartRTSickLevel2Color = Color.fromARGB(255, 60, 0, 105);
 final Color smartRTSickLevel3Color = Color.fromARGB(255, 255, 0, 0);
 
 final Color smartRTStatusRedColor = Color.fromARGB(255, 255, 0, 0);

@@ -5,14 +5,18 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/health/health_task_help.dart';
+import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
-import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatanku_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class DetailRiwayatBantuanPageArguments {
   int dataBantuanID;
-  DetailRiwayatBantuanPageArguments({required this.dataBantuanID});
+  String type;
+  DetailRiwayatBantuanPageArguments(
+      {required this.dataBantuanID, required this.type});
 }
 
 class DetailRiwayatBantuanPage extends StatefulWidget {
@@ -28,9 +32,9 @@ class DetailRiwayatBantuanPage extends StatefulWidget {
 class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
   int? dataBantuanID;
   HealthTaskHelp? dataBantuan;
-
+  User user = AuthProvider.currentUser!;
   final detailPermintaanController = TextEditingController();
-
+  String type = '';
   int statusID = -1;
   String statusName = '';
   Color statusColor = smartRTPrimaryColor;
@@ -40,10 +44,11 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
   String tanggalKonfirmasi = '';
   String konfirmasiBy = '';
   String statusKonfirmasi = '';
-  String catatanKonfirmasi = '';
+  String catatanRejected = '';
 
   void getData() async {
     dataBantuanID = widget.args.dataBantuanID;
+    type = widget.args.type;
 
     Response<dynamic> resp =
         await NetUtil().dioClient.get('/health/healthTaskHelp/$dataBantuanID');
@@ -58,18 +63,51 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
     tanggalTerbuat = DateFormat('d MMMM y').format(dataBantuan!.created_at);
     waktuTerbuat = '${DateFormat('HH:mm').format(dataBantuan!.created_at)} WIB';
 
+    if (dataBantuan!.rejected_reason != null) {
+      catatanRejected = dataBantuan!.rejected_reason!;
+    }
+
     setState(() {});
   }
 
-  void batalkan() async {
-    Response<dynamic> resp = await NetUtil().dioClient.patch(
-        '/health/healthTaskHelp',
-        data: {"status": -2, "idBantuan": dataBantuanID});
+  // void batalkan() async {
+  //   Response<dynamic> resp = await NetUtil().dioClient.patch(
+  //       '/health/healthTaskHelp',
+  //       data: {"status": -2, "idBantuan": dataBantuanID});
+  //   if (resp.statusCode.toString() == '200') {
+  //     DetailRiwayatBantuanPageArguments arguments =
+  //         DetailRiwayatBantuanPageArguments(dataBantuanID: dataBantuanID!);
+  //     Navigator.pop(context);
+  //     Navigator.popAndPushNamed(context, RiwayatBantuanPage.id);
+  //     Navigator.pushNamed(context, DetailRiwayatBantuanPage.id,
+  //         arguments: arguments);
+  //     SmartRTSnackbar.show(context,
+  //         message: resp.data, backgroundColor: smartRTSuccessColor);
+  //   } else {
+  //     SmartRTSnackbar.show(context,
+  //         message: resp.data, backgroundColor: smartRTErrorColor);
+  //   }
+  // }
+
+  void updatePermintaanBantuan(
+      int statusKode, int idPermintaanBantuan, String alasan) async {
+    Response<dynamic> resp =
+        await NetUtil().dioClient.patch('/health/healthTaskHelp', data: {
+      "status": statusKode,
+      "idBantuan": idPermintaanBantuan,
+      "alasanPenolakan": alasan
+    });
     if (resp.statusCode.toString() == '200') {
-      DetailRiwayatBantuanPageArguments arguments =
-          DetailRiwayatBantuanPageArguments(dataBantuanID: dataBantuanID!);
       Navigator.pop(context);
-      Navigator.popAndPushNamed(context, RiwayatBantuanPage.id);
+
+      RiwayatBantuanArguments argsRiwayatBantuan =
+          RiwayatBantuanArguments(type: type);
+      Navigator.pushNamed(context, RiwayatBantuanPage.id,
+          arguments: argsRiwayatBantuan);
+
+      DetailRiwayatBantuanPageArguments arguments =
+          DetailRiwayatBantuanPageArguments(
+              dataBantuanID: dataBantuanID!, type: type);
       Navigator.pushNamed(context, DetailRiwayatBantuanPage.id,
           arguments: arguments);
       SmartRTSnackbar.show(context,
@@ -78,6 +116,119 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
       SmartRTSnackbar.show(context,
           message: resp.data, backgroundColor: smartRTErrorColor);
     }
+  }
+
+  void terimaPermintaan() async {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          'Hai Sobat Pintar,',
+          style: smartRTTextTitleCard,
+        ),
+        content: Text(
+          'Apakah anda yakin menerima permintaan bantuan ini?',
+          style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+        ),
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Tidak'),
+                child: Text(
+                  'Tidak',
+                  style: smartRTTextNormal.copyWith(
+                      fontWeight: FontWeight.bold, color: smartRTErrorColor2),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  updatePermintaanBantuan(1, dataBantuanID!, '');
+                },
+                child: Text(
+                  'SAYA YAKIN',
+                  style: smartRTTextNormal.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void tolakPermintaan() async {
+    final _alasanController = TextEditingController();
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          'Hai Sobat Pintar,',
+          style: smartRTTextTitleCard,
+        ),
+        content: Text(
+          'Anda wajib mengisikan alasan penolakan permintaan tersebut',
+          style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _alasanController,
+              maxLines: 5,
+              autocorrect: false,
+              style: smartRTTextNormal_Primary,
+              decoration: const InputDecoration(
+                labelText: 'Alasan',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Tidak boleh kosong';
+                }
+              },
+            ),
+          ),
+          SB_height30,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () {
+                  _alasanController.text = '';
+                  Navigator.pop(context, 'Batal');
+                },
+                child: Text(
+                  'Batal',
+                  style: smartRTTextNormal.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_alasanController.text == '') {
+                    SmartRTSnackbar.show(context,
+                        message: 'Alasan tidak boleh kosong',
+                        backgroundColor: smartRTErrorColor);
+                  } else {
+                    updatePermintaanBantuan(
+                        -1, dataBantuanID!, _alasanController.text);
+                  }
+                },
+                child: Text(
+                  'Tolak Permintaan',
+                  style: smartRTTextNormal.copyWith(
+                      fontWeight: FontWeight.bold, color: smartRTErrorColor2),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -124,6 +275,18 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                       ),
                     ],
                   ),
+                  catatanRejected != ''
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Alasan Ditolak',
+                              style: smartRTTextLarge,
+                            ),
+                            Text(catatanRejected, style: smartRTTextLarge),
+                          ],
+                        )
+                      : SizedBox(),
                   const Divider(
                     height: 50,
                     thickness: 1,
@@ -331,12 +494,12 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
               //   ],
               // ),
 
-              statusID == 0
+              statusID == 0 && user.id == dataBantuan!.created_by
                   ? SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          batalkan();
+                          updatePermintaanBantuan(-2, dataBantuanID!, '');
                         },
                         child: Text(
                           'BATALKAN',
@@ -344,7 +507,72 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                         ),
                       ),
                     )
-                  : const Text(''),
+                  : const SizedBox(),
+
+              statusID == 1 &&
+                      (user.user_role == Role.Ketua_RT ||
+                          user.user_role == Role.Wakil_RT ||
+                          user.user_role == Role.Sekretaris)
+                  ? SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          updatePermintaanBantuan(2, dataBantuanID!, '');
+                        },
+                        child: Text(
+                          'SELESAI',
+                          style: smartRTTextLargeBold_Secondary,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+
+              statusID == 0 &&
+                      (user.user_role == Role.Ketua_RT ||
+                          user.user_role == Role.Wakil_RT ||
+                          user.user_role == Role.Sekretaris)
+                  ? Column(
+                      children: [
+                        SB_height15,
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: smartRTSuccessColor,
+                            ),
+                            onPressed: () {
+                              terimaPermintaan();
+                            },
+                            child: Text(
+                              'TERIMA',
+                              style: smartRTTextLarge.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: smartRTPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SB_height15,
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: smartRTErrorColor,
+                            ),
+                            onPressed: () async {
+                              tolakPermintaan();
+                            },
+                            child: Text(
+                              'TOLAK',
+                              style: smartRTTextLarge.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),
