@@ -49,6 +49,7 @@ import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_c
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_minta_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/laporan_warga_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_canvas_page.dart';
@@ -180,6 +181,10 @@ class Routes {
           return DetailRiwayatKesehatanPage(
             args: settings.arguments as DetailRiwayatKesehatanArguments,
           );
+        });
+      case LaporanWargaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LaporanWargaPage();
         });
 
       // === ARISAN

@@ -47,6 +47,8 @@ class HealthTaskHelp {
   String? rejected_reason;
   DateTime? solved_at;
   int? solved_by;
+  int? rating;
+  String? review;
 
   HealthTaskHelp.fromData(Map<String, dynamic> data) {
     id = int.parse(data['id'].toString());
@@ -76,6 +78,12 @@ class HealthTaskHelp {
     if (data['solved_by'] != null) {
       solved_by = int.parse(data['solved_by'].toString());
     }
+    if (data['rating'] != null) {
+      rating = int.parse(data['rating'].toString());
+    }
+    if (data['review'] != null) {
+      review = data['review'].toString();
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -94,6 +102,8 @@ class HealthTaskHelp {
       "rejected_reason": rejected_reason.toString(),
       "solved_at": solved_at.toString(),
       "solved_by": solved_by.toString(),
+      "rating": rating.toString(),
+      "review": review.toString(),
     };
   }
 }

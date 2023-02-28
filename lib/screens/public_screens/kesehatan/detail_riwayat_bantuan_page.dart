@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
@@ -45,6 +46,9 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
   String konfirmasiBy = '';
   String statusKonfirmasi = '';
   String catatanRejected = '';
+  String review = '';
+  int rating = -1;
+  double tempCtrRating = 3;
 
   void getData() async {
     dataBantuanID = widget.args.dataBantuanID;
@@ -67,27 +71,13 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
       catatanRejected = dataBantuan!.rejected_reason!;
     }
 
+    rating = dataBantuan!.rating ?? -1;
+    debugPrint(rating.toString());
+    debugPrint(dataBantuan!.rating.toString());
+    debugPrint(dataBantuanID.toString());
+    review = dataBantuan!.review ?? '';
     setState(() {});
   }
-
-  // void batalkan() async {
-  //   Response<dynamic> resp = await NetUtil().dioClient.patch(
-  //       '/health/healthTaskHelp',
-  //       data: {"status": -2, "idBantuan": dataBantuanID});
-  //   if (resp.statusCode.toString() == '200') {
-  //     DetailRiwayatBantuanPageArguments arguments =
-  //         DetailRiwayatBantuanPageArguments(dataBantuanID: dataBantuanID!);
-  //     Navigator.pop(context);
-  //     Navigator.popAndPushNamed(context, RiwayatBantuanPage.id);
-  //     Navigator.pushNamed(context, DetailRiwayatBantuanPage.id,
-  //         arguments: arguments);
-  //     SmartRTSnackbar.show(context,
-  //         message: resp.data, backgroundColor: smartRTSuccessColor);
-  //   } else {
-  //     SmartRTSnackbar.show(context,
-  //         message: resp.data, backgroundColor: smartRTErrorColor);
-  //   }
-  // }
 
   void updatePermintaanBantuan(
       int statusKode, int idPermintaanBantuan, String alasan) async {
@@ -231,6 +221,131 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
     );
   }
 
+  void beriPenilaianPopUp() async {
+    final _reviewController = TextEditingController();
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          'Hai Sobat Pintar,',
+          style: smartRTTextTitleCard,
+        ),
+        content: Text(
+          'Anda dapat memberikan penilaian pada pemberi bantuan untuk meningkatkan performa',
+          style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+        ),
+        actions: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: RatingBar.builder(
+                  initialRating: tempCtrRating,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  itemPadding: EdgeInsets.all(5),
+                  itemCount: 5,
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    tempCtrRating = rating;
+                  },
+                ),
+              ),
+            ],
+          ),
+          SB_height30,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: _reviewController,
+              maxLines: 5,
+              autocorrect: false,
+              style: smartRTTextNormal_Primary,
+              decoration: const InputDecoration(
+                labelText: 'Review',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Tidak boleh kosong';
+                }
+              },
+            ),
+          ),
+          SB_height30,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () {
+                  _reviewController.text = '';
+                  tempCtrRating = 3;
+                  Navigator.pop(context, 'Batal');
+                },
+                child: Text(
+                  'Batal',
+                  style: smartRTTextNormal.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_reviewController.text == '') {
+                    SmartRTSnackbar.show(context,
+                        message: 'Review tidak boleh kosong',
+                        backgroundColor: smartRTErrorColor);
+                  } else {
+                    updateKirimPenilaian(_reviewController.text);
+                  }
+                },
+                child: Text(
+                  'KIRIM',
+                  style: smartRTTextNormal.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: smartRTStatusGreenColor),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void updateKirimPenilaian(String reviewText) async {
+    Response<dynamic> resp = await NetUtil()
+        .dioClient
+        .patch('/health/userReported/rating', data: {
+      "idTaskHelp": dataBantuan!.id,
+      "rating": tempCtrRating,
+      "review": reviewText
+    });
+    if (resp.statusCode.toString() == '200') {
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Navigator.pop(context);
+
+      RiwayatBantuanArguments argsRiwayatBantuan =
+          RiwayatBantuanArguments(type: type);
+      Navigator.pushNamed(context, RiwayatBantuanPage.id,
+          arguments: argsRiwayatBantuan);
+
+      DetailRiwayatBantuanPageArguments arguments =
+          DetailRiwayatBantuanPageArguments(
+              dataBantuanID: dataBantuanID!, type: type);
+      Navigator.pushNamed(context, DetailRiwayatBantuanPage.id,
+          arguments: arguments);
+      SmartRTSnackbar.show(context,
+          message: resp.data, backgroundColor: smartRTSuccessColor);
+    } else {
+      SmartRTSnackbar.show(context,
+          message: resp.data, backgroundColor: smartRTErrorColor);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -355,6 +470,52 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                   ),
                 ],
               ),
+              rating != -1
+                  ? Column(
+                      children: [
+                        const Divider(
+                          height: 50,
+                          thickness: 1,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Rating',
+                              style: smartRTTextLarge,
+                            ),
+                            Row(
+                              children: [
+                                Text('$rating', style: smartRTTextLarge),
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 15,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Review',
+                                style: smartRTTextLarge,
+                              ),
+                            ),
+                            Expanded(
+                                child: Text(
+                              review,
+                              style: smartRTTextLarge,
+                              textAlign: TextAlign.right,
+                            )),
+                          ],
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
               const Divider(
                 height: 50,
                 thickness: 1,
@@ -503,6 +664,23 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                         },
                         child: Text(
                           'BATALKAN',
+                          style: smartRTTextLargeBold_Secondary,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+
+              statusID == 2 &&
+                      user.id == dataBantuan!.created_by &&
+                      dataBantuan!.rating == null
+                  ? SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          beriPenilaianPopUp();
+                        },
+                        child: Text(
+                          'BERI PENILAIAN SEKARANG',
                           style: smartRTTextLargeBold_Secondary,
                         ),
                       ),

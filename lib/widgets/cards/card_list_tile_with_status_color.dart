@@ -7,6 +7,7 @@ class CardListTileWithStatusColor extends StatelessWidget {
     Key? key,
     required this.title,
     required this.subtitle,
+    this.maxLineSubtitle,
     required this.bottomText,
     required this.statusColor,
     required this.onTap,
@@ -14,6 +15,7 @@ class CardListTileWithStatusColor extends StatelessWidget {
 
   final String title;
   final String subtitle;
+  final int? maxLineSubtitle;
   final String bottomText;
   final Color statusColor;
   final Function() onTap;
@@ -55,7 +57,7 @@ class CardListTileWithStatusColor extends StatelessWidget {
                           subtitle,
                           style: smartRTTextNormal,
                           textAlign: TextAlign.justify,
-                          maxLines: 1,
+                          maxLines: maxLineSubtitle ?? 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],

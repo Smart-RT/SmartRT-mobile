@@ -7,6 +7,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/health/disease_group.dart';
 import 'package:smart_rt/models/health/health_task_help.dart';
 import 'package:smart_rt/models/health/user_health_report.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/laporan_warga_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
@@ -52,9 +53,17 @@ class _DetailRiwayatKesehatanPageState
   String getStatus() {
     if (dataReport!.healed_at != null) {
       return 'Sudah Sembuh';
-    } else {
+    } else if (dataReport!.healed_at == null &&
+        dataReport!.confirmation_status == 1) {
       statusColor = smartRTStatusRedColor;
       return 'Masih Sakit';
+    } else if (dataReport!.healed_at == null &&
+        dataReport!.confirmation_status == 0) {
+      statusColor = smartRTStatusRedColor;
+      return 'Laporan di Tolak';
+    } else {
+      statusColor = smartRTStatusYellowColor;
+      return 'Menunggu Laporan di Konfirmasi';
     }
   }
 
@@ -111,6 +120,123 @@ class _DetailRiwayatKesehatanPageState
     }
 
     setState(() {});
+  }
+
+  void terimaPermintaan() async {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          'Hai Sobat Pintar,',
+          style: smartRTTextTitleCard,
+        ),
+        content: Text(
+          'Apakah anda yakin menerima laporan tersebut ?\n\nPastikan anda telah memeriksa kondisi warga yang dilaporkan terlebih dahulu!',
+          style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+        ),
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Tidak'),
+                child: Text(
+                  'Batal',
+                  style:
+                      smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  updateKonfirmasi('terima');
+                },
+                child: Text(
+                  'TERIMA LAPORAN',
+                  style: smartRTTextNormal.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: smartRTStatusGreenColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void tolakPermintaan() async {
+    final _alasanController = TextEditingController();
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          'Hai Sobat Pintar,',
+          style: smartRTTextTitleCard,
+        ),
+        content: Text(
+          'Apakah anda yakin menolak laporan tersebut ?\n\nPastikan anda telah memeriksa kondisi warga yang dilaporkan terlebih dahulu!',
+          style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+        ),
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () {
+                  _alasanController.text = '';
+                  Navigator.pop(context, 'Batal');
+                },
+                child: Text(
+                  'Batal',
+                  style: smartRTTextNormal.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  updateKonfirmasi('tolak');
+                },
+                child: Text(
+                  'TOLAK LAPORAN',
+                  style: smartRTTextNormal.copyWith(
+                      fontWeight: FontWeight.bold, color: smartRTErrorColor2),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void updateKonfirmasi(String status) async {
+    Response<dynamic> resp = await NetUtil()
+        .dioClient
+        .patch('/health/userReported/confirmationAction/${status}', data: {
+      "idReport": dataReport!.id,
+    });
+    if (resp.statusCode.toString() == '200') {
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Navigator.popAndPushNamed(context, LaporanWargaPage.id);
+
+      Response<dynamic> resp = await NetUtil()
+          .dioClient
+          .get('/health/userReported/id/${dataReport!.id}');
+
+      UserHealthReport tempDataReport = UserHealthReport.fromData(resp.data);
+      DetailRiwayatKesehatanArguments arguments =
+          DetailRiwayatKesehatanArguments(dataReport: tempDataReport);
+      Navigator.pushNamed(context, DetailRiwayatKesehatanPage.id,
+          arguments: arguments);
+      SmartRTSnackbar.show(context,
+          message: resp.data, backgroundColor: smartRTSuccessColor);
+    } else {
+      SmartRTSnackbar.show(context,
+          message: resp.data, backgroundColor: smartRTErrorColor);
+    }
   }
 
   @override
@@ -408,6 +534,50 @@ class _DetailRiwayatKesehatanPageState
                 height: 50,
                 thickness: 1,
               ),
+              (dataReport!.healed_at == null &&
+                      dataReport!.confirmation_status == -1)
+                  ? Column(
+                      children: [
+                        SB_height15,
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: smartRTSuccessColor,
+                            ),
+                            onPressed: () {
+                              terimaPermintaan();
+                            },
+                            child: Text(
+                              'TERIMA',
+                              style: smartRTTextLarge.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: smartRTPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SB_height15,
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: smartRTErrorColor,
+                            ),
+                            onPressed: () async {
+                              tolakPermintaan();
+                            },
+                            child: Text(
+                              'TOLAK',
+                              style: smartRTTextLarge.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),

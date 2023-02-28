@@ -58,6 +58,7 @@ dependencies:
   dependencies:
   flutter_pdfview: ^1.2.1
   toggle_switch: ^2.0.1
+  flutter_rating_bar: ^4.0.1
 
 
 dev_dependencies:

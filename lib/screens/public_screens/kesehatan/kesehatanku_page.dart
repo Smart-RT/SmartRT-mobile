@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
@@ -9,8 +10,10 @@ import 'package:smart_rt/providers/health_provider.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_choose_user_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_minta_bantuan_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/laporan_warga_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
+import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_primary.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_button.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
@@ -27,10 +30,17 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
   User user = AuthProvider.currentUser!;
   String statusKesehatanku = '';
   Color statusColor = smartRTSuccessColor;
+  String ctrLaporanButuhKonfirmasi = '0';
 
   void getData() async {
     statusKesehatanku = user.is_health == 0 ? 'KURANG SEHAT' : 'SEHAT';
     statusColor = user.is_health == 0 ? smartRTErrorColor : smartRTSuccessColor;
+    Response<dynamic> resp = await NetUtil()
+        .dioClient
+        .get('/health/userReported/needConfirmation/count');
+    ctrLaporanButuhKonfirmasi = (resp.data).toString();
+
+    setState(() {});
   }
 
   void updateSayaSehat() async {
@@ -150,6 +160,15 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                                 Navigator.pushNamed(
                                     context, RiwayatBantuanPage.id,
                                     arguments: arguments);
+                              },
+                            ),
+                            SB_height15,
+                            CardListTilePrimary(
+                              title:
+                                  'Laporan dari Warga\n[${ctrLaporanButuhKonfirmasi} Laporan Butuh Konfirmasi]',
+                              onTap: () async {
+                                Navigator.pushNamed(
+                                    context, LaporanWargaPage.id);
                               },
                             ),
                           ],
