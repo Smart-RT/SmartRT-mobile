@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/lottery_club_period_detail.dart';
 import 'package:smart_rt/models/lottery_club_period_detail_bill.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page_2.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
@@ -9,11 +10,11 @@ import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
 class PembayaranIuranArisanArguments {
-  String pertemuanID;
+  LotteryClubPeriodDetail dataPertemuan;
   String periodeKe;
   String pertemuanKe;
   PembayaranIuranArisanArguments(
-      {required this.pertemuanID,
+      {required this.dataPertemuan,
       required this.periodeKe,
       required this.pertemuanKe});
 }
@@ -28,20 +29,20 @@ class PembayaranIuranArisan extends StatefulWidget {
 }
 
 class _PembayaranIuranArisanState extends State<PembayaranIuranArisan> {
-  String pertemuanID = '';
   String periodeKe = '';
   String pertemuanKe = '';
   String totalTagihan = '0';
   LotteryClubPeriodDetailBill? dataPembayaran;
+  LotteryClubPeriodDetail? dataPertemuan;
 
   void getData() async {
-    pertemuanID = widget.args.pertemuanID;
+    dataPertemuan = widget.args.dataPertemuan;
     periodeKe = widget.args.periodeKe;
     pertemuanKe = widget.args.pertemuanKe;
 
     Response<dynamic> resp = await NetUtil()
         .dioClient
-        .get('/lotteryClubs/getDataTagihan/$pertemuanID');
+        .get('/lotteryClubs/getDataTagihan/${dataPertemuan!.id}');
     dataPembayaran = LotteryClubPeriodDetailBill.fromData(resp.data);
     totalTagihan = CurrencyFormat.convertToIdr(dataPembayaran!.bill_amount, 2);
 
@@ -127,7 +128,7 @@ class _PembayaranIuranArisanState extends State<PembayaranIuranArisan> {
                           .post('/lotteryClubs/payment', data: {
                         'payment_type': 'bank_transfer',
                         'bank': 'bca',
-                        'id_bill': dataPembayaran!.id.toString(),
+                        'id_bill': dataPembayaran!.id,
                       });
                       LotteryClubPeriodDetailBill data =
                           LotteryClubPeriodDetailBill.fromData(resp.data);
@@ -135,7 +136,8 @@ class _PembayaranIuranArisanState extends State<PembayaranIuranArisan> {
                           PembayaranIuranArisanPage2Arguments(
                               periodeKe: periodeKe,
                               pertemuanKe: pertemuanKe,
-                              dataPembayaran: dataPembayaran!);
+                              dataPembayaran: dataPembayaran!,
+                              dataPertemuan: dataPertemuan!);
                       Navigator.popAndPushNamed(
                           context, PembayaranIuranArisanPage2.id,
                           arguments: args);

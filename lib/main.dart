@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/theme.dart';
 import 'package:smart_rt/routes/routes.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,6 +81,11 @@ class _SmartRTAppState extends State<SmartRTApp> {
           theme: getThemeData(),
           initialRoute: routeStart,
           onGenerateRoute: Routes.generateRoute,
+          localizationsDelegates: [
+            GlobalWidgetsLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            MonthYearPickerLocalizations.delegate,
+          ],
         );
       },
     );

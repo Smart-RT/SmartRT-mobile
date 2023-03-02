@@ -47,18 +47,19 @@ class _DetailPertemuanSelanjutnyaPageState
     if (dataPembayaran.payment_type == null ||
         dataPembayaran.payment_type == '') {
       PembayaranIuranArisanArguments args = PembayaranIuranArisanArguments(
-        periodeKe: periodeKe,
-        pertemuanKe: pertemuanKe,
-        pertemuanID: dataPertemuan!.id.toString(),
-      );
+          periodeKe: periodeKe,
+          pertemuanKe: pertemuanKe,
+          dataPertemuan: dataPertemuan!);
       Navigator.pushNamed(context, PembayaranIuranArisan.id, arguments: args);
     } else if (dataPembayaran.midtrans_transaction_status == 'pending') {
       PembayaranIuranArisanPage2Arguments args =
           PembayaranIuranArisanPage2Arguments(
-              periodeKe: periodeKe,
-              pertemuanKe: pertemuanKe,
-              dataPembayaran: dataPembayaran);
-      Navigator.popAndPushNamed(context, PembayaranIuranArisanPage2.id,
+        periodeKe: periodeKe,
+        pertemuanKe: pertemuanKe,
+        dataPembayaran: dataPembayaran,
+        dataPertemuan: dataPertemuan!,
+      );
+      Navigator.pushNamed(context, PembayaranIuranArisanPage2.id,
           arguments: args);
     }
   }
@@ -236,8 +237,16 @@ class _DetailPertemuanSelanjutnyaPageState
               thickness: 2,
             ),
             ListTileArisan(
-                title: 'Lihat Tagihan Anggota',
-                onTapDestination: LihatIuranArisanPertemuanPage.id),
+              title: 'Lihat Tagihan Anggota',
+              onTap: () async {
+                LihatIuranArisanPageArguments args =
+                    LihatIuranArisanPageArguments(
+                        idPertemuan: dataPertemuan!.id.toString(),
+                        pertemuanKe: pertemuanKe);
+                Navigator.pushNamed(context, LihatIuranArisanPertemuanPage.id,
+                    arguments: args);
+              },
+            ),
             Divider(
               height: 25,
               thickness: 2,

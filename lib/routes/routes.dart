@@ -19,6 +19,7 @@ import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/cre
 import 'package:smart_rt/screens/public_screens/arisan/create_pertemuan_arisan/create_pertemuan_selanjutnya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/detail_iuran_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/list_anggota_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page_2.dart';
@@ -268,7 +269,9 @@ class Routes {
         });
       case LihatIuranArisanPertemuanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return const LihatIuranArisanPertemuanPage();
+          return LihatIuranArisanPertemuanPage(
+            args: settings.arguments as LihatIuranArisanPageArguments,
+          );
         });
       case PembayaranIuranArisan.id:
         return MaterialPageRoute(builder: (context) {
@@ -298,7 +301,11 @@ class Routes {
           return PembayaranIuranArisanPage2(
               args: settings.arguments as PembayaranIuranArisanPage2Arguments);
         });
-
+      case DetailIuranArisanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return DetailIuranArisanPage(
+              args: settings.arguments as DetailIuranArisanArguments);
+        });
       // ---
 
       case BerandaAdminPage.id:

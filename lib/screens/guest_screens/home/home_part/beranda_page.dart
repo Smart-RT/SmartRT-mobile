@@ -164,14 +164,25 @@ class _BerandaPageState extends State<BerandaPage> {
                         },
                       ),
                     ),
-                    Expanded(
-                      child: CardIconWithText(
-                        icon: Icons.close,
-                        iconColor: smartRTPrimaryColor,
-                        title: '-',
-                        onTap: () async {},
-                      ),
-                    ),
+                    user.user_role == Role.Ketua_RT ||
+                            user.user_role == Role.Wakil_RT ||
+                            user.user_role == Role.Sekretaris
+                        ? Expanded(
+                            child: CardIconWithText(
+                              icon: Icons.domain_add,
+                              iconColor: smartRTPrimaryColor,
+                              title: 'Gabung Wilayah',
+                              onTap: () async {},
+                            ),
+                          )
+                        : Expanded(
+                            child: CardIconWithText(
+                              icon: Icons.close,
+                              iconColor: smartRTPrimaryColor,
+                              title: '-',
+                              onTap: () async {},
+                            ),
+                          ),
                     Expanded(
                       child: CardIconWithText(
                         icon: Icons.close,

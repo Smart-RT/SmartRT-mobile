@@ -22,6 +22,8 @@ class LotteryClubPeriodDetailBill {
   int? updated_by;
   DateTime? midtrans_created_at;
   DateTime? midtrans_expired_at;
+  User? data_user;
+  User? data_user_konfirmasi;
 
   LotteryClubPeriodDetailBill.fromData(Map<String, dynamic> data) {
     if (data['id'] != null) {
@@ -83,6 +85,12 @@ class LotteryClubPeriodDetailBill {
     if (data['updated_by'] != null) {
       updated_by = int.parse(data['updated_by'].toString());
     }
+    if (data['data_user'] != null) {
+      data_user = User.fromData(data['data_user']);
+    }
+    if (data['data_user_konfirmasi'] != null) {
+      data_user_konfirmasi = User.fromData(data['data_user_konfirmasi']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -108,6 +116,8 @@ class LotteryClubPeriodDetailBill {
         "updated_by": updated_by.toString(),
         "midtrans_created_at": midtrans_created_at.toString(),
         "midtrans_expired_at": midtrans_expired_at.toString(),
+        "data_user": data_user,
+        "data_user_konfirmasi": data_user_konfirmasi,
       }
     };
   }
