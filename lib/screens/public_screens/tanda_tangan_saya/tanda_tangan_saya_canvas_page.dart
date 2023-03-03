@@ -16,6 +16,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class TandaTanganSayaCanvasPage extends StatefulWidget {
@@ -45,10 +46,11 @@ class _TandaTanganSayaCanvasPageState extends State<TandaTanganSayaCanvasPage> {
     final Uint8List? data = await _signatureController.toPngBytes();
     if (data != null) {
       await context
-            .read<AuthProvider>()
-            .uploadSignatureImage(context: context, file: data);
-            
+          .read<AuthProvider>()
+          .uploadSignatureImage(context: context, file: data);
+
       Navigator.pop(context);
+      Navigator.popAndPushNamed(context, TandaTanganSayaPage.id);
     }
   }
 

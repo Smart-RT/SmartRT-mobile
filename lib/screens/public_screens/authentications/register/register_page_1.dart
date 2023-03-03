@@ -18,7 +18,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
   final _formKey = GlobalKey<FormState>();
   final _namaLengkapController = TextEditingController();
   final _tanggalLahirController = TextEditingController();
-  String _genderSelectedValue= '';
+  String _genderSelectedValue = '';
 
   final List<String> genderItems = [
     'Laki-Laki',
@@ -65,7 +65,8 @@ class _RegisterPage1State extends State<RegisterPage1> {
                   ),
                   SB_height15,
                   DropdownButtonFormField2(
-                    style: smartRTTextNormal_Primary,
+                    style:
+                        smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
                       isDense: true,
                       contentPadding: EdgeInsets.zero,
@@ -84,7 +85,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                     ),
                     iconSize: 30,
                     buttonHeight: 60,
-                    buttonPadding: const EdgeInsets.only(left: 25, right: 10),
+                    buttonPadding: const EdgeInsets.only(left: 10, right: 10),
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                     ),
@@ -93,7 +94,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                               value: item,
                               child: Text(
                                 item,
-                                style:  smartRTTextNormal_Primary,
+                                style: smartRTTextNormal_Primary,
                               ),
                             ))
                         .toList(),
@@ -136,8 +137,13 @@ class _RegisterPage1State extends State<RegisterPage1> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      RegisterPage2Arguments argsForRegisterPage2 = RegisterPage2Arguments(namaLengkap: _namaLengkapController.text, jenisKelamin: _genderSelectedValue, tanggalLahir: _tanggalLahirController.text);
-                      Navigator.pushNamed(context, RegisterPage2.id, arguments: argsForRegisterPage2);
+                      RegisterPage2Arguments argsForRegisterPage2 =
+                          RegisterPage2Arguments(
+                              namaLengkap: _namaLengkapController.text,
+                              jenisKelamin: _genderSelectedValue,
+                              tanggalLahir: _tanggalLahirController.text);
+                      Navigator.pushNamed(context, RegisterPage2.id,
+                          arguments: argsForRegisterPage2);
                     }
                   },
                   child: Text(

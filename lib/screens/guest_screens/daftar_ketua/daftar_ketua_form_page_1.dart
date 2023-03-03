@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
@@ -78,62 +76,157 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
         physics: const BouncingScrollPhysics(),
         child: Form(
           key: _formKey,
-          child: Container(
-            height: MediaQuery.of(context).size.height -
-                (AppBar().preferredSize.height + 50),
-            child: Padding(
-              padding: paddingScreen,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Tentang Saya\ndan Wilayah Saya',
-                        style: smartRTTextTitle_Primary,
+          child: Padding(
+            padding: paddingScreen,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Tentang Saya\ndan Wilayah Saya',
+                      style: smartRTTextTitle_Primary,
+                    ),
+                    Text(
+                      'Pastikan data anda sesuai dengan data yang valid dan sesuai dengan KTP.',
+                      style: smartRTTextNormal_Primary,
+                      textAlign: TextAlign.justify,
+                    ),
+                    SB_height30,
+                    TextFormField(
+                      controller: textEditingControllerNamaLengkap,
+                      autocorrect: false,
+                      style: smartRTTextNormal_Primary,
+                      decoration: const InputDecoration(
+                        labelText: 'Nama Lengkap',
                       ),
-                      Text(
-                        'Pastikan data anda sesuai dengan data yang valid dan sesuai dengan KTP.',
-                        style: smartRTTextNormal_Primary,
-                        textAlign: TextAlign.justify,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Nama tidak boleh kosong';
+                        }
+                      },
+                    ),
+                    SB_height30,
+                    Text(
+                      'Catatan : Wilayah RT anda akan dibuat berdasarkan Kecamatan, Kelurahan, no RT, dan no RW sesuai yang anda cantumkan. Jika telah di konfirmasi oleh pihak pengelola aplikasi, maka otomatis alamat Ketua RT pada wilayah tersebut akan diarahkan pada alamat anda.',
+                      style: smartRTTextNormal_Primary,
+                      textAlign: TextAlign.justify,
+                    ),
+                    SB_height30,
+                    TextFormField(
+                      autocorrect: false,
+                      controller: textEditingControllerAlamat,
+                      style: smartRTTextNormal_Primary,
+                      decoration: const InputDecoration(
+                        labelText: 'Alamat Rumah',
                       ),
-                      SB_height30,
-                      TextFormField(
-                        controller: textEditingControllerNamaLengkap,
-                        autocorrect: false,
-                        style: smartRTTextNormal_Primary,
-                        decoration: const InputDecoration(
-                          labelText: 'Nama Lengkap',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Alamat tidak boleh kosong';
+                        }
+                      },
+                    ),
+                    SB_height15,
+                    DropdownButtonFormField2(
+                      style: smartRTTextLargeBold_Primary,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Nama tidak boleh kosong';
-                          }
-                        },
                       ),
-                      SB_height30,
-                      Text(
-                        'Catatan : Wilayah RT anda akan dibuat berdasarkan Kecamatan, Kelurahan, no RT, dan no RW sesuai yang anda cantumkan. Jika telah di konfirmasi oleh pihak pengelola aplikasi, maka otomatis alamat Ketua RT pada wilayah tersebut akan diarahkan pada alamat anda.',
-                        style: smartRTTextNormal_Primary,
-                        textAlign: TextAlign.justify,
-                      ),
-                      SB_height30,
-                      TextFormField(
-                        autocorrect: false,
-                        controller: textEditingControllerAlamat,
-                        style: smartRTTextNormal_Primary,
-                        decoration: const InputDecoration(
-                          labelText: 'Alamat Rumah',
+                      dropdownMaxHeight: 200,
+                      searchController: textEditingControllerKecamatan,
+                      searchInnerWidget: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 8,
+                          bottom: 4,
+                          right: 8,
+                          left: 8,
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Alamat tidak boleh kosong';
-                          }
-                        },
+                        child: TextFormField(
+                          controller: textEditingControllerKecamatan,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 8,
+                            ),
+                            hintText: 'Search for an item...',
+                            hintStyle: smartRTTextLargeBold_Primary,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
                       ),
-                      SB_height15,
-                      DropdownButtonFormField2(
+                      searchMatchFn: (item, searchValue) {
+                        debugPrint(item.toString());
+                        List<String> ids = _listKecamatan
+                            .where(
+                              (element) => element.name
+                                  .toUpperCase()
+                                  .contains(searchValue.toUpperCase()),
+                            )
+                            .map(
+                              (e) => e.id.toString(),
+                            )
+                            .toList();
+                        return ids.contains(item.value.toString());
+                      },
+                      onMenuStateChange: (isOpen) {
+                        if (!isOpen) {
+                          textEditingControllerKecamatan.clear();
+                        }
+                      },
+                      isExpanded: true,
+                      hint: Text(
+                        'Kecamatan',
+                        style: smartRTTextLargeBold_Primary,
+                      ),
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        color: smartRTPrimaryColor,
+                      ),
+                      iconSize: 30,
+                      buttonHeight: 60,
+                      buttonPadding: const EdgeInsets.only(left: 25, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      items: _listKecamatan
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item.id.toString(),
+                                child: Text(
+                                  item.name,
+                                  style: smartRTTextNormal_Primary,
+                                ),
+                              ))
+                          .toList(),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Kecamatan tidak boleh kosong';
+                        }
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _kecamatanSelectedValue = value.toString();
+                          _kelurahanSelectedValue = null;
+                          _listKelurahanFiltered = _listKelurahan
+                              .where((element) =>
+                                  element.idKecamatan.toString() ==
+                                  _kecamatanSelectedValue)
+                              .toList();
+                        });
+                      },
+                      onSaved: (value) {
+                        _kecamatanSelectedValue = value.toString();
+                      },
+                    ),
+                    SB_height15,
+                    DropdownButtonFormField2(
                         style: smartRTTextLargeBold_Primary,
                         decoration: InputDecoration(
                           isDense: true,
@@ -143,7 +236,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                           ),
                         ),
                         dropdownMaxHeight: 200,
-                        searchController: textEditingControllerKecamatan,
+                        searchController: textEditingControllerKelurahan,
                         searchInnerWidget: Padding(
                           padding: const EdgeInsets.only(
                             top: 8,
@@ -152,7 +245,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                             left: 8,
                           ),
                           child: TextFormField(
-                            controller: textEditingControllerKecamatan,
+                            controller: textEditingControllerKelurahan,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: const EdgeInsets.symmetric(
@@ -169,7 +262,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                         ),
                         searchMatchFn: (item, searchValue) {
                           debugPrint(item.toString());
-                          List<String> ids = _listKecamatan
+                          List<String> ids = _listKelurahanFiltered
                               .where(
                                 (element) => element.name
                                     .toUpperCase()
@@ -183,18 +276,24 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                         },
                         onMenuStateChange: (isOpen) {
                           if (!isOpen) {
-                            textEditingControllerKecamatan.clear();
+                            textEditingControllerKelurahan.clear();
                           }
                         },
                         isExpanded: true,
                         hint: Text(
-                          'Kecamatan',
+                          'Kelurahan',
                           style: smartRTTextLargeBold_Primary,
                         ),
-                        icon: Icon(
-                          Icons.arrow_drop_down,
-                          color: smartRTPrimaryColor,
+                        disabledHint: Text(
+                          'Kelurahan',
+                          style: smartRTTextLargeBold_Primary.copyWith(
+                              color: smartRTDisabledColor),
                         ),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                        ),
+                        iconDisabledColor: smartRTDisabledColor,
+                        iconEnabledColor: smartRTPrimaryColor,
                         iconSize: 30,
                         buttonHeight: 60,
                         buttonPadding:
@@ -202,7 +301,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                         dropdownDecoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        items: _listKecamatan
+                        items: _listKelurahanFiltered
                             .map((item) => DropdownMenuItem<String>(
                                   value: item.id.toString(),
                                   child: Text(
@@ -213,194 +312,91 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                             .toList(),
                         validator: (value) {
                           if (value == null) {
-                            return 'Kecamatan tidak boleh kosong';
+                            return 'Kelurahan tidak boleh kosong';
                           }
                         },
-                        onChanged: (value) {
-                          setState(() {
-                            _kecamatanSelectedValue = value.toString();
-                            _kelurahanSelectedValue = null;
-                            _listKelurahanFiltered = _listKelurahan
-                                .where((element) =>
-                                    element.idKecamatan.toString() ==
-                                    _kecamatanSelectedValue)
-                                .toList();
-                          });
-                        },
+                        onChanged: _kecamatanSelectedValue.isNotEmpty
+                            ? (value) {
+                                setState(() {
+                                  _kelurahanSelectedValue = value.toString();
+                                });
+                              }
+                            : null,
                         onSaved: (value) {
-                          _kecamatanSelectedValue = value.toString();
+                          _kelurahanSelectedValue = value.toString();
                         },
-                      ),
-                      SB_height15,
-                      DropdownButtonFormField2(
-                          style: smartRTTextLargeBold_Primary,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: EdgeInsets.zero,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
+                        value: _kelurahanSelectedValue),
+                    SB_height15,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            autocorrect: false,
+                            controller: textEditingControllerNoRT,
+                            style: smartRTTextNormal_Primary,
+                            decoration: const InputDecoration(
+                              labelText: 'Nomor RT',
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Nomor RT tidak boleh kosong';
+                              }
+                            },
                           ),
-                          dropdownMaxHeight: 200,
-                          searchController: textEditingControllerKelurahan,
-                          searchInnerWidget: Padding(
-                            padding: const EdgeInsets.only(
-                              top: 8,
-                              bottom: 4,
-                              right: 8,
-                              left: 8,
+                        ),
+                        SB_width25,
+                        Expanded(
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            autocorrect: false,
+                            controller: textEditingControllerNoRW,
+                            style: smartRTTextNormal_Primary,
+                            decoration: const InputDecoration(
+                              labelText: 'Nomor RW',
                             ),
-                            child: TextFormField(
-                              controller: textEditingControllerKelurahan,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 8,
-                                ),
-                                hintText: 'Search for an item...',
-                                hintStyle: smartRTTextLargeBold_Primary,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Nomor RW tidak boleh kosong';
+                              }
+                            },
                           ),
-                          searchMatchFn: (item, searchValue) {
-                            debugPrint(item.toString());
-                            List<String> ids = _listKelurahanFiltered
-                                .where(
-                                  (element) => element.name
-                                      .toUpperCase()
-                                      .contains(searchValue.toUpperCase()),
-                                )
-                                .map(
-                                  (e) => e.id.toString(),
-                                )
-                                .toList();
-                            return ids.contains(item.value.toString());
-                          },
-                          onMenuStateChange: (isOpen) {
-                            if (!isOpen) {
-                              textEditingControllerKelurahan.clear();
-                            }
-                          },
-                          isExpanded: true,
-                          hint: Text(
-                            'Kelurahan',
-                            style: smartRTTextLargeBold_Primary,
-                          ),
-                          disabledHint: Text(
-                            'Kelurahan',
-                            style: smartRTTextLargeBold_Primary.copyWith(
-                                color: smartRTDisabledColor),
-                          ),
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                          ),
-                          iconDisabledColor: smartRTDisabledColor,
-                          iconEnabledColor: smartRTPrimaryColor,
-                          iconSize: 30,
-                          buttonHeight: 60,
-                          buttonPadding:
-                              const EdgeInsets.only(left: 25, right: 10),
-                          dropdownDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          items: _listKelurahanFiltered
-                              .map((item) => DropdownMenuItem<String>(
-                                    value: item.id.toString(),
-                                    child: Text(
-                                      item.name,
-                                      style: smartRTTextNormal_Primary,
-                                    ),
-                                  ))
-                              .toList(),
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Kelurahan tidak boleh kosong';
-                            }
-                          },
-                          onChanged: _kecamatanSelectedValue.isNotEmpty
-                              ? (value) {
-                                  setState(() {
-                                    _kelurahanSelectedValue = value.toString();
-                                  });
-                                }
-                              : null,
-                          onSaved: (value) {
-                            _kelurahanSelectedValue = value.toString();
-                          },
-                          value: _kelurahanSelectedValue),
-                      SB_height15,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              autocorrect: false,
-                              controller: textEditingControllerNoRT,
-                              style: smartRTTextNormal_Primary,
-                              decoration: const InputDecoration(
-                                labelText: 'Nomor RT',
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Nomor RT tidak boleh kosong';
-                                }
-                              },
-                            ),
-                          ),
-                          SB_width25,
-                          Expanded(
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              autocorrect: false,
-                              controller: textEditingControllerNoRW,
-                              style: smartRTTextNormal_Primary,
-                              decoration: const InputDecoration(
-                                labelText: 'Nomor RW',
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Nomor RW tidak boleh kosong';
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SB_height15,
-                    ],
-                  ),
-                  Container(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          DaftarKetuaFormPage2Arguments
-                              argsForDaftarKetuaPage2 =
-                              DaftarKetuaFormPage2Arguments(
-                                  namaLengkap:
-                                      textEditingControllerNamaLengkap.text,
-                                  alamat: textEditingControllerAlamat.text,
-                                  kecamatan: _kecamatanSelectedValue,
-                                  kelurahan: _kelurahanSelectedValue.toString(),
-                                  noRT: textEditingControllerNoRT.text,
-                                  noRW: textEditingControllerNoRW.text);
-                          Navigator.pushNamed(context, DaftarKetuaFormPage2.id,
-                              arguments: argsForDaftarKetuaPage2);
-                        }
-                      },
-                      child: Text(
-                        'SELANJUTNYA',
-                        style: smartRTTextLargeBold_Secondary,
-                      ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
+                    SB_height15,
+                  ],
+                ),
+              ],
             ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0),
+          ))),
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              DaftarKetuaFormPage2Arguments argsForDaftarKetuaPage2 =
+                  DaftarKetuaFormPage2Arguments(
+                      namaLengkap: textEditingControllerNamaLengkap.text,
+                      alamat: textEditingControllerAlamat.text,
+                      kecamatan: _kecamatanSelectedValue,
+                      kelurahan: _kelurahanSelectedValue.toString(),
+                      noRT: textEditingControllerNoRT.text,
+                      noRW: textEditingControllerNoRW.text);
+              Navigator.pushNamed(context, DaftarKetuaFormPage2.id,
+                  arguments: argsForDaftarKetuaPage2);
+            }
+          },
+          child: Text(
+            'SELANJUTNYA',
+            style: smartRTTextLargeBold_Secondary,
           ),
         ),
       ),

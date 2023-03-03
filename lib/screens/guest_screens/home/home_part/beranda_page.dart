@@ -8,6 +8,7 @@ import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/gabung_wilayah/konfirmasi_gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
@@ -164,25 +165,14 @@ class _BerandaPageState extends State<BerandaPage> {
                         },
                       ),
                     ),
-                    user.user_role == Role.Ketua_RT ||
-                            user.user_role == Role.Wakil_RT ||
-                            user.user_role == Role.Sekretaris
-                        ? Expanded(
-                            child: CardIconWithText(
-                              icon: Icons.domain_add,
-                              iconColor: smartRTPrimaryColor,
-                              title: 'Gabung Wilayah',
-                              onTap: () async {},
-                            ),
-                          )
-                        : Expanded(
-                            child: CardIconWithText(
-                              icon: Icons.close,
-                              iconColor: smartRTPrimaryColor,
-                              title: '-',
-                              onTap: () async {},
-                            ),
-                          ),
+                    Expanded(
+                      child: CardIconWithText(
+                        icon: Icons.close,
+                        iconColor: smartRTPrimaryColor,
+                        title: '-',
+                        onTap: () async {},
+                      ),
+                    ),
                     Expanded(
                       child: CardIconWithText(
                         icon: Icons.close,
@@ -196,17 +186,30 @@ class _BerandaPageState extends State<BerandaPage> {
               ],
             ),
             SB_height30,
-            Row(
-              children: [
-                CardBigIconAndText(
-                  icon: Icons.domain_add,
-                  title: 'Gabung Wilayah',
-                  onTap: () async {
-                    gabungWilayah();
-                  },
-                ),
-              ],
-            ),
+            user.user_role == Role.Ketua_RT
+                ? Row(
+                    children: [
+                      CardBigIconAndText(
+                        icon: Icons.domain_add,
+                        title: 'Konfirmasi Gabung Wilayah',
+                        onTap: () async {
+                          Navigator.pushNamed(
+                              context, KonfirmasiGabungWilayahPage.id);
+                        },
+                      ),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      CardBigIconAndText(
+                        icon: Icons.domain_add,
+                        title: 'Gabung Wilayah',
+                        onTap: () async {
+                          gabungWilayah();
+                        },
+                      ),
+                    ],
+                  ),
             SB_height50,
             // Column(
             //   children: [

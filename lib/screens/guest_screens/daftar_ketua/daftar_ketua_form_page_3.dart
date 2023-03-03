@@ -75,131 +75,133 @@ class _DaftarKetuaFormPage3State extends State<DaftarKetuaFormPage3> {
       appBar: AppBar(
         title: Text('Daftar Ketua RT ( 3 / 3 )'),
       ),
-      body: Padding(
-        padding: paddingScreen,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Lampiran',
-                  style: smartRTTextTitle_Primary,
-                ),
-                Text(
-                  'Unggahlah surat keputusan anda telah terpilih menjadi Ketua RT di wilayah atau surat keterangan menjabat sebagai Ketua RT yang didapatkan dari Ketua RW anda.',
-                  style: smartRTTextNormal_Primary,
-                  textAlign: TextAlign.justify,
-                ),
-                SB_height30,
-                _fileLampiran == null
-                    ? Container(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            _fileLampiran = await FilePicker.platform.pickFiles(
-                                type: FileType.custom,
-                                allowedExtensions: ['pdf']);
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: paddingScreen,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Lampiran',
+                style: smartRTTextTitle_Primary,
+              ),
+              Text(
+                'Unggahlah surat keputusan anda telah terpilih menjadi Ketua RT di wilayah atau surat keterangan menjabat sebagai Ketua RT yang didapatkan dari Ketua RW anda.',
+                style: smartRTTextNormal_Primary,
+                textAlign: TextAlign.justify,
+              ),
+              SB_height30,
+              _fileLampiran == null
+                  ? SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          _fileLampiran = await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: ['pdf']);
 
-                            if (_fileLampiran != null) {
-                              File file = File(
-                                  _fileLampiran!.files.single.path.toString());
-                              _file = _fileLampiran!.files.first;
-                              setState(() {});
-                            } else {
-                              // User canceled the picker
-                            }
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.upload_file,
-                                color: smartRTSecondaryColor,
-                                size: 20,
-                              ),
-                              SB_width15,
-                              Text(
-                                'Upload File',
-                                style: smartRTTextNormalBold_Secondary,
-                              ),
-                            ],
+                          if (_fileLampiran != null) {
+                            File file = File(
+                                _fileLampiran!.files.single.path.toString());
+                            _file = _fileLampiran!.files.first;
+                            setState(() {});
+                          } else {
+                            // User canceled the picker
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.upload_file,
+                              color: smartRTSecondaryColor,
+                              size: 20,
+                            ),
+                            SB_width15,
+                            Text(
+                              'Upload File',
+                              style: smartRTTextNormalBold_Secondary,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        Card(
+                          margin: EdgeInsets.all(0),
+                          child: ListTile(
+                            tileColor: smartRTPrimaryColor,
+                            textColor: smartRTSecondaryColor,
+                            leading:
+                                Image.asset('assets/img/icons/file/pdf.png'),
+                            title: Text(
+                              _file!.name,
+                              style: smartRTTextNormalBold_Secondary,
+                            ),
+                            subtitle: Text(
+                              _file!.path.toString(),
+                              style: smartRTTextNormal_Secondary,
+                            ),
+                            trailing: GestureDetector(
+                                child: Icon(
+                                  Icons.close,
+                                  color: smartRTSecondaryColor,
+                                  size: 15,
+                                ),
+                                onTap: () async {
+                                  _fileLampiran = null;
+                                  _file = null;
+                                  setState(() {});
+                                }),
                           ),
                         ),
-                      )
-                    : Column(
-                        children: [
-                          Card(
-                            margin: EdgeInsets.all(0),
-                            child: ListTile(
-                              tileColor: smartRTPrimaryColor,
-                              textColor: smartRTSecondaryColor,
-                              leading:
-                                  Image.asset('assets/img/icons/file/pdf.png'),
-                              title: Text(
-                                _file!.name,
-                                style: smartRTTextNormalBold_Secondary,
-                              ),
-                              subtitle: Text(
-                                _file!.path.toString(),
-                                style: smartRTTextNormal_Secondary,
-                              ),
-                              trailing: GestureDetector(
-                                  child: Icon(
-                                    Icons.close,
-                                    color: smartRTSecondaryColor,
-                                    size: 15,
-                                  ),
-                                  onTap: () async {
-                                    _fileLampiran = null;
-                                    _file = null;
-                                    setState(() {});
-                                  }),
+                        SB_height15,
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      PDFScreen(path: _file!.path.toString()),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Lihat',
+                              style: smartRTTextNormalBold_Secondary,
                             ),
                           ),
-                          SB_height15,
-                          Container(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PDFScreen(path: _file!.path.toString()),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Lihat',
-                                style: smartRTTextNormalBold_Secondary,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-              ],
+                        ),
+                      ],
+                    ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
             ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_fileLampiran != null) {
-                    daftarReqKetuaRT();
-                  } else {
-                    SmartRTSnackbar.show(context,
-                        message: 'File Lampiran tidak boleh kosong!',
-                        backgroundColor: smartRTErrorColor);
-                  }
-                },
-                child: Text(
-                  'DAFTAR',
-                  style: smartRTTextLargeBold_Secondary,
-                ),
-              ),
-            ),
-          ],
+          ),
+          onPressed: () {
+            if (_fileLampiran != null) {
+              daftarReqKetuaRT();
+            } else {
+              SmartRTSnackbar.show(context,
+                  message: 'File Lampiran tidak boleh kosong!',
+                  backgroundColor: smartRTErrorColor);
+            }
+          },
+          child: Text(
+            'DAFTAR',
+            style: smartRTTextLargeBold_Secondary,
+          ),
         ),
       ),
     );

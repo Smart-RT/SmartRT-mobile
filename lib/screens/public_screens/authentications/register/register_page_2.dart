@@ -43,7 +43,6 @@ class _RegisterPage2State extends State<RegisterPage2> {
         "tanggalLahir": widget.args.tanggalLahir
       });
 
-
       debugPrint(response.toString());
       gotoOTP();
     } on DioError catch (e) {
@@ -60,6 +59,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
         tanggalLahir: widget.args.tanggalLahir,
         kataSandi: _kataSandiController.text,
         noTelp: _noTelpController.text);
+    Navigator.pop(context);
     Navigator.pushReplacementNamed(context, OTPPage.id,
         arguments: argsForOTPPage);
   }

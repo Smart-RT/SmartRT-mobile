@@ -178,7 +178,7 @@ class AuthProvider extends ApplicationProvider {
           await NetUtil().dioClient.post('/users/reqUserRole', data: formData);
 
       currentUser!.user_role_requests
-          .insert(0, UserRoleRequests.fromData(resp.data));
+          .insert(0, UserRoleRequest.fromData(resp.data));
       currentUser!.full_name = namaLengkap;
       currentUser!.address = alamat;
 
@@ -206,10 +206,16 @@ class AuthProvider extends ApplicationProvider {
         "request_role": 3,
         "request_code": request_code,
       });
-      currentUser!.user_role_requests
-          .insert(0, UserRoleRequests.fromData(resp.data));
-      notifyListeners();
-      saveUserDataToStorage();
+      if (resp.statusCode.toString() == '200') {
+        currentUser!.user_role_requests
+            .insert(0, UserRoleRequest.fromData(resp.data));
+        notifyListeners();
+        saveUserDataToStorage();
+        SmartRTSnackbar.show(context,
+            message: 'Berhasil Request Gabung Wilayah!',
+            backgroundColor: smartRTSuccessColor);
+      }
+
       return true;
     } on DioError catch (e) {
       if (e.response != null) {
@@ -236,7 +242,7 @@ class AuthProvider extends ApplicationProvider {
       });
       // resp.data['sub_district_id'] = SubDistricts.fromData(resp.data['sub_district_id']);
       // resp.data['urban_village_id'] = UrbanVillages.fromData(resp.data['urban_village_id']);
-      currentUser!.user_role_requests[0] = UserRoleRequests.fromData(resp.data);
+      currentUser!.user_role_requests[0] = UserRoleRequest.fromData(resp.data);
       notifyListeners();
       saveUserDataToStorage();
       return true;

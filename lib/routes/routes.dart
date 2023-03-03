@@ -42,6 +42,7 @@ import 'package:smart_rt/screens/public_screens/authentications/register/registe
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_2.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/gabung_wilayah/konfirmasi_gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_bantuan_page.dart';
@@ -188,6 +189,13 @@ class Routes {
           return const LaporanWargaPage();
         });
 
+      // === USER ROLE REQ
+      case KonfirmasiGabungWilayahPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const KonfirmasiGabungWilayahPage();
+        });
+      // === END
+
       // === ARISAN
       case ArisanPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -306,7 +314,7 @@ class Routes {
           return DetailIuranArisanPage(
               args: settings.arguments as DetailIuranArisanArguments);
         });
-      // ---
+      // === END
 
       case BerandaAdminPage.id:
         return MaterialPageRoute(builder: (context) {

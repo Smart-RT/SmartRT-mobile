@@ -42,7 +42,7 @@ class User {
   String refresh_token = "";
   DateTime created_at = DateTime.now();
   int? created_by;
-  List<UserRoleRequests> user_role_requests = [];
+  List<UserRoleRequest> user_role_requests = [];
 
   User.fromData(Map<String, dynamic> data) {
     Map<String, dynamic> userData = data;
@@ -120,8 +120,8 @@ class User {
     if (userData['user_role_requests'] != null) {
       user_role_requests.clear();
       user_role_requests.addAll(
-          userData['user_role_requests'].map<UserRoleRequests>((request) {
-        return UserRoleRequests.fromData(request);
+          userData['user_role_requests'].map<UserRoleRequest>((request) {
+        return UserRoleRequest.fromData(request);
       }));
     }
   }
