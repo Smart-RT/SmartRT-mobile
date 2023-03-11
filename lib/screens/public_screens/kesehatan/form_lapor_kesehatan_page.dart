@@ -354,7 +354,7 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
           style: ButtonStyle(

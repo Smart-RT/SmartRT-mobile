@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/arisan_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class DaftarArisanPage extends StatefulWidget {
   static const String id = 'DaftarArisanPage';
@@ -353,7 +355,11 @@ class _DaftarArisanPageState extends State<DaftarArisanPage> {
                       .read<ArisanProvider>()
                       .bukaArisan(context: context);
                   if (bukaArisanSukses) {
+                    Navigator.pop(context);
                     Navigator.popAndPushNamed(context, ArisanPage.id);
+                    SmartRTSnackbar.show(context,
+                        message: 'Berhasil membuka fitur arisan!',
+                        backgroundColor: smartRTSuccessColor);
                   }
                 },
                 child: Text(

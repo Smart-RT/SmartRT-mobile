@@ -4,7 +4,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/lottery_club_period_member.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period_member.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
 import 'package:provider/provider.dart';

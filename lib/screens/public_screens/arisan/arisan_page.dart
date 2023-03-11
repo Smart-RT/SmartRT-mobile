@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
-import 'package:smart_rt/models/lottery_club_period_detail.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
@@ -12,6 +13,7 @@ import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_a
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_sebelumnya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_selanjutnya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_pertemuan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/riwayat_arisan_wilayah_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
@@ -31,8 +33,11 @@ class _ArisanPageState extends State<ArisanPage> {
   bool isPeriodeBerjalan = false;
   int status = 0;
   String tanggalPertemuan = '';
+  String tanggalPalingLambat = '';
   String waktuPertemuan = '';
   String tempatPertemuan = '';
+  LotteryClubPeriodDetail? dataPertemuan;
+  int? idPeriodeTerakhir;
   Map<int, dynamic> listPage = {
     0: {
       "preTitle": "",
@@ -70,9 +75,11 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Daftarkan Sekarang",
-            "nextPageDestination": DaftarArisanPage.id
-          }
-        ]
+            "onTap": () {
+              Navigator.pushNamed(context, DaftarArisanPage.id);
+            },
+          },
+        ],
       },
       // lottery_clubs sudah terbuat, lottery_clubs_periods tidak ada yang aktif, role 3-6
       3: {
@@ -86,11 +93,15 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Riwayat Arisan Saya",
-            "nextPageDestination": RiwayatArisanSayaPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanSayaPage.id);
+            },
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            }
           }
         ]
       },
@@ -106,20 +117,26 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Buat Periode Arisan Sekarang!",
-            "nextPageDestination": CreatePeriodeArisanPage1.id
+            "onTap": () {
+              Navigator.pushNamed(context, CreatePeriodeArisanPage1.id);
+            }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "nextPageDestination": RiwayatArisanWilayahPage.id,
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+            },
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            }
           },
-          {
-            "menuTitle": "Pengaturan Arisan",
-            "nextPageDestination": PengaturanArisanPage.id,
-          }
+          // {
+          //   "menuTitle": "Pengaturan Arisan",
+          //   "onTap": PengaturanArisanPage.id,
+          // }
         ]
       },
       // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah berjalan, bukan member, role 3
@@ -134,11 +151,15 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Riwayat Arisan Saya",
-            "nextPageDestination": RiwayatArisanSayaPage.id,
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanSayaPage.id);
+            },
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id,
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            },
           },
         ]
       },
@@ -153,15 +174,21 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan Selanjutnya",
-            "nextPageDestination": DetailPertemuanSelanjutnyaPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, DetailPertemuanSelanjutnyaPage.id);
+            }
           },
           {
             "menuTitle": "Riwayat Arisan Saya",
-            "nextPageDestination": RiwayatArisanSayaPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanSayaPage.id);
+            }
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            }
           },
         ]
       },
@@ -175,17 +202,21 @@ class _ArisanPageState extends State<ArisanPage> {
             "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": [
+          // {
+          //   "menuTitle": "Detail Pertemuan Sebelumnya",
+          //   "onTap": DetailPertemuanSebelumnyaPage.id
+          // },
           {
-            "menuTitle": "Detail Pertemuan Sebelumnya",
-            "nextPageDestination": DetailPertemuanSebelumnyaPage.id
-          },
-          {
-            "menuTitle": "Riwayat Periode Sebelumnya",
-            "nextPageDestination": RiwayatArisanSayaPage.id
+            "menuTitle": "Riwayat Arisan Saya",
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanSayaPage.id);
+            }
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            }
           },
         ]
       },
@@ -200,15 +231,21 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan Selanjutnya",
-            "nextPageDestination": DetailPertemuanSelanjutnyaPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, DetailPertemuanSelanjutnyaPage.id);
+            }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "nextPageDestination": RiwayatArisanWilayahPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+            }
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            }
           },
         ]
       },
@@ -222,17 +259,21 @@ class _ArisanPageState extends State<ArisanPage> {
             "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": [
-          {
-            "menuTitle": "Detail Pertemuan Sebelumnya",
-            "nextPageDestination": DetailPertemuanSebelumnyaPage.id
-          },
+          // {
+          //   "menuTitle": "Detail Pertemuan Sebelumnya",
+          //   "onTap": DetailPertemuanSebelumnyaPage.id
+          // },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "nextPageDestination": RiwayatArisanWilayahPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+            }
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            }
           },
         ]
       },
@@ -243,29 +284,31 @@ class _ArisanPageState extends State<ArisanPage> {
         "title": "BELUM ADA",
         "titleStyleColor": smartRTErrorColor,
         "subTitle":
-            "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
+            "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal \n$tanggalPalingLambat",
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": [
           {
             "menuTitle": "Buat Pertemuan Selanjutnya",
-            "nextPageDestination": CreatePertemuanSelanjutnyaPage.id
-          },
-          {
-            "menuTitle": "Detail Pertemuan Sebelumnya",
-            "nextPageDestination": DetailPertemuanSebelumnyaPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, CreatePertemuanSelanjutnyaPage.id);
+            }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "nextPageDestination": RiwayatArisanWilayahPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+            }
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            }
           },
-          {
-            "menuTitle": "Pengaturan Arisan",
-            "nextPageDestination": PengaturanArisanPage.id
-          },
+          // {
+          //   "menuTitle": "Pengaturan Arisan",
+          //   "onTap": PengaturanArisanPage.id
+          // },
         ]
       },
       // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah di publish, member, role 7
@@ -279,20 +322,32 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan",
-            "nextPageDestination": DetailPertemuanSelanjutnyaPage.id
+            "onTap": () {
+              DetailPertemuanArisanPageArguments arguments =
+                  DetailPertemuanArisanPageArguments(
+                      dataPertemuan: dataPertemuan!,
+                      periodeKe: dataPertemuan!.period_ke.toString(),
+                      pertemuanKe: dataPertemuan!.pertemuan_ke.toString());
+              Navigator.pushNamed(context, DetailPertemuanArisanPage.id,
+                  arguments: arguments);
+            }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "nextPageDestination": RiwayatArisanWilayahPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+            }
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "nextPageDestination": PeraturanDanTataCaraArisanPage.id
+            "onTap": () {
+              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            }
           },
-          {
-            "menuTitle": "Pengaturan Arisan",
-            "nextPageDestination": PengaturanArisanPage.id
-          },
+          // {
+          //   "menuTitle": "Pengaturan Arisan",
+          //   "onTap": PengaturanArisanPage.id
+          // },
         ]
       },
     };
@@ -301,12 +356,11 @@ class _ArisanPageState extends State<ArisanPage> {
   void getData() async {
     if (user.area!.lottery_club_id != null) {
       // Mendapatkan ID Periode Terakhir
-      debugPrint('MASOK SINI');
       Response<dynamic> resp = await NetUtil().dioClient.get(
           '/lotteryClubs/getLastPeriodeID/${user.area!.lottery_club_id!.id.toString()}');
 
       if (resp.data != 'Belum ada Periode Arisan') {
-        int idPeriodeTerakhir = resp.data;
+        idPeriodeTerakhir = resp.data;
         debugPrint('MASOK SINI 2');
         // Mengecek apakah Periode tersebut sudah mempunyai pertemuan yang berjalan (dipublish)
         resp = await NetUtil().dioClient.get(
@@ -321,12 +375,19 @@ class _ArisanPageState extends State<ArisanPage> {
           resp = await NetUtil().dioClient.get(
               '/lotteryClubs/getPeriodDetail/Published/${idPeriodeTerakhir.toString()}');
 
-          LotteryClubPeriodDetail dataPertemuan =
-              LotteryClubPeriodDetail.fromData(resp.data);
+          dataPertemuan = LotteryClubPeriodDetail.fromData(resp.data);
           tanggalPertemuan =
-              DateFormat('d MMMM y').format(dataPertemuan.meet_date);
-          waktuPertemuan = DateFormat('H:m').format(dataPertemuan.meet_date);
-          tempatPertemuan = dataPertemuan.meet_at.toString();
+              DateFormat('d MMMM y', 'id_ID').format(dataPertemuan!.meet_date);
+          waktuPertemuan =
+              DateFormat('H:m', 'id_ID').format(dataPertemuan!.meet_date);
+          tempatPertemuan = dataPertemuan!.meet_at.toString();
+        } else if (status == 10) {
+          Response<dynamic> respPertemuan = await NetUtil().dioClient.get(
+              '/lotteryClubs/getPeriodDetail/Unpublished/$idPeriodeTerakhir');
+          LotteryClubPeriodDetail dataPertemuan =
+              LotteryClubPeriodDetail.fromData(respPertemuan.data);
+          tanggalPalingLambat = DateFormat('d MMMM y', 'id_ID').format(
+              dataPertemuan.meet_date.subtract(const Duration(days: 3)));
         }
       }
     }
@@ -445,9 +506,9 @@ class _ArisanPageState extends State<ArisanPage> {
                   itemCount: listPage[status]["listMenu"].length,
                   itemBuilder: (context, count) {
                     return ListTileArisan(
-                        title: listPage[status]["listMenu"][count]["menuTitle"],
-                        onTapDestination: listPage[status]["listMenu"][count]
-                            ["nextPageDestination"]);
+                      title: listPage[status]["listMenu"][count]["menuTitle"],
+                      onTap: listPage[status]["listMenu"][count]["onTap"],
+                    );
                   }),
             ),
           ],

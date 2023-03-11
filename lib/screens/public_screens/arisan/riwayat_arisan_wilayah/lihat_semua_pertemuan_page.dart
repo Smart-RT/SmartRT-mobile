@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/lottery_club_period_detail.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
+import 'package:smart_rt/screens/public_screens/arisan/create_pertemuan_arisan/create_pertemuan_selanjutnya_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/cards/card_list_pertemuan_arisan.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_pertemuan_arisan_page.dart';
@@ -85,23 +86,57 @@ class _LihatSemuaPertemuanPageState extends State<LihatSemuaPertemuanPage> {
                 itemBuilder: (context, index) {
                   return CardListPertemuanArisan(
                     status: listPertemuan[index].status,
+                    statusColor: listPertemuan[index].status == 'Unpublished'
+                        ? smartRTStatusYellowColor
+                        : listPertemuan[index].status == 'Published'
+                            ? smartRTStatusGreenColor
+                            : smartRTSecondaryColor,
                     pertemuanKe: (index + 1).toString(),
                     jumlahAnggotaHadir:
                         listPertemuan[index].total_attendance.toString(),
-                    tempatPelaksanaan: listPertemuan[index].meet_at.toString(),
+                    tempatPelaksanaan: listPertemuan[index].meet_at ?? '-',
                     tanggalPelaksanaan: DateFormat('d MMMM y')
                         .format(listPertemuan[index].meet_date),
                     waktuPelaksanaan: DateFormat('H:m')
                         .format(listPertemuan[index].meet_date),
-                    onTap: () {
-                      DetailPertemuanArisanPageArguments arguments =
-                          DetailPertemuanArisanPageArguments(
-                              dataPertemuan: listPertemuan[index],
-                              periodeKe: periodeKe,
-                              pertemuanKe: (index + 1).toString());
-                      Navigator.pushNamed(context, DetailPertemuanArisanPage.id,
-                          arguments: arguments);
-                    },
+                    onTap: listPertemuan[index].status == 'Unpublished'
+                        ? () async {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: Text(
+                                  'Hai Sobat Pintar,',
+                                  style: smartRTTextTitleCard,
+                                ),
+                                content: Text(
+                                  'Anda dapat mengatur pertemuan dan mempublikasikan dengan memilih "BUAT PERTEMUAN SELANJUTNYA" di halaman utama arisan ',
+                                  style: smartRTTextNormal.copyWith(
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'OK'),
+                                    child: Text(
+                                      'OK',
+                                      style: smartRTTextNormal.copyWith(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        : () {
+                            DetailPertemuanArisanPageArguments arguments =
+                                DetailPertemuanArisanPageArguments(
+                                    dataPertemuan: listPertemuan[index],
+                                    periodeKe: periodeKe,
+                                    pertemuanKe: (index + 1).toString());
+                            Navigator.pushNamed(
+                                context, DetailPertemuanArisanPage.id,
+                                arguments: arguments);
+                          },
                   );
                 },
               ),

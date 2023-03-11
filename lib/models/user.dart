@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:smart_rt/models/area.dart';
+import 'package:smart_rt/models/sub_district.dart';
+import 'package:smart_rt/models/urban_village.dart';
 import 'package:smart_rt/models/user_role_request.dart';
 
 enum Role {
@@ -16,7 +18,7 @@ enum Role {
 class User {
   int id = -1;
   String? nik;
-  int? kk_num;
+  String? kk_num;
   String full_name = "";
   String? address;
   int? rt_num;
@@ -26,8 +28,8 @@ class User {
   String gender = "Laki-Laki";
   String? born_at;
   DateTime? born_date = DateTime.now();
-  int? religion;
-  bool? is_married;
+  String? religion;
+  String? status_perkawinan;
   String? profession;
   String phone = "";
   Role user_role = Role.None;
@@ -43,6 +45,9 @@ class User {
   DateTime created_at = DateTime.now();
   int? created_by;
   List<UserRoleRequest> user_role_requests = [];
+  SubDistrict? data_sub_district;
+  UrbanVillage? data_urban_village;
+  String? nationality;
 
   User.fromData(Map<String, dynamic> data) {
     Map<String, dynamic> userData = data;
@@ -80,8 +85,8 @@ class User {
     if (userData['religion'] != null) {
       religion = userData['religion'];
     }
-    if (userData['is_married'] != null) {
-      is_married = userData['is_married'] == 1 ? true : false;
+    if (userData['status_perkawinan'] != null) {
+      status_perkawinan = userData['status_perkawinan'];
     }
     if (userData['religion'] != null) {
       profession = userData['profession'];
@@ -105,6 +110,10 @@ class User {
       sign_img = userData['sign_img'];
     }
 
+    if (userData['nationality'] != null) {
+      nationality = userData['nationality'];
+    }
+
     photo_profile_img = userData['photo_profile_img'];
     is_health = int.parse(userData['is_health'].toString());
     total_serving_as_neighbourhood_head =
@@ -124,6 +133,14 @@ class User {
         return UserRoleRequest.fromData(request);
       }));
     }
+
+    if (userData['data_urban_village'] != null) {
+      data_urban_village =
+          UrbanVillage.fromData(userData['data_urban_village']);
+    }
+    if (userData['data_sub_district'] != null) {
+      data_sub_district = SubDistrict.fromData(userData['data_sub_district']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -142,7 +159,7 @@ class User {
         "born_at": born_at,
         "born_date": born_date.toString(),
         "religion": religion,
-        "is_married": (is_married ?? false) ? 1 : 0,
+        "status_perkawinan": status_perkawinan,
         "profession": profession,
         "phone": phone,
         "user_role": Role.values.indexOf(user_role) + 1,
@@ -155,7 +172,10 @@ class User {
         "total_serving_as_neighbourhood_head":
             total_serving_as_neighbourhood_head,
         "created_at": created_at.toString(),
-        "created_by": created_by
+        "created_by": created_by,
+        "data_urban_village": data_urban_village,
+        "data_sub_district": data_sub_district,
+        "nationality": nationality,
       },
       "token": token,
       "refreshToken": refresh_token

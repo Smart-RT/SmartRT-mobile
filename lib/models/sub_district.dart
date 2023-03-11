@@ -13,11 +13,9 @@ class SubDistrict {
 
   Map<String, dynamic> toJson() {
     return {
-      "subDistrict": {
-        "id": id,
-        "name": name,
-        "wilayah": WilayahSurabaya.values.indexOf(wilayah),
-      }
+      "id": id,
+      "name": name,
+      "wilayah": WilayahSurabaya.values.indexOf(wilayah),
     };
   }
 

@@ -6,7 +6,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/administration/administration_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/konfirmasi_gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
@@ -28,7 +28,10 @@ class _BerandaPageState extends State<BerandaPage> {
     Navigator.pushNamed(context, ListJanjiTemuPage.id);
   }
 
-  void administrasi() async {}
+  void administrasi() async {
+    Navigator.pushNamed(context, AdministrationPage.id);
+  }
+
   void arisan() async {
     if (user.area == null) {
       showDialog<String>(

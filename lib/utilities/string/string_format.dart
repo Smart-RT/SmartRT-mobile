@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class StringFormat {
   static String convertMax2Words(String name) {
     if (name == '') {
@@ -44,5 +46,24 @@ class StringFormat {
     } else {
       return '${name[0]}${name[1]}'.toUpperCase();
     }
+  }
+
+  static bool isKTPKKFormat(String name) {
+    if (name.length != 16) {
+      return false;
+    }
+    return true;
+  }
+
+  static String numFormatRTRW(String name) {
+    if (name.length != 3) {
+      String tempName = '';
+      for (var i = 0; i < (3 - name.length); i++) {
+        tempName += '0';
+      }
+      tempName += name;
+      return tempName;
+    }
+    return name;
   }
 }

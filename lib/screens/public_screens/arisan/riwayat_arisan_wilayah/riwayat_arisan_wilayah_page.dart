@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/lottery_club_period.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_riwayat_arisan_wilayah_page.dart';
@@ -32,6 +32,8 @@ class _RiwayatArisanWilayahPageState extends State<RiwayatArisanWilayahPage> {
     listPeriodeArisan.addAll((resp.data).map<LotteryClubPeriod>((request) {
       return LotteryClubPeriod.fromData(request);
     }));
+    debugPrint('================');
+    debugPrint(listPeriodeArisan.toString());
     setState(() {});
   }
 
@@ -57,45 +59,60 @@ class _RiwayatArisanWilayahPageState extends State<RiwayatArisanWilayahPage> {
               style: smartRTTextTitle,
               textAlign: TextAlign.center,
             ),
-            SB_height30,
-            Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, int) {
-                  return Divider(
-                    color: smartRTPrimaryColor,
-                    height: 5,
-                  );
-                },
-                itemCount: listPeriodeArisan.length,
-                itemBuilder: (context, index) {
-                  return CardRiwayatArisanWilayah(
-                    periodeKe: listPeriodeArisan[index].period.toString(),
-                    status: listPeriodeArisan[index].meet_ctr <
-                            listPeriodeArisan[index].total_meets
-                        ? 'Berlangsung'
-                        : 'Selesai',
-                    statusTextColor: listPeriodeArisan[index].meet_ctr <
-                            listPeriodeArisan[index].total_meets
-                        ? smartRTSuccessColor
-                        : smartRTSecondaryColor,
-                    totalPertemuan:
-                        '${listPeriodeArisan[index].total_meets}x (${listPeriodeArisan[index].year_limit == 0 ? '6 bulan' : '${listPeriodeArisan[index].year_limit.toString()} tahun'})',
-                    totalAnggota:
-                        '${listPeriodeArisan[index].total_members} orang',
-                    iuran: CurrencyFormat.convertToIdr(
-                        listPeriodeArisan[index].bill_amount, 2),
-                    onTap: () async {
-                      DetailRiwayatArisanWilayahArguments args =
-                          DetailRiwayatArisanWilayahArguments(
-                              dataPeriodeArisan: listPeriodeArisan[index]);
-                      Navigator.pushNamed(
-                          context, DetailRiwayatArisanWilayah.id,
-                          arguments: args);
-                    },
-                  );
-                },
-              ),
+            // SB_height30,
+            Divider(
+              height: 50,
+              thickness: 2,
             ),
+            listPeriodeArisan.isNotEmpty
+                ? Expanded(
+                    child: ListView.separated(
+                      separatorBuilder: (context, int) {
+                        return Divider(
+                          color: smartRTPrimaryColor,
+                          height: 5,
+                        );
+                      },
+                      itemCount: listPeriodeArisan.length,
+                      itemBuilder: (context, index) {
+                        return CardRiwayatArisanWilayah(
+                          periodeKe: listPeriodeArisan[index].period.toString(),
+                          status: listPeriodeArisan[index].meet_ctr <
+                                  listPeriodeArisan[index].total_meets
+                              ? 'Berlangsung'
+                              : 'Selesai',
+                          statusTextColor: listPeriodeArisan[index].meet_ctr <
+                                  listPeriodeArisan[index].total_meets
+                              ? smartRTSuccessColor
+                              : smartRTSecondaryColor,
+                          totalPertemuan:
+                              '${listPeriodeArisan[index].total_meets}x (${listPeriodeArisan[index].year_limit == 0 ? '6 bulan' : '${listPeriodeArisan[index].year_limit.toString()} tahun'})',
+                          totalAnggota:
+                              '${listPeriodeArisan[index].total_members} orang',
+                          iuran: CurrencyFormat.convertToIdr(
+                              listPeriodeArisan[index].bill_amount, 2),
+                          onTap: () async {
+                            DetailRiwayatArisanWilayahArguments args =
+                                DetailRiwayatArisanWilayahArguments(
+                                    dataPeriodeArisan:
+                                        listPeriodeArisan[index]);
+                            Navigator.pushNamed(
+                                context, DetailRiwayatArisanWilayah.id,
+                                arguments: args);
+                          },
+                        );
+                      },
+                    ),
+                  )
+                : Expanded(
+                    child: Center(
+                      child: Text(
+                        'Tidak ada Riwayat Arisan',
+                        style: smartRTTextLarge.copyWith(
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

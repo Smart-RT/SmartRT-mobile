@@ -63,10 +63,18 @@ class _DaftarKetuaFormPage3State extends State<DaftarKetuaFormPage3> {
         ktp: widget.args.croppedImageKTP,
         ktpSelfie: widget.args.croppedImageKTPSelfie,
         fileLampiran: _fileLampiran!);
-    Navigator.pop(context);
-    Navigator.pop(context);
-    Navigator.pop(context);
-    Navigator.pushReplacementNamed(context, DaftarKetuaPage.id);
+    if (isSuccess) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Navigator.pop(context);
+      SmartRTSnackbar.show(context,
+          message: "Berhasil membuat permintaan!",
+          backgroundColor: smartRTSuccessColor);
+    } else {
+      SmartRTSnackbar.show(context,
+          message: "Gagal membuat permintaan!",
+          backgroundColor: smartRTErrorColor);
+    }
   }
 
   @override

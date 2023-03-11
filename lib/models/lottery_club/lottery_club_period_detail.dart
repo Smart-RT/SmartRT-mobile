@@ -1,5 +1,5 @@
-import 'package:smart_rt/models/lottery_club_period.dart';
-import 'package:smart_rt/models/lottery_club.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club.dart';
 import 'package:smart_rt/models/user.dart';
 
 class LotteryClubPeriodDetail {
@@ -17,6 +17,8 @@ class LotteryClubPeriodDetail {
   int? created_by;
   DateTime? updated_at;
   int? updated_by;
+  int pertemuan_ke = 0;
+  int period_ke = 0;
 
   LotteryClubPeriodDetail.fromData(Map<String, dynamic> data) {
     id = int.parse(data['id'].toString());
@@ -50,6 +52,12 @@ class LotteryClubPeriodDetail {
     if (data['updated_at'] != null) {
       updated_at = DateTime.parse(data['updated_at']);
     }
+    if (data['pertemuan_ke'] != null) {
+      pertemuan_ke = int.parse(data['pertemuan_ke'].toString());
+    }
+    if (data['period_ke'] != null) {
+      period_ke = int.parse(data['period_ke'].toString());
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +77,8 @@ class LotteryClubPeriodDetail {
         "created_at": created_at,
         "updated_by": updated_by,
         "updated_at": updated_at,
+        "pertemuan_ke": pertemuan_ke,
+        "period_ke": period_ke,
       }
     };
   }

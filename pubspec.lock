@@ -717,6 +717,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      sha256: "8036802a00bae2a78fc197af8a158e3e2f7b500561ed23b4c458107685e645bb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.0"
   pin_code_fields:
     dependency: "direct main"
     description:
@@ -749,6 +757,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.6.2"
+  printing:
+    dependency: "direct main"
+    description:
+      name: printing
+      sha256: fe654363cd0114b50a0815b24e96957c7e9a60eb4e3b7ccfe71cf3f2b7114cb2
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.10.1"
   process:
     dependency: transitive
     description:
@@ -862,10 +878,10 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: fb76374625e5cfa485ed1d2b080f2b5a6722d95b36d8355a4a9bd0567567d769
+      sha256: "6faeb211311559f99f3c816b75aa493e68d1cc263f62dec530d5e8098b71bae4"
       url: "https://pub.dev"
     source: hosted
-    version: "20.4.44"
+    version: "20.4.52"
   syncfusion_flutter_core:
     dependency: transitive
     description:
@@ -996,4 +1012,4 @@ packages:
     version: "6.2.2"
 sdks:
   dart: ">=2.19.0 <3.0.0"
-  flutter: ">=3.7.0-0"
+  flutter: ">=3.7.0"

@@ -11,11 +11,12 @@ import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_pa
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/guest_screens/daftar_ketua/pdf_screen.dart';
 import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
+import 'package:smart_rt/screens/public_screens/administration/administration_detail_page.dart';
+import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_4.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/absen_anggota_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_2.dart';
-import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_0.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_pertemuan_arisan/create_pertemuan_selanjutnya_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
@@ -41,8 +42,10 @@ import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_2.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
+import 'package:smart_rt/screens/public_screens/gabung_wilayah/detail_konfirmasi_gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/konfirmasi_gabung_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/image_view/image_view_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_bantuan_page.dart';
@@ -60,6 +63,16 @@ import 'package:smart_rt/screens/public_screens/test_screen.dart';
 import 'package:smart_rt/screens/public_screens/test_screen2.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
+
+import 'package:smart_rt/screens/public_screens/administration/administration_page.dart';
+import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_1.dart';
+import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_2.dart';
+import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_3.dart';
+import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_5.dart';
+
+import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_2_sk_kelahiran.dart';
+import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_3_sk_kelahiran.dart';
+import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_4_sk_kelahiran.dart';
 
 class Routes {
   static Route<dynamic> Function(RouteSettings) generateRoute =
@@ -144,6 +157,77 @@ class Routes {
           );
         });
 
+      // === ADMINISTRASI
+      case AdministrationPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const AdministrationPage();
+        });
+      case AdministrationCreatePage1.id:
+        return MaterialPageRoute(builder: (context) {
+          return const AdministrationCreatePage1();
+        });
+      case AdministrationCreatePage2.id:
+        return MaterialPageRoute(builder: (context) {
+          return AdministrationCreatePage2(
+            args: settings.arguments as AdministrationCreatePage2Argument,
+          );
+        });
+      case AdministrationCreatePage2SKKelahiran.id:
+        return MaterialPageRoute(builder: (context) {
+          return AdministrationCreatePage2SKKelahiran(
+            args: settings.arguments
+                as AdministrationCreatePage2SKKelahiranArgument,
+          );
+        });
+      case AdministrationCreatePage3SKKelahiran.id:
+        return MaterialPageRoute(builder: (context) {
+          return AdministrationCreatePage3SKKelahiran(
+            args: settings.arguments
+                as AdministrationCreatePage3SKKelahiranArgument,
+          );
+        });
+      case AdministrationCreatePage4SKKelahiran.id:
+        return MaterialPageRoute(builder: (context) {
+          return AdministrationCreatePage4SKKelahiran(
+            args: settings.arguments
+                as AdministrationCreatePage4SKKelahiranArgument,
+          );
+        });
+      case AdministrationCreatePage3.id:
+        return MaterialPageRoute(builder: (context) {
+          return AdministrationCreatePage3(
+            args: settings.arguments as AdministrationCreatePage3Argument,
+          );
+        });
+      case AdministrationCreatePage4.id:
+        return MaterialPageRoute(builder: (context) {
+          return AdministrationCreatePage4(
+            args: settings.arguments as AdministrationCreatePage4Argument,
+          );
+        });
+      case AdministrationCreatePage5.id:
+        return MaterialPageRoute(builder: (context) {
+          return AdministrationCreatePage5(
+            args: settings.arguments as AdministrationCreatePage5Argument,
+          );
+        });
+      case AdministrationDetailPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return AdministrationDetailPage(
+            args: settings.arguments as AdministrationDetailPageArgument,
+          );
+        });
+      // === END
+
+      // === IMAGE VIEW
+      case ImageViewPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return ImageViewPage(
+            args: settings.arguments as ImageViewPageArgument,
+          );
+        });
+      // === END
+
       // === KESEHATAN
       case FormLaporKesehatanPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -194,6 +278,12 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const KonfirmasiGabungWilayahPage();
         });
+      case DetailKonfirmasiGabungWilayahPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return DetailKonfirmasiGabungWilayahPage(
+            args: settings.arguments as DetailKonfirmasiGabungWilayahArguments,
+          );
+        });
       // === END
 
       // === ARISAN
@@ -216,10 +306,6 @@ class Routes {
       case ListAnggotaArisanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const ListAnggotaArisanPage();
-        });
-      case CreatePeriodeArisanPage0.id:
-        return MaterialPageRoute(builder: (context) {
-          return const CreatePeriodeArisanPage0();
         });
       case CreatePeriodeArisanPage1.id:
         return MaterialPageRoute(builder: (context) {

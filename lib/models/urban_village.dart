@@ -4,18 +4,22 @@ class UrbanVillage {
   int idKecamatan = -1;
 
   UrbanVillage.fromData(Map<String, dynamic> data) {
-    id = data['id'];
+    if (data['id'] != null) {
+      id = int.parse(data['id'].toString());
+    }
     name = data['name'];
-    idKecamatan = data['kecamatan']['id'];
+    if (data['kecamatan'] != null) {
+      idKecamatan = int.parse(data['kecamatan']['id'].toString());
+    } else if (data['idKecamatan'] != null) {
+      idKecamatan = int.parse(data['idKecamatan'].toString());
+    }
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "urbanVillage": {
-        "id": id,
-        "name": name,
-        "idKecamatan": idKecamatan,
-      }
+      "id": id,
+      "name": name,
+      "idKecamatan": idKecamatan,
     };
   }
 }

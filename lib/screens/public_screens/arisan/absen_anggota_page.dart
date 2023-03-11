@@ -4,7 +4,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/lottery_club_period_detail_absence.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_absence.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_2.dart';
 import 'package:smart_rt/utilities/net_util.dart';

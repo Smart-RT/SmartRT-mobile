@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/health/data_patient_grouping_by_disease_group.dart';
 import 'package:smart_rt/models/health/user_health_report.dart';
 import 'package:smart_rt/models/syncfusion_calendar/event_data_source.dart';
 import 'package:smart_rt/models/user.dart';
@@ -18,7 +19,10 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'dart:ui' as ui;
 
 class RiwayatKesehatanArguments {
   String type;
@@ -37,38 +41,205 @@ class RiwayatKesehatanPage extends StatefulWidget {
 
 class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
   User user = AuthProvider.currentUser!;
-  String type = '';
-  double sizeAgendaItemHeight = 75;
   List<UserHealthReport> listRiwayatSakit = <UserHealthReport>[];
   List<HealthyCard> listSakit = <HealthyCard>[];
+  String type = '';
+  double sizeAgendaItemHeight = 75;
   Widget actionWidget = SizedBox();
   DateTime? _selected;
   DateTime monthYearCreated = DateTime(2023);
+  TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+  List<DataPatientGroupingByDiseaseGroup>
+      listDataPatientGroupingByDiseaseGroup = [];
+  late GlobalKey<SfCartesianChartState> _cartesianChartKey;
+  // = GlobalKey();
+  Uint8List mem = Uint8List(1);
 
   // PDF
   Future<void> _createPDF() async {
-    // try {
-    //   final pdf = pw.Document();
+    String monthYear =
+        DateFormat('MMMM y', 'id_ID').format(_selected!).toUpperCase();
+    String kecamatan = user.data_sub_district!.name;
+    String kelurahan = user.data_urban_village!.name;
+    String RWRT = 'RW ${user.rw_num} / RT ${user.rt_num}';
+    Response<dynamic> resp = await NetUtil()
+        .dioClient
+        .get('/users/getCountAnggota/wilayah/${user.area!.id}');
+    String totalWarga = '${resp.data} Orang';
 
-    //   pdf.addPage(
-    //     pw.Page(
-    //       pageFormat: PdfPageFormat.a4,
-    //       build: (pw.Context context) {
-    //         return pw.Center(
-    //           child: pw.Text("Hello World"),
-    //         );
-    //       },
-    //     ),
-    //   );
+    final ui.Image data =
+        await _cartesianChartKey.currentState!.toImage(pixelRatio: 3.0);
+    final ByteData? bytes =
+        await data.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List imageBytes =
+        bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
 
-    //   final bytes = await pdf.save();
-    //   final dir = await getApplicationDocumentsDirectory();
-    //   final file = File('$dir/example.pdf');
+    final chartImage = pw.MemoryImage(imageBytes);
 
-    //   await file.writeAsBytes(bytes);
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+            children: [
+              pw.Text('LAPORAN KESEHATAN WILAYAH',
+                  style: pw.TextStyle(
+                    fontSize: 20,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  textAlign: pw.TextAlign.center),
+              pw.Text(monthYear,
+                  style: pw.TextStyle(
+                    fontSize: 15,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  textAlign: pw.TextAlign.center),
+              pw.Divider(
+                height: 30,
+                thickness: 5,
+                color: PdfColor.fromHex('#000000'),
+              ),
+              pw.Row(
+                children: [
+                  pw.Expanded(
+                    flex: 3,
+                    child: pw.Text(
+                      'Kecamatan',
+                      style: const pw.TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    child: pw.Text(
+                      ':',
+                      style: const pw.TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    flex: 15,
+                    child: pw.Text(
+                      kecamatan,
+                      style: const pw.TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              pw.Row(
+                children: [
+                  pw.Expanded(
+                    flex: 3,
+                    child: pw.Text(
+                      'Kelurahan',
+                      style: const pw.TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    child: pw.Text(
+                      ':',
+                      style: const pw.TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    flex: 15,
+                    child: pw.Text(
+                      kelurahan,
+                      style: const pw.TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              pw.Row(
+                children: [
+                  pw.Expanded(
+                    flex: 3,
+                    child: pw.Text(
+                      'RW / RT',
+                      style: const pw.TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    child: pw.Text(
+                      ':',
+                      style: const pw.TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    flex: 15,
+                    child: pw.Text(
+                      RWRT,
+                      style: const pw.TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              pw.Row(
+                children: [
+                  pw.Expanded(
+                    flex: 3,
+                    child: pw.Text(
+                      'Total Warga',
+                      style: const pw.TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    child: pw.Text(
+                      ':',
+                      style: const pw.TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    flex: 15,
+                    child: pw.Text(
+                      totalWarga,
+                      style: const pw.TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              pw.Divider(
+                height: 30,
+                thickness: 1,
+                color: PdfColor.fromHex('#000000'),
+              ),
+              pw.Center(
+                  child: pw.SizedBox(
+                width: 500,
+                height: 500,
+                child: pw.Image(chartImage),
+              )),
+            ],
+          );
+        },
+      ),
+    );
+
+    await Printing.layoutPdf(
+        onLayout: (PdfPageFormat format) async => pdf.save());
   }
   // ===
 
@@ -87,10 +258,25 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
     if (selected != null) {
       setState(() {
         _selected = selected;
+        String tempDate = DateFormat('yyyy-MM').format(_selected!);
+        debugPrint(tempDate);
+        getDataPatientGroupingByDiseaseGroup(tempDate);
         Navigator.pop(context);
+
         chooseDateForReport();
       });
     }
+  }
+
+  void getDataPatientGroupingByDiseaseGroup(String date) async {
+    listDataPatientGroupingByDiseaseGroup.clear();
+    Response<dynamic> respDataPDF = await NetUtil().dioClient.get(
+        '/health/getDataPatientGroupingByDiseaseGroup/area/${user.area!.id}/monthYear/$date');
+    listDataPatientGroupingByDiseaseGroup.addAll(
+        (respDataPDF.data).map<DataPatientGroupingByDiseaseGroup>((request) {
+      return DataPatientGroupingByDiseaseGroup.fromData(request);
+    }));
+    setState(() {});
   }
 
   void chooseDateForReport() {
@@ -149,7 +335,6 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
                       onPressed: () async {
                         Navigator.pop(context, 'Batal');
                         _selected = null;
-                        // _createPDF();
                       },
                       child: Text(
                         'Batal',
@@ -164,7 +349,9 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
                           SmartRTSnackbar.show(context,
                               message: 'Wajib memilih bulan dan tahun !',
                               backgroundColor: smartRTErrorColor);
-                        } else {}
+                        } else {
+                          _createPDF();
+                        }
                       },
                       child: Text(
                         'EXPORT PDF',
@@ -194,6 +381,12 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
     } else {
       resp = await NetUtil().dioClient.get('/health/userReported/all');
       sizeAgendaItemHeight = 125;
+      Response<dynamic> respDataPDF = await NetUtil().dioClient.get(
+          '/health/getDataPatientGroupingByDiseaseGroup/area/${user.area!.id}/monthYear/2023-02');
+      listDataPatientGroupingByDiseaseGroup.addAll(
+          (respDataPDF.data).map<DataPatientGroupingByDiseaseGroup>((request) {
+        return DataPatientGroupingByDiseaseGroup.fromData(request);
+      }));
 
       actionWidget = Row(
         children: [
@@ -239,62 +432,97 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
   void initState() {
     // TODO: implement initState
     getData();
+    _cartesianChartKey = GlobalKey();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var padding = MediaQuery.of(context).padding;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
           title: Text(type),
           actions: [actionWidget],
         ),
-        body: Column(
+        body: Stack(
           children: [
-            Expanded(
-              child: SfCalendar(
-                minDate: user.created_at,
-                maxDate: DateTime.now(),
-                todayHighlightColor: smartRTTertiaryColor,
-                initialSelectedDate: DateTime.now(),
-                selectionDecoration: BoxDecoration(
-                  border: Border.all(color: smartRTTertiaryColor, width: 2),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  shape: BoxShape.rectangle,
-                ),
-                headerStyle: CalendarHeaderStyle(
-                  textAlign: TextAlign.center,
-                  backgroundColor: smartRTTertiaryColor,
-                  textStyle: smartRTTextTitleCard.copyWith(
-                      letterSpacing: 3, color: smartRTQuaternaryColor),
-                ),
-                viewHeaderStyle: ViewHeaderStyle(
-                    backgroundColor: smartRTSuccessColor,
-                    dayTextStyle: smartRTTextLarge,
-                    dateTextStyle: smartRTTextLarge),
-                backgroundColor: smartRTQuaternaryColor,
-                view: CalendarView.month,
-                dataSource: HealthyDataSource(listSakit),
-                monthViewSettings: MonthViewSettings(
-                  showAgenda: true,
-                  agendaViewHeight: 300,
-                  agendaItemHeight: sizeAgendaItemHeight,
-                ),
-                onTap: (calendarTapDetails) {
-                  if (calendarTapDetails.targetElement ==
-                          CalendarElement.appointment &&
-                      type.toUpperCase() != 'RIWAYAT KESEHATANKU') {
-                    UserHealthReport data = calendarTapDetails
-                        .appointments![0].dataUserHealthReport!;
-                    DetailRiwayatKesehatanArguments arguments =
-                        DetailRiwayatKesehatanArguments(dataReport: data);
-                    Navigator.pushNamed(context, DetailRiwayatKesehatanPage.id,
-                        arguments: arguments);
-                  }
-                },
+            SfCartesianChart(
+              key: _cartesianChartKey,
+              primaryXAxis: CategoryAxis(
+                // labelPlacement: LabelPlacement.onTicks,
+                // rangePadding: ChartRangePadding.auto,
+                labelRotation: 90,
               ),
+              title: ChartTitle(
+                  text: 'Grafik Berdasarkan Golongan Penyakit',
+                  textStyle:
+                      smartRTTextNormal.copyWith(fontWeight: FontWeight.bold)),
+              legend: Legend(isVisible: true),
+              tooltipBehavior: _tooltipBehavior,
+              series: <ColumnSeries<DataPatientGroupingByDiseaseGroup, String>>[
+                ColumnSeries<DataPatientGroupingByDiseaseGroup, String>(
+                    color: smartRTPrimaryColor,
+                    xAxisName: 'Golongan Penyakit',
+                    yAxisName: 'Jumlah Penderita',
+                    name: 'Jumlah Penderita',
+                    dataSource: listDataPatientGroupingByDiseaseGroup,
+                    xValueMapper: (DataPatientGroupingByDiseaseGroup data, _) =>
+                        data.disease_group_name,
+                    yValueMapper: (DataPatientGroupingByDiseaseGroup data, _) =>
+                        data.total_patient,
+                    // Enable data label
+                    dataLabelSettings: DataLabelSettings(isVisible: true)),
+              ],
+            ),
+            SfCalendar(
+              minDate: user.created_at,
+              maxDate: DateTime.now(),
+              todayHighlightColor: smartRTTertiaryColor,
+              initialSelectedDate: DateTime.now(),
+              selectionDecoration: BoxDecoration(
+                border: Border.all(color: smartRTTertiaryColor, width: 2),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                shape: BoxShape.rectangle,
+              ),
+              headerStyle: CalendarHeaderStyle(
+                textAlign: TextAlign.center,
+                backgroundColor: smartRTTertiaryColor,
+                textStyle: smartRTTextTitleCard.copyWith(
+                    letterSpacing: 3, color: smartRTQuaternaryColor),
+              ),
+              viewHeaderStyle: ViewHeaderStyle(
+                  backgroundColor: smartRTSuccessColor,
+                  dayTextStyle: smartRTTextLarge,
+                  dateTextStyle: smartRTTextLarge),
+              backgroundColor: smartRTQuaternaryColor,
+              view: CalendarView.month,
+              dataSource: HealthyDataSource(listSakit),
+              monthViewSettings: MonthViewSettings(
+                showAgenda: true,
+                agendaViewHeight: 300,
+                agendaItemHeight: sizeAgendaItemHeight,
+              ),
+              onTap: (calendarTapDetails) {
+                if (calendarTapDetails.targetElement ==
+                        CalendarElement.appointment &&
+                    type.toUpperCase() != 'RIWAYAT KESEHATANKU') {
+                  UserHealthReport data =
+                      calendarTapDetails.appointments![0].dataUserHealthReport!;
+                  DetailRiwayatKesehatanArguments arguments =
+                      DetailRiwayatKesehatanArguments(dataReport: data);
+                  Navigator.pushNamed(context, DetailRiwayatKesehatanPage.id,
+                      arguments: arguments);
+                }
+              },
             ),
           ],
         ));
   }
+}
+
+class SalesData {
+  SalesData(this.year, this.sales);
+  final String year;
+  final double sales;
 }

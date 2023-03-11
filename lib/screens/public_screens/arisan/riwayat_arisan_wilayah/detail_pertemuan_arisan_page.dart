@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/lottery_club_period_detail.dart';
-import 'package:smart_rt/models/lottery_club_period_detail_bill.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_bill.dart';
 import 'package:smart_rt/screens/public_screens/arisan/absen_anggota_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page_2.dart';
@@ -11,6 +11,7 @@ import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/li
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_absensi_pertemuan_arisan_page.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/net_util.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/colors.dart';
@@ -201,14 +202,20 @@ class _DetailPertemuanArisanPageState extends State<DetailPertemuanArisanPage> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            tempatPertemuan,
-                            style: smartRTTextLarge,
+                          Expanded(
+                            child: Text(
+                              'Tempat Pertemuan',
+                              style: smartRTTextLarge,
+                            ),
                           ),
-                          Text(
-                            'Rumah Pak RT',
-                            style: smartRTTextLarge,
+                          Expanded(
+                            child: Text(
+                              tempatPertemuan,
+                              style: smartRTTextLarge,
+                              textAlign: TextAlign.right,
+                            ),
                           ),
                         ],
                       ),
@@ -365,12 +372,53 @@ class _DetailPertemuanArisanPageState extends State<DetailPertemuanArisanPage> {
             ListTileArisan(
               title: 'Lihat Absensi',
               onTap: () async {
-                debugPrint('YOLOO : $status');
-                if (status == "Published") {
-                  AbsenAnggotaPageArguments args = AbsenAnggotaPageArguments(
-                      idPertemuan: dataPertemuan!.id.toString());
-                  Navigator.pushNamed(context, AbsenAnggotaPage.id,
-                      arguments: args);
+                DateTime dateTimeNow = DateTime.now();
+                debugPrint('======================================');
+                debugPrint(dateTimeNow
+                    .compareTo(dataPertemuan!.meet_date
+                        .subtract(Duration(minutes: 30)))
+                    .toString());
+                debugPrint('======================================');
+                debugPrint(dateTimeNow.toString());
+                debugPrint('======================================');
+                debugPrint(dataPertemuan!.meet_date
+                    .subtract(Duration(minutes: 30))
+                    .toString());
+                debugPrint('======================================');
+                if (dateTimeNow.compareTo(dataPertemuan!.meet_date
+                        .subtract(Duration(minutes: 30))) >
+                    0) {
+                  if (status == "Published") {
+                    AbsenAnggotaPageArguments args = AbsenAnggotaPageArguments(
+                        idPertemuan: dataPertemuan!.id.toString());
+                    Navigator.pushNamed(context, AbsenAnggotaPage.id,
+                        arguments: args);
+                  }
+                } else {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: Text(
+                        'Hai Sobat Pintar,',
+                        style: smartRTTextTitleCard,
+                      ),
+                      content: Text(
+                        'Anda hanya dapat melakukan absensi dari waktu 30 menit sebelum waktu pertemuan Arisan hingga pemenang telah terpilih.',
+                        style: smartRTTextNormal.copyWith(
+                            fontWeight: FontWeight.normal),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: Text(
+                            'OK',
+                            style: smartRTTextNormal.copyWith(
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 }
               },
             ),

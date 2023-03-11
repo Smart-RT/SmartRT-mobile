@@ -5,6 +5,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/health/health_task_help.dart';
 import 'package:smart_rt/models/user_role_request.dart';
+import 'package:smart_rt/screens/public_screens/gabung_wilayah/detail_konfirmasi_gabung_wilayah_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_status_color.dart';
 
@@ -90,7 +91,14 @@ class _KonfirmasiGabungWilayahPageState
                         bottomText:
                             'Tanggal dibuat : ${DateFormat('d MMMM y').format(listPermohonan[index].created_at)}',
                         statusColor: smartRTStatusYellowColor,
-                        onTap: () {},
+                        onTap: () {
+                          DetailKonfirmasiGabungWilayahArguments args =
+                              DetailKonfirmasiGabungWilayahArguments(
+                                  dataKonfirmasi: listPermohonan[index]);
+                          Navigator.pushNamed(
+                              context, DetailKonfirmasiGabungWilayahPage.id,
+                              arguments: args);
+                        },
                       );
                     },
                   )
@@ -122,8 +130,18 @@ class _KonfirmasiGabungWilayahPageState
                             '',
                         bottomText:
                             'Tanggal dibuat : ${DateFormat('d MMMM y').format(listTelahDikonfirmasi[index].created_at)}',
-                        statusColor: smartRTStatusYellowColor,
-                        onTap: () {},
+                        statusColor:
+                            listTelahDikonfirmasi[index].accepted_at == null
+                                ? smartRTErrorColor
+                                : smartRTSuccessColor,
+                        onTap: () {
+                          DetailKonfirmasiGabungWilayahArguments args =
+                              DetailKonfirmasiGabungWilayahArguments(
+                                  dataKonfirmasi: listTelahDikonfirmasi[index]);
+                          Navigator.pushNamed(
+                              context, DetailKonfirmasiGabungWilayahPage.id,
+                              arguments: args);
+                        },
                       );
                     },
                   )

@@ -47,7 +47,7 @@ class AuthProvider extends ApplicationProvider {
       currentUser = user;
       saveUserDataToStorage();
       debugPrint(
-          'IDnya: ${user.id}, Namanya: ${user.full_name} berjenis kelamin : ${user.gender}');
+          'IDnya: ${user.id}, Namanya: ${user.full_name} berjenis kelamin : ${user.gender} role : ${user.user_role.name}');
       return true;
     } on DioError catch (e) {
       if (e.response != null) {

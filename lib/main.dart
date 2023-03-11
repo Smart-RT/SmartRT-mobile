@@ -57,7 +57,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
     } else {
       routeStart = GuestHome.id;
     }
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       ApplicationProvider.context!
           .read<ApplicationProvider>()
           .initApp(ApplicationProvider.context!);
@@ -81,7 +81,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
           theme: getThemeData(),
           initialRoute: routeStart,
           onGenerateRoute: Routes.generateRoute,
-          localizationsDelegates: [
+          localizationsDelegates: const [
             GlobalWidgetsLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             MonthYearPickerLocalizations.delegate,
