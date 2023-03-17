@@ -85,7 +85,7 @@ class _LaporanWargaPageState extends State<LaporanWargaPage> {
                             'Detail : ${listMenungguKonfirmasi[index].disease_level == 1 ? 'Sakit Ringan' : listMenungguKonfirmasi[index].disease_level == 2 ? 'Sakit Sedang' : 'Sakit Berat'} - ${listMenungguKonfirmasi[index].disease_notes}',
                         maxLineSubtitle: 2,
                         bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y').format(listMenungguKonfirmasi[index].created_at)}',
+                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(listMenungguKonfirmasi[index].created_at)}',
                         statusColor: smartRTPrimaryColor,
                         onTap: () {
                           DetailRiwayatKesehatanArguments arguments =
@@ -123,7 +123,7 @@ class _LaporanWargaPageState extends State<LaporanWargaPage> {
                             'Detail : ${listTelahDikonfirmasi[index].disease_level == 1 ? 'Sakit Ringan' : listTelahDikonfirmasi[index].disease_level == 2 ? 'Sakit Sedang' : 'Sakit Berat'} - ${listTelahDikonfirmasi[index].disease_notes}',
                         maxLineSubtitle: 2,
                         bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y').format(listTelahDikonfirmasi[index].created_at)}',
+                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(listTelahDikonfirmasi[index].created_at)}',
                         statusColor:
                             listTelahDikonfirmasi[index].confirmation_status ==
                                     0

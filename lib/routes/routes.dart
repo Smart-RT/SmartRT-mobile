@@ -14,29 +14,22 @@ import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
 import 'package:smart_rt/screens/public_screens/administration/administration_detail_page.dart';
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_4.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/absen_anggota_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/absensi_pertemuan_arisan/absensi_pertemuan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_2.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_pertemuan_arisan/create_pertemuan_selanjutnya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/detail_dan_informasi_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/detail_iuran_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/list_anggota_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page_2.dart';
+import 'package:smart_rt/screens/public_screens/arisan/create_arisan/create_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/list_iuran_pertemuan_dan_detail/list_iuran_pertemuan_detail_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_arisan/pembayaran_iuran_arisan_page_1.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_arisan/pembayaran_iuran_arisan_page_2.dart';
 import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengaturan_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_sebelumnya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_selanjutnya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_riwayat_arisan_saya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_riwayat_arisan_wilayah_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_anggota_periode_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_absensi_pertemuan_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_iuran_arisan_pertemuan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_pertemuan_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_semua_pertemuan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/riwayat_arisan_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara/peraturan_dan_tata_cara_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_periode_detail_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/anggota_periode/anggota_periode_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/list_iuran_pertemuan_dan_detail/list_iuran_pertemuan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_detail_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_periode_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
@@ -291,21 +284,13 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const ArisanPage();
         });
-      case DetailDanInformasiArisanPage.id:
+      case CreateArisanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return const DetailDanInformasiArisanPage();
-        });
-      case DaftarArisanPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return const DaftarArisanPage();
+          return const CreateArisanPage();
         });
       case PeraturanDanTataCaraArisanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const PeraturanDanTataCaraArisanPage();
-        });
-      case ListAnggotaArisanPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return const ListAnggotaArisanPage();
         });
       case CreatePeriodeArisanPage1.id:
         return MaterialPageRoute(builder: (context) {
@@ -317,77 +302,59 @@ class Routes {
             args: settings.arguments as CreatePeriodeArisanPage2Arguments,
           );
         });
-      case RiwayatArisanSayaPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return const RiwayatArisanSayaPage();
-        });
-      case DetailRiwayatArisanSayaPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return const DetailRiwayatArisanSayaPage();
-        });
       case PengaturanArisanPage.id:
         return MaterialPageRoute(builder: (context) {
           return const PengaturanArisanPage();
         });
-      case RiwayatArisanWilayahPage.id:
+      case RiwayatArisanPeriodePage.id:
         return MaterialPageRoute(builder: (context) {
-          return const RiwayatArisanWilayahPage();
-        });
-      case DetailRiwayatArisanWilayah.id:
-        return MaterialPageRoute(builder: (context) {
-          return DetailRiwayatArisanWilayah(
-            args: settings.arguments as DetailRiwayatArisanWilayahArguments,
+          return RiwayatArisanPeriodePage(
+            args: settings.arguments as RiwayatArisanPeriodeArguments,
           );
         });
-      case LihatSemuaPertemuanPage.id:
+      case RiwayatArisanPeriodeDetailPage.id:
         return MaterialPageRoute(builder: (context) {
-          return LihatSemuaPertemuanPage(
-            args: settings.arguments as LihatSemuaPertemuanPageArguments,
+          return RiwayatArisanPeriodeDetailPage(
+            args: settings.arguments as RiwayatArisanPeriodeDetailArguments,
           );
         });
-      case LihatSemuaAnggotaArisanPage.id:
+      case RiwayatArisanPertemuanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return LihatSemuaAnggotaArisanPage(
-            args: settings.arguments as LihatSemuaAnggotaArisanPageArguments,
+          return RiwayatArisanPertemuanPage(
+            args: settings.arguments as RiwayatArisanPertemuanArguments,
           );
         });
-      case DetailPertemuanArisanPage.id:
+      case AnggotaPeriodePage.id:
         return MaterialPageRoute(builder: (context) {
-          return DetailPertemuanArisanPage(
-            args: settings.arguments as DetailPertemuanArisanPageArguments,
+          return AnggotaPeriodePage(
+            args: settings.arguments as AnggotaPeriodeArgument,
           );
         });
-      case LihatAbsensiPertemuanArisanPage.id:
+      case RiwayatArisanPertemuanDetailPage.id:
         return MaterialPageRoute(builder: (context) {
-          return const LihatAbsensiPertemuanArisanPage();
-        });
-      case LihatIuranArisanPertemuanPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return LihatIuranArisanPertemuanPage(
-            args: settings.arguments as LihatIuranArisanPageArguments,
+          return RiwayatArisanPertemuanDetailPage(
+            args: settings.arguments as RiwayatArisanPertemuanDetailArguments,
           );
         });
-      case PembayaranIuranArisan.id:
+      case ListIuranPertemuanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return PembayaranIuranArisan(
-              args: settings.arguments as PembayaranIuranArisanArguments);
+          return ListIuranPertemuanPage(
+            args: settings.arguments as ListIuranPertemuanArgument,
+          );
         });
-      case DetailPertemuanSelanjutnyaPage.id:
+      case PembayaranIuranArisanPage1.id:
         return MaterialPageRoute(builder: (context) {
-          return const DetailPertemuanSelanjutnyaPage();
-        });
-      case DetailPertemuanSebelumnyaPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return const DetailPertemuanSebelumnyaPage();
+          return PembayaranIuranArisanPage1(
+              args: settings.arguments as PembayaranIuranArisanPage1Arguments);
         });
       case CreatePertemuanSelanjutnyaPage.id:
         return MaterialPageRoute(builder: (context) {
           return const CreatePertemuanSelanjutnyaPage();
         });
-      case AbsenAnggotaPage.id:
+      case AbsensiPertemuanArisanPage.id:
         return MaterialPageRoute(builder: (context) {
-          return AbsenAnggotaPage(
-            args: settings.arguments as AbsenAnggotaPageArguments,
+          return AbsensiPertemuanArisanPage(
+            args: settings.arguments as AbsensiPertemuanArisanArgument,
           );
         });
       case PembayaranIuranArisanPage2.id:
@@ -395,11 +362,12 @@ class Routes {
           return PembayaranIuranArisanPage2(
               args: settings.arguments as PembayaranIuranArisanPage2Arguments);
         });
-      case DetailIuranArisanPage.id:
+      case ListIuranPertemuanDetailPage.id:
         return MaterialPageRoute(builder: (context) {
-          return DetailIuranArisanPage(
-              args: settings.arguments as DetailIuranArisanArguments);
+          return ListIuranPertemuanDetailPage(
+              args: settings.arguments as ListIuranPertemuanDetailArgument);
         });
+
       // === END
 
       case BerandaAdminPage.id:

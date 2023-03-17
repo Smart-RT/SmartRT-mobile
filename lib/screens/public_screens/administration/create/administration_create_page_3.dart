@@ -122,6 +122,7 @@ class _AdministrationCreatePage3State extends State<AdministrationCreatePage3> {
               SB_height15,
               DateTimePicker(
                 type: DateTimePickerType.date,
+                locale: const Locale('id', 'ID'),
                 dateMask: 'dd MMMM yyyy',
                 style: smartRTTextNormal_Primary,
                 firstDate: DateTime(1900),

@@ -258,7 +258,7 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
     if (selected != null) {
       setState(() {
         _selected = selected;
-        String tempDate = DateFormat('yyyy-MM').format(_selected!);
+        String tempDate = DateFormat('yyyy-MM', 'id_ID').format(_selected!);
         debugPrint(tempDate);
         getDataPatientGroupingByDiseaseGroup(tempDate);
         Navigator.pop(context);
@@ -304,7 +304,7 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
                   )
                 else
                   Text(
-                    DateFormat('MMMM y').format(_selected!),
+                    DateFormat('MMMM y', 'id_ID').format(_selected!),
                     style:
                         smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
                   ),

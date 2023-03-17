@@ -7,15 +7,15 @@ import 'package:provider/provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
-class DaftarArisanPage extends StatefulWidget {
-  static const String id = 'DaftarArisanPage';
-  const DaftarArisanPage({Key? key}) : super(key: key);
+class CreateArisanPage extends StatefulWidget {
+  static const String id = 'CreateArisanPage';
+  const CreateArisanPage({Key? key}) : super(key: key);
 
   @override
-  State<DaftarArisanPage> createState() => _DaftarArisanPageState();
+  State<CreateArisanPage> createState() => _CreateArisanPageState();
 }
 
-class _DaftarArisanPageState extends State<DaftarArisanPage> {
+class _CreateArisanPageState extends State<CreateArisanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

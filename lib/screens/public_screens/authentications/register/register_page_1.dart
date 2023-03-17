@@ -116,6 +116,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                   DateTimePicker(
                     type: DateTimePickerType.date,
                     dateMask: 'yyyy/MM/dd',
+                    locale: const Locale('id', 'ID'),
                     style: smartRTTextNormal_Primary,
                     firstDate: DateTime(1900),
                     lastDate: DateTime.now(),

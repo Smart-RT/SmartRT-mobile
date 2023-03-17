@@ -10,25 +10,22 @@ import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart'
 import 'package:provider/provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 
-class LihatSemuaAnggotaArisanPageArguments {
+class AnggotaPeriodeArgument {
   String idPeriode;
   String periodeKe;
-  LihatSemuaAnggotaArisanPageArguments(
-      {required this.idPeriode, required this.periodeKe});
+  AnggotaPeriodeArgument({required this.idPeriode, required this.periodeKe});
 }
 
-class LihatSemuaAnggotaArisanPage extends StatefulWidget {
-  static const String id = 'LihatSemuaAnggotaArisanPage';
-  LihatSemuaAnggotaArisanPageArguments args;
-  LihatSemuaAnggotaArisanPage({Key? key, required this.args}) : super(key: key);
+class AnggotaPeriodePage extends StatefulWidget {
+  static const String id = 'AnggotaPeriodePage';
+  AnggotaPeriodeArgument args;
+  AnggotaPeriodePage({Key? key, required this.args}) : super(key: key);
 
   @override
-  State<LihatSemuaAnggotaArisanPage> createState() =>
-      _LihatSemuaAnggotaArisanPageState();
+  State<AnggotaPeriodePage> createState() => _AnggotaPeriodePageState();
 }
 
-class _LihatSemuaAnggotaArisanPageState
-    extends State<LihatSemuaAnggotaArisanPage> {
+class _AnggotaPeriodePageState extends State<AnggotaPeriodePage> {
   List<LotteryClubPeriodMember> listMember = [];
   String idPeriode = '';
   String periodeKe = '';

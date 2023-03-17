@@ -182,6 +182,7 @@ class _AdministrationCreatePage2SKKelahiranState
               SB_height15,
               DateTimePicker(
                 type: DateTimePickerType.dateTime,
+                locale: const Locale('id', 'ID'),
                 dateMask: 'dd MMMM yyyy HH:mm',
                 style: smartRTTextNormal_Primary,
                 firstDate: DateTime(1900),

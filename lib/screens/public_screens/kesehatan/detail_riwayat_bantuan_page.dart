@@ -64,7 +64,8 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
     tingkatKepentingan =
         dataBantuan!.urgent_level == 1 ? 'Normal' : 'Butuh Cepat';
     detailPermintaanController.text = dataBantuan!.notes;
-    tanggalTerbuat = DateFormat('d MMMM y').format(dataBantuan!.created_at);
+    tanggalTerbuat =
+        DateFormat('d MMMM y', 'id_ID').format(dataBantuan!.created_at);
     waktuTerbuat = '${DateFormat('HH:mm').format(dataBantuan!.created_at)} WIB';
 
     if (dataBantuan!.rejected_reason != null) {

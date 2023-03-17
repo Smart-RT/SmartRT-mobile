@@ -5,8 +5,11 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_bill.dart';
-import 'package:smart_rt/screens/public_screens/arisan/detail_iuran_arisan_page.dart';
+import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/screens/public_screens/arisan/list_iuran_pertemuan_dan_detail/list_iuran_pertemuan_detail_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
@@ -14,29 +17,33 @@ import 'package:provider/provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_user_2.dart';
 
-class LihatIuranArisanPageArguments {
+class ListIuranPertemuanArgument {
   String idPertemuan;
   String pertemuanKe;
-  LihatIuranArisanPageArguments(
-      {required this.idPertemuan, required this.pertemuanKe});
+  String typeFrom;
+  LotteryClubPeriodDetail dataPertemuan;
+  ListIuranPertemuanArgument({
+    required this.idPertemuan,
+    required this.pertemuanKe,
+    required this.typeFrom,
+    required this.dataPertemuan,
+  });
 }
 
-class LihatIuranArisanPertemuanPage extends StatefulWidget {
-  static const String id = 'LihatIuranArisanPertemuanPage';
-  LihatIuranArisanPageArguments args;
-  LihatIuranArisanPertemuanPage({Key? key, required this.args})
-      : super(key: key);
+class ListIuranPertemuanPage extends StatefulWidget {
+  static const String id = 'ListIuranPertemuanPage';
+  ListIuranPertemuanArgument args;
+  ListIuranPertemuanPage({Key? key, required this.args}) : super(key: key);
 
   @override
-  State<LihatIuranArisanPertemuanPage> createState() =>
-      _LihatIuranArisanPertemuanPageState();
+  State<ListIuranPertemuanPage> createState() => _ListIuranPertemuanPageState();
 }
 
-class _LihatIuranArisanPertemuanPageState
-    extends State<LihatIuranArisanPertemuanPage> {
+class _ListIuranPertemuanPageState extends State<ListIuranPertemuanPage> {
   String idPertemuan = '';
   String pertemuanKe = '';
   List<LotteryClubPeriodDetailBill> listDataPembayaran = [];
+  User user = AuthProvider.currentUser!;
 
   void getData() async {
     idPertemuan = widget.args.idPertemuan;
@@ -49,6 +56,10 @@ class _LihatIuranArisanPertemuanPageState
         .addAll((resp.data).map<LotteryClubPeriodDetailBill>((request) {
       return LotteryClubPeriodDetailBill.fromData(request);
     }));
+
+    debugPrint(listDataPembayaran[0].status.toString());
+    debugPrint(listDataPembayaran[0].midtrans_transaction_status);
+    debugPrint(listDataPembayaran[0].payment_type);
 
     setState(() {});
   }
@@ -68,7 +79,9 @@ class _LihatIuranArisanPertemuanPageState
       ),
       body: Column(
         children: [
-          Padding(
+          Container(
+            color: smartRTSecondaryColor,
+            width: double.infinity,
             padding: paddingScreen,
             child: Column(
               children: [
@@ -111,17 +124,23 @@ class _LihatIuranArisanPertemuanPageState
                       : smartRTSuccessColor,
                   paymentDate: listDataPembayaran[index].updated_at == null
                       ? ''
-                      : DateFormat('d MMMM y')
+                      : DateFormat('d MMMM y', 'id_ID')
                           .format(listDataPembayaran[index].updated_at!),
                   via: listDataPembayaran[index].status == 0
                       ? ''
-                      : listDataPembayaran[index].payment_type,
+                      : listDataPembayaran[index].payment_type ==
+                              'bank_transfer'
+                          ? 'Transfer Bank (${listDataPembayaran[index].acquiring_bank!.toUpperCase()})'
+                          : 'Tunai',
                   onTap: () {
-                    DetailIuranArisanArguments arguments =
-                        DetailIuranArisanArguments(
+                    ListIuranPertemuanDetailArgument arguments =
+                        ListIuranPertemuanDetailArgument(
+                            dataPertemuan: widget.args.dataPertemuan,
+                            typeFrom: widget.args.typeFrom,
                             dataPembayaran: listDataPembayaran[index],
                             pertemuanKe: pertemuanKe);
-                    Navigator.pushNamed(context, DetailIuranArisanPage.id,
+                    Navigator.pushNamed(
+                        context, ListIuranPertemuanDetailPage.id,
                         arguments: arguments);
                   },
                 );

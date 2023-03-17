@@ -6,34 +6,41 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_riwayat_arisan_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_periode_detail_page.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/cards/card_riwayat_arisan_wilayah.dart';
 
-class RiwayatArisanWilayahPage extends StatefulWidget {
-  static const String id = 'RiwayatArisanWilayahPage';
-  const RiwayatArisanWilayahPage({Key? key}) : super(key: key);
-
-  @override
-  State<RiwayatArisanWilayahPage> createState() =>
-      _RiwayatArisanWilayahPageState();
+class RiwayatArisanPeriodeArguments {
+  String type;
+  RiwayatArisanPeriodeArguments({
+    required this.type,
+  });
 }
 
-class _RiwayatArisanWilayahPageState extends State<RiwayatArisanWilayahPage> {
+class RiwayatArisanPeriodePage extends StatefulWidget {
+  static const String id = 'RiwayatArisanPeriodePage';
+  RiwayatArisanPeriodeArguments args;
+  RiwayatArisanPeriodePage({Key? key, required this.args}) : super(key: key);
+
+  @override
+  State<RiwayatArisanPeriodePage> createState() =>
+      _RiwayatArisanPeriodePageState();
+}
+
+class _RiwayatArisanPeriodePageState extends State<RiwayatArisanPeriodePage> {
   User user = AuthProvider.currentUser!;
+  String type = '';
   List<LotteryClubPeriod> listPeriodeArisan = [];
 
   void getData() async {
-    Response<dynamic> resp = await NetUtil()
-        .dioClient
-        .get('/lotteryClubs/getListPeriodeArisan/${user.area!.id}');
+    type = widget.args.type.toLowerCase();
+    Response<dynamic> resp =
+        await NetUtil().dioClient.get('/lotteryClubs/get/periods');
     listPeriodeArisan.clear();
     listPeriodeArisan.addAll((resp.data).map<LotteryClubPeriod>((request) {
       return LotteryClubPeriod.fromData(request);
     }));
-    debugPrint('================');
-    debugPrint(listPeriodeArisan.toString());
     setState(() {});
   }
 
@@ -55,7 +62,7 @@ class _RiwayatArisanWilayahPageState extends State<RiwayatArisanWilayahPage> {
         child: Column(
           children: [
             Text(
-              'RIWAYAT ARISAN WILAYAH',
+              'RIWAYAT ARISAN $type'.toUpperCase(),
               style: smartRTTextTitle,
               textAlign: TextAlign.center,
             ),
@@ -83,8 +90,8 @@ class _RiwayatArisanWilayahPageState extends State<RiwayatArisanWilayahPage> {
                               : 'Selesai',
                           statusTextColor: listPeriodeArisan[index].meet_ctr <
                                   listPeriodeArisan[index].total_meets
-                              ? smartRTSuccessColor
-                              : smartRTSecondaryColor,
+                              ? smartRTStatusYellowColor
+                              : smartRTQuaternaryColor,
                           totalPertemuan:
                               '${listPeriodeArisan[index].total_meets}x (${listPeriodeArisan[index].year_limit == 0 ? '6 bulan' : '${listPeriodeArisan[index].year_limit.toString()} tahun'})',
                           totalAnggota:
@@ -92,12 +99,12 @@ class _RiwayatArisanWilayahPageState extends State<RiwayatArisanWilayahPage> {
                           iuran: CurrencyFormat.convertToIdr(
                               listPeriodeArisan[index].bill_amount, 2),
                           onTap: () async {
-                            DetailRiwayatArisanWilayahArguments args =
-                                DetailRiwayatArisanWilayahArguments(
-                                    dataPeriodeArisan:
-                                        listPeriodeArisan[index]);
+                            RiwayatArisanPeriodeDetailArguments args =
+                                RiwayatArisanPeriodeDetailArguments(
+                              dataPeriodeArisan: listPeriodeArisan[index],
+                            );
                             Navigator.pushNamed(
-                                context, DetailRiwayatArisanWilayah.id,
+                                context, RiwayatArisanPeriodeDetailPage.id,
                                 arguments: args);
                           },
                         );

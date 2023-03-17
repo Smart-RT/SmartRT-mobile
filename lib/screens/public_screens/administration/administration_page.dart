@@ -116,7 +116,7 @@ class _AdministrationPageState extends State<AdministrationPage> {
                         subtitle:
                             '${listPermohonan[index].creator_fullname}\n${listPermohonan[index].creator_address}',
                         bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y').format(listPermohonan[index].created_at)}',
+                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(listPermohonan[index].created_at)}',
                         statusColor: smartRTTertiaryColor,
                         onTap: () {
                           AdministrationDetailPageArgument args =
@@ -153,7 +153,7 @@ class _AdministrationPageState extends State<AdministrationPage> {
                         subtitle:
                             '${listDiterima[index].creator_fullname}\n${listDiterima[index].creator_address}',
                         bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y').format(listDiterima[index].created_at)}',
+                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(listDiterima[index].created_at)}',
                         statusColor: smartRTTertiaryColor,
                         onTap: () {
                           AdministrationDetailPageArgument args =
@@ -190,7 +190,7 @@ class _AdministrationPageState extends State<AdministrationPage> {
                         subtitle:
                             '${listDitolak[index].creator_fullname}\n${listDitolak[index].creator_address}',
                         bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y').format(listDitolak[index].created_at)}',
+                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(listDitolak[index].created_at)}',
                         statusColor: smartRTTertiaryColor,
                         onTap: () {
                           AdministrationDetailPageArgument args =

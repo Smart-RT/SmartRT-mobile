@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+final double roundSize = 5;
+
 final SizedBox SB_height5 = SizedBox(
   height: 5,
 );

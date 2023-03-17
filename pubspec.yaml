@@ -94,6 +94,7 @@ flutter:
 
   assets:
     - assets/lotties/welcome/welcome-smile.json
+    - assets/lotties/arisan/gold-cracking.json
     - assets/lotties/auth/otp.json
     - assets/img/icons/file/pdf.png
 

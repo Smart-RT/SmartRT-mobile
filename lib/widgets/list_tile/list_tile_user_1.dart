@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
 
-class ListTileUser extends StatelessWidget {
-  const ListTileUser({
+class ListTileUser1 extends StatelessWidget {
+  const ListTileUser1({
     Key? key,
     required this.fullName,
     required this.address,

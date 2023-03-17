@@ -42,12 +42,12 @@ class _DaftarKetuaPageState extends State<DaftarKetuaPage> {
       if (request_role == 3) {
         _reqRoleWords = "gabung wilayah";
         _dataWords =
-            "Tanggal Permintaan : ${DateFormat.yMMMMd().format(DateTime.parse(listUserRoleRequests[0].created_at.toString()))}";
+            "Tanggal Permintaan : ${DateFormat('d MMMM y', 'id_ID').format(DateTime.parse(listUserRoleRequests[0].created_at.toString()))}";
         _roleConfirmater = "Ketua RT dari kode wilayah tersebut";
       } else if (request_role == 7) {
         _reqRoleWords = "mengubah jabatan menjadi Ketua RT";
         _dataWords =
-            "Tanggal Permintaan : ${DateFormat.yMMMMd().format(DateTime.parse(listUserRoleRequests[0].created_at.toString()))}\n\nWilayah :  \nRT/RW ${listUserRoleRequests[0].rt_num}/${listUserRoleRequests[0].rw_num}, \n${listUserRoleRequests[0].urban_village_id!.name}, \nKec. ${listUserRoleRequests[0].sub_district_id!.name}";
+            "Tanggal Permintaan : ${DateFormat('d MMMM y', 'id_ID').format(DateTime.parse(listUserRoleRequests[0].created_at.toString()))}\n\nWilayah :  \nRT/RW ${listUserRoleRequests[0].rt_num}/${listUserRoleRequests[0].rw_num}, \n${listUserRoleRequests[0].urban_village_id!.name}, \nKec. ${listUserRoleRequests[0].sub_district_id!.name}";
         _roleConfirmater = "Admin";
       }
     }

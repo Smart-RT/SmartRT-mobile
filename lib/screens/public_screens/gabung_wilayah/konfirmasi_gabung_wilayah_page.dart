@@ -89,7 +89,7 @@ class _KonfirmasiGabungWilayahPageState
                                 .address ??
                             '',
                         bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y').format(listPermohonan[index].created_at)}',
+                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(listPermohonan[index].created_at)}',
                         statusColor: smartRTStatusYellowColor,
                         onTap: () {
                           DetailKonfirmasiGabungWilayahArguments args =
@@ -129,7 +129,7 @@ class _KonfirmasiGabungWilayahPageState
                                 .address ??
                             '',
                         bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y').format(listTelahDikonfirmasi[index].created_at)}',
+                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(listTelahDikonfirmasi[index].created_at)}',
                         statusColor:
                             listTelahDikonfirmasi[index].accepted_at == null
                                 ? smartRTErrorColor

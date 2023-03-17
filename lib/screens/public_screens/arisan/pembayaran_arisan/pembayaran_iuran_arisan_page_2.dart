@@ -7,7 +7,9 @@ import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_bill.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_arisan/pembayaran_iuran_arisan_page_1.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_detail_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
@@ -18,11 +20,13 @@ class PembayaranIuranArisanPage2Arguments {
   LotteryClubPeriodDetail dataPertemuan;
   String periodeKe;
   String pertemuanKe;
+  String typeFrom;
   PembayaranIuranArisanPage2Arguments({
     required this.periodeKe,
     required this.pertemuanKe,
     required this.dataPembayaran,
     required this.dataPertemuan,
+    required this.typeFrom,
   });
 }
 
@@ -55,11 +59,14 @@ class _PembayaranIuranArisanPage2State
     if (resp.statusCode.toString() == '200') {
       Navigator.pop(context);
 
-      PembayaranIuranArisanArguments args = PembayaranIuranArisanArguments(
-          periodeKe: periodeKe,
-          pertemuanKe: pertemuanKe,
-          dataPertemuan: dataPertemuan!);
-      Navigator.pushNamed(context, PembayaranIuranArisan.id, arguments: args);
+      PembayaranIuranArisanPage1Arguments args =
+          PembayaranIuranArisanPage1Arguments(
+              typeFrom: widget.args.typeFrom,
+              periodeKe: periodeKe,
+              pertemuanKe: pertemuanKe,
+              dataPertemuan: dataPertemuan!);
+      Navigator.pushNamed(context, PembayaranIuranArisanPage1.id,
+          arguments: args);
 
       SmartRTSnackbar.show(context,
           message: resp.data, backgroundColor: smartRTSuccessColor);
@@ -69,28 +76,128 @@ class _PembayaranIuranArisanPage2State
     }
   }
 
+  void cekStatusPembayaran() async {
+    Response<dynamic> resp = await NetUtil()
+        .dioClient
+        .get('/lotteryClubs/payment/idPayment/${dataPembayaran!.id}');
+    LotteryClubPeriodDetailBill dataPembayaranNew =
+        LotteryClubPeriodDetailBill.fromData(resp.data);
+
+    if (dataPembayaranNew.midtrans_transaction_status == 'settlement') {
+      // ignore: use_build_context_synchronously
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Pembayaran anda telah berhasil dan lunas pada tanggal ${DateFormat('d MMMM y HH:mm', 'id_ID').format(dataPembayaranNew.updated_at!)}',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                if (widget.args.typeFrom.toLowerCase() == 'riwayat') {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+
+                  RiwayatArisanPertemuanArguments arguments =
+                      RiwayatArisanPertemuanArguments(
+                    idPeriode:
+                        dataPertemuan!.lottery_club_period_id!.id.toString(),
+                    periodeKe: dataPertemuan!.lottery_club_period_id!.period
+                        .toString(),
+                    dataPeriodeArisan: dataPertemuan!.lottery_club_period_id!,
+                  );
+                  Navigator.pushNamed(context, RiwayatArisanPertemuanPage.id,
+                      arguments: arguments);
+                } else {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+
+                Response<dynamic> respPertemuanBaru = await NetUtil().dioClient.get(
+                    '/lotteryClubs/get/meet/id-pertemuan/${dataPertemuan!.id}');
+                LotteryClubPeriodDetail dataPertemuanBaru =
+                    LotteryClubPeriodDetail.fromData(respPertemuanBaru.data);
+
+                RiwayatArisanPertemuanDetailArguments arguments2 =
+                    RiwayatArisanPertemuanDetailArguments(
+                  dataPertemuan: dataPertemuanBaru,
+                  periodeKe: dataPertemuanBaru.period_ke.toString(),
+                  pertemuanKe: dataPertemuanBaru.pertemuan_ke.toString(),
+                  typeFrom: widget.args.typeFrom,
+                  dataPeriodeArisan: dataPertemuanBaru.lottery_club_period_id!,
+                );
+                Navigator.pushNamed(
+                    context, RiwayatArisanPertemuanDetailPage.id,
+                    arguments: arguments2);
+              },
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Pembayaran anda belum diterima! Segera bayarkan tagihan anda!',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   void getData() async {
-    dataPembayaran = widget.args.dataPembayaran;
-    dataPertemuan = widget.args.dataPertemuan;
-    periodeKe = widget.args.periodeKe;
-    pertemuanKe = widget.args.pertemuanKe;
+    setState(() {
+      dataPembayaran = widget.args.dataPembayaran;
+      dataPertemuan = widget.args.dataPertemuan;
+      periodeKe = widget.args.periodeKe;
+      pertemuanKe = widget.args.pertemuanKe;
 
-    datetimeBayarSebelum =
-        DateFormat('d MMMM y H:m').format(dataPembayaran!.midtrans_expired_at!);
-    vaNum = dataPembayaran!.va_num ?? '';
-    totalTagihan = CurrencyFormat.convertToIdr(dataPembayaran!.bill_amount, 2);
-    status = (dataPembayaran!.midtrans_transaction_status == 'pending')
-        ? 'Menunggu Pembayaran'
-        : '';
-
-    setState(() {});
+      datetimeBayarSebelum = DateFormat('d MMMM y H:m', 'id_ID')
+          .format(dataPembayaran!.midtrans_expired_at!);
+      vaNum = dataPembayaran!.va_num ?? '';
+      totalTagihan =
+          CurrencyFormat.convertToIdr(dataPembayaran!.bill_amount, 2);
+      status = (dataPembayaran!.midtrans_transaction_status == 'pending')
+          ? 'Menunggu Pembayaran'
+          : '';
+    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    getData();
     super.initState();
+    getData();
   }
 
   @override
@@ -196,7 +303,9 @@ class _PembayaranIuranArisanPage2State
                       ),
                     ),
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    cekStatusPembayaran();
+                  },
                   child: Text(
                     'CEK STATUS PEMBAYARAN',
                     style: smartRTTextLargeBold_Secondary,

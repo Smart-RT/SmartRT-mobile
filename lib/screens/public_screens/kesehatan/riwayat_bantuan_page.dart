@@ -144,7 +144,7 @@ class _RiwayatBantuanPageState extends State<RiwayatBantuanPage> {
                             'Kebutuhan ${getHelpType(listPermohonan[index].help_type.toString())}',
                         subtitle: 'Detail : ${listPermohonan[index].notes}',
                         bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y').format(listPermohonan[index].created_at)}',
+                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(listPermohonan[index].created_at)}',
                         statusColor: listPermohonan[index].urgent_level == 1
                             ? smartRTStatusYellowColor
                             : smartRTStatusRedColor,

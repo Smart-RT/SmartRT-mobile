@@ -409,6 +409,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                     controller: _bornDateUserController,
                                     // initialValue: _bornDateUser,
                                     type: DateTimePickerType.date,
+                                    locale: const Locale('id', 'ID'),
                                     dateMask: 'MMM dd, yyyy',
                                     style: smartRTTextNormal_Primary,
                                     firstDate: DateTime(1900),
@@ -465,8 +466,9 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    DateFormat.yMMMd().format(DateTime.parse(
-                                        _bornDateUserController.text)),
+                                    DateFormat('y MMMM d', 'id_ID').format(
+                                        DateTime.parse(
+                                            _bornDateUserController.text)),
                                     style: smartRTTextLarge_Primary.copyWith(
                                         fontWeight: FontWeight.normal),
                                     textAlign: TextAlign.right,

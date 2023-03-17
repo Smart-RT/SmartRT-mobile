@@ -102,19 +102,21 @@ class _DetailRiwayatKesehatanPageState
 
     createdBy = dataReport!.created_by_data_user!.full_name;
     createdByAddress = dataReport!.created_by_data_user!.address ?? '';
-    createdAtDate = DateFormat('d MMMM y').format(dataReport!.created_at);
+    createdAtDate =
+        DateFormat('d MMMM y', 'id_ID').format(dataReport!.created_at);
     createdAtTime = '${DateFormat('HH:mm').format(dataReport!.created_at)} WIB';
 
     if (dataReport!.confirmation_by != null) {
       confirmationBy = dataReport!.confirmation_by_data_user!.full_name;
       confirmationByAddress =
           dataReport!.confirmation_by_data_user!.address ?? '';
-      confirmationAt =
-          DateFormat('d MMMM y HH:mm').format(dataReport!.confirmation_at!);
+      confirmationAt = DateFormat('d MMMM y HH:mm', 'id_ID')
+          .format(dataReport!.confirmation_at!);
     }
 
     if (dataReport!.healed_at != null) {
-      healedAtDate = DateFormat('d MMMM y').format(dataReport!.healed_at!);
+      healedAtDate =
+          DateFormat('d MMMM y', 'id_ID').format(dataReport!.healed_at!);
       healedAtTime =
           '${DateFormat('HH:mm').format(dataReport!.healed_at!)} WIB';
     }

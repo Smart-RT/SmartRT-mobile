@@ -2,53 +2,62 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_bill.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/screens/public_screens/arisan/absen_anggota_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page_2.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_iuran_arisan_pertemuan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/lihat_absensi_pertemuan_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/list_iuran_pertemuan_dan_detail/list_iuran_pertemuan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_arisan/pembayaran_iuran_arisan_page_1.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_arisan/pembayaran_iuran_arisan_page_2.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_detail_page.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/net_util.dart';
-import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/colors.dart';
 
-class DetailIuranArisanArguments {
+import '../riwayat_arisan/riwayat_arisan_pertemuan_page.dart';
+
+class ListIuranPertemuanDetailArgument {
   LotteryClubPeriodDetailBill dataPembayaran;
+  LotteryClubPeriodDetail dataPertemuan;
   String pertemuanKe;
-  DetailIuranArisanArguments(
-      {required this.dataPembayaran, required this.pertemuanKe});
+  String typeFrom;
+  ListIuranPertemuanDetailArgument({
+    required this.dataPembayaran,
+    required this.dataPertemuan,
+    required this.pertemuanKe,
+    required this.typeFrom,
+  });
 }
 
-class DetailIuranArisanPage extends StatefulWidget {
-  static const String id = 'DetailIuranArisanPage';
-  DetailIuranArisanArguments args;
-  DetailIuranArisanPage({Key? key, required this.args}) : super(key: key);
+class ListIuranPertemuanDetailPage extends StatefulWidget {
+  static const String id = 'ListIuranPertemuanDetailPage';
+  ListIuranPertemuanDetailArgument args;
+  ListIuranPertemuanDetailPage({Key? key, required this.args})
+      : super(key: key);
 
   @override
-  State<DetailIuranArisanPage> createState() => _DetailIuranArisanPageState();
+  State<ListIuranPertemuanDetailPage> createState() =>
+      _ListIuranPertemuanDetailPageState();
 }
 
-class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
+class _ListIuranPertemuanDetailPageState
+    extends State<ListIuranPertemuanDetailPage> {
   LotteryClubPeriodDetailBill? dataPembayaran;
   User user = AuthProvider.currentUser!;
   String pertemuanKe = '';
   String statusPembayaran = '';
-  Color statusPembayaranColor = smartRTSuccessColor;
+  Color statusPembayaranColor = smartRTStatusGreenColor;
   String totalTagihan = 'IDR 0';
   String pembayaranVia = '';
   String tanggalPembayaran = '';
-  String dikonfirmasiOleh = '';
+  String dikonfirmasiOleh = 'System';
   String namaAnggota = '';
   String alamatAnggota = '';
   int idUser = -1;
-
+  LotteryClubPeriodDetail? dataPertemuan;
   void konfirmasiBayarCash() async {
     showDialog<String>(
       context: context,
@@ -97,25 +106,67 @@ class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
       "id_bill": dataPembayaran!.id,
     });
     if (resp.statusCode.toString() == '200') {
-      Navigator.pop(context);
-      Navigator.pop(context);
-      Navigator.pop(context);
+      if (widget.args.typeFrom.toLowerCase() == 'riwayat') {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
 
-      LihatIuranArisanPageArguments args = LihatIuranArisanPageArguments(
-          idPertemuan: dataPembayaran!.lottery_club_period_detail_id.toString(),
-          pertemuanKe: pertemuanKe);
-      Navigator.pushNamed(context, LihatIuranArisanPertemuanPage.id,
-          arguments: args);
-      resp = await NetUtil()
+        RiwayatArisanPertemuanArguments arguments =
+            RiwayatArisanPertemuanArguments(
+          idPeriode: dataPertemuan!.lottery_club_period_id!.id.toString(),
+          periodeKe: dataPertemuan!.lottery_club_period_id!.period.toString(),
+          dataPeriodeArisan: dataPertemuan!.lottery_club_period_id!,
+        );
+        Navigator.pushNamed(context, RiwayatArisanPertemuanPage.id,
+            arguments: arguments);
+      } else {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+      }
+
+      Response<dynamic> respPertemuanBaru = await NetUtil()
+          .dioClient
+          .get('/lotteryClubs/get/meet/id-pertemuan/${dataPertemuan!.id}');
+      LotteryClubPeriodDetail dataPertemuanBaru =
+          LotteryClubPeriodDetail.fromData(respPertemuanBaru.data);
+
+      RiwayatArisanPertemuanDetailArguments arguments2 =
+          RiwayatArisanPertemuanDetailArguments(
+        dataPertemuan: dataPertemuanBaru,
+        periodeKe: dataPertemuanBaru.period_ke.toString(),
+        pertemuanKe: dataPertemuanBaru.pertemuan_ke.toString(),
+        typeFrom: widget.args.typeFrom,
+        dataPeriodeArisan: dataPertemuanBaru.lottery_club_period_id!,
+      );
+      Navigator.pushNamed(context, RiwayatArisanPertemuanDetailPage.id,
+          arguments: arguments2);
+
+      ListIuranPertemuanArgument arguments3 = ListIuranPertemuanArgument(
+          dataPertemuan: dataPertemuanBaru,
+          typeFrom: widget.args.typeFrom,
+          idPertemuan: dataPertemuanBaru.id.toString(),
+          pertemuanKe: dataPertemuanBaru.pertemuan_ke.toString());
+      Navigator.pushNamed(context, ListIuranPertemuanPage.id,
+          arguments: arguments3);
+
+      Response<dynamic> respPembayaranBaru = await NetUtil()
           .dioClient
           .get('/lotteryClubs/payment/idPayment/${dataPembayaran!.id}');
+      LotteryClubPeriodDetailBill dataPembayaranBaru =
+          LotteryClubPeriodDetailBill.fromData(respPembayaranBaru.data);
 
-      LotteryClubPeriodDetailBill tempData =
-          LotteryClubPeriodDetailBill.fromData(resp.data);
-      DetailIuranArisanArguments arguments = DetailIuranArisanArguments(
-          dataPembayaran: tempData, pertemuanKe: pertemuanKe);
-      Navigator.pushNamed(context, DetailIuranArisanPage.id,
-          arguments: arguments);
+      ListIuranPertemuanDetailArgument arguments4 =
+          ListIuranPertemuanDetailArgument(
+              dataPertemuan: dataPertemuanBaru,
+              typeFrom: widget.args.typeFrom,
+              dataPembayaran: dataPembayaranBaru,
+              pertemuanKe: pertemuanKe);
+      Navigator.pushNamed(context, ListIuranPertemuanDetailPage.id,
+          arguments: arguments4);
 
       SmartRTSnackbar.show(context,
           message: resp.data, backgroundColor: smartRTSuccessColor);
@@ -125,28 +176,67 @@ class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
     }
   }
 
+  void bayarSekarangAction() async {
+    Response<dynamic> resp = await NetUtil()
+        .dioClient
+        .get('/lotteryClubs/getDataTagihan/${dataPertemuan!.id}');
+    LotteryClubPeriodDetailBill dataPembayaran =
+        LotteryClubPeriodDetailBill.fromData(resp.data);
+
+    if (dataPembayaran.payment_type == null ||
+        dataPembayaran.payment_type == '' ||
+        dataPembayaran.midtrans_transaction_status == 'failure') {
+      PembayaranIuranArisanPage1Arguments args =
+          PembayaranIuranArisanPage1Arguments(
+              typeFrom: widget.args.typeFrom,
+              periodeKe: dataPertemuan!.period_ke.toString(),
+              pertemuanKe: pertemuanKe,
+              dataPertemuan: dataPertemuan!);
+      Navigator.pushNamed(context, PembayaranIuranArisanPage1.id,
+          arguments: args);
+    } else if (dataPembayaran.midtrans_transaction_status == 'pending') {
+      PembayaranIuranArisanPage2Arguments args =
+          PembayaranIuranArisanPage2Arguments(
+        periodeKe: dataPertemuan!.period_ke.toString(),
+        typeFrom: widget.args.typeFrom,
+        pertemuanKe: pertemuanKe,
+        dataPembayaran: dataPembayaran,
+        dataPertemuan: dataPertemuan!,
+      );
+      Navigator.pushNamed(context, PembayaranIuranArisanPage2.id,
+          arguments: args);
+    }
+  }
+
   void getData() async {
     dataPembayaran = widget.args.dataPembayaran;
     pertemuanKe = widget.args.pertemuanKe;
+    dataPertemuan = widget.args.dataPertemuan;
 
     statusPembayaran = dataPembayaran!.status == 0 ? 'Belum Bayar' : 'Lunas';
-    statusPembayaranColor =
-        dataPembayaran!.status == 0 ? smartRTErrorColor2 : smartRTSuccessColor2;
+    statusPembayaranColor = dataPembayaran!.status == 0
+        ? smartRTStatusRedColor
+        : smartRTStatusGreenColor;
 
     totalTagihan = CurrencyFormat.convertToIdr(dataPembayaran!.bill_amount, 2);
     namaAnggota = dataPembayaran!.data_user!.full_name;
     alamatAnggota = dataPembayaran!.data_user!.address!;
 
     if (dataPembayaran!.status == 1) {
-      pembayaranVia = dataPembayaran!.payment_type!;
+      pembayaranVia = dataPembayaran!.payment_type == 'bank_transfer'
+          ? 'Transfer Bank (${dataPembayaran!.acquiring_bank!.toUpperCase()})'
+          : 'Tunai';
     } else {
       idUser = dataPembayaran!.user_id!;
     }
 
+    debugPrint(dataPembayaran!.updated_by.toString());
     if (dataPembayaran!.updated_at != null) {
-      tanggalPembayaran =
-          DateFormat('d MMMM y HH:mm').format(dataPembayaran!.updated_at!);
-      dikonfirmasiOleh = dataPembayaran!.data_user_konfirmasi!.full_name;
+      tanggalPembayaran = DateFormat('d MMMM y HH:mm', 'id_ID')
+          .format(dataPembayaran!.updated_at!);
+      if (dataPembayaran!.updated_by != null) {
+        dikonfirmasiOleh = dataPembayaran!.data_user_konfirmasi!.full_name;
+      }
     }
 
     setState(() {});
@@ -163,7 +253,7 @@ class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: const Text(''),
       ),
       body: Padding(
         padding: paddingScreen,
@@ -282,8 +372,7 @@ class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
                               ),
                               Text(
                                 pembayaranVia,
-                                style: smartRTTextLarge.copyWith(
-                                    color: statusPembayaranColor),
+                                style: smartRTTextLarge,
                               ),
                             ],
                           ),
@@ -296,8 +385,7 @@ class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
                               ),
                               Text(
                                 tanggalPembayaran,
-                                style: smartRTTextLarge.copyWith(
-                                    color: statusPembayaranColor),
+                                style: smartRTTextLarge,
                               ),
                             ],
                           ),
@@ -310,8 +398,7 @@ class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
                               ),
                               Text(
                                 dikonfirmasiOleh,
-                                style: smartRTTextLarge.copyWith(
-                                    color: statusPembayaranColor),
+                                style: smartRTTextLarge,
                               ),
                             ],
                           ),
@@ -341,7 +428,9 @@ class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
                                         ),
                                       ),
                                     ),
-                                    onPressed: () async {},
+                                    onPressed: () async {
+                                      bayarSekarangAction();
+                                    },
                                     child: Text(
                                       'BAYAR SEKARANG',
                                       style: smartRTTextLargeBold_Secondary,
@@ -352,26 +441,29 @@ class _DetailIuranArisanPageState extends State<DetailIuranArisanPage> {
                               ],
                             )
                           : const SizedBox(),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero,
+                      (user.user_role == Role.Bendahara ||
+                              user.user_role == Role.Ketua_RT)
+                          ? SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  konfirmasiBayarCash();
+                                },
+                                child: Text(
+                                  'KONFIRMASI BAYAR CASH',
+                                  style: smartRTTextLargeBold_Secondary,
+                                ),
                               ),
-                            ),
-                          ),
-                          onPressed: () async {
-                            konfirmasiBayarCash();
-                          },
-                          child: Text(
-                            'KONFIRMASI BAYAR CASH',
-                            style: smartRTTextLargeBold_Secondary,
-                          ),
-                        ),
-                      ),
+                            )
+                          : const SizedBox(),
                     ],
                   )
                 : const SizedBox(),

@@ -426,7 +426,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                     pw.Expanded(
                       flex: 8,
                       child: pw.Text(
-                        "${dataAdm!.creator_bornplace!}, ${DateFormat('d MMMM y').format(dataAdm!.creator_borndate!)}",
+                        "${dataAdm!.creator_bornplace!}, ${DateFormat('d MMMM y', 'id_ID').format(dataAdm!.creator_borndate!)}",
                         style: const pw.TextStyle(
                           fontSize: 12,
                         ),
@@ -709,7 +709,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                   ),
                   pw.Expanded(
                     child: pw.Text(
-                      'Surabaya, ${DateFormat('d MMMM y').format(DateTime.now())}',
+                      'Surabaya, ${DateFormat('d MMMM y', 'id_ID').format(DateTime.now())}',
                       style: const pw.TextStyle(
                         fontSize: 12,
                       ),
@@ -927,7 +927,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                     pw.Expanded(
                       flex: 8,
                       child: pw.Text(
-                        "${DateFormat('d MMMM y HH:mm').format(dataAdm!.creator_borndate!)}",
+                        "${DateFormat('d MMMM y HH:mm', 'id_ID').format(dataAdm!.creator_borndate!)}",
                         style: const pw.TextStyle(
                           fontSize: 12,
                         ),
@@ -1090,7 +1090,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                     pw.Expanded(
                       flex: 8,
                       child: pw.Text(
-                        "${dataAdm!.creator_dad_bornplace!}, ${DateFormat('d MMMM y').format(dataAdm!.creator_dad_borndate!)}",
+                        "${dataAdm!.creator_dad_bornplace!}, ${DateFormat('d MMMM y', 'id_ID').format(dataAdm!.creator_dad_borndate!)}",
                         style: const pw.TextStyle(
                           fontSize: 12,
                         ),
@@ -1213,7 +1213,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                     pw.Expanded(
                       flex: 8,
                       child: pw.Text(
-                        "${dataAdm!.creator_mom_bornplace!}, ${DateFormat('d MMMM y').format(dataAdm!.creator_mom_borndate!)}",
+                        "${dataAdm!.creator_mom_bornplace!}, ${DateFormat('d MMMM y', 'id_ID').format(dataAdm!.creator_mom_borndate!)}",
                         style: const pw.TextStyle(
                           fontSize: 12,
                         ),
@@ -1271,7 +1271,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                   ),
                   pw.Expanded(
                     child: pw.Text(
-                      'Surabaya, ${DateFormat('d MMMM y').format(DateTime.now())}',
+                      'Surabaya, ${DateFormat('d MMMM y', 'id_ID').format(DateTime.now())}',
                       style: const pw.TextStyle(
                         fontSize: 12,
                       ),
@@ -1491,7 +1491,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                     pw.Expanded(
                       flex: 8,
                       child: pw.Text(
-                        "${dataAdm!.creator_bornplace!}, ${DateFormat('d MMMM y').format(dataAdm!.creator_borndate!)}",
+                        "${dataAdm!.creator_bornplace!}, ${DateFormat('d MMMM y', 'id_ID').format(dataAdm!.creator_borndate!)}",
                         style: const pw.TextStyle(
                           fontSize: 12,
                         ),
@@ -1699,7 +1699,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                   ),
                   pw.Expanded(
                     child: pw.Text(
-                      'Surabaya, ${DateFormat('d MMMM y').format(DateTime.now())}',
+                      'Surabaya, ${DateFormat('d MMMM y', 'id_ID').format(DateTime.now())}',
                       style: const pw.TextStyle(
                         fontSize: 12,
                       ),

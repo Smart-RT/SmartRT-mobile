@@ -1,6 +1,7 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
@@ -31,13 +32,15 @@ class _CreatePertemuanSelanjutnyaPageState
   User user = AuthProvider.currentUser!;
   LotteryClubPeriodDetail? dataPertemuan;
 
+  DateTime? lastDateMonth;
+  DateTime? firstDateMonth;
+
   void getData() async {
     Response<dynamic> resp = await NetUtil().dioClient.get(
         '/lotteryClubs/getLastPeriodeID/${user.area!.lottery_club_id!.id.toString()}');
     int idPeriodeTerakhir = resp.data;
-    resp = await NetUtil()
-        .dioClient
-        .get('/lotteryClubs/getPeriodDetail/Unpublished/${idPeriodeTerakhir}');
+    resp = await NetUtil().dioClient.get(
+        '/lotteryClubs/getPeriodDetail/status/Unpublished/id-periode/${idPeriodeTerakhir}');
 
     dataPertemuan = LotteryClubPeriodDetail.fromData(resp.data);
 
@@ -48,6 +51,10 @@ class _CreatePertemuanSelanjutnyaPageState
 
     debugPrint('tempat : ${_tempatPertemuanController}');
     debugPrint('tanggal : ${_tanggalPertemuanController}');
+
+    DateTime meetDateTime = dataPertemuan!.meet_date;
+    lastDateMonth = DateTime(meetDateTime.year, meetDateTime.month + 1, 1 - 1);
+    firstDateMonth = DateTime(meetDateTime.year, meetDateTime.month, 1);
 
     setState(() {});
   }
@@ -125,6 +132,7 @@ class _CreatePertemuanSelanjutnyaPageState
                   DateTimePicker(
                     controller: _tanggalPertemuanController,
                     type: DateTimePickerType.dateTime,
+                    locale: const Locale('id', 'ID'),
                     dateMask: 'yyyy/MM/dd HH:mm',
                     style: smartRTTextNormal_Primary,
                     initialDate: dataPertemuan == null
@@ -132,10 +140,10 @@ class _CreatePertemuanSelanjutnyaPageState
                         : dataPertemuan!.meet_date,
                     firstDate: dataPertemuan == null
                         ? DateTime.now().add(Duration(days: 10))
-                        : dataPertemuan!.meet_date,
+                        : firstDateMonth,
                     lastDate: dataPertemuan == null
                         ? DateTime.now().add(Duration(days: 70))
-                        : dataPertemuan!.created_at.add(Duration(days: 70)),
+                        : lastDateMonth,
                     dateLabelText: 'Tanggal Pertemuan',
                     onChanged: (val) => print(val),
                     validator: (val) {

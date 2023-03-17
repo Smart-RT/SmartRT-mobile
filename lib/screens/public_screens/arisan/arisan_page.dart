@@ -2,19 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
-import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
 import 'package:smart_rt/models/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_pertemuan_arisan/create_pertemuan_selanjutnya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/daftar_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pengaturan_arisan/pengaturan_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_sebelumnya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/detail_pertemuan_selanjutnya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_saya/riwayat_arisan_saya_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/detail_pertemuan_arisan_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan_wilayah/riwayat_arisan_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/create_arisan/create_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/peraturan_dan_tata_cara/peraturan_dan_tata_cara_arisan_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_detail_page.dart';
+import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_periode_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 import 'package:smart_rt/widgets/parts/header_arisan.dart';
@@ -52,7 +47,7 @@ class _ArisanPageState extends State<ArisanPage> {
 
   void getListPage() {
     listPage = {
-      // Role 3-6, lottery_clubs belum terbuat
+      // ROLE 3-6, ! LOTTERY_CLUBS
       1: {
         "preTitle": "Wilayah Anda Belum Membuka Arisan",
         "preTitleStyleColor": smartRTErrorColor,
@@ -63,7 +58,7 @@ class _ArisanPageState extends State<ArisanPage> {
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": []
       },
-      // Role 7, lottery_clubs belum terbuat
+      // ROLE 7  , ! LOTTERY_CLUBS
       2: {
         "preTitle": "Wilayah Anda Belum Membuka Arisan",
         "preTitleStyleColor": smartRTErrorColor,
@@ -76,12 +71,12 @@ class _ArisanPageState extends State<ArisanPage> {
           {
             "menuTitle": "Daftarkan Sekarang",
             "onTap": () {
-              Navigator.pushNamed(context, DaftarArisanPage.id);
+              Navigator.pushNamed(context, CreateArisanPage.id);
             },
           },
         ],
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods tidak ada yang aktif, role 3-6
+      // ROLE 3-6, LOTTERY_CLUBS  , ! LOTTERY_CLUB_PERIODS
       3: {
         "preTitle":
             "Wilayah Anda sedang Tidak Memiliki Periode Arisan Aktif untuk Diikuti",
@@ -94,7 +89,10 @@ class _ArisanPageState extends State<ArisanPage> {
           {
             "menuTitle": "Riwayat Arisan Saya",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanSayaPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'saya');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             },
           },
           {
@@ -105,7 +103,7 @@ class _ArisanPageState extends State<ArisanPage> {
           }
         ]
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods tidak ada yang aktif, role 7
+      // ROLE 7  , LOTTERY_CLUBS  , ! LOTTERY_CLUB_PERIODS
       4: {
         "preTitle":
             "Wilayah Anda sedang Tidak Memiliki Periode Arisan yang Aktif ",
@@ -124,7 +122,10 @@ class _ArisanPageState extends State<ArisanPage> {
           {
             "menuTitle": "Riwayat Arisan Wilayah",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'wilayah');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             },
           },
           {
@@ -139,7 +140,7 @@ class _ArisanPageState extends State<ArisanPage> {
           // }
         ]
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah berjalan, bukan member, role 3
+      // ROLE 3  , LOTTERY_CLUBS  , LOTTERY_CLUB_PERIODS   , ! MEMBER
       5: {
         "preTitle": "Periode Arisan telah Berjalan",
         "preTitleStyleColor": smartRTErrorColor,
@@ -152,7 +153,10 @@ class _ArisanPageState extends State<ArisanPage> {
           {
             "menuTitle": "Riwayat Arisan Saya",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanSayaPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'saya');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             },
           },
           {
@@ -163,25 +167,37 @@ class _ArisanPageState extends State<ArisanPage> {
           },
         ]
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah berjalan, member, role 3
+      // ROLE 3  , LOTTERY_CLUBS  , LOTTERY_CLUB_PERIODS   , MEMBER   , PUBLISHED
       6: {
         "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
         "preTitleStyleColor": smartRTSuccessColor,
-        "title": "1 JANUARI 2024",
+        "title": tanggalPertemuan,
         "titleStyleColor": smartRTSuccessColor,
-        "subTitle": "PK. 19:00 WIB di Rumah Pak RT",
+        "subTitle": "PK. $waktuPertemuan WIB di $tempatPertemuan",
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan Selanjutnya",
             "onTap": () {
-              Navigator.pushNamed(context, DetailPertemuanSelanjutnyaPage.id);
+              RiwayatArisanPertemuanDetailArguments arguments =
+                  RiwayatArisanPertemuanDetailArguments(
+                dataPeriodeArisan: dataPertemuan!.lottery_club_period_id!,
+                typeFrom: 'Detail Pertemuan',
+                dataPertemuan: dataPertemuan!,
+                periodeKe: dataPertemuan!.period_ke.toString(),
+                pertemuanKe: dataPertemuan!.pertemuan_ke.toString(),
+              );
+              Navigator.pushNamed(context, RiwayatArisanPertemuanDetailPage.id,
+                  arguments: arguments);
             }
           },
           {
             "menuTitle": "Riwayat Arisan Saya",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanSayaPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'saya');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             }
           },
           {
@@ -192,7 +208,7 @@ class _ArisanPageState extends State<ArisanPage> {
           },
         ]
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, belum berjalan, member, role 3
+      // ROLE 3  , LOTTERY_CLUBS  , LOTTERY_CLUB_PERIODS   , MEMBER   , UNPUBLISHED
       7: {
         "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
         "preTitleStyleColor": smartRTErrorColor,
@@ -202,14 +218,13 @@ class _ArisanPageState extends State<ArisanPage> {
             "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": [
-          // {
-          //   "menuTitle": "Detail Pertemuan Sebelumnya",
-          //   "onTap": DetailPertemuanSebelumnyaPage.id
-          // },
           {
             "menuTitle": "Riwayat Arisan Saya",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanSayaPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'saya');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             }
           },
           {
@@ -220,25 +235,37 @@ class _ArisanPageState extends State<ArisanPage> {
           },
         ]
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah berjalan, member, role 4-6
+      // ROLE 4-6, LOTTERY_CLUBS  , LOTTERY_CLUB_PERIODS   , MEMBER   , PUBLISHED
       8: {
         "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
         "preTitleStyleColor": smartRTSuccessColor,
-        "title": "1 JANUARI 2024",
+        "title": tanggalPertemuan,
         "titleStyleColor": smartRTSuccessColor,
-        "subTitle": "PK. 19:00 WIB di Rumah Pak RT",
+        "subTitle": "PK. $waktuPertemuan WIB di $tempatPertemuan",
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan Selanjutnya",
             "onTap": () {
-              Navigator.pushNamed(context, DetailPertemuanSelanjutnyaPage.id);
+              RiwayatArisanPertemuanDetailArguments arguments =
+                  RiwayatArisanPertemuanDetailArguments(
+                dataPeriodeArisan: dataPertemuan!.lottery_club_period_id!,
+                typeFrom: 'Detail Pertemuan',
+                dataPertemuan: dataPertemuan!,
+                periodeKe: dataPertemuan!.period_ke.toString(),
+                pertemuanKe: dataPertemuan!.pertemuan_ke.toString(),
+              );
+              Navigator.pushNamed(context, RiwayatArisanPertemuanDetailPage.id,
+                  arguments: arguments);
             }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'wilayah');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             }
           },
           {
@@ -249,7 +276,7 @@ class _ArisanPageState extends State<ArisanPage> {
           },
         ]
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, belum di publish, member, role 4-6
+      // ROLE 4-6, LOTTERY_CLUBS  , LOTTERY_CLUB_PERIODS   , MEMBER   , UNPUBLISHED
       9: {
         "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
         "preTitleStyleColor": smartRTErrorColor,
@@ -259,14 +286,13 @@ class _ArisanPageState extends State<ArisanPage> {
             "Jadwal pertemuan selanjutnya akan di publikasikan paling lambat tanggal DD MONTH YYYY",
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": [
-          // {
-          //   "menuTitle": "Detail Pertemuan Sebelumnya",
-          //   "onTap": DetailPertemuanSebelumnyaPage.id
-          // },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'wilayah');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             }
           },
           {
@@ -277,7 +303,7 @@ class _ArisanPageState extends State<ArisanPage> {
           },
         ]
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, belum di publish, member, role 7
+      // ROLE 7  , LOTTERY_CLUBS  , LOTTERY_CLUB_PERIODS   , MEMBER   , UNPUBLISHED
       10: {
         "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
         "preTitleStyleColor": smartRTErrorColor,
@@ -296,7 +322,10 @@ class _ArisanPageState extends State<ArisanPage> {
           {
             "menuTitle": "Riwayat Arisan Wilayah",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'wilayah');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             }
           },
           {
@@ -311,31 +340,37 @@ class _ArisanPageState extends State<ArisanPage> {
           // },
         ]
       },
-      // lottery_clubs sudah terbuat, lottery_clubs_periods aktif, sudah di publish, member, role 7
+      // ROLE 4-6, LOTTERY_CLUBS  , LOTTERY_CLUB_PERIODS   , MEMBER   , PUBLISHED
       11: {
         "preTitle": "TANGGAL PERTEMUAN SELANJUTNYA",
         "preTitleStyleColor": smartRTSuccessColor,
         "title": tanggalPertemuan,
         "titleStyleColor": smartRTSuccessColor,
-        "subTitle": "PK. ${waktuPertemuan} WIB di ${tempatPertemuan}",
+        "subTitle": "PK. $waktuPertemuan WIB di $tempatPertemuan",
         "subTitleStyleColor": smartRTSecondaryColor,
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan",
             "onTap": () {
-              DetailPertemuanArisanPageArguments arguments =
-                  DetailPertemuanArisanPageArguments(
-                      dataPertemuan: dataPertemuan!,
-                      periodeKe: dataPertemuan!.period_ke.toString(),
-                      pertemuanKe: dataPertemuan!.pertemuan_ke.toString());
-              Navigator.pushNamed(context, DetailPertemuanArisanPage.id,
+              RiwayatArisanPertemuanDetailArguments arguments =
+                  RiwayatArisanPertemuanDetailArguments(
+                dataPeriodeArisan: dataPertemuan!.lottery_club_period_id!,
+                typeFrom: 'Detail Pertemuan',
+                dataPertemuan: dataPertemuan!,
+                periodeKe: dataPertemuan!.period_ke.toString(),
+                pertemuanKe: dataPertemuan!.pertemuan_ke.toString(),
+              );
+              Navigator.pushNamed(context, RiwayatArisanPertemuanDetailPage.id,
                   arguments: arguments);
             }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
             "onTap": () {
-              Navigator.pushNamed(context, RiwayatArisanWilayahPage.id);
+              RiwayatArisanPeriodeArguments args =
+                  RiwayatArisanPeriodeArguments(type: 'wilayah');
+              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+                  arguments: args);
             }
           },
           {
@@ -344,10 +379,6 @@ class _ArisanPageState extends State<ArisanPage> {
               Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
             }
           },
-          // {
-          //   "menuTitle": "Pengaturan Arisan",
-          //   "onTap": PengaturanArisanPage.id
-          // },
         ]
       },
     };
@@ -359,21 +390,31 @@ class _ArisanPageState extends State<ArisanPage> {
       Response<dynamic> resp = await NetUtil().dioClient.get(
           '/lotteryClubs/getLastPeriodeID/${user.area!.lottery_club_id!.id.toString()}');
 
+      debugPrint('GET DATA');
+      debugPrint('====================================');
+      debugPrint('Resp Data (Last Periode ID): ${resp.data.toString()}');
+
       if (resp.data != 'Belum ada Periode Arisan') {
+        debugPrint('====================================');
+        debugPrint('-> Masuk IF ! Belum Ada Periode Arisan');
+
         idPeriodeTerakhir = resp.data;
-        debugPrint('MASOK SINI 2');
+
         // Mengecek apakah Periode tersebut sudah mempunyai pertemuan yang berjalan (dipublish)
         resp = await NetUtil().dioClient.get(
             '/lotteryClubs/checkPertemuanPeriodeBerjalan/${idPeriodeTerakhir.toString()}');
         isPeriodeBerjalan = resp.data == 'true';
+        debugPrint('====================================');
+        debugPrint(
+            'Resp Data Check Pertemuan Berjalan : ${isPeriodeBerjalan.toString()}');
 
         getStatusNow();
-        debugPrint('STATUS ${status}');
+        debugPrint('STATUS $status');
         debugPrint('PERIODE TRAKHIR ${idPeriodeTerakhir.toString()}');
         if (status == 11 || status == 8 || status == 6) {
           //Mendapatkan data Pertemuan
           resp = await NetUtil().dioClient.get(
-              '/lotteryClubs/getPeriodDetail/Published/${idPeriodeTerakhir.toString()}');
+              '/lotteryClubs/getPeriodDetail/status/Published/id-periode/${idPeriodeTerakhir.toString()}');
 
           dataPertemuan = LotteryClubPeriodDetail.fromData(resp.data);
           tanggalPertemuan =
@@ -383,7 +424,7 @@ class _ArisanPageState extends State<ArisanPage> {
           tempatPertemuan = dataPertemuan!.meet_at.toString();
         } else if (status == 10) {
           Response<dynamic> respPertemuan = await NetUtil().dioClient.get(
-              '/lotteryClubs/getPeriodDetail/Unpublished/$idPeriodeTerakhir');
+              '/lotteryClubs/getPeriodDetail/status/Unpublished/id-periode/$idPeriodeTerakhir');
           LotteryClubPeriodDetail dataPertemuan =
               LotteryClubPeriodDetail.fromData(respPertemuan.data);
           tanggalPalingLambat = DateFormat('d MMMM y', 'id_ID').format(
@@ -397,78 +438,83 @@ class _ArisanPageState extends State<ArisanPage> {
   }
 
   void getStatusNow() async {
+    debugPrint('====================================1');
+    debugPrint('====================================2');
+    debugPrint('====================================3');
     debugPrint('lottery_club_id : ${user.area!.lottery_club_id != null}');
     debugPrint('lottery_club_id : ${user.area!.lottery_club_id}');
     debugPrint('user_role : ${user.user_role.index}');
     debugPrint('active : ${user.area!.is_lottery_club_period_active}');
     debugPrint('member : ${user.is_lottery_club_member}');
-    debugPrint('berjalan : ${isPeriodeBerjalan}');
+    debugPrint('berjalan : $isPeriodeBerjalan');
     if (user.area!.lottery_club_id == null &&
         user.user_role.index >= 2 &&
         user.user_role.index <= 5) {
       status = 1;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id == null &&
         user.user_role.index == 6) {
       status = 2;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         user.user_role.index >= 2 &&
         user.user_role.index <= 5 &&
         user.area!.is_lottery_club_period_active == 0) {
       status = 3;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         user.user_role.index == 6 &&
         user.area!.is_lottery_club_period_active == 0) {
       status = 4;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         isPeriodeBerjalan &&
         !user.is_lottery_club_member &&
         user.user_role.index == 2) {
       status = 5;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         isPeriodeBerjalan &&
         user.is_lottery_club_member &&
         user.user_role.index == 2) {
       status = 6;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         !isPeriodeBerjalan &&
         user.is_lottery_club_member &&
         user.user_role.index == 2) {
       status = 7;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         isPeriodeBerjalan &&
         user.is_lottery_club_member &&
         user.user_role.index >= 3 &&
         user.user_role.index <= 5) {
       status = 8;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         !isPeriodeBerjalan &&
         user.is_lottery_club_member &&
         user.user_role.index >= 3 &&
         user.user_role.index <= 5) {
       status = 9;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         !isPeriodeBerjalan &&
         user.is_lottery_club_member &&
         user.user_role.index == 6) {
       status = 10;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     } else if (user.area!.lottery_club_id != null &&
         isPeriodeBerjalan &&
         user.is_lottery_club_member &&
         user.user_role.index == 6) {
       status = 11;
-      debugPrint('MASUK ${status}');
+      debugPrint('MASUK STATUS : $status');
     }
-    debugPrint('LOHAHAHAHA ${status}');
+    debugPrint('====================================3');
+    debugPrint('====================================2');
+    debugPrint('====================================1');
   }
 
   @override

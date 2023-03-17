@@ -90,7 +90,7 @@ class _BerandaPageState extends State<BerandaPage> {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              '( ${user.user_role.name} )',
+              user.user_role.name.replaceAll("_", " "),
               style: smartRTTextLarge,
             ),
             SB_height30,

@@ -59,9 +59,10 @@ class _DetailKonfirmasiGabungWilayahPageState
 
     namaPemohon = dataKonfirmasi!.data_user_requester!.full_name;
     alamatPemohon = dataKonfirmasi!.data_user_requester!.address ?? '-';
-    createdAt = DateFormat('d MMMM y').format(dataKonfirmasi!.created_at);
+    createdAt =
+        DateFormat('d MMMM y', 'id_ID').format(dataKonfirmasi!.created_at);
     if (isConfirmated) {
-      confirmationAt = DateFormat('d MMMM y')
+      confirmationAt = DateFormat('d MMMM y', 'id_ID')
           .format(dataKonfirmasi!.rejected_at ?? dataKonfirmasi!.accepted_at!);
     }
 

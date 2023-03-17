@@ -255,6 +255,7 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
                     DateTimePicker(
                       controller: _tanggalMulaiController,
                       type: DateTimePickerType.dateTime,
+                      locale: const Locale('id', 'ID'),
                       dateMask: 'yyyy/MM/dd HH:mm',
                       style: smartRTTextNormal_Primary,
                       initialDate: DateTime.now().add(Duration(days: 10)),

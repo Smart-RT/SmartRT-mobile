@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
 
 class CardListPertemuanArisan extends StatelessWidget {
   const CardListPertemuanArisan({
@@ -38,6 +39,9 @@ class CardListPertemuanArisan extends StatelessWidget {
           },
       child: Card(
         color: smartRTPrimaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(roundSize),
+        ),
         child: Padding(
           padding: paddingCard,
           child: Column(
@@ -46,40 +50,62 @@ class CardListPertemuanArisan extends StatelessWidget {
               Text(
                 'Pertemuan Ke ${pertemuanKe}',
                 style: smartRTTextTitleCard.copyWith(
-                    fontWeight: FontWeight.bold, color: smartRTSecondaryColor),
+                    fontWeight: FontWeight.bold, color: smartRTQuaternaryColor),
               ),
-              Row(
-                children: [
-                  Text(
-                    'Status : ',
-                    style:
-                        smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
-                  ),
-                  Text(
-                    status,
-                    style: smartRTTextLarge.copyWith(
-                        color: statusColor ?? smartRTSecondaryColor),
-                  ),
-                ],
+              Divider(
+                height: 15,
+                thickness: 1,
+                color: smartRTQuaternaryColor,
               ),
-              SB_height15,
-              Text(
-                'Tanggal : ${tanggalPelaksanaan}',
-                style: smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
+              ListTileData1(
+                txtLeft: 'Status',
+                txtStyleLeft:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
+                txtRight: status,
+                txtStyleRight: smartRTTextNormal.copyWith(color: statusColor),
+                txtStyleColon:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
               ),
-              Text(
-                'Waktu : ${waktuPelaksanaan}',
-                style: smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
+              ListTileData1(
+                txtLeft: 'Tanggal',
+                txtStyleLeft:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
+                txtRight: tanggalPelaksanaan,
+                txtStyleRight:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
+                txtStyleColon:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
               ),
-              Text(
-                'Tempat : ${tempatPelaksanaan}',
-                style: smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
+              ListTileData1(
+                txtLeft: 'Waktu',
+                txtStyleLeft:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
+                txtRight: waktuPelaksanaan,
+                txtStyleRight:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
+                txtStyleColon:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
+              ),
+              ListTileData1(
+                txtLeft: 'Tempat',
+                txtStyleLeft:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
+                txtRight: tempatPelaksanaan,
+                txtStyleRight:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
+                txtStyleColon:
+                    smartRTTextNormal.copyWith(color: smartRTQuaternaryColor),
               ),
               status != 'Unpublished'
-                  ? Text(
-                      'Jumlah Anggota Hadir : ${jumlahAnggotaHadir} orang',
-                      style: smartRTTextLarge.copyWith(
-                          color: smartRTSecondaryColor),
+                  ? ListTileData1(
+                      txtLeft: 'Anggota Hadir',
+                      txtStyleLeft: smartRTTextNormal.copyWith(
+                          color: smartRTQuaternaryColor),
+                      txtRight: jumlahAnggotaHadir,
+                      txtStyleRight: smartRTTextNormal.copyWith(
+                          color: smartRTQuaternaryColor),
+                      txtStyleColon: smartRTTextNormal.copyWith(
+                          color: smartRTQuaternaryColor),
                     )
                   : const SizedBox(),
             ],

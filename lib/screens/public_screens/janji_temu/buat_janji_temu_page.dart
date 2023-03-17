@@ -36,6 +36,7 @@ class _BuatJanjiTemuPageState extends State<BuatJanjiTemuPage> {
                 DateTimePicker(
                   type: DateTimePickerType.date,
                   dateMask: 'yyyy/MM/dd',
+                  locale: const Locale('id', 'ID'),
                   style: smartRTTextNormal_Primary,
                   firstDate: DateTime.now(),
                   lastDate: DateTime.now().add(Duration(days: 90)),
@@ -133,8 +134,7 @@ class _BuatJanjiTemuPageState extends State<BuatJanjiTemuPage> {
                       style: smartRTTextLargeBold_Primary,
                     ),
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: smartRTPrimaryColor, width: 2)
-                    ),
+                        side: BorderSide(color: smartRTPrimaryColor, width: 2)),
                   ),
                 ),
               ],

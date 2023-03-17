@@ -12,7 +12,7 @@ import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart'
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_user.dart';
+import 'package:smart_rt/widgets/list_tile/list_tile_user_1.dart';
 import 'package:provider/provider.dart';
 
 class FormLaporKesehatanPageArguments {
@@ -194,7 +194,7 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
                           thickness: 5,
                           height: 10,
                         ),
-                        ListTileUser(
+                        ListTileUser1(
                             fullName: dataUserTerlaporkan!.full_name,
                             address: dataUserTerlaporkan!.address.toString(),
                             initialName: StringFormat.initialName(

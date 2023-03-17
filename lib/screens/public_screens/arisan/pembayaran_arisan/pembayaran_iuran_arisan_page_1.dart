@@ -4,31 +4,36 @@ import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_bill.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pembayaran_iuran_arisan_page_2.dart';
+import 'package:smart_rt/screens/public_screens/arisan/pembayaran_arisan/pembayaran_iuran_arisan_page_2.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
-class PembayaranIuranArisanArguments {
+class PembayaranIuranArisanPage1Arguments {
   LotteryClubPeriodDetail dataPertemuan;
   String periodeKe;
   String pertemuanKe;
-  PembayaranIuranArisanArguments(
-      {required this.dataPertemuan,
-      required this.periodeKe,
-      required this.pertemuanKe});
+  String typeFrom;
+  PembayaranIuranArisanPage1Arguments({
+    required this.dataPertemuan,
+    required this.periodeKe,
+    required this.pertemuanKe,
+    required this.typeFrom,
+  });
 }
 
-class PembayaranIuranArisan extends StatefulWidget {
-  static const String id = 'PembayaranIuranArisan';
-  PembayaranIuranArisanArguments args;
-  PembayaranIuranArisan({Key? key, required this.args}) : super(key: key);
+class PembayaranIuranArisanPage1 extends StatefulWidget {
+  static const String id = 'PembayaranIuranArisanPage1';
+  PembayaranIuranArisanPage1Arguments args;
+  PembayaranIuranArisanPage1({Key? key, required this.args}) : super(key: key);
 
   @override
-  State<PembayaranIuranArisan> createState() => _PembayaranIuranArisanState();
+  State<PembayaranIuranArisanPage1> createState() =>
+      _PembayaranIuranArisanPage1State();
 }
 
-class _PembayaranIuranArisanState extends State<PembayaranIuranArisan> {
+class _PembayaranIuranArisanPage1State
+    extends State<PembayaranIuranArisanPage1> {
   String periodeKe = '';
   String pertemuanKe = '';
   String totalTagihan = '0';
@@ -134,10 +139,12 @@ class _PembayaranIuranArisanState extends State<PembayaranIuranArisan> {
                           LotteryClubPeriodDetailBill.fromData(resp.data);
                       PembayaranIuranArisanPage2Arguments args =
                           PembayaranIuranArisanPage2Arguments(
+                              typeFrom: widget.args.typeFrom,
                               periodeKe: periodeKe,
                               pertemuanKe: pertemuanKe,
-                              dataPembayaran: dataPembayaran!,
+                              dataPembayaran: data,
                               dataPertemuan: dataPertemuan!);
+
                       Navigator.popAndPushNamed(
                           context, PembayaranIuranArisanPage2.id,
                           arguments: args);
@@ -149,7 +156,28 @@ class _PembayaranIuranArisanState extends State<PembayaranIuranArisan> {
                   ),
                   ListTileArisan(
                     title: 'BNI',
-                    onTap: () {},
+                    onTap: () async {
+                      Response<dynamic> resp = await NetUtil()
+                          .dioClient
+                          .post('/lotteryClubs/payment', data: {
+                        'payment_type': 'bank_transfer',
+                        'bank': 'bni',
+                        'id_bill': dataPembayaran!.id,
+                      });
+                      LotteryClubPeriodDetailBill data =
+                          LotteryClubPeriodDetailBill.fromData(resp.data);
+                      PembayaranIuranArisanPage2Arguments args =
+                          PembayaranIuranArisanPage2Arguments(
+                              typeFrom: widget.args.typeFrom,
+                              periodeKe: periodeKe,
+                              pertemuanKe: pertemuanKe,
+                              dataPembayaran: data,
+                              dataPertemuan: dataPertemuan!);
+
+                      Navigator.popAndPushNamed(
+                          context, PembayaranIuranArisanPage2.id,
+                          arguments: args);
+                    },
                   ),
                   const Divider(
                     height: 0,
@@ -157,7 +185,28 @@ class _PembayaranIuranArisanState extends State<PembayaranIuranArisan> {
                   ),
                   ListTileArisan(
                     title: 'BRI',
-                    onTap: () {},
+                    onTap: () async {
+                      Response<dynamic> resp = await NetUtil()
+                          .dioClient
+                          .post('/lotteryClubs/payment', data: {
+                        'payment_type': 'bank_transfer',
+                        'bank': 'bri',
+                        'id_bill': dataPembayaran!.id,
+                      });
+                      LotteryClubPeriodDetailBill data =
+                          LotteryClubPeriodDetailBill.fromData(resp.data);
+                      PembayaranIuranArisanPage2Arguments args =
+                          PembayaranIuranArisanPage2Arguments(
+                              typeFrom: widget.args.typeFrom,
+                              periodeKe: periodeKe,
+                              pertemuanKe: pertemuanKe,
+                              dataPembayaran: data,
+                              dataPertemuan: dataPertemuan!);
+
+                      Navigator.popAndPushNamed(
+                          context, PembayaranIuranArisanPage2.id,
+                          arguments: args);
+                    },
                   ),
                   const Divider(
                     height: 0,
