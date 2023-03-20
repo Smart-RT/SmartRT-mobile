@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/providers/application_provider.dart';
+
 import 'package:smart_rt/screens/admin_screens/daftar_akun/buat_akun_admin_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/pdf_screen.dart';
-import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
+
+import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
+import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
+import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
+import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
+import 'package:smart_rt/screens/public_screens/daftar_ketua/pdf_screen.dart';
+
+import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/screens/public_screens/administration/administration_detail_page.dart';
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_4.dart';
+
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/absensi_pertemuan_arisan/absensi_pertemuan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/create_periode_arisan/create_periode_arisan_page_1.dart';
@@ -30,17 +34,22 @@ import 'package:smart_rt/screens/public_screens/arisan/list_iuran_pertemuan_dan_
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_detail_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_periode_page.dart';
+
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/otp_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_2.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
+
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/detail_konfirmasi_gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/konfirmasi_gabung_wilayah_page.dart';
+
 import 'package:smart_rt/screens/public_screens/image_view/image_view_page.dart';
+
 import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
+
 import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_kesehatan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/form_lapor_kesehatan_choose_user_page.dart';
@@ -50,6 +59,11 @@ import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart'
 import 'package:smart_rt/screens/public_screens/kesehatan/laporan_warga_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
+
+import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_1.dart';
+import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_2.dart';
+import 'package:smart_rt/screens/public_screens/pengumuman/pengumuman_detail_page.dart';
+
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_canvas_page.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/test_screen.dart';
@@ -62,7 +76,6 @@ import 'package:smart_rt/screens/public_screens/administration/create/administra
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_2.dart';
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_3.dart';
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_5.dart';
-
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_2_sk_kelahiran.dart';
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_3_sk_kelahiran.dart';
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_4_sk_kelahiran.dart';
@@ -96,10 +109,10 @@ class Routes {
             args: settings.arguments as OTPPageArguments,
           );
         });
-      case GuestHome.id:
+      case PublicHome.id:
         return MaterialPageRoute(builder: (context) {
           ApplicationProvider.context = context;
-          return const GuestHome();
+          return const PublicHome();
         });
       case GabungWilayahPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -208,6 +221,25 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return AdministrationDetailPage(
             args: settings.arguments as AdministrationDetailPageArgument,
+          );
+        });
+      // === END
+
+      // === PENGUMUMAN
+      case CreatePengumumanPage1.id:
+        return MaterialPageRoute(builder: (context) {
+          return const CreatePengumumanPage1();
+        });
+      case CreatePengumumanPage2.id:
+        return MaterialPageRoute(builder: (context) {
+          return CreatePengumumanPage2(
+            args: settings.arguments as CreatePengumumanPage2Argument,
+          );
+        });
+      case PengumumanDetailPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return PengumumanDetailPage(
+            args: settings.arguments as PengumumanDetailPageArgument,
           );
         });
       // === END

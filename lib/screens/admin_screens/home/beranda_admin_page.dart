@@ -7,7 +7,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
+import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -63,7 +63,10 @@ class _BerandaAdminPageState extends State<BerandaAdminPage> {
               ),
             ),
           ),
-          Visibility(child: Divider(thickness: 1,)),
+          Visibility(
+              child: Divider(
+            thickness: 1,
+          )),
           Center(
               child: SfCircularChart(
                   title: ChartTitle(
@@ -80,7 +83,9 @@ class _BerandaAdminPageState extends State<BerandaAdminPage> {
                     dataLabelMapper: (_PieData data, _) => data.text,
                     dataLabelSettings: DataLabelSettings(isVisible: true)),
               ])),
-          Divider(thickness: 1,),
+          Divider(
+            thickness: 1,
+          ),
         ],
       ),
       drawer: Drawer(

@@ -4,7 +4,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_page.dart';
+import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';

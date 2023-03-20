@@ -11,7 +11,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
+import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 

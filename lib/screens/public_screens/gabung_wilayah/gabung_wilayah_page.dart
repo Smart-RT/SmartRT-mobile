@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/user.dart';
-import 'package:smart_rt/models/user_role_request.dart';
+import 'package:smart_rt/models/user/user.dart';
+import 'package:smart_rt/models/user/user_role_request.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 
 import 'package:provider/provider.dart';

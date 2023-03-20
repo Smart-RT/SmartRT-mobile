@@ -6,7 +6,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/administration/administration.dart';
 import 'package:smart_rt/screens/public_screens/administration/administration_detail_page.dart';
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_1.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_status_color.dart';
 import 'package:smart_rt/providers/auth_provider.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:smart_rt/models/area.dart';
-import 'package:smart_rt/models/sub_district.dart';
-import 'package:smart_rt/models/urban_village.dart';
-import 'package:smart_rt/models/user_role_request.dart';
+import 'package:smart_rt/models/area/area.dart';
+import 'package:smart_rt/models/area/sub_district.dart';
+import 'package:smart_rt/models/area/urban_village.dart';
+import 'package:smart_rt/models/user/user_role_request.dart';
 
 enum Role {
   Admin, //0

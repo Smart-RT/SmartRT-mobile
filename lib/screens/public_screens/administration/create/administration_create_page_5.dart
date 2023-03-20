@@ -5,7 +5,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/administration/administration_type.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/screens/public_screens/administration/administration_page.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/parts/explain_part.dart';

@@ -1,5 +1,5 @@
 import 'package:smart_rt/models/lottery_club/lottery_club.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 
 class Area {
   int id = -1;

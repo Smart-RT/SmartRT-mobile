@@ -6,10 +6,10 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
+import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
       User currentUser = AuthProvider.currentUser!;
       if (currentUser.user_role != Role.Admin) {
         Navigator.pop(context);
-        Navigator.pushReplacementNamed(context, GuestHome.id);
+        Navigator.pushReplacementNamed(context, PublicHome.id);
       }
     }
   }

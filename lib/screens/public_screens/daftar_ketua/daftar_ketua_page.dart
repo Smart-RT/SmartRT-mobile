@@ -4,10 +4,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/user.dart';
-import 'package:smart_rt/models/user_role_request.dart';
+import 'package:smart_rt/models/user/user.dart';
+import 'package:smart_rt/models/user/user_role_request.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/screens/guest_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
+import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
 import 'package:provider/provider.dart';
 
 class DaftarKetuaPage extends StatefulWidget {

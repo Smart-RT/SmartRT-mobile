@@ -1,5 +1,5 @@
 import 'package:smart_rt/models/administration/administration_type.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 
 class Administration {
   int id = -1;

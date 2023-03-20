@@ -9,7 +9,7 @@ import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_bill.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_member.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/absensi_pertemuan_arisan/absensi_pertemuan_arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/arisan/anggota_periode/anggota_periode_page.dart';

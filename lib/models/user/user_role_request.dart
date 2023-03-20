@@ -1,6 +1,6 @@
-import 'package:smart_rt/models/sub_district.dart';
-import 'package:smart_rt/models/urban_village.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/area/sub_district.dart';
+import 'package:smart_rt/models/area/urban_village.dart';
+import 'package:smart_rt/models/user/user.dart';
 
 class UserRoleRequest {
   int id = -1;

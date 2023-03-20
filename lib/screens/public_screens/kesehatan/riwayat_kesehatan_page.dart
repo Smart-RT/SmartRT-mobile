@@ -10,7 +10,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/health/data_patient_grouping_by_disease_group.dart';
 import 'package:smart_rt/models/health/user_health_report.dart';
 import 'package:smart_rt/models/syncfusion_calendar/event_data_source.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_kesehatan_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';

@@ -1,5 +1,5 @@
 import 'package:smart_rt/models/health/disease_group.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 
 class UserHealthReport {
   int id = -1;

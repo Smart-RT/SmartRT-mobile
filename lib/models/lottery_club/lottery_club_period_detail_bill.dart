@@ -1,7 +1,7 @@
-import 'package:smart_rt/models/area.dart';
+import 'package:smart_rt/models/area/area.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_member.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 
 class LotteryClubPeriodDetailBill {
   int id = -1;

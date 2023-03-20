@@ -1,4 +1,4 @@
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 
 class LotteryClubPeriodMember {
   int id = -1;

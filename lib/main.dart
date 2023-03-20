@@ -1,14 +1,14 @@
 import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_rt/models/user.dart';
+import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/arisan_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/health_provider.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
-import 'package:smart_rt/screens/guest_screens/home/guest_home.dart';
-import 'package:smart_rt/screens/guest_screens/home/home_part/beranda_page.dart';
+import 'package:smart_rt/screens/public_screens/home/public_home.dart';
+import 'package:smart_rt/screens/public_screens/home/home_part/beranda_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +55,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
     } else if (roleUser == Role.None) {
       routeStart = WelcomePage.id;
     } else {
-      routeStart = GuestHome.id;
+      routeStart = PublicHome.id;
     }
     Future.delayed(const Duration(milliseconds: 500), () {
       ApplicationProvider.context!
