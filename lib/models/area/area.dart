@@ -1,3 +1,5 @@
+import 'package:smart_rt/models/area/sub_district.dart';
+import 'package:smart_rt/models/area/urban_village.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club.dart';
 import 'package:smart_rt/models/user/user.dart';
 
@@ -18,6 +20,8 @@ class Area {
   User? bendahara_id;
   String bendahara_code = 'XXX';
   DateTime tenure_end_at = DateTime.now().add(Duration(days: 1460));
+  SubDistrict? data_kecamatan;
+  UrbanVillage? data_kelurahan;
 
   Area.fromData(Map<String, dynamic> data) {
     id = data['id'];
@@ -46,6 +50,12 @@ class Area {
     }
     bendahara_code = data['bendahara_code'];
     tenure_end_at = DateTime.parse(data['tenure_end_at']);
+    if (data['data_kecamatan'] != null) {
+      data_kecamatan = SubDistrict.fromData(data['data_kecamatan']);
+    }
+    if (data['data_kelurahan'] != null) {
+      data_kelurahan = UrbanVillage.fromData(data['data_kelurahan']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +80,8 @@ class Area {
           bendahara_id == null ? bendahara_id : bendahara_id!.toJson(),
       "bendahara_code": bendahara_code,
       "tenure_end_at": tenure_end_at.toString(),
+      "data_kecamatan": data_kecamatan,
+      "data_kelurahan": data_kelurahan,
     };
   }
 }

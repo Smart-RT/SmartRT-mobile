@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class StringFormat {
@@ -65,5 +68,11 @@ class StringFormat {
       return tempName;
     }
     return name;
+  }
+
+  String getRandString(int len) {
+    var random = Random.secure();
+    var values = List<int>.generate(len, (i) => random.nextInt(255));
+    return base64UrlEncode(values);
   }
 }

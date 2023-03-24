@@ -11,7 +11,7 @@ import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_p
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
-import 'package:smart_rt/screens/public_screens/daftar_ketua/pdf_screen.dart';
+import 'package:smart_rt/screens/pdf_screen/pdf_screen.dart';
 
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/screens/public_screens/administration/administration_detail_page.dart';
@@ -48,6 +48,7 @@ import 'package:smart_rt/screens/public_screens/gabung_wilayah/konfirmasi_gabung
 import 'package:smart_rt/screens/public_screens/image_view/image_view_page.dart';
 
 import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
+import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_detail_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 
 import 'package:smart_rt/screens/public_screens/kesehatan/detail_riwayat_bantuan_page.dart';
@@ -121,14 +122,6 @@ class Routes {
       case ReqUpdateRolePage.id:
         return MaterialPageRoute(builder: (context) {
           return const ReqUpdateRolePage();
-        });
-      case ListJanjiTemuPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return const ListJanjiTemuPage();
-        });
-      case BuatJanjiTemuPage.id:
-        return MaterialPageRoute(builder: (context) {
-          return const BuatJanjiTemuPage();
         });
       case UbahProfilPage.id:
         return MaterialPageRoute(builder: (context) {
@@ -221,6 +214,23 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return AdministrationDetailPage(
             args: settings.arguments as AdministrationDetailPageArgument,
+          );
+        });
+      // === END
+
+      // === JANJI TEMU
+      case ListJanjiTemuPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const ListJanjiTemuPage();
+        });
+      case BuatJanjiTemuPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const BuatJanjiTemuPage();
+        });
+      case ListJanjiTemuDetailPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return ListJanjiTemuDetailPage(
+            args: settings.arguments as ListJanjiTemuDetailPageArgument,
           );
         });
       // === END
