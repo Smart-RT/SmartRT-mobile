@@ -58,8 +58,13 @@ class User {
     }
 
     id = userData['id'];
-    nik = userData['nik'];
-    kk_num = userData['kk_num'];
+    if (userData['nik'] != null) {
+      nik = userData['nik'];
+    }
+    if (userData['kk_num'] != null) {
+      kk_num = userData['kk_num'];
+    }
+
     full_name = userData['full_name'];
     address = userData['address'];
     if (userData['rt_num'] != null) {
@@ -116,8 +121,10 @@ class User {
 
     photo_profile_img = userData['photo_profile_img'];
     is_health = int.parse(userData['is_health'].toString());
-    total_serving_as_neighbourhood_head =
-        userData['total_serving_as_neighbourhood_head'];
+    if (userData['total_serving_as_neighbourhood_head'] != null) {
+      total_serving_as_neighbourhood_head =
+          userData['total_serving_as_neighbourhood_head'];
+    }
 
     if (userData['created_at'] != null) {
       created_at = DateTime.parse(userData['created_at']);

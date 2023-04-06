@@ -3,10 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
@@ -36,36 +38,35 @@ class _CreatePengumumanPage2State extends State<CreatePengumumanPage2> {
 
   void buatDanTampilkanPengumuman() async {
     Response<dynamic> resp;
+    bool isSukses = true;
     if (croppedImageLampiran == null) {
-      resp = await NetUtil().dioClient.post('/news/add', data: {
-        "title": widget.args.title,
-        "detail": widget.args.detail,
-        "is_with_lampiran": 'false',
-      });
+      isSukses = await context.read<NewsProvider>().createNews(
+          title: widget.args.title,
+          detail: widget.args.detail,
+          isWithLampiran: 'false');
     } else {
       MultipartFile multipartImageLampiran = await MultipartFile.fromFile(
           croppedImageLampiran!.path,
           filename: croppedImageLampiran!.path.split('/').last,
           contentType: MediaType('image',
               croppedImageLampiran!.path.split('/').last.split('.').last));
-      var formData = FormData.fromMap({
-        "title": widget.args.title,
-        "detail": widget.args.detail,
-        "is_with_lampiran": 'true',
-        "file_img": multipartImageLampiran
-      });
-      resp = await NetUtil().dioClient.post('/news/add', data: formData);
+      isSukses = await context.read<NewsProvider>().createNews(
+          title: widget.args.title,
+          detail: widget.args.detail,
+          isWithLampiran: 'true',
+          multiPartImageLampiran: multipartImageLampiran);
     }
 
-    if (resp.statusCode.toString() == '200') {
+    if (isSukses) {
       Navigator.pop(context);
       Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, PublicHome.id);
       SmartRTSnackbar.show(context,
-          message: resp.data, backgroundColor: smartRTSuccessColor);
+          message: 'Berhasil membuat pengumuman!',
+          backgroundColor: smartRTSuccessColor);
     } else {
       SmartRTSnackbar.show(context,
-          message: resp.data, backgroundColor: smartRTErrorColor);
+          message: 'Terjadi Kesalahan, Coba lagi nanti !',
+          backgroundColor: smartRTErrorColor);
     }
   }
 

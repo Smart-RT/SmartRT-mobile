@@ -23,3 +23,4 @@ final Color smartRTSickLevel3Color = Color.fromARGB(255, 255, 0, 0);
 final Color smartRTStatusRedColor = Color.fromARGB(255, 255, 0, 0);
 final Color smartRTStatusYellowColor = Color.fromARGB(255, 255, 255, 0);
 final Color smartRTStatusGreenColor = Color.fromARGB(255, 0, 255, 0);
+final Color smartRTStatusGreyColor = Color.fromARGB(255, 100, 100, 100);

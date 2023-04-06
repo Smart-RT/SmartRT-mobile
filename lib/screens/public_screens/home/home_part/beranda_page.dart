@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
@@ -11,6 +10,7 @@ import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_pa
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/konfirmasi_gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart';
+import 'package:smart_rt/screens/public_screens/acara/acara_page.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/cards/card_big_icon_text_home.dart';
 import 'package:smart_rt/widgets/cards/card_icon_with_text.dart';
@@ -23,7 +23,10 @@ class BerandaPage extends StatefulWidget {
 }
 
 class _BerandaPageState extends State<BerandaPage> {
-  void acara() async {}
+  void acara() async {
+    Navigator.pushNamed(context, AcaraPage.id);
+  }
+
   void janjiTemu() async {
     Navigator.pushNamed(context, ListJanjiTemuPage.id);
   }

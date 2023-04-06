@@ -6,9 +6,7 @@ import 'package:smart_rt/screens/public_screens/home/home_part/keuangan_page.dar
 import 'package:smart_rt/screens/public_screens/home/home_part/pengumuman_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/saya_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/tugas_page.dart';
-import 'package:dio/dio.dart';
 import 'package:smart_rt/models/news/news.dart';
-import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class PublicHome extends StatefulWidget {
@@ -22,43 +20,23 @@ class PublicHome extends StatefulWidget {
 class _PublicHomeState extends State<PublicHome> {
   List<News> listPengumuman = [];
   int _selectedIndex = 0;
-  late List<Widget> _widgetOptions = <Widget>[
+  late final List<Widget> _widgetOptions = <Widget>[
     BerandaPage(),
+    TugasSayaPage(),
+    PengumumanPage(),
+    KeuanganPage(),
+    SayaPage(),
   ];
 
-  void getData() async {
-    Response<dynamic> resp = await NetUtil().dioClient.get('/news/get/all');
-    listPengumuman.clear();
-    listPengumuman.addAll((resp.data).map<News>((request) {
-      return News.fromData(request);
-    }));
-
-    _widgetOptions = <Widget>[
-      BerandaPage(),
-      TugasSayaPage(),
-      PengumumanPage(listPengumuman: listPengumuman),
-      KeuanganPage(),
-      SayaPage(),
-    ];
-    setState(() {});
-  }
-
   void _onItemTapped(int index) {
-    if (_widgetOptions.length != 5) {
-      SmartRTSnackbar.show(context,
-          message: "Tunggu sebentar! Masih dalam proses!",
-          backgroundColor: smartRTStatusYellowColor);
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    getData();
     super.initState();
   }
 

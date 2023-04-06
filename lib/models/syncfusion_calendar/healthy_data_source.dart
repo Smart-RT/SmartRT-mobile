@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/models/event/event.dart';
+import 'package:smart_rt/models/health/user_health_report.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class EventDataSource extends CalendarDataSource {
-  EventDataSource(List<EventCard> source) {
+class HealthyDataSource extends CalendarDataSource {
+  HealthyDataSource(List<HealthyCard> source) {
     appointments = source;
   }
 
-  Event getDataEvent(int index) {
-    return appointments![index].dataEvent;
+  UserHealthReport getDataUserHealthReport(int index) {
+    return appointments![index].dataUserHealthReport;
   }
 
   @override
@@ -37,14 +37,14 @@ class EventDataSource extends CalendarDataSource {
   }
 }
 
-class EventCard {
-  EventCard(this.eventName, this.from, this.to, this.background, this.isAllDay,
-      this.dataEvent);
+class HealthyCard {
+  HealthyCard(this.eventName, this.from, this.to, this.background,
+      this.isAllDay, this.dataUserHealthReport);
 
   String eventName;
   DateTime from;
   DateTime to;
   Color background;
   bool isAllDay;
-  Event? dataEvent;
+  UserHealthReport? dataUserHealthReport;
 }

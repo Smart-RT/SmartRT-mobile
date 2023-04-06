@@ -34,7 +34,7 @@ class CardListTileWithButton extends StatelessWidget {
           textAlign: TextAlign.justify,
         ),
         SB_height30,
-        Container(
+        SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             onPressed: onTapButton,

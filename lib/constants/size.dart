@@ -18,6 +18,10 @@ final SizedBox SB_height50 = SizedBox(
   height: 50,
 );
 
+final SizedBox SB_width5 = SizedBox(
+  width: 5,
+);
+
 final SizedBox SB_width15 = SizedBox(
   width: 15,
 );

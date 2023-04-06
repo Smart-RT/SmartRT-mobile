@@ -10,6 +10,7 @@ class CardListTileWithStatusColor extends StatelessWidget {
     this.maxLineSubtitle,
     required this.bottomText,
     required this.statusColor,
+    this.padding,
     required this.onTap,
   }) : super(key: key);
 
@@ -18,6 +19,7 @@ class CardListTileWithStatusColor extends StatelessWidget {
   final int? maxLineSubtitle;
   final String bottomText;
   final Color statusColor;
+  final EdgeInsetsGeometry? padding;
   final Function() onTap;
 
   @override
@@ -25,7 +27,7 @@ class CardListTileWithStatusColor extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: paddingCard,
+        padding: padding ?? paddingCard,
         child: Row(
           children: [
             Expanded(

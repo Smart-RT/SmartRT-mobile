@@ -6,6 +6,11 @@ import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
+import 'package:smart_rt/screens/public_screens/acara/tugas/form_tugas/form_tugas_page.dart';
+import 'package:smart_rt/screens/public_screens/acara/tugas/petugas/beri_tugas_warga_page.dart';
+import 'package:smart_rt/screens/public_screens/acara/tugas/petugas/konfirmasi_petugas_page.dart';
+import 'package:smart_rt/screens/public_screens/acara/tugas/petugas/lihat_petugas_page_rating.dart';
+import 'package:smart_rt/screens/public_screens/acara/tugas/tugas_page_detail.dart';
 
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_2.dart';
@@ -81,6 +86,11 @@ import 'package:smart_rt/screens/public_screens/administration/create/administra
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_3_sk_kelahiran.dart';
 import 'package:smart_rt/screens/public_screens/administration/create/administration_create_page_4_sk_kelahiran.dart';
 
+import 'package:smart_rt/screens/public_screens/acara/acara_page.dart';
+import 'package:smart_rt/screens/public_screens/acara/acara_page_detail.dart';
+import 'package:smart_rt/screens/public_screens/acara/form_acara/form_acara_page.dart';
+import 'package:smart_rt/screens/public_screens/acara/tugas/petugas/lihat_petugas_page.dart';
+
 class Routes {
   static Route<dynamic> Function(RouteSettings) generateRoute =
       (RouteSettings settings) {
@@ -127,6 +137,7 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const UbahProfilPage();
         });
+
       case TandaTanganSayaCanvasPage.id:
         return MaterialPageRoute(builder: (context) {
           return const TandaTanganSayaCanvasPage();
@@ -135,6 +146,7 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const TandaTanganSayaPage();
         });
+
       case DaftarKetuaPage.id:
         return MaterialPageRoute(builder: (context) {
           return const DaftarKetuaPage();
@@ -410,6 +422,61 @@ class Routes {
               args: settings.arguments as ListIuranPertemuanDetailArgument);
         });
 
+      // === END
+
+      // === ACARA
+      case AcaraPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const AcaraPage();
+        });
+      case FormAcaraPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return FormAcaraPage(
+            args: settings.arguments as FormAcaraPageArgument,
+          );
+        });
+      case AcaraPageDetail.id:
+        return MaterialPageRoute(builder: (context) {
+          return AcaraPageDetail(
+            args: settings.arguments as AcaraPageDetailArgument,
+          );
+        });
+      case FormTugasPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return FormTugasPage(
+            args: settings.arguments as FormTugasPageArgument,
+          );
+        });
+      case TugasPageDetail.id:
+        return MaterialPageRoute(builder: (context) {
+          return TugasPageDetail(
+            args: settings.arguments as TugasPageDetailArgument,
+          );
+        });
+      case LihatPetugasPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatPetugasPage(
+            args: settings.arguments as LihatPetugasPageArgument,
+          );
+        });
+      case BeriTugasWargaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return BeriTugasWargaPage(
+            args: settings.arguments as BeriTugasWargaPageArgument,
+          );
+        });
+      case LihatPetugasPageRating.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatPetugasPageRating(
+            args: settings.arguments as LihatPetugasPageRatingArgument,
+          );
+        });
+      case KonfirmasiPetugasPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return KonfirmasiPetugasPage(
+            args: settings.arguments as KonfirmasiPetugasPageArgument,
+          );
+        });
       // === END
 
       case BerandaAdminPage.id:

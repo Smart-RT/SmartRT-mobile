@@ -15,16 +15,18 @@ class ExplainPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           title,
           style: smartRTTextTitle,
+          textAlign: TextAlign.left,
         ),
         SB_height15,
         Text(
           notes,
-          style: smartRTTextNormal_Primary,
+          style: smartRTTextLarge,
+          textAlign: TextAlign.left,
         ),
       ],
     );

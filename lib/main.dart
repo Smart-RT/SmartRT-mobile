@@ -5,7 +5,9 @@ import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/arisan_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/providers/event_provider.dart';
 import 'package:smart_rt/providers/health_provider.dart';
+import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/beranda_page.dart';
@@ -74,6 +76,8 @@ class _SmartRTAppState extends State<SmartRTApp> {
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
         ChangeNotifierProvider(create: ((context) => ArisanProvider())),
         ChangeNotifierProvider(create: ((context) => HealthProvider())),
+        ChangeNotifierProvider(create: ((context) => EventProvider())),
+        ChangeNotifierProvider(create: ((context) => NewsProvider())),
       ],
       builder: (context, child) {
         return MaterialApp(
