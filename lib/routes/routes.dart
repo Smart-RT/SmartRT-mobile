@@ -65,6 +65,10 @@ import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart'
 import 'package:smart_rt/screens/public_screens/kesehatan/laporan_warga_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
+import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_kandidat/lihat_semua_kandidat_page.dart';
+import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_kandidat/lihat_semua_kandidat_page_detail.dart';
+import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_status_kandidat_calon_pengurus_rt_saya_page.dart';
+import 'package:smart_rt/screens/public_screens/neighbourhood_head/rekomendasikan_kandidat_page.dart';
 
 import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_1.dart';
 import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_2.dart';
@@ -90,6 +94,11 @@ import 'package:smart_rt/screens/public_screens/acara/acara_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/acara_page_detail.dart';
 import 'package:smart_rt/screens/public_screens/acara/form_acara/form_acara_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/tugas/petugas/lihat_petugas_page.dart';
+
+import 'package:smart_rt/screens/public_screens/committe/lihat_status_kepanitiaan_saya_page.dart';
+import 'package:smart_rt/screens/public_screens/committe/rekomendasikan_panitia_page.dart';
+import 'package:smart_rt/screens/public_screens/committe/lihat_panitia/lihat_panitia_page.dart';
+import 'package:smart_rt/screens/public_screens/committe/lihat_panitia/lihat_panitia_page_detail.dart';
 
 class Routes {
   static Route<dynamic> Function(RouteSettings) generateRoute =
@@ -476,6 +485,48 @@ class Routes {
           return KonfirmasiPetugasPage(
             args: settings.arguments as KonfirmasiPetugasPageArgument,
           );
+        });
+      // === END
+
+      // === PANITIA
+      case LihatStatusKepanitiaanSayaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LihatStatusKepanitiaanSayaPage();
+        });
+      case RekomendasikanPanitiaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const RekomendasikanPanitiaPage();
+        });
+      case LihatPanitiaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LihatPanitiaPage();
+        });
+      case LihatPanitiaPageDetail.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatPanitiaPageDetail(
+            args: settings.arguments as LihatPanitiaPageDetailArgument,
+          );
+        });
+      // === END
+
+      // === NEIGHBOURHOODHEAD
+      case LihatStatusKandidatCalonPengurusRTSayaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LihatStatusKandidatCalonPengurusRTSayaPage();
+        });
+      case LihatSemuaKandidatPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LihatSemuaKandidatPage();
+        });
+      case LihatSemuaKandidatPageDetail.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatSemuaKandidatPageDetail(
+            args: settings.arguments as LihatSemuaKandidatPageDetailArgument,
+          );
+        });
+      case RekomendasikanKandidatPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const RekomendasikanKandidatPage();
         });
       // === END
 

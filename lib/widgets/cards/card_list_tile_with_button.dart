@@ -7,15 +7,21 @@ class CardListTileWithButton extends StatelessWidget {
   const CardListTileWithButton({
     Key? key,
     required this.title,
+    this.titleTextStyle,
     required this.subtitle,
-    required this.buttonText,
-    required this.onTapButton,
+    this.buttonText,
+    this.onTapButton,
+    this.buttonText2,
+    this.onTapButton2,
   }) : super(key: key);
 
   final String title;
+  final TextStyle? titleTextStyle;
   final String subtitle;
-  final String buttonText;
+  final String? buttonText;
   final Function()? onTapButton;
+  final String? buttonText2;
+  final Function()? onTapButton2;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,7 @@ class CardListTileWithButton extends StatelessWidget {
       children: [
         Text(
           title,
-          style: smartRTTextTitle_Primary,
+          style: titleTextStyle ?? smartRTTextTitle,
           textAlign: TextAlign.left,
         ),
         SB_height15,
@@ -34,16 +40,35 @@ class CardListTileWithButton extends StatelessWidget {
           textAlign: TextAlign.justify,
         ),
         SB_height30,
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: onTapButton,
-            child: Text(
-              buttonText,
-              style: smartRTTextLargeBold_Secondary,
+        if (buttonText != '' && buttonText != null)
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: onTapButton ?? () {},
+              child: Text(
+                buttonText!,
+                style: smartRTTextLargeBold_Secondary,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-        ),
+        if (buttonText2 != '' &&
+            buttonText2 != null &&
+            buttonText != '' &&
+            buttonText != null)
+          SB_height15,
+        if (buttonText2 != '' && buttonText2 != null)
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: onTapButton2 ?? () {},
+              child: Text(
+                buttonText2!,
+                style: smartRTTextLargeBold_Secondary,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
       ],
     );
   }

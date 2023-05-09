@@ -6,6 +6,8 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/news/news.dart';
+import 'package:smart_rt/models/user/user.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_1.dart';
 import 'package:smart_rt/screens/public_screens/pengumuman/pengumuman_detail_page.dart';
@@ -21,6 +23,8 @@ class PengumumanPage extends StatefulWidget {
 }
 
 class _PengumumanPageState extends State<PengumumanPage> {
+  User user = AuthProvider.currentUser!;
+
   void getData() async {
     await context.read<NewsProvider>().getDataListNews();
   }
@@ -72,19 +76,22 @@ class _PengumumanPageState extends State<PengumumanPage> {
                 style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-      floatingActionButton: SizedBox(
-          height: 75,
-          width: 75,
-          child: ElevatedButton(
-            onPressed: () async {
-              Navigator.pushNamed(context, CreatePengumumanPage1.id);
-            },
-            style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            )),
-            child: const Icon(Icons.add),
-          )),
+      floatingActionButton:
+          (user.user_role != Role.Guest && user.user_role != Role.Warga)
+              ? SizedBox(
+                  height: 75,
+                  width: 75,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.pushNamed(context, CreatePengumumanPage1.id);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    )),
+                    child: const Icon(Icons.add),
+                  ))
+              : SizedBox(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:smart_rt/utilities/int/int_format.dart';
 
 class StringFormat {
   static String convertMax2Words(String name) {
@@ -74,5 +75,10 @@ class StringFormat {
     var random = Random.secure();
     var values = List<int>.generate(len, (i) => random.nextInt(255));
     return base64UrlEncode(values);
+  }
+
+  static String ageNow({required DateTime bornDate}) {
+    int umur = IntFormat.ageNow(bornDate: bornDate);
+    return '$umur tahun';
   }
 }

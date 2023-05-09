@@ -33,6 +33,22 @@ class AuthProvider extends ApplicationProvider {
         .write(key: 'user', value: jsonEncode(user!.toJson()));
   }
 
+  Future<void> refreshDataUser({required int userId}) async {
+    try {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.post("/users/get", data: {"id": userId});
+      User user = User.fromData(resp.data);
+      currentUser = user;
+      ApplicationProvider.currentUserJWT = user.token;
+      ApplicationProvider.currentUserRefreshToken = user.refresh_token;
+      saveUserDataToStorage();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+  }
+
   Future<bool> login(
       {required BuildContext context,
       required String phone,

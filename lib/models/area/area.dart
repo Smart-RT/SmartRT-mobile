@@ -22,6 +22,7 @@ class Area {
   DateTime tenure_end_at = DateTime.now().add(Duration(days: 1460));
   SubDistrict? data_kecamatan;
   UrbanVillage? data_kelurahan;
+  int periode = 1;
 
   Area.fromData(Map<String, dynamic> data) {
     id = data['id'];
@@ -56,6 +57,9 @@ class Area {
     if (data['data_kelurahan'] != null) {
       data_kelurahan = UrbanVillage.fromData(data['data_kelurahan']);
     }
+    if (data['periode'] != null) {
+      periode = int.parse(data['periode'].toString());
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -82,6 +86,7 @@ class Area {
       "tenure_end_at": tenure_end_at.toString(),
       "data_kecamatan": data_kecamatan,
       "data_kelurahan": data_kelurahan,
+      "periode": periode,
     };
   }
 }

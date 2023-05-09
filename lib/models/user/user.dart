@@ -48,6 +48,7 @@ class User {
   SubDistrict? data_sub_district;
   UrbanVillage? data_urban_village;
   String? nationality;
+  int is_committe = 0;
 
   User.fromData(Map<String, dynamic> data) {
     Map<String, dynamic> userData = data;
@@ -148,6 +149,9 @@ class User {
     if (userData['data_sub_district'] != null) {
       data_sub_district = SubDistrict.fromData(userData['data_sub_district']);
     }
+    if (userData['is_committe'] != null) {
+      is_committe = int.parse(userData['is_committe'].toString());
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -183,6 +187,7 @@ class User {
         "data_urban_village": data_urban_village,
         "data_sub_district": data_sub_district,
         "nationality": nationality,
+        "is_committe": is_committe.toString(),
       },
       "token": token,
       "refreshToken": refresh_token
