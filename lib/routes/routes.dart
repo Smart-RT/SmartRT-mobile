@@ -100,6 +100,8 @@ import 'package:smart_rt/screens/public_screens/committe/rekomendasikan_panitia_
 import 'package:smart_rt/screens/public_screens/committe/lihat_panitia/lihat_panitia_page.dart';
 import 'package:smart_rt/screens/public_screens/committe/lihat_panitia/lihat_panitia_page_detail.dart';
 
+import 'package:smart_rt/screens/public_screens/voting/voting_page_1.dart';
+
 class Routes {
   static Route<dynamic> Function(RouteSettings) generateRoute =
       (RouteSettings settings) {
@@ -530,6 +532,12 @@ class Routes {
         });
       // === END
 
+      // === VOTE
+      case VotingPage1.id:
+        return MaterialPageRoute(builder: (context) {
+          return const VotingPage1();
+        });
+      // === END
       case BerandaAdminPage.id:
         return MaterialPageRoute(builder: (context) {
           ApplicationProvider.context = context;

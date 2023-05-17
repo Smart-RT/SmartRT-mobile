@@ -64,6 +64,8 @@ dependencies:
   path_provider: ^2.0.13
   printing: ^5.10.1
   photo_view: ^0.14.0
+  im_stepper: ^1.0.1+1
+  slide_to_confirm: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +98,8 @@ flutter:
     - assets/lotties/welcome/welcome-smile.json
     - assets/lotties/arisan/gold-cracking.json
     - assets/lotties/auth/otp.json
+    - assets/lotties/decoration/team-jump.json
+    - assets/lotties/decoration/vote.json
     - assets/img/icons/file/pdf.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

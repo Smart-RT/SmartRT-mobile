@@ -18,6 +18,11 @@ class NeighbourhoodHeadCandidate {
   String? discualified_notes;
   int status = -99;
 
+  // vote require
+  String? totalTask;
+  String? totalRatingTask;
+  String? avgRatingTask;
+
   NeighbourhoodHeadCandidate.fromData(Map<String, dynamic> data) {
     if (data['id'] != null) {
       id = int.parse(data['id'].toString());
@@ -64,6 +69,15 @@ class NeighbourhoodHeadCandidate {
     if (data['status'] != null) {
       status = int.parse(data['status'].toString());
     }
+    if (data['totalTask'] != null) {
+      totalTask = data['totalTask'].toString();
+    }
+    if (data['totalRatingTask'] != null) {
+      totalRatingTask = data['totalRatingTask'].toString();
+    }
+    if (data['avgRatingTask'] != null) {
+      avgRatingTask = data['avgRatingTask'].toString();
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +97,9 @@ class NeighbourhoodHeadCandidate {
       "discualified_by": discualified_by,
       "discualified_notes": discualified_notes,
       "status": status,
+      "totalTask": totalTask,
+      "totalRatingTask": totalRatingTask,
+      "avgRatingTask": avgRatingTask,
     };
   }
 }
