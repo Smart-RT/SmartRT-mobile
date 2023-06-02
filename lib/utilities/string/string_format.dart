@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_rt/utilities/int/int_format.dart';
 
 class StringFormat {
@@ -71,7 +72,24 @@ class StringFormat {
     return name;
   }
 
-  String getRandString(int len) {
+  static String formatRTRW(
+      {required String rtNum, required String rwNum, bool isNumOnly = true}) {
+    String result =
+        '${StringFormat.numFormatRTRW(rtNum)}/${StringFormat.numFormatRTRW(rwNum)}';
+    if (!isNumOnly) {
+      result = 'RT/RW $result';
+    }
+    return result;
+  }
+
+  static String formatDate(
+      {required DateTime dateTime, bool isWithTime = true}) {
+    String format = isWithTime ? 'd MMMM y HH:mm' : 'd MMMM y';
+    String result = DateFormat(format, 'id_ID').format(dateTime);
+    return result;
+  }
+
+  static String getRandString(int len) {
     var random = Random.secure();
     var values = List<int>.generate(len, (i) => random.nextInt(255));
     return base64UrlEncode(values);
@@ -80,5 +98,25 @@ class StringFormat {
   static String ageNow({required DateTime bornDate}) {
     int umur = IntFormat.ageNow(bornDate: bornDate);
     return '$umur tahun';
+  }
+
+  static String kecamatanFormat({required String kecamatan}) {
+    String result = '';
+    if (kecamatan.toLowerCase().contains('kecamatan')) {
+      result = 'Kec. ${kecamatan.substring(10)}';
+    } else {
+      result = 'Kec. $kecamatan';
+    }
+    return result;
+  }
+
+  static String kelurahanFormat({required String kelurahan}) {
+    String result = '';
+    if (kelurahan.toLowerCase().contains('kelurahan')) {
+      result = 'Kel. ${kelurahan.substring(10)}';
+    } else {
+      result = 'Kel. $kelurahan';
+    }
+    return result;
   }
 }

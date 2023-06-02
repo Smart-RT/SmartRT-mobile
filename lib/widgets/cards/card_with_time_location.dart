@@ -55,12 +55,15 @@ class CardWithTimeLocation extends StatelessWidget {
                   size: 15,
                 ),
                 SB_width25,
-                Text(
-                  dateTime,
-                  style: smartRTTextNormal_Primary,
+                Expanded(
+                  child: Text(
+                    dateTime,
+                    style: smartRTTextNormal_Primary,
+                  ),
                 ),
               ],
             ),
+            SB_height5,
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,9 +73,11 @@ class CardWithTimeLocation extends StatelessWidget {
                   size: 15,
                 ),
                 SB_width25,
-                Text(
-                  location,
-                  style: smartRTTextNormal_Primary,
+                Expanded(
+                  child: Text(
+                    location,
+                    style: smartRTTextNormal_Primary,
+                  ),
                 ),
               ],
             ),

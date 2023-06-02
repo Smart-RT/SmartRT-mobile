@@ -43,8 +43,15 @@ class _RegisterPage2State extends State<RegisterPage2> {
         "tanggalLahir": widget.args.tanggalLahir
       });
 
-      debugPrint(response.toString());
-      gotoOTP();
+      int newUserID = int.parse(response.data.toString());
+
+      if (response.statusCode.toString() == '200') {
+        var resp = await NetUtil().dioClient.post('/users/role/log/add', data: {
+          "user_id": newUserID,
+          "after_user_role_id": 2,
+        });
+        gotoOTP();
+      }
     } on DioError catch (e) {
       if (e.response != null) {
         debugPrint(e.response!.data.toString());

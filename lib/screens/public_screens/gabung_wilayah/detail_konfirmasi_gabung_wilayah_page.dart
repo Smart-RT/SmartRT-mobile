@@ -166,6 +166,13 @@ class _DetailKonfirmasiGabungWilayahPageState
       "typeConfirmation": typeConfirmation
     });
     if (resp.statusCode.toString() == '200') {
+      if (typeConfirmation == 'terima') {
+        await NetUtil().dioClient.post('/users/role/log/add', data: {
+          "user_id": dataKonfirmasi!.data_user_requester!.id,
+          "before_user_role_id": 2,
+          "after_user_role_id": 3,
+        });
+      }
       Navigator.pop(context);
       Navigator.pop(context);
       Navigator.popAndPushNamed(context, KonfirmasiGabungWilayahPage.id);

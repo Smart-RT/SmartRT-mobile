@@ -203,6 +203,26 @@ class SayaPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
+                onTap: () async {},
+                child: Card(
+                  color: smartRTSecondaryColor,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.logout,
+                      color: smartRTPrimaryColor,
+                    ),
+                    title: Text(
+                      'Keluarkan Jabatan',
+                      style: smartRTTextLargeBold_Primary,
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: smartRTPrimaryColor,
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
                 onTap: () async {
                   await context.read<AuthProvider>().logout();
                   Navigator.pushReplacementNamed(context, WelcomePage.id);

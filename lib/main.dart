@@ -11,6 +11,8 @@ import 'package:smart_rt/providers/event_provider.dart';
 import 'package:smart_rt/providers/health_provider.dart';
 import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/providers/neighbourhood_head_provider.dart';
+import 'package:smart_rt/providers/population_provider.dart';
+import 'package:smart_rt/providers/role_request_provider.dart';
 import 'package:smart_rt/providers/voting_provider.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
@@ -84,6 +86,8 @@ class _SmartRTAppState extends State<SmartRTApp> {
         ChangeNotifierProvider(create: ((context) => NewsProvider())),
         ChangeNotifierProvider(create: ((context) => CommitteProvider())),
         ChangeNotifierProvider(create: ((context) => VotingProvider())),
+        ChangeNotifierProvider(create: ((context) => PopulationProvider())),
+        ChangeNotifierProvider(create: ((context) => RoleRequestProvider())),
         ChangeNotifierProvider(
             create: ((context) => NeighbourhoodHeadProvider())),
       ],

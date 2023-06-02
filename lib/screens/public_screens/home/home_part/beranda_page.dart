@@ -14,6 +14,7 @@ import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/committe_provider.dart';
 import 'package:smart_rt/providers/neighbourhood_head_provider.dart';
 import 'package:smart_rt/providers/voting_provider.dart';
+import 'package:smart_rt/screens/public_screens/voting/voting_absensi_page.dart';
 import 'package:smart_rt/screens/public_screens/voting/voting_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 import 'package:smart_rt/screens/public_screens/administration/administration_page.dart';
@@ -881,7 +882,31 @@ class _BerandaPageState extends State<BerandaPage> {
                           ),
                         ],
                       ),
-                      SB_height15,
+                      const Divider(
+                        thickness: 1,
+                        height: 15,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, VotingAbsensiPage.id);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'LIHAT ABSENSI',
+                              style: smartRTTextSmall.copyWith(
+                                  color: smartRTTertiaryColor),
+                            ),
+                            Icon(Icons.keyboard_arrow_right,
+                                color: smartRTTertiaryColor)
+                          ],
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        height: 15,
+                      ),
                       GestureDetector(
                         onTap: () {
                           if (myVoteData.id == -1) {

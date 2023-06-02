@@ -9,6 +9,7 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/screens/public_screens/authentications/register/register_page_1.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -45,6 +46,9 @@ class _LoginPageState extends State<LoginPage> {
       if (currentUser.user_role != Role.Admin) {
         Navigator.pop(context);
         Navigator.pushReplacementNamed(context, PublicHome.id);
+      } else if (currentUser.user_role == Role.Admin) {
+        Navigator.pop(context);
+        Navigator.pushReplacementNamed(context, BerandaAdminPage.id);
       }
     }
   }

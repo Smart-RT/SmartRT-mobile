@@ -24,11 +24,20 @@ class UserRoleRequest {
   User? data_user_confirmater;
 
   UserRoleRequest.fromData(Map<String, dynamic> data) {
-    id = int.parse(data['id'].toString());
-    requester_id = int.parse(data['requester_id'].toString());
-    request_role = int.parse(data['request_role'].toString());
-    confirmater_role_id = int.parse(data['confirmater_role_id'].toString());
+    if (data['id'] != null) {
+      id = int.parse(data['id'].toString());
+    }
+    if (data['requester_id'] != null) {
+      requester_id = int.parse(data['requester_id'].toString());
+    }
 
+    if (data['request_role'] != null) {
+      request_role = int.parse(data['request_role'].toString());
+    }
+
+    if (data['confirmater_role_id'] != null) {
+      confirmater_role_id = int.parse(data['confirmater_role_id'].toString());
+    }
     if (data['confirmater_id'] != null) {
       confirmater_id = int.parse(data['confirmater_id'].toString());
     }

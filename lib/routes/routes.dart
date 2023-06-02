@@ -5,6 +5,7 @@ import 'package:smart_rt/screens/admin_screens/daftar_akun/buat_akun_admin_page.
 import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
+import 'package:smart_rt/screens/admin_screens/request_role/detail_request_role_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/tugas/form_tugas/form_tugas_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/tugas/petugas/beri_tugas_warga_page.dart';
@@ -99,6 +100,7 @@ import 'package:smart_rt/screens/public_screens/committe/lihat_status_kepanitiaa
 import 'package:smart_rt/screens/public_screens/committe/rekomendasikan_panitia_page.dart';
 import 'package:smart_rt/screens/public_screens/committe/lihat_panitia/lihat_panitia_page.dart';
 import 'package:smart_rt/screens/public_screens/committe/lihat_panitia/lihat_panitia_page_detail.dart';
+import 'package:smart_rt/screens/public_screens/voting/voting_absensi_page.dart';
 
 import 'package:smart_rt/screens/public_screens/voting/voting_page_1.dart';
 
@@ -537,7 +539,12 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const VotingPage1();
         });
+      case VotingAbsensiPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const VotingAbsensiPage();
+        });
       // === END
+
       case BerandaAdminPage.id:
         return MaterialPageRoute(builder: (context) {
           ApplicationProvider.context = context;
@@ -547,6 +554,13 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return const ListRequestRolePage();
         });
+      case DetailRequestRolePage.id:
+        return MaterialPageRoute(builder: (context) {
+          return DetailRequestRolePage(
+            args: settings.arguments as DetailRequestRolePageArguments,
+          );
+        });
+
       case DaftarWilayahSurabayaPage.id:
         return MaterialPageRoute(builder: (context) {
           return const DaftarWilayahSurabayaPage();
