@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_rt/models/neighbourhood_head/neighbourhood_head_candidate.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
+import 'package:smart_rt/providers/area_bill_provider.dart';
 import 'package:smart_rt/providers/arisan_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/committe_provider.dart';
@@ -13,6 +14,8 @@ import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/providers/neighbourhood_head_provider.dart';
 import 'package:smart_rt/providers/population_provider.dart';
 import 'package:smart_rt/providers/role_request_provider.dart';
+import 'package:smart_rt/providers/setting_provider.dart';
+import 'package:smart_rt/providers/subscribe_provider.dart';
 import 'package:smart_rt/providers/voting_provider.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
@@ -35,12 +38,13 @@ void main() async {
     debugPrint('[Main.Dart] => loadApp');
   }
 
-  // Baca Storage...
-  await ApplicationProvider.loadApp();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Baca Storage...
+  await ApplicationProvider.loadApp();
+  await AuthProvider.loadNotification();
 
   runApp(const SmartRTApp());
 }
@@ -88,8 +92,11 @@ class _SmartRTAppState extends State<SmartRTApp> {
         ChangeNotifierProvider(create: ((context) => VotingProvider())),
         ChangeNotifierProvider(create: ((context) => PopulationProvider())),
         ChangeNotifierProvider(create: ((context) => RoleRequestProvider())),
+        ChangeNotifierProvider(create: ((context) => SettingProvider())),
+        ChangeNotifierProvider(create: ((context) => SubscribeProvider())),
         ChangeNotifierProvider(
             create: ((context) => NeighbourhoodHeadProvider())),
+        ChangeNotifierProvider(create: ((context) => AreaBillProvider())),
       ],
       builder: (context, child) {
         return MaterialApp(

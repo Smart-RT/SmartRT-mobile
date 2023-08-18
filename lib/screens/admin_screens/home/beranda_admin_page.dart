@@ -12,11 +12,13 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/population_provider.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_1.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:smart_rt/screens/admin_screens/pengaturan/pengaturan_page.dart';
 
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -231,6 +233,27 @@ class _BerandaAdminPageState extends State<BerandaAdminPage> {
                 color: smartRTPrimaryColor,
               ),
               title: Text(
+                'Daftar Pelanggan Pro',
+                style: smartRTTextLarge_Primary,
+              ),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                // Navigator.pop(context);
+                Navigator.pushNamed(context, DaftarPelangganProPage.id);
+              },
+            ),
+            Divider(
+              color: smartRTPrimaryColor,
+              thickness: 0.25,
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.list,
+                color: smartRTPrimaryColor,
+              ),
+              title: Text(
                 'Daftar Akun',
                 style: smartRTTextLarge_Primary,
               ),
@@ -260,6 +283,23 @@ class _BerandaAdminPageState extends State<BerandaAdminPage> {
                 // ...
                 // Then close the drawer
                 Navigator.pop(context);
+              },
+            ),
+            Divider(
+              color: smartRTPrimaryColor,
+              thickness: 0.25,
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.settings,
+                color: smartRTPrimaryColor,
+              ),
+              title: Text(
+                'Pengaturan',
+                style: smartRTTextLarge_Primary,
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, PengaturanPage.id);
               },
             ),
             Divider(

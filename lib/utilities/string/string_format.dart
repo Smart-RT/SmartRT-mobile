@@ -83,8 +83,14 @@ class StringFormat {
   }
 
   static String formatDate(
-      {required DateTime dateTime, bool isWithTime = true}) {
-    String format = isWithTime ? 'd MMMM y HH:mm' : 'd MMMM y';
+      {required DateTime dateTime,
+      bool isWithTime = true,
+      String formatDate = ''}) {
+    String format = (formatDate != '')
+        ? formatDate
+        : isWithTime
+            ? 'd MMMM y HH:mm'
+            : 'd MMMM y';
     String result = DateFormat(format, 'id_ID').format(dateTime);
     return result;
   }

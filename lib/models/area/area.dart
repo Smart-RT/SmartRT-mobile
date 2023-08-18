@@ -1,6 +1,7 @@
 import 'package:smart_rt/models/area/sub_district.dart';
 import 'package:smart_rt/models/area/urban_village.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club.dart';
+import 'package:smart_rt/models/subscribe/pro_subscribe.dart';
 import 'package:smart_rt/models/user/user.dart';
 
 class Area {
@@ -23,6 +24,9 @@ class Area {
   SubDistrict? data_kecamatan;
   UrbanVillage? data_kelurahan;
   int periode = 1;
+  int total_population = 1;
+  int is_subscribe_pro = 0;
+  ProSubscribe? dataSubscribe;
 
   Area.fromData(Map<String, dynamic> data) {
     id = data['id'];
@@ -60,6 +64,13 @@ class Area {
     if (data['periode'] != null) {
       periode = int.parse(data['periode'].toString());
     }
+    if (data['total_population'] != null) {
+      total_population = int.parse(data['total_population'].toString());
+    }
+    is_subscribe_pro = int.parse(data['is_subscribe_pro'].toString());
+    if (data['dataSubscribe'] != null) {
+      dataSubscribe = ProSubscribe.fromData(data['dataSubscribe']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -87,6 +98,8 @@ class Area {
       "data_kecamatan": data_kecamatan,
       "data_kelurahan": data_kelurahan,
       "periode": periode,
+      "is_subscribe_pro": is_subscribe_pro,
+      "dataSubscribe": dataSubscribe,
     };
   }
 }

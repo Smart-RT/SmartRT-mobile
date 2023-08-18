@@ -1,4 +1,4 @@
-const String backendURL = "http://192.168.1.6:8000";
+const String backendURL = "http://10.0.2.2:8000";
 const String apiURL = '$backendURL/api';
 const String assetURL = '$backendURL/assets';
 

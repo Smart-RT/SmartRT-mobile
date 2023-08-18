@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/buat_iuran_page.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_list_iuran_page.dart';
+import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
 class KeuanganPage extends StatelessWidget {
   const KeuanganPage({
@@ -16,115 +19,53 @@ class KeuanganPage extends StatelessWidget {
         Container(
           color: smartRTPrimaryColor,
           width: double.infinity,
-          // height: 125,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                  child: Padding(
-                padding: paddingScreen,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      'DOMPET SAYA',
-                      style: smartRTTextLarge.copyWith(
-                          color: smartRTSuccessColor,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    SB_height15,
-                    Text(
-                      'IDR 0,00',
-                      style: smartRTTextTitleCard.copyWith(
-                          color: smartRTSuccessColor),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+          child: Padding(
+            padding: paddingScreen,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'TAGIHAN BELUM DIBAYAR',
+                  style:
+                      smartRTTextTitleCard.copyWith(color: smartRTErrorColor),
+                  textAlign: TextAlign.center,
                 ),
-              )),
-              Expanded(
-                  child: Padding(
-                padding: paddingScreen,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      'HUTANG',
-                      style: smartRTTextLarge.copyWith(
-                          color: smartRTErrorColor,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    SB_height15,
-                    Text(
-                      'IDR 0,00',
-                      style: smartRTTextTitleCard.copyWith(
-                          color: smartRTErrorColor),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                Text(
+                  'IDR 0,00',
+                  style: smartRTTextTitle.copyWith(color: smartRTErrorColor),
+                  textAlign: TextAlign.center,
                 ),
-              )),
-            ],
+              ],
+            ),
           ),
         ),
-        Container(
-          height: 500,
+        Expanded(
           child: ListView(
             children: <Widget>[
-              Card(
-                color: smartRTSecondaryColor,
-                child: ListTile(
-                  title: Text(
-                    'Semua Tagihan (0)',
-                    style: smartRTTextLargeBold_Primary,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: smartRTPrimaryColor,
-                  ),
-                ),
+              ListTileArisan(
+                title: 'Tagihan Saya',
+                onTap: () {},
               ),
-              Card(
-                color: smartRTSecondaryColor,
-                child: ListTile(
-                  title: Text(
-                    'Keuangan Kas',
-                    style: smartRTTextLargeBold_Primary,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: smartRTPrimaryColor,
-                  ),
-                ),
+              Divider(
+                thickness: 1,
               ),
-              Card(
-                color: smartRTSecondaryColor,
-                child: ListTile(
-                  title: Text(
-                    'Keuangan Iuran',
-                    style: smartRTTextLargeBold_Primary,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: smartRTPrimaryColor,
-                  ),
-                ),
+              ListTileArisan(
+                title: 'Buat Iuran',
+                onTap: () {
+                  Navigator.pushNamed(context, BuatIuranPage.id);
+                },
               ),
-              Card(
-                color: smartRTSecondaryColor,
-                child: ListTile(
-                  title: Text(
-                    'Keuangan Arisan',
-                    style: smartRTTextLargeBold_Primary,
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: smartRTPrimaryColor,
-                  ),
-                ),
+              Divider(
+                thickness: 1,
+              ),
+              ListTileArisan(
+                title: 'Lihat Semua Iuran',
+                onTap: () {
+                  Navigator.pushNamed(context, LihatListIuranPage.id);
+                },
+              ),
+              Divider(
+                thickness: 1,
               ),
             ],
           ),

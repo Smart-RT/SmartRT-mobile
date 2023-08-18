@@ -1,52 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 
-class ListTileData1 extends StatelessWidget {
-  const ListTileData1({
+class ListTileData5 extends StatelessWidget {
+  const ListTileData5({
     Key? key,
     required this.txtLeft,
     required this.txtRight,
     this.txtStyleLeft,
     this.txtStyleRight,
-    this.txtStyleColon,
     this.onTap,
-    this.crossAxisAlignment,
   }) : super(key: key);
 
   final String txtLeft;
   final TextStyle? txtStyleLeft;
   final String txtRight;
   final TextStyle? txtStyleRight;
-  final TextStyle? txtStyleColon;
   final GestureTapCallback? onTap;
-  final CrossAxisAlignment? crossAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          flex: 7,
           child: Text(
             txtLeft,
             style: txtStyleLeft ?? smartRTTextLarge,
+            textAlign: TextAlign.left,
           ),
         ),
+        SB_width15,
         Expanded(
-          child: Text(
-            ':',
-            style: txtStyleColon ?? smartRTTextLarge,
-          ),
-        ),
-        Expanded(
-          flex: 8,
           child: GestureDetector(
-            onTap: onTap,
-            child: Text(
-              txtRight,
-              style: txtStyleRight ?? smartRTTextLarge,
+            onTap: onTap ?? () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  txtRight,
+                  style: txtStyleRight ?? smartRTTextLarge,
+                  textAlign: TextAlign.right,
+                ),
+                SB_width15,
+                Icon(Icons.arrow_forward_ios),
+              ],
             ),
           ),
         ),

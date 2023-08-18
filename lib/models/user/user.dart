@@ -17,6 +17,7 @@ enum Role {
 
 class User {
   int id = -1;
+  int? area_id;
   String? nik;
   String? kk_num;
   String full_name = "";
@@ -152,6 +153,9 @@ class User {
     if (userData['is_committe'] != null) {
       is_committe = int.parse(userData['is_committe'].toString());
     }
+    if (userData['area_id'] != null) {
+      area_id = int.parse(userData['area_id'].toString());
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -188,6 +192,7 @@ class User {
         "data_sub_district": data_sub_district,
         "nationality": nationality,
         "is_committe": is_committe.toString(),
+        "area_id": area_id.toString(),
       },
       "token": token,
       "refreshToken": refresh_token

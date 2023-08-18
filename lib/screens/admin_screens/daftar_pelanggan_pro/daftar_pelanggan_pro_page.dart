@@ -8,26 +8,26 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/area/area.dart';
 import 'package:smart_rt/models/area/sub_district.dart';
 import 'package:smart_rt/models/area/urban_village.dart';
-import 'package:smart_rt/providers/population_provider.dart';
+import 'package:smart_rt/providers/subscribe_provider.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page_detail.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
-import 'package:smart_rt/widgets/cards/card_list_area.dart';
+import 'package:smart_rt/widgets/cards/card_list_subscribe.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_detail_page.dart';
 
-class DaftarWilayahSurabayaPage extends StatefulWidget {
-  static const String id = 'DaftarWilayahSurabayaPage';
-  const DaftarWilayahSurabayaPage({Key? key}) : super(key: key);
+class DaftarPelangganProPage extends StatefulWidget {
+  static const String id = 'DaftarPelangganProPage';
+  const DaftarPelangganProPage({Key? key}) : super(key: key);
 
   @override
-  State<DaftarWilayahSurabayaPage> createState() =>
-      _DaftarWilayahSurabayaPageState();
+  State<DaftarPelangganProPage> createState() => _DaftarPelangganProPageState();
 }
 
-class _DaftarWilayahSurabayaPageState extends State<DaftarWilayahSurabayaPage> {
+class _DaftarPelangganProPageState extends State<DaftarPelangganProPage> {
   List<Area> listAreaFiltered = [];
   List<Area> listArea = [];
   void getData() async {
-    await context.read<PopulationProvider>().getListArea();
+    await context.read<SubscribeProvider>().getListAreaLangganan();
   }
 
   final List<SubDistrict> _listKecamatan = [];
@@ -63,292 +63,6 @@ class _DaftarWilayahSurabayaPageState extends State<DaftarWilayahSurabayaPage> {
       }));
     });
   }
-
-  // void filterDialog() async {
-  //   showDialog<String>(
-  //     context: context,
-  //     builder: (BuildContext context) => AlertDialog(
-  //       title: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         children: [
-  //           Text(
-  //             'FILTER',
-  //             style: smartRTTextTitleCard,
-  //           ),
-  //           GestureDetector(
-  //               onTap: () {
-  //                 Navigator.pop(context);
-  //               },
-  //               child: Icon(Icons.close)),
-  //         ],
-  //       ),
-  //       actions: <Widget>[
-  //         Padding(
-  //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-  //           child: DropdownButtonFormField2(
-  //             style: smartRTTextLargeBold_Primary,
-  //             decoration: InputDecoration(
-  //               isDense: true,
-  //               contentPadding: EdgeInsets.zero,
-  //               border: OutlineInputBorder(
-  //                 borderRadius: BorderRadius.circular(15),
-  //               ),
-  //             ),
-  //             dropdownMaxHeight: 200,
-  //             searchController: textEditingControllerKecamatan,
-  //             searchInnerWidget: Padding(
-  //               padding: const EdgeInsets.only(
-  //                 top: 8,
-  //                 bottom: 4,
-  //                 right: 8,
-  //                 left: 8,
-  //               ),
-  //               child: TextFormField(
-  //                 controller: textEditingControllerKecamatan,
-  //                 decoration: InputDecoration(
-  //                   isDense: true,
-  //                   contentPadding: const EdgeInsets.symmetric(
-  //                     horizontal: 10,
-  //                     vertical: 8,
-  //                   ),
-  //                   hintText: 'Search for an item...',
-  //                   hintStyle: smartRTTextLargeBold_Primary,
-  //                   border: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(8),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //             searchMatchFn: (item, searchValue) {
-  //               debugPrint(item.toString());
-  //               List<String> ids = _listKecamatan
-  //                   .where(
-  //                     (element) => element.name
-  //                         .toUpperCase()
-  //                         .contains(searchValue.toUpperCase()),
-  //                   )
-  //                   .map(
-  //                     (e) => e.id.toString(),
-  //                   )
-  //                   .toList();
-  //               return ids.contains(item.value.toString());
-  //             },
-  //             onMenuStateChange: (isOpen) {
-  //               if (!isOpen) {
-  //                 textEditingControllerKecamatan.clear();
-  //               }
-  //             },
-  //             isExpanded: true,
-  //             hint: Text(
-  //               'Kecamatan',
-  //               style: smartRTTextLargeBold_Primary,
-  //             ),
-  //             icon: Icon(
-  //               Icons.arrow_drop_down,
-  //               color: smartRTPrimaryColor,
-  //             ),
-  //             iconSize: 30,
-  //             buttonHeight: 60,
-  //             buttonPadding: const EdgeInsets.only(left: 25, right: 10),
-  //             dropdownDecoration: BoxDecoration(
-  //               borderRadius: BorderRadius.circular(5),
-  //             ),
-  //             items: _listKecamatan
-  //                 .map((item) => DropdownMenuItem<String>(
-  //                       value: item.id.toString(),
-  //                       child: Text(
-  //                         item.name,
-  //                         style: smartRTTextNormal_Primary,
-  //                       ),
-  //                     ))
-  //                 .toList(),
-  //             validator: (value) {
-  //               if (value == null) {
-  //                 return 'Kecamatan tidak boleh kosong';
-  //               }
-  //             },
-  //             onChanged: (value) {
-  //               setState(() {
-  //                 _kecamatanSelectedValue = value.toString();
-  //                 _kelurahanSelectedValue = null;
-  //                 _listKelurahanFiltered = _listKelurahan
-  //                     .where((element) =>
-  //                         element.idKecamatan.toString() ==
-  //                         _kecamatanSelectedValue)
-  //                     .toList();
-  //               });
-  //             },
-  //             onSaved: (value) {
-  //               _kecamatanSelectedValue = value.toString();
-  //             },
-  //           ),
-  //         ),
-  //         SB_height15,
-  //         Padding(
-  //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-  //           child: DropdownButtonFormField2(
-  //               style: smartRTTextLargeBold_Primary,
-  //               decoration: InputDecoration(
-  //                 isDense: true,
-  //                 contentPadding: EdgeInsets.zero,
-  //                 border: OutlineInputBorder(
-  //                   borderRadius: BorderRadius.circular(15),
-  //                 ),
-  //               ),
-  //               dropdownMaxHeight: 200,
-  //               searchController: textEditingControllerKelurahan,
-  //               searchInnerWidget: Padding(
-  //                 padding: const EdgeInsets.only(
-  //                   top: 8,
-  //                   bottom: 4,
-  //                   right: 8,
-  //                   left: 8,
-  //                 ),
-  //                 child: TextFormField(
-  //                   controller: textEditingControllerKelurahan,
-  //                   decoration: InputDecoration(
-  //                     isDense: true,
-  //                     contentPadding: const EdgeInsets.symmetric(
-  //                       horizontal: 10,
-  //                       vertical: 8,
-  //                     ),
-  //                     hintText: 'Search for an item...',
-  //                     hintStyle: smartRTTextLargeBold_Primary,
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(8),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //               searchMatchFn: (item, searchValue) {
-  //                 debugPrint(item.toString());
-  //                 List<String> ids = _listKelurahanFiltered
-  //                     .where(
-  //                       (element) => element.name
-  //                           .toUpperCase()
-  //                           .contains(searchValue.toUpperCase()),
-  //                     )
-  //                     .map(
-  //                       (e) => e.id.toString(),
-  //                     )
-  //                     .toList();
-  //                 return ids.contains(item.value.toString());
-  //               },
-  //               onMenuStateChange: (isOpen) {
-  //                 if (!isOpen) {
-  //                   textEditingControllerKelurahan.clear();
-  //                 }
-  //               },
-  //               isExpanded: true,
-  //               hint: Text(
-  //                 'Kelurahan',
-  //                 style: smartRTTextLargeBold_Primary,
-  //               ),
-  //               disabledHint: Text(
-  //                 'Kelurahan',
-  //                 style: smartRTTextLargeBold_Primary.copyWith(
-  //                     color: smartRTDisabledColor),
-  //               ),
-  //               icon: const Icon(
-  //                 Icons.arrow_drop_down,
-  //               ),
-  //               iconDisabledColor: smartRTDisabledColor,
-  //               iconEnabledColor: smartRTPrimaryColor,
-  //               iconSize: 30,
-  //               buttonHeight: 60,
-  //               buttonPadding: const EdgeInsets.only(left: 25, right: 10),
-  //               dropdownDecoration: BoxDecoration(
-  //                 borderRadius: BorderRadius.circular(5),
-  //               ),
-  //               items: _listKelurahanFiltered
-  //                   .map((item) => DropdownMenuItem<String>(
-  //                         value: item.id.toString(),
-  //                         child: Text(
-  //                           item.name,
-  //                           style: smartRTTextNormal_Primary,
-  //                         ),
-  //                       ))
-  //                   .toList(),
-  //               validator: (value) {
-  //                 if (value == null) {
-  //                   return 'Kelurahan tidak boleh kosong';
-  //                 }
-  //               },
-  //               onChanged: _kecamatanSelectedValue.isNotEmpty
-  //                   ? (value) {
-  //                       setState(() {
-  //                         _kelurahanSelectedValue = value.toString();
-  //                       });
-  //                     }
-  //                   : null,
-  //               onSaved: (value) {
-  //                 _kelurahanSelectedValue = value.toString();
-  //               },
-  //               value: _kelurahanSelectedValue),
-  //         ),
-  //         SB_height15,
-  //         Padding(
-  //           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-  //           child: Row(
-  //             children: [
-  //               Expanded(
-  //                 child: TextFormField(
-  //                   controller: textEditingControllerRW,
-  //                   autocorrect: false,
-  //                   style: smartRTTextNormal_Primary,
-  //                   decoration: const InputDecoration(
-  //                     labelText: 'RW',
-  //                   ),
-  //                 ),
-  //               ),
-  //               SB_width15,
-  //               Expanded(
-  //                 child: TextFormField(
-  //                   controller: textEditingControllerRT,
-  //                   autocorrect: false,
-  //                   style: smartRTTextNormal_Primary,
-  //                   decoration: const InputDecoration(
-  //                     labelText: 'RT',
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //         SB_height15,
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             TextButton(
-  //               onPressed: () {
-  //                 _kecamatanSelectedValue = '';
-  //                 _kelurahanSelectedValue = '';
-  //                 textEditingControllerRT.text = '';
-  //                 textEditingControllerRW.text = '';
-  //                 filter();
-  //               },
-  //               child: Text(
-  //                 'Clear',
-  //                 style: smartRTTextNormal,
-  //               ),
-  //             ),
-  //             TextButton(
-  //               onPressed: () {
-  //                 filter();
-  //               },
-  //               child: Text(
-  //                 'CARI SEKARANG!',
-  //                 style: smartRTTextNormal.copyWith(
-  //                   fontWeight: FontWeight.bold,
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   void filterDialog() async {
     // Buat Data yang akan dilempar ke widget Filter
@@ -439,7 +153,7 @@ class _DaftarWilayahSurabayaPageState extends State<DaftarWilayahSurabayaPage> {
 
   @override
   Widget build(BuildContext context) {
-    listArea = context.watch<PopulationProvider>().listArea;
+    listArea = context.watch<SubscribeProvider>().listAreaLangganan;
     listAreaFiltered = listArea.where(
       (element) {
         return ((_kecamatanSelectedValue == "" ||
@@ -460,7 +174,7 @@ class _DaftarWilayahSurabayaPageState extends State<DaftarWilayahSurabayaPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Daftar Wilayah Surabaya'),
+          title: Text('Daftar Langganan Pro'),
           actions: [
             GestureDetector(
                 onTap: () {
@@ -483,7 +197,7 @@ class _DaftarWilayahSurabayaPageState extends State<DaftarWilayahSurabayaPage> {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      CardListArea(
+                      CardListSubscribe(
                           kecamatan: StringFormat.kecamatanFormat(
                               kecamatan:
                                   listAreaFiltered[index].data_kecamatan!.name),
@@ -492,19 +206,20 @@ class _DaftarWilayahSurabayaPageState extends State<DaftarWilayahSurabayaPage> {
                                   listAreaFiltered[index].data_kelurahan!.name),
                           rtNum: listAreaFiltered[index].rt_num.toString(),
                           rwNum: listAreaFiltered[index].rw_num.toString(),
-                          totalPopulasi: listAreaFiltered[index]
-                              .total_population
-                              .toString(),
-                          ketuaRTNama:
-                              listAreaFiltered[index].ketua_id!.full_name,
-                          ketuaRTAlamat:
-                              listAreaFiltered[index].ketua_id!.address ?? '',
-                          ketuaRTTelp: listAreaFiltered[index].ketua_id!.phone,
+                          status:
+                              listAreaFiltered[index].dataSubscribe!.status == 0
+                                  ? 'Menunggu Pembayaran'
+                                  : listAreaFiltered[index]
+                                              .dataSubscribe!
+                                              .status ==
+                                          1
+                                      ? 'Telah Membayar'
+                                      : 'Berhenti Berlangganan',
                           onTap: () {
                             Navigator.pushNamed(
-                                context, DaftarWilayahSurabayaDetailPage.id,
+                                context, DaftarPelangganProPageDetail.id,
                                 arguments:
-                                    DaftarWilayahSurabayaDetailPageArguments(
+                                    DaftarPelangganProPageDetailArguments(
                                         index: index));
                           }),
                       if (index == listArea.length - 1)

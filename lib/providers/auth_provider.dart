@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,10 +21,50 @@ import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 class AuthProvider extends ApplicationProvider {
   static User? currentUser;
   static bool isLoggedIn = false;
+  static String? fcmToken;
+
+  // Firebase
+  static FirebaseMessaging messaging = FirebaseMessaging.instance;
+  static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   User? get user => currentUser;
   set user(User? value) {
     currentUser = value;
+  }
+
+  static Future<void> saveFCMToken() async {
+    if (AuthProvider.currentUser != null && fcmToken != null) {
+      Map<String, dynamic> dataToken = {
+        "userId": AuthProvider.currentUser!.id,
+        "FCMToken": fcmToken
+      };
+      await firestore
+          .collection('FCMTokens')
+          .doc(fcmToken)
+          .set(dataToken, SetOptions(merge: true));
+    }
+  }
+
+  static Future<void> deleteFCMToken() async {
+    await firestore.collection('FCMTokens').doc(fcmToken).delete();
+  }
+
+  static Future<void> loadNotification() async {
+    fcmToken = await FirebaseMessaging.instance.getToken();
+    saveFCMToken();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // Ngeprint ke console, kalau dia dapat message
+      debugPrint('Dapet Message di Foreground!');
+      debugPrint('Message data: ${message.data}');
+
+      ApplicationProvider.showNotification(
+          hashCode: message.hashCode,
+          notificationTitle: message.data["title"],
+          notificationBody: message.data["body"]);
+      // Kalau mau buat notifikasi kyk aplikasi lainnya, coba cek ini ya:
+      // https://pub.dev/packages/flutter_local_notifications
+    });
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
 
   void saveUserDataToStorage() async {
@@ -62,6 +104,7 @@ class AuthProvider extends ApplicationProvider {
       ApplicationProvider.currentUserRefreshToken = user.refresh_token;
       currentUser = user;
       saveUserDataToStorage();
+      saveFCMToken();
       debugPrint(
           'IDnya: ${user.id}, Namanya: ${user.full_name} berjenis kelamin : ${user.gender} role : ${user.user_role.name}');
       return true;
@@ -117,6 +160,7 @@ class AuthProvider extends ApplicationProvider {
     await ApplicationProvider.storage.delete(key: 'jwt');
     await ApplicationProvider.storage.delete(key: 'refreshToken');
     await ApplicationProvider.storage.delete(key: 'user');
+    deleteFCMToken();
   }
 
   Future<bool> uploadProfilePicture({
@@ -307,6 +351,31 @@ class AuthProvider extends ApplicationProvider {
     try {
       Response<dynamic> resp =
           await NetUtil().dioClient.post('/users/listUserWilayah');
+      List<User> listUserWilayah = [];
+      if (resp.data != null) {
+        listUserWilayah.addAll(resp.data.map<User>((request) {
+          return User.fromData(request);
+        }));
+      }
+      return listUserWilayah;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return [];
+    }
+  }
+
+  Future<List<User>> getListUserWilayahByAreaID({
+    required BuildContext context,
+    required int areaID,
+  }) async {
+    try {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.get('/users/listUserWilayah/$areaID');
       List<User> listUserWilayah = [];
       if (resp.data != null) {
         listUserWilayah.addAll(resp.data.map<User>((request) {

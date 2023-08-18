@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/app_setting/app_setting.dart';
 import 'package:smart_rt/models/committe/committe.dart';
 import 'package:smart_rt/models/neighbourhood_head/neighbourhood_head_candidate.dart';
 import 'package:smart_rt/models/user/user.dart';
@@ -13,7 +14,10 @@ import 'package:smart_rt/models/voting/voting.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/committe_provider.dart';
 import 'package:smart_rt/providers/neighbourhood_head_provider.dart';
+import 'package:smart_rt/providers/setting_provider.dart';
 import 'package:smart_rt/providers/voting_provider.dart';
+import 'package:smart_rt/screens/public_screens/langganan/kelebihan_dan_aturan_langganan_page.dart';
+import 'package:smart_rt/screens/public_screens/langganan/langganan_page.dart';
 import 'package:smart_rt/screens/public_screens/voting/voting_absensi_page.dart';
 import 'package:smart_rt/screens/public_screens/voting/voting_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
@@ -29,6 +33,7 @@ import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_status_
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/rekomendasikan_kandidat_page.dart';
 import 'package:smart_rt/utilities/bool/checker_return_bool.dart';
 import 'package:smart_rt/utilities/net_util.dart';
+import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/cards/card_big_icon_text_home.dart';
 import 'package:smart_rt/widgets/cards/card_icon_with_text.dart';
@@ -37,6 +42,7 @@ import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/screens/public_screens/committe/lihat_status_kepanitiaan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/committe/rekomendasikan_panitia_page.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_4.dart';
+import 'package:smart_rt/providers/application_provider.dart';
 
 class BerandaPage extends StatefulWidget {
   const BerandaPage({super.key});
@@ -114,6 +120,61 @@ class _BerandaPageState extends State<BerandaPage> {
 
   void gabungWilayah() async {
     Navigator.pushNamed(context, GabungWilayahPage.id);
+  }
+
+  void langgananPro() async {
+    int subscribeAmount = context.read<SettingProvider>().subscribeAmount;
+    if (user.area!.is_subscribe_pro == 0) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Anda belum bergabung menjadi pengguna Smart RT Pro! Apakah anda berminat untuk mendaftar dan bergabung berlangganan untuk dapat mengakses semua fitur?\n\nBiaya Langganan : \n${CurrencyFormat.convertToIdr(subscribeAmount, 2)}/bulan',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0),
+                  ))),
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, KelebihanDanAturanLangganan.id);
+                  },
+                  child: Text(
+                    'DAFTAR SEKARANG!',
+                    style: smartRTTextLarge.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: smartRTQuaternaryColor),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: TextButton(
+                onPressed: () => Navigator.pop(context, 'Batal'),
+                child: Text(
+                  'Batal',
+                  style: smartRTTextNormal,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Navigator.pushNamed(context, LanggananPage.id);
+    }
   }
 
   void showVoteDone(String dateTime) async {
@@ -687,20 +748,37 @@ class _BerandaPageState extends State<BerandaPage> {
                             },
                           ),
                         ),
+                        user.user_role != Role.Guest &&
+                                user.user_role != Role.Warga
+                            ? Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.payment,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'Langganan Pro',
+                                  onTap: () async {
+                                    langgananPro();
+                                  },
+                                ),
+                              )
+                            : Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.close,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: '-',
+                                  onTap: () async {},
+                                ),
+                              ),
                         Expanded(
                           child: CardIconWithText(
                             icon: Icons.close,
                             iconColor: smartRTPrimaryColor,
                             title: '-',
-                            onTap: () async {},
-                          ),
-                        ),
-                        Expanded(
-                          child: CardIconWithText(
-                            icon: Icons.close,
-                            iconColor: smartRTPrimaryColor,
-                            title: '-',
-                            onTap: () async {},
+                            onTap: () async {
+                              ApplicationProvider.showNotification(
+                                  hashCode: 1,
+                                  notificationBody: "Test VBoasdas",
+                                  notificationTitle: "ASDASD");
+                            },
                           ),
                         ),
                       ],

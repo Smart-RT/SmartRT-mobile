@@ -8,6 +8,7 @@ class ListTileUser1 extends StatelessWidget {
     Key? key,
     required this.fullName,
     required this.address,
+    this.role,
     this.photoPathURL,
     this.photo,
     this.ratingAVG,
@@ -17,6 +18,7 @@ class ListTileUser1 extends StatelessWidget {
   }) : super(key: key);
 
   final String fullName;
+  final String? role;
   final String address;
   final String? photoPathURL;
   final String? photo;
@@ -47,6 +49,11 @@ class ListTileUser1 extends StatelessWidget {
               address,
               textAlign: TextAlign.left,
             ),
+            if (role != null)
+              Text(
+                role!,
+                textAlign: TextAlign.left,
+              ),
             if (ratingAVG != null) SB_height15,
             if (ratingAVG != null)
               Row(

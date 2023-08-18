@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/providers/application_provider.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page_detail.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_bill_page.dart';
 
+import 'package:smart_rt/screens/admin_screens/pengaturan/pengaturan_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/buat_akun_admin_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_detail_page.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/lihat_warga_page.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/detail_request_role_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
@@ -66,6 +72,18 @@ import 'package:smart_rt/screens/public_screens/kesehatan/kesehatanku_page.dart'
 import 'package:smart_rt/screens/public_screens/kesehatan/laporan_warga_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/buat_iuran_page.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_list_iuran_page.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_list_iuran_page_detail.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_pembayar_page.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_bulan_page.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_pembayar_page_detail.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/pembayaran_tf/pembayaran_tf_page_1.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/pembayaran_tf/pembayaran_tf_page_2.dart';
+import 'package:smart_rt/screens/public_screens/langganan/kelebihan_dan_aturan_langganan_page.dart';
+import 'package:smart_rt/screens/public_screens/langganan/langganan_page.dart';
+import 'package:smart_rt/screens/public_screens/langganan/langganan_page_detail_1.dart';
+import 'package:smart_rt/screens/public_screens/langganan/langganan_page_detail_2.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_kandidat/lihat_semua_kandidat_page.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_kandidat/lihat_semua_kandidat_page_detail.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_status_kandidat_calon_pengurus_rt_saya_page.dart';
@@ -560,11 +578,104 @@ class Routes {
             args: settings.arguments as DetailRequestRolePageArguments,
           );
         });
-
       case DaftarWilayahSurabayaPage.id:
         return MaterialPageRoute(builder: (context) {
           return const DaftarWilayahSurabayaPage();
         });
+      case DaftarWilayahSurabayaDetailPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return DaftarWilayahSurabayaDetailPage(
+            args:
+                settings.arguments as DaftarWilayahSurabayaDetailPageArguments,
+          );
+        });
+      case LihatWargaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatWargaPage(
+            args: settings.arguments as LihatWargaPageArguments,
+          );
+        });
+      case PengaturanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const PengaturanPage();
+        });
+      case KelebihanDanAturanLangganan.id:
+        return MaterialPageRoute(builder: (context) {
+          return const KelebihanDanAturanLangganan();
+        });
+      case DaftarPelangganProPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DaftarPelangganProPage();
+        });
+      case DaftarPelangganProPageDetail.id:
+        return MaterialPageRoute(builder: (context) {
+          return DaftarPelangganProPageDetail(
+            args: settings.arguments as DaftarPelangganProPageDetailArguments,
+          );
+        });
+      case DaftarPelangganProBillPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return DaftarPelangganProBillPage(
+            args: settings.arguments as DaftarPelangganProBillPageArguments,
+          );
+        });
+
+      case LanggananPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LanggananPage();
+        });
+      case LanggananPageDetail1.id:
+        return MaterialPageRoute(builder: (context) {
+          return LanggananPageDetail1(
+            args: settings.arguments as LanggananPageDetail1Arguments,
+          );
+        });
+      case LanggananPageDetail2.id:
+        return MaterialPageRoute(builder: (context) {
+          return LanggananPageDetail2(
+            args: settings.arguments as LanggananPageDetail2Arguments,
+          );
+        });
+      case BuatIuranPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return BuatIuranPage();
+        });
+      case LihatListIuranPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatListIuranPage();
+        });
+      case LihatListIuranPageDetail.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatListIuranPageDetail(
+              args: settings.arguments as LihatListIuranPageDetailArguments);
+        });
+      case LihatSemuaPembayarPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatSemuaPembayarPage(
+              args: settings.arguments as LihatSemuaPembayarPageArguments);
+        });
+      case LihatSemuaPembayarPageDetail.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatSemuaPembayarPageDetail(
+              args:
+                  settings.arguments as LihatSemuaPembayarPageDetailArguments);
+        });
+      case PembayaranTfPage1.id:
+        return MaterialPageRoute(builder: (context) {
+          return PembayaranTfPage1(
+              args: settings.arguments as PembayaranTfPage1Arguments);
+        });
+      case PembayaranTfPage2.id:
+        return MaterialPageRoute(builder: (context) {
+          return PembayaranTfPage2(
+              args: settings.arguments as PembayaranTfPage2Arguments);
+        });
+      case LihatSemuaBulanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return LihatSemuaBulanPage(
+              args: settings.arguments as LihatSemuaBulanPageArguments);
+        });
+
       case DaftarAkunPage.id:
         return MaterialPageRoute(builder: (context) {
           return const DaftarAkunPage();
