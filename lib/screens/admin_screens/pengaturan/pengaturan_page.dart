@@ -4,6 +4,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/setting_provider.dart';
+import 'package:smart_rt/screens/admin_screens/pengaturan/karosel_beranda/karosel_beranda_page.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_5.dart';
@@ -123,15 +124,31 @@ class _Pengaturantate extends State<PengaturanPage> {
       appBar: AppBar(
         title: const Text('Pengaturan'),
       ),
-      body: Padding(
-        padding: paddingScreen,
-        child: ListTileData5(
-          txtLeft: 'Biaya Langganan',
-          txtRight: biayaLangganan,
-          onTap: () {
-            biayaLanggananDialog();
-          },
-        ),
+      body: Column(
+        children: [
+          Padding(
+            padding: paddingScreen,
+            child: ListTileData5(
+              txtLeft: 'Biaya Langganan',
+              txtRight: biayaLangganan,
+              onTap: () {
+                biayaLanggananDialog();
+              },
+            ),
+          ),
+          div_height0,
+          Padding(
+            padding: paddingScreen,
+            child: ListTileData5(
+              txtLeft: 'Karosel Beranda',
+              txtRight: '',
+              onTap: () {
+                Navigator.pushNamed(context, KaroselBerandaPage.id);
+              },
+            ),
+          ),
+          div_height0,
+        ],
       ),
     );
   }

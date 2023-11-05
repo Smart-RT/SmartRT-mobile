@@ -37,9 +37,10 @@ class _KelebihanDanAturanLanggananState
                     style: smartRTTextTitleCard,
                     textAlign: TextAlign.center,
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 50,
-                    thickness: 10,
+                    thickness: 1,
                   ),
                   Text(
                     'KELEBIHAN',
@@ -79,9 +80,10 @@ class _KelebihanDanAturanLanggananState
                       ),
                     ],
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 50,
-                    thickness: 10,
+                    thickness: 1,
                   ),
                   Text(
                     'ATURAN',
@@ -138,9 +140,10 @@ class _KelebihanDanAturanLanggananState
                       ),
                     ],
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 50,
-                    thickness: 10,
+                    thickness: 1,
                   ),
                   Text(
                     'Apakah anda setuju dengan kelebihan serta aturan yang berlaku dan ingin mendaftarkan wilayah anda menjadi SMART RT PRO?',

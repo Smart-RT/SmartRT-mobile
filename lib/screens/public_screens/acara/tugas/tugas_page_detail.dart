@@ -119,9 +119,10 @@ class _TugasPageDetailState extends State<TugasPageDetail> {
                 title: title.toUpperCase(),
                 notes: detail,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 'DATA PETUGAS',

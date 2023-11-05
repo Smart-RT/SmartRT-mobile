@@ -263,9 +263,10 @@ class _DetailRiwayatKesehatanPageState
                 style: smartRTTextTitle.copyWith(letterSpacing: 10),
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -330,7 +331,8 @@ class _DetailRiwayatKesehatanPageState
                       ],
                     )
                   : SizedBox(),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),
@@ -431,7 +433,8 @@ class _DetailRiwayatKesehatanPageState
                       ],
                     )
                   : SizedBox(),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),
@@ -532,7 +535,8 @@ class _DetailRiwayatKesehatanPageState
                   ),
                 ],
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),

@@ -4,6 +4,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
@@ -225,7 +226,7 @@ class SayaPage extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   await context.read<AuthProvider>().logout();
-                  Navigator.pushReplacementNamed(context, WelcomePage.id);
+                  Navigator.pushReplacementNamed(context, LoginPage.id);
                 },
                 child: Card(
                   color: smartRTSecondaryColor,

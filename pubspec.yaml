@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.17.5 <3.0.0"
@@ -67,10 +67,37 @@ dependencies:
   im_stepper: ^1.0.1+1
   slide_to_confirm: ^1.1.0
   flutter_local_notifications: ^15.1.0+1
+  carousel_slider: ^4.2.1
+  flutter_native_splash: ^2.2.19
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  ios: true
+  android: true
+  remove_alpha_ios: true
+  image_path_android: "assets/img/logo/logo-icon.png"
+  image_path_ios: "assets/img/logo/logo-icon.png"
+  image_path: "assets/img/logo/logo-icon.png"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/img/logo/logo-icon.png"
+
+flutter_native_splash:
+  android_12:
+    color: "#311C0A"
+    color_dark: "#311C0A"
+    image: "assets/img/splash/splash.png"
+    image_dark: "assets/img/splash/splash.png"
+    fullscreen: false
+  color: "#311C0A"
+  color_dark: "#311C0A"
+  image: "assets/img/splash/splash.png"
+  image_dark: "assets/img/splash/splash.png"
+  fullscreen: false
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -102,6 +129,12 @@ flutter:
     - assets/lotties/decoration/team-jump.json
     - assets/lotties/decoration/vote.json
     - assets/img/icons/file/pdf.png
+    - assets/img/logo/logo-black.png
+    - assets/img/logo/logo-white.png
+    - assets/img/logo/logo-kotak.png
+    - assets/img/carousel/1.png
+    - assets/img/carousel/2.png
+    - assets/img/carousel/3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

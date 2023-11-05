@@ -369,9 +369,10 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                 style: smartRTTextTitle,
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Column(
                 children: [
@@ -403,7 +404,8 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                           ],
                         )
                       : SizedBox(),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 50,
                     thickness: 1,
                   ),
@@ -419,7 +421,8 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                   ),
                 ],
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),
@@ -443,7 +446,8 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                   ),
                 ],
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),
@@ -474,7 +478,8 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
               rating != -1
                   ? Column(
                       children: [
-                        const Divider(
+                        Divider(
+                          color: smartRTPrimaryColor,
                           height: 50,
                           thickness: 1,
                         ),
@@ -517,7 +522,8 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                       ],
                     )
                   : SizedBox(),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),

@@ -71,15 +71,6 @@ class _LihatSemuaKandidatPageState extends State<LihatSemuaKandidatPage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Daftar Kandidat Pengurus RT'),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.pushNamed(context, BuatJanjiTemuPage.id);
-              },
-            ),
-            SB_height15,
-          ],
           bottom: const TabBar(
             isScrollable: true,
             tabs: <Widget>[

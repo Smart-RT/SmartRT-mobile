@@ -97,9 +97,10 @@ class _LanggananPageDetail1State extends State<LanggananPageDetail1> {
                     textAlign: TextAlign.left,
                   ),
                   SB_height15,
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BCA',
@@ -123,9 +124,10 @@ class _LanggananPageDetail1State extends State<LanggananPageDetail1> {
                       }
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BNI',
@@ -148,9 +150,10 @@ class _LanggananPageDetail1State extends State<LanggananPageDetail1> {
                       }
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BRI',
@@ -173,9 +176,10 @@ class _LanggananPageDetail1State extends State<LanggananPageDetail1> {
                       }
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                 ],
               )

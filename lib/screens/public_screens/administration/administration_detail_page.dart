@@ -1868,9 +1868,10 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
             txtLeft: 'Alamat',
             txtRight: dataAdm!.data_creator!.address ?? '',
           ),
-          const Divider(
+          Divider(
+            color: smartRTPrimaryColor,
             height: 50,
-            thickness: 2,
+            thickness: 1,
           ),
           Text(
             'DATA ORANG YANG MENINGGAL',
@@ -1981,9 +1982,10 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
             txtLeft: 'Alamat',
             txtRight: dataAdm!.data_creator!.address ?? '',
           ),
-          const Divider(
+          Divider(
+            color: smartRTPrimaryColor,
             height: 50,
-            thickness: 2,
+            thickness: 1,
           ),
           Text(
             'DATA ANAK',
@@ -2014,9 +2016,10 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
             txtLeft: 'Gender',
             txtRight: admCreatorGender,
           ),
-          const Divider(
+          Divider(
+            color: smartRTPrimaryColor,
             height: 50,
-            thickness: 2,
+            thickness: 1,
           ),
           Text(
             'DATA AYAH',
@@ -2067,9 +2070,10 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
             txtLeft: 'Pekerjaan',
             txtRight: creatorDadJob,
           ),
-          const Divider(
+          Divider(
+            color: smartRTPrimaryColor,
             height: 50,
-            thickness: 2,
+            thickness: 1,
           ),
           Text(
             'DATA IBU',
@@ -2265,9 +2269,10 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                 style: smartRTTextTitle,
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -2281,14 +2286,16 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                     txtLeft: 'Status',
                     txtRight: admStatus,
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 50,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   dataPemohonWidget,
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 50,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   admStatus == 'Ditolak'
                       ? ListTileData1(

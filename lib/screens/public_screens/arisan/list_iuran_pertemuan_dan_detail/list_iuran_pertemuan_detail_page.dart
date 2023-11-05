@@ -276,8 +276,9 @@ class _ListIuranPertemuanDetailPageState
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Divider(
-                  thickness: 2,
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 1,
                   height: 50,
                 ),
                 Row(
@@ -329,8 +330,9 @@ class _ListIuranPertemuanDetailPageState
                     ),
                   ],
                 ),
-                const Divider(
-                  thickness: 2,
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 1,
                   height: 50,
                 ),
                 Row(
@@ -405,8 +407,9 @@ class _ListIuranPertemuanDetailPageState
                         ],
                       )
                     : const SizedBox(),
-                const Divider(
-                  thickness: 2,
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 1,
                   height: 50,
                 ),
               ],

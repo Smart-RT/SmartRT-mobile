@@ -140,9 +140,10 @@ class _RiwayatArisanPeriodeDetailPageState
                 ],
               ),
             ),
-            const Divider(
+            Divider(
+              color: smartRTPrimaryColor,
               height: 25,
-              thickness: 2,
+              thickness: 1,
             ),
             ListTileArisan(
               title: 'Lihat Semua Anggota',
@@ -154,9 +155,10 @@ class _RiwayatArisanPeriodeDetailPageState
                     arguments: arguments);
               },
             ),
-            const Divider(
+            Divider(
+              color: smartRTPrimaryColor,
               height: 25,
-              thickness: 2,
+              thickness: 1,
             ),
             ListTileArisan(
               title: 'Lihat Semua Pertemuan',
@@ -171,9 +173,10 @@ class _RiwayatArisanPeriodeDetailPageState
                     arguments: arguments);
               },
             ),
-            const Divider(
+            Divider(
+              color: smartRTPrimaryColor,
               height: 25,
-              thickness: 2,
+              thickness: 1,
             ),
           ],
         ),

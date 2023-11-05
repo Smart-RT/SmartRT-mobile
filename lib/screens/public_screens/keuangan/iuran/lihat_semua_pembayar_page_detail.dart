@@ -153,8 +153,9 @@ class _LihatSemuaPembayarPageDetailState
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Divider(
-                  thickness: 2,
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 1,
                   height: 50,
                 ),
                 ListTileData1(
@@ -164,8 +165,9 @@ class _LihatSemuaPembayarPageDetailState
                     txtRight: dataTagihan.dataUser!.address ?? ''),
                 ListTileData1(
                     txtLeft: 'Telp', txtRight: dataTagihan.dataUser!.phone),
-                const Divider(
-                  thickness: 2,
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 1,
                   height: 50,
                 ),
                 ListTileData1(
@@ -199,8 +201,9 @@ class _LihatSemuaPembayarPageDetailState
                         dateTime: dataTagihan.updated_at!, isWithTime: false),
                     crossAxisAlignment: CrossAxisAlignment.center,
                   ),
-                const Divider(
-                  thickness: 2,
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 1,
                   height: 50,
                 ),
                 if (dataTagihan.status == 0 && user.id == dataTagihan.user_id)

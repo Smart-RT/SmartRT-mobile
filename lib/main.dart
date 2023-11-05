@@ -18,6 +18,7 @@ import 'package:smart_rt/providers/setting_provider.dart';
 import 'package:smart_rt/providers/subscribe_provider.dart';
 import 'package:smart_rt/providers/voting_provider.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
+import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/beranda_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
@@ -65,7 +66,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
     if (roleUser == Role.Admin) {
       routeStart = BerandaAdminPage.id;
     } else if (roleUser == Role.None) {
-      routeStart = WelcomePage.id;
+      routeStart = LoginPage.id;
     } else {
       routeStart = PublicHome.id;
     }
@@ -99,6 +100,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
         ChangeNotifierProvider(create: ((context) => AreaBillProvider())),
       ],
       builder: (context, child) {
+        ApplicationProvider.context = context;
         return MaterialApp(
           title: 'Flutter Demo',
           theme: getThemeData(),

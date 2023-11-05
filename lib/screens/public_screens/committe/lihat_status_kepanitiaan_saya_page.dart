@@ -274,9 +274,10 @@ class _LihatStatusKepanitiaanSayaPageState
                 style: smartRTTextTitle,
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(txtLeft: 'Tanggal Daftar', txtRight: tanggalDaftar),
               ListTileData1(

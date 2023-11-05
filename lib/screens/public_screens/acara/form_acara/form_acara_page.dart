@@ -166,9 +166,10 @@ class _FormAcaraPageState extends State<FormAcaraPage> {
                   controller: _TECDateEnd,
                 ),
               if (type == 'create')
-                const Divider(
+                Divider(
+                  color: smartRTPrimaryColor,
                   height: 50,
-                  thickness: 5,
+                  thickness: 1,
                 ),
               TextFormField(
                 controller: _TECJudul,

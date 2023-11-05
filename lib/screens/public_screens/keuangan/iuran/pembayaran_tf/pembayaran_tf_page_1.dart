@@ -105,9 +105,10 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                     textAlign: TextAlign.left,
                   ),
                   SB_height15,
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BCA',
@@ -154,9 +155,10 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                       //     arguments: args);
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BNI',
@@ -183,9 +185,10 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                       //     arguments: args);
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BRI',
@@ -212,9 +215,10 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                       //     arguments: args);
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                 ],
               )

@@ -72,7 +72,7 @@ class _VotingPage1State extends State<VotingPage1> {
             child: NumberStepper(
               enableNextPreviousButtons: false,
               stepColor: smartRTDisabledColor,
-              activeStepColor: smartRTQuaternaryColor,
+              activeStepColor: smartRTActiveColor2,
               activeStepBorderColor: smartRTPrimaryColor,
               numberStyle: smartRTTextLarge,
               lineColor: smartRTPrimaryColor,
@@ -121,7 +121,7 @@ class _VotingPage1State extends State<VotingPage1> {
     return Container(
       padding: paddingCard,
       decoration: BoxDecoration(
-        color: smartRTQuaternaryColor,
+        color: smartRTActiveColor2,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Row(
@@ -194,10 +194,10 @@ class _VotingPage1State extends State<VotingPage1> {
                   Lottie.asset('assets/lotties/decoration/vote.json',
                       fit: BoxFit.fitWidth),
                   ConfirmationSlider(
-                    backgroundColor: smartRTQuaternaryColor,
+                    backgroundColor: smartRTActiveColor2,
                     backgroundColorEnd: smartRTSuccessColor,
                     foregroundColor: smartRTPrimaryColor,
-                    iconColor: smartRTQuaternaryColor,
+                    iconColor: smartRTActiveColor2,
                     text: 'Geser untuk Konfirmasi',
                     onConfirmation: () async {
                       debugPrint('masokkkk');

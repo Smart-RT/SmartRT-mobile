@@ -233,16 +233,18 @@ class _DetailRequestRolePageState extends State<DetailRequestRolePage> {
                 style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(txtLeft: 'Status', txtRight: status),
               ListTileData1(txtLeft: 'Tanggal Dibuat', txtRight: createdAt),
               if (isConfirmated)
                 ListTileData1(
                     txtLeft: 'Tanggal Konfirmasi', txtRight: confirmationAt),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),
@@ -270,7 +272,8 @@ class _DetailRequestRolePageState extends State<DetailRequestRolePage> {
                 txtLeft: 'RT / RW',
                 txtRight: rtrw,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),
@@ -334,7 +337,8 @@ class _DetailRequestRolePageState extends State<DetailRequestRolePage> {
                   );
                 },
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
@@ -121,9 +122,10 @@ class _PembayaranIuranArisanPage1State
                     textAlign: TextAlign.left,
                   ),
                   SB_height15,
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BCA',
@@ -150,9 +152,10 @@ class _PembayaranIuranArisanPage1State
                           arguments: args);
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BNI',
@@ -179,9 +182,10 @@ class _PembayaranIuranArisanPage1State
                           arguments: args);
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'BRI',
@@ -208,9 +212,10 @@ class _PembayaranIuranArisanPage1State
                           arguments: args);
                     },
                   ),
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                 ],
               )

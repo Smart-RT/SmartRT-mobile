@@ -130,8 +130,9 @@ class _AdministrationCreatePage2State extends State<AdministrationCreatePage2> {
                   labelText: 'Alamat',
                 ),
               ),
-              const Divider(
-                thickness: 2,
+              Divider(
+                color: smartRTPrimaryColor,
+                thickness: 1,
                 height: 50,
               ),
               TextFormField(

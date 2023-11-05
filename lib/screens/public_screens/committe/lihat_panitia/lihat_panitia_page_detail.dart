@@ -291,9 +291,10 @@ class _LihatPanitiaPageDetailState extends State<LihatPanitiaPageDetail> {
                 style: smartRTTextTitle,
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(txtLeft: 'Tanggal Daftar', txtRight: tanggalDaftar),
               ListTileData1(
@@ -301,17 +302,19 @@ class _LihatPanitiaPageDetailState extends State<LihatPanitiaPageDetail> {
               ListTileData1(txtLeft: 'Status', txtRight: status),
               if (alasan != '')
                 ListTileData1(txtLeft: 'Alasan', txtRight: alasan),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(txtLeft: 'Nama', txtRight: nama),
               ListTileData1(txtLeft: 'Jenis Kelamin', txtRight: jk),
               ListTileData1(txtLeft: 'Umur', txtRight: '$umur tahun'),
               ListTileData1(txtLeft: 'Alamat', txtRight: alamat),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               if (dataPanitia.created_by!.user_role == Role.Warga &&
                   dataPanitia.status == 0 &&

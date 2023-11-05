@@ -256,9 +256,10 @@ class _LihatStatusKandidatCalonPengurusRTSayaPageState
                 style: smartRTTextTitle,
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(txtLeft: 'Nama', txtRight: kandidatName),
               ListTileData1(txtLeft: 'Alamat', txtRight: kandidatAddress),
@@ -266,9 +267,10 @@ class _LihatStatusKandidatCalonPengurusRTSayaPageState
               ListTileData1(
                   txtLeft: 'Tanggal Lahir', txtRight: kandidatBornDate),
               ListTileData1(txtLeft: 'Umur', txtRight: kandidatAge),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(txtLeft: 'Tanggal Daftar', txtRight: tanggalDaftar),
               ListTileData1(
@@ -276,9 +278,10 @@ class _LihatStatusKandidatCalonPengurusRTSayaPageState
               ListTileData1(txtLeft: 'Status', txtRight: status),
               if (alasan != '')
                 ListTileData1(txtLeft: 'Alasan', txtRight: alasan),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(txtLeft: 'Visi', txtRight: visi),
               ListTileData1(txtLeft: 'Misi', txtRight: misi),
@@ -304,9 +307,10 @@ class _LihatStatusKandidatCalonPengurusRTSayaPageState
                     ),
                   ),
                 ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
             ],
           ),

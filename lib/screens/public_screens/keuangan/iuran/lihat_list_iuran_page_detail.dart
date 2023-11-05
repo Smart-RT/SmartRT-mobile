@@ -58,9 +58,10 @@ class _LihatListIuranPageDetailState extends State<LihatListIuranPageDetail> {
                 style: smartRTTextTitleCard,
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(
                   txtLeft: 'Dibuat Tanngal',
@@ -69,7 +70,8 @@ class _LihatListIuranPageDetailState extends State<LihatListIuranPageDetail> {
               ListTileData1(
                   txtLeft: 'Dibuat Oleh',
                   txtRight: dataIuran.created_by!.full_name),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),
@@ -82,7 +84,8 @@ class _LihatListIuranPageDetailState extends State<LihatListIuranPageDetail> {
                   txtLeft: 'Nominal Tagihan',
                   txtRight:
                       CurrencyFormat.convertToIdr(dataIuran.bill_amount, 2)),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),

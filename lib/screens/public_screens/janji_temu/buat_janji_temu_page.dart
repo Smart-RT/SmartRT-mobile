@@ -234,9 +234,10 @@ class _BuatJanjiTemuPageState extends State<BuatJanjiTemuPage> {
                       onSaved: (val) => print(val),
                       controller: _TECDateTime,
                     ),
-                    const Divider(
+                    Divider(
+                      color: smartRTPrimaryColor,
                       height: 50,
-                      thickness: 5,
+                      thickness: 1,
                     ),
                     Text(
                       'KEPERLUAN',
@@ -262,9 +263,10 @@ class _BuatJanjiTemuPageState extends State<BuatJanjiTemuPage> {
                         labelText: 'Detail',
                       ),
                     ),
-                    const Divider(
+                    Divider(
+                      color: smartRTPrimaryColor,
                       height: 50,
-                      thickness: 5,
+                      thickness: 1,
                     ),
                     Text(
                       'LAMPIRAN',

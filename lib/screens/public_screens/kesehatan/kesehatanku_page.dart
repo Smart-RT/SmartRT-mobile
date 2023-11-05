@@ -136,8 +136,9 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                       ? Column(
                           children: [
                             SB_height30,
-                            const Divider(
-                              thickness: 5,
+                            Divider(
+                              color: smartRTPrimaryColor,
+                              thickness: 1,
                             ),
                             SB_height30,
                             CardListTilePrimary(
@@ -177,8 +178,9 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                 ],
               ),
               SB_height30,
-              const Divider(
-                thickness: 5,
+              Divider(
+                color: smartRTPrimaryColor,
+                thickness: 1,
               ),
               SB_height30,
               user.is_health == 0
@@ -236,8 +238,9 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                           },
                         ),
                         SB_height30,
-                        const Divider(
-                          thickness: 5,
+                        Divider(
+                          color: smartRTPrimaryColor,
+                          thickness: 1,
                         ),
                         SB_height30,
                         CardListTileWithButton(
@@ -267,8 +270,9 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                       },
                     ),
               SB_height30,
-              const Divider(
-                thickness: 5,
+              Divider(
+                color: smartRTPrimaryColor,
+                thickness: 1,
               ),
               SB_height30,
               (user.user_role == Role.Ketua_RT ||
@@ -293,8 +297,9 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                             context, FormLaporKesehatanChooseUserPage.id);
                       }),
               SB_height30,
-              const Divider(
-                thickness: 5,
+              Divider(
+                color: smartRTPrimaryColor,
+                thickness: 1,
               ),
               SB_height30,
             ],

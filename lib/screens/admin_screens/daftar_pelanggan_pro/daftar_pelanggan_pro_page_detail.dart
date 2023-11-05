@@ -67,16 +67,18 @@ class DaftarPelangganProPageDetailState
                 style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(
                   txtLeft: 'Total Populasi',
                   txtRight: '${data.total_population} pengguna aplikasi'),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 'DATA KETUA RT',
@@ -88,9 +90,10 @@ class DaftarPelangganProPageDetailState
               ListTileData1(txtLeft: '', txtRight: ketuaRTAge),
               ListTileData1(txtLeft: '', txtRight: ketuaRTAddress),
               ListTileData1(txtLeft: '', txtRight: ketuaRTPhone),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 2,
+                thickness: 1,
               ),
               Text(
                 'DATA TAGIHAN',
@@ -129,9 +132,10 @@ class DaftarPelangganProPageDetailState
                           dateTime: data.dataSubscribe!.created_at
                               .add(Duration(days: 7)),
                           isWithTime: false)),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               SizedBox(
                 width: double.infinity,

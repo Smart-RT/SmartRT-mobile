@@ -24,20 +24,23 @@ class CardIconWithText extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          Container(
-            height: 70,
-            child: AspectRatio(
-              aspectRatio: 1 / 1,
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: smartRTTertiaryColor,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 35,
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              height: 70,
+              child: AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: smartRTTertiaryColor,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Icon(
+                    icon,
+                    color: iconColor,
+                    size: 35,
+                  ),
                 ),
               ),
             ),

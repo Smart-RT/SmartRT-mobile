@@ -3,6 +3,7 @@ import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page_detail.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_bill_page.dart';
+import 'package:smart_rt/screens/admin_screens/pengaturan/karosel_beranda/karosel_beranda_page.dart';
 
 import 'package:smart_rt/screens/admin_screens/pengaturan/pengaturan_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/buat_akun_admin_page.dart';
@@ -618,6 +619,11 @@ class Routes {
           return DaftarPelangganProBillPage(
             args: settings.arguments as DaftarPelangganProBillPageArguments,
           );
+        });
+
+      case KaroselBerandaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return KaroselBerandaPage();
         });
 
       case LanggananPage.id:

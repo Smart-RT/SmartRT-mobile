@@ -171,9 +171,10 @@ class _AcaraPageDetailState extends State<AcaraPageDetail> {
                 title: title.toUpperCase(),
                 notes: detail,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 'TANGGAL DAN WAKTU',
@@ -182,9 +183,10 @@ class _AcaraPageDetailState extends State<AcaraPageDetail> {
               SB_height15,
               ListTileData1(txtLeft: 'Tanggal', txtRight: tanggal),
               ListTileData1(txtLeft: 'Waktu', txtRight: waktu),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 'TUGAS',
@@ -253,9 +255,10 @@ class _AcaraPageDetailState extends State<AcaraPageDetail> {
                     style: smartRTTextLarge,
                   ),
                 ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
             ],
           ),

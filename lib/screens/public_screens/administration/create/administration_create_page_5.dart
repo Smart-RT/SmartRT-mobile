@@ -270,9 +270,10 @@ class _AdministrationCreatePage5State extends State<AdministrationCreatePage5> {
                         labelText: 'Penyebab',
                       ),
                     ),
-                    const Divider(
+                    Divider(
+                      color: smartRTPrimaryColor,
                       height: 50,
-                      thickness: 5,
+                      thickness: 1,
                     ),
                   ],
                 ),
@@ -294,9 +295,10 @@ class _AdministrationCreatePage5State extends State<AdministrationCreatePage5> {
                       decoration:
                           const InputDecoration(hintText: 'Tuliskan disini...'),
                     ),
-                    const Divider(
+                    Divider(
+                      color: smartRTPrimaryColor,
                       height: 50,
-                      thickness: 5,
+                      thickness: 1,
                     ),
                   ],
                 ),

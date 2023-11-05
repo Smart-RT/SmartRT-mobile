@@ -56,8 +56,9 @@ class ListTileKandidatVote extends StatelessWidget {
             style: smartRTTextTitleCard.copyWith(letterSpacing: 5),
             textAlign: TextAlign.left,
           ),
-          const Divider(
-            thickness: 2,
+          Divider(
+            color: smartRTPrimaryColor,
+            thickness: 1,
           ),
           Row(
             children: [
@@ -98,8 +99,9 @@ class ListTileKandidatVote extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(
-            thickness: 2,
+          Divider(
+            color: smartRTPrimaryColor,
+            thickness: 1,
           ),
           if (isShowMore)
             Column(
@@ -133,8 +135,9 @@ class ListTileKandidatVote extends StatelessWidget {
                   ],
                 ),
                 SB_height15,
-                const Divider(
-                  thickness: 2,
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 1,
                 ),
                 SB_height15,
                 Text(
@@ -160,8 +163,9 @@ class ListTileKandidatVote extends StatelessWidget {
                   ],
                 ),
                 SB_height15,
-                const Divider(
-                  thickness: 2,
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 1,
                 ),
               ],
             ),

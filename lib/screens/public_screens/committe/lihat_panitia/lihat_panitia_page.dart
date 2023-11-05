@@ -67,15 +67,6 @@ class _LihatPanitiaPageState extends State<LihatPanitiaPage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Daftar Panitia'),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.pushNamed(context, BuatJanjiTemuPage.id);
-              },
-            ),
-            SB_height15,
-          ],
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(

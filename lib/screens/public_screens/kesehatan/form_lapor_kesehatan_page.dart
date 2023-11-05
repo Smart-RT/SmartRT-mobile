@@ -190,8 +190,9 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
                   ? Column(
                       children: [
                         SB_height30,
-                        const Divider(
-                          thickness: 5,
+                        Divider(
+                          color: smartRTPrimaryColor,
+                          thickness: 1,
                           height: 10,
                         ),
                         ListTileUser1(
@@ -199,15 +200,17 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
                             address: dataUserTerlaporkan!.address.toString(),
                             initialName: StringFormat.initialName(
                                 dataUserTerlaporkan!.full_name)),
-                        const Divider(
-                          thickness: 5,
+                        Divider(
+                          color: smartRTPrimaryColor,
+                          thickness: 1,
                           height: 10,
                         ),
                         SB_height30
                       ],
                     )
-                  : const Divider(
-                      thickness: 5,
+                  : Divider(
+                      color: smartRTPrimaryColor,
+                      thickness: 1,
                       height: 50,
                     ),
               Text(

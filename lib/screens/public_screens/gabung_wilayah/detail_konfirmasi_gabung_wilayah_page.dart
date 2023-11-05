@@ -222,9 +222,10 @@ class _DetailKonfirmasiGabungWilayahPageState
                 style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -268,7 +269,8 @@ class _DetailKonfirmasiGabungWilayahPageState
                       ],
                     )
                   : const SizedBox(),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),
@@ -332,7 +334,8 @@ class _DetailKonfirmasiGabungWilayahPageState
                   ),
                 ],
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
                 thickness: 1,
               ),

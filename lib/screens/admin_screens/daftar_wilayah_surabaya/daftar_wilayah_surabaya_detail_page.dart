@@ -87,16 +87,18 @@ class DaftarWilayahSurabayaDetailPageState
                 style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               ListTileData1(
                   txtLeft: 'Total Populasi',
                   txtRight: '${data.total_population} pengguna aplikasi'),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 'PENGURUS RT',
@@ -131,9 +133,10 @@ class DaftarWilayahSurabayaDetailPageState
                 ListTileData1(txtLeft: '', txtRight: bendaharaRTAddress),
               if (bendaharaRTNama != '-')
                 ListTileData1(txtLeft: '', txtRight: bendaharaRTPhone),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               SizedBox(
                 width: double.infinity,

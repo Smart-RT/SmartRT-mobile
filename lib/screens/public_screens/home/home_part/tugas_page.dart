@@ -314,9 +314,10 @@ class _TugasSayaPageState extends State<TugasSayaPage> {
               ],
             ),
           ),
-          const Divider(
+          Divider(
+            color: smartRTPrimaryColor,
             height: 50,
-            thickness: 5,
+            thickness: 1,
           ),
           if (listTugas.isEmpty)
             Expanded(

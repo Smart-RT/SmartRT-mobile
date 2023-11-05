@@ -741,9 +741,10 @@ class _ListJanjiTemuDetailPageState extends State<ListJanjiTemuDetailPage> {
               if (confirmationDate != '')
                 ListTileData1(
                     txtLeft: 'Tanggal Konfirmasi', txtRight: confirmationDate),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 titleDataPemohon,
@@ -760,9 +761,10 @@ class _ListJanjiTemuDetailPageState extends State<ListJanjiTemuDetailPage> {
                 ListTileData1(txtLeft: 'Kelurahan', txtRight: pemohonKelurahan),
               if (pemohonRTRW != '')
                 ListTileData1(txtLeft: 'RT/RW', txtRight: pemohonRTRW),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 titleDataResponden,
@@ -779,9 +781,10 @@ class _ListJanjiTemuDetailPageState extends State<ListJanjiTemuDetailPage> {
                     txtLeft: 'Kelurahan', txtRight: respondenKelurahan),
               if (respondenRTRW != '')
                 ListTileData1(txtLeft: 'RT/RW', txtRight: respondenRTRW),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 status == 'Terjadwalkan' || status == 'Selesai'
@@ -797,9 +800,10 @@ class _ListJanjiTemuDetailPageState extends State<ListJanjiTemuDetailPage> {
                   status == 'Menunggu Konfirmasi Pemohon')
                 ListTileData1(
                     txtLeft: 'Diajukan Oleh', txtRight: meetDateTimeBy),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               Text(
                 'KEPERLUAN',
@@ -832,9 +836,10 @@ class _ListJanjiTemuDetailPageState extends State<ListJanjiTemuDetailPage> {
                   );
                 },
               ),
-              const Divider(
+              Divider(
+                color: smartRTPrimaryColor,
                 height: 50,
-                thickness: 5,
+                thickness: 1,
               ),
               if (showBtnGantiResponden)
                 Column(

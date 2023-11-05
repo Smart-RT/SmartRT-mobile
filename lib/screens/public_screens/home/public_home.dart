@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
+import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/user/user.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/beranda_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/keuangan_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/pengumuman_page.dart';
@@ -18,6 +21,7 @@ class PublicHome extends StatefulWidget {
 }
 
 class _PublicHomeState extends State<PublicHome> {
+  User user = AuthProvider.currentUser!;
   List<News> listPengumuman = [];
   int _selectedIndex = 0;
   late final List<Widget> _widgetOptions = <Widget>[
@@ -44,6 +48,23 @@ class _PublicHomeState extends State<PublicHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: _selectedIndex == 0
+            ? Row(
+                children: [
+                  SizedBox(
+                      width: 25,
+                      child: Image.asset('assets/img/logo/logo-kotak.png',
+                          fit: BoxFit.fitWidth)),
+                  SB_width15,
+                  Text(
+                    'Hai, ${user.full_name}',
+                    style: smartRTTextLarge.copyWith(
+                      color: smartRTSecondaryColor,
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
         actions: [
           Icon(Icons.notifications),
           SB_width25,

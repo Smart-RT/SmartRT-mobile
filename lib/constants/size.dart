@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_rt/constants/colors.dart';
 
 final double roundSize = 5;
 
@@ -28,6 +29,12 @@ final SizedBox SB_width15 = SizedBox(
 
 final SizedBox SB_width25 = SizedBox(
   width: 25,
+);
+
+final Divider div_height0 = Divider(
+  color: smartRTPrimaryColor,
+  thickness: 1,
+  height: 0,
 );
 
 final EdgeInsets paddingScreen = EdgeInsets.all(25);

@@ -459,9 +459,10 @@ class _RiwayatArisanPertemuanDetailPageState
                 status == "Published")
               Column(
                 children: [
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 25,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'Mulai Sekarang',
@@ -474,9 +475,10 @@ class _RiwayatArisanPertemuanDetailPageState
             if (statusPembayaran.toLowerCase() != 'lunas')
               Column(
                 children: [
-                  const Divider(
+                  Divider(
+                    color: smartRTPrimaryColor,
                     height: 25,
-                    thickness: 2,
+                    thickness: 1,
                   ),
                   ListTileArisan(
                     title: 'Bayar Iuran Sekarang',
@@ -486,9 +488,10 @@ class _RiwayatArisanPertemuanDetailPageState
                   ),
                 ],
               ),
-            const Divider(
+            Divider(
+              color: smartRTPrimaryColor,
               height: 25,
-              thickness: 2,
+              thickness: 1,
             ),
             ListTileArisan(
               title: 'Lihat Absensi',
@@ -533,9 +536,10 @@ class _RiwayatArisanPertemuanDetailPageState
                 }
               },
             ),
-            const Divider(
+            Divider(
+              color: smartRTPrimaryColor,
               height: 25,
-              thickness: 2,
+              thickness: 1,
             ),
             ListTileArisan(
               title: 'Lihat Iuran Arisan',
@@ -549,9 +553,10 @@ class _RiwayatArisanPertemuanDetailPageState
                     arguments: args);
               },
             ),
-            const Divider(
+            Divider(
+              color: smartRTPrimaryColor,
               height: 25,
-              thickness: 2,
+              thickness: 1,
             ),
           ],
         ),

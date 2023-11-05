@@ -153,7 +153,7 @@ class User {
     if (userData['is_committe'] != null) {
       is_committe = int.parse(userData['is_committe'].toString());
     }
-    if (userData['area_id'] != null) {
+    if (userData['area_id'] != null && userData['area_id'] != "null") {
       area_id = int.parse(userData['area_id'].toString());
     }
   }

@@ -20,7 +20,7 @@ import 'package:smart_rt/widgets/cards/card_list_tile_with_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:smart_rt/screens/admin_screens/pengaturan/pengaturan_page.dart';
 
-import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
+import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class BerandaAdminPage extends StatefulWidget {
@@ -318,7 +318,7 @@ class _BerandaAdminPageState extends State<BerandaAdminPage> {
               onTap: () async {
                 Navigator.pop(context);
                 await context.read<AuthProvider>().logout();
-                Navigator.pushReplacementNamed(context, WelcomePage.id);
+                Navigator.pushReplacementNamed(context, LoginPage.id);
               },
             ),
           ],
