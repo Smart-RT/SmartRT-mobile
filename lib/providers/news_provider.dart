@@ -1,8 +1,7 @@
 import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:smart_rt/models/event/event.dart';
-import 'package:smart_rt/models/event/event_task_detail_rating.dart';
 import 'package:smart_rt/models/news/news.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 

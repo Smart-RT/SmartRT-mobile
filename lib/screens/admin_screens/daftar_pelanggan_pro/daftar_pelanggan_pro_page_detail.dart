@@ -4,13 +4,10 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/area/area.dart';
-import 'package:smart_rt/models/subscribe/pro_subscribe_bill.dart';
-import 'package:smart_rt/providers/population_provider.dart';
 import 'package:smart_rt/providers/subscribe_provider.dart';
-import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/lihat_warga_page.dart';
+import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_bill_page.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
-import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_bill_page.dart';
 
 class DaftarPelangganProPageDetailArguments {
   int index;

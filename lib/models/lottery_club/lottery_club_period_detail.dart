@@ -1,5 +1,4 @@
 import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
-import 'package:smart_rt/models/lottery_club/lottery_club.dart';
 import 'package:smart_rt/models/user/user.dart';
 
 class LotteryClubPeriodDetail {

@@ -1,14 +1,12 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {

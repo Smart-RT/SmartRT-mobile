@@ -1,20 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:smart_rt/constants/colors.dart';
-import 'package:smart_rt/models/area/sub_district.dart';
-import 'package:smart_rt/models/area/urban_village.dart';
+import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/models/user/user_role_request.dart';
 import 'package:smart_rt/providers/application_provider.dart';
-import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 

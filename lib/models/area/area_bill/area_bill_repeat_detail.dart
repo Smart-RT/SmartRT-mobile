@@ -1,6 +1,3 @@
-import 'package:smart_rt/models/user/user.dart';
-import 'package:smart_rt/models/area/area.dart';
-
 class AreaBillRepeatDetail {
   int id = -1;
   DateTime month_year = DateTime.now();

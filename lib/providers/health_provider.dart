@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
-import 'package:smart_rt/models/lottery_club/lottery_club.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';

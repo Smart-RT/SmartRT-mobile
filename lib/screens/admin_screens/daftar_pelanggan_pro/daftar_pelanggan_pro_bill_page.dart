@@ -5,15 +5,9 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/subscribe/pro_subscribe_bill.dart';
 import 'package:smart_rt/models/user/user.dart';
-import 'package:smart_rt/models/user/user_role_request.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/providers/role_request_provider.dart';
 import 'package:smart_rt/providers/subscribe_provider.dart';
-import 'package:smart_rt/screens/admin_screens/request_role/detail_request_role_page.dart';
-import 'package:smart_rt/screens/public_screens/langganan/langganan_page_detail_1.dart';
-import 'package:smart_rt/screens/public_screens/langganan/langganan_page_detail_2.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
-import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_status_color.dart';
 
 class DaftarPelangganProBillPageArguments {

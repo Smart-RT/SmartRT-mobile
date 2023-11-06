@@ -1,12 +1,12 @@
 import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/models/app_setting/app_setting.dart';
 import 'package:smart_rt/utilities/net_util.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class SettingProvider extends ChangeNotifier {

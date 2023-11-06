@@ -1,7 +1,11 @@
 import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_rt/models/neighbourhood_head/neighbourhood_head_candidate.dart';
+import 'package:smart_rt/constants/theme.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/application_provider.dart';
 import 'package:smart_rt/providers/area_bill_provider.dart';
@@ -10,25 +14,19 @@ import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/committe_provider.dart';
 import 'package:smart_rt/providers/event_provider.dart';
 import 'package:smart_rt/providers/health_provider.dart';
-import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/providers/neighbourhood_head_provider.dart';
+import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/providers/population_provider.dart';
 import 'package:smart_rt/providers/role_request_provider.dart';
 import 'package:smart_rt/providers/setting_provider.dart';
 import 'package:smart_rt/providers/subscribe_provider.dart';
 import 'package:smart_rt/providers/voting_provider.dart';
+import 'package:smart_rt/routes/routes.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
-import 'package:smart_rt/screens/public_screens/home/home_part/beranda_page.dart';
-import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_page.dart';
+
 import 'firebase_options.dart';
-import 'package:flutter/material.dart';
-import 'package:smart_rt/constants/theme.dart';
-import 'package:smart_rt/routes/routes.dart';
-import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:month_year_picker/month_year_picker.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

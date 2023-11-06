@@ -1,4 +1,3 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
@@ -43,6 +42,7 @@ class _BuatAkunAdminPageState extends State<BuatAkunAdminPage> {
                     if (value == null || value.isEmpty) {
                       return 'Judul Keperluan tidak boleh kosong';
                     }
+                    return null;
                   },
                 ),
                 SB_height50,
@@ -83,6 +83,7 @@ class _BuatAkunAdminPageState extends State<BuatAkunAdminPage> {
                     if (value == null) {
                       return 'Jenis Kelamin tidak boleh kosong';
                     }
+                    return null;
                   },
                   onChanged: (value) {
                     setState(() {
@@ -104,6 +105,7 @@ class _BuatAkunAdminPageState extends State<BuatAkunAdminPage> {
                     if (value == null || value.isEmpty) {
                       return 'Judul Keperluan tidak boleh kosong';
                     }
+                    return null;
                   },
                 ),
                 SB_height15,
@@ -118,6 +120,7 @@ class _BuatAkunAdminPageState extends State<BuatAkunAdminPage> {
                     if (value == null || value.isEmpty) {
                       return 'Detail Keperluan tidak boleh kosong';
                     }
+                    return null;
                   },
                 ),
                 SB_height15,
@@ -130,8 +133,7 @@ class _BuatAkunAdminPageState extends State<BuatAkunAdminPage> {
                       style: smartRTTextLargeBold_Primary,
                     ),
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: smartRTPrimaryColor, width: 2)
-                    ),
+                        side: BorderSide(color: smartRTPrimaryColor, width: 2)),
                   ),
                 ),
               ],

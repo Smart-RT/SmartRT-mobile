@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:smart_rt/models/area/area.dart';
 import 'package:smart_rt/models/area/sub_district.dart';
 import 'package:smart_rt/models/area/urban_village.dart';
@@ -209,7 +208,6 @@ class User {
 
   String initialName() {
     // J
-    String initName = '';
     if (full_name == '') {
       return '';
     } else if (full_name.contains(' ')) {

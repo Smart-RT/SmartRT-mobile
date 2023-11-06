@@ -1,12 +1,12 @@
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/style.dart';
+import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
-import 'package:smart_rt/screens/public_screens/authentications/welcome_page.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
@@ -73,7 +73,7 @@ class SayaPage extends StatelessWidget {
           ),
         ),
         Container(
-          height: 500,
+          height: 400,
           child: ListView(
             children: <Widget>[
               GestureDetector(
@@ -120,50 +120,54 @@ class SayaPage extends StatelessWidget {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, GabungWilayahPage.id);
-                },
-                child: Card(
-                  color: smartRTSecondaryColor,
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.domain_add,
-                      color: smartRTPrimaryColor,
+              AuthProvider.currentUser!.user_role == Role.Ketua_RT
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, GabungWilayahPage.id);
+                      },
+                      child: Card(
+                        color: smartRTSecondaryColor,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.domain_add,
+                            color: smartRTPrimaryColor,
+                          ),
+                          title: Text(
+                            'Join Wilayah',
+                            style: smartRTTextLargeBold_Primary,
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: smartRTPrimaryColor,
+                          ),
+                        ),
+                      ),
                     ),
-                    title: Text(
-                      'Join Wilayah',
-                      style: smartRTTextLargeBold_Primary,
+              AuthProvider.currentUser!.user_role == Role.Ketua_RT
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, DaftarKetuaPage.id);
+                      },
+                      child: Card(
+                        color: smartRTSecondaryColor,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.accessibility_new_rounded,
+                            color: smartRTPrimaryColor,
+                          ),
+                          title: Text(
+                            'Daftar menjadi Ketua RT',
+                            style: smartRTTextLargeBold_Primary,
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: smartRTPrimaryColor,
+                          ),
+                        ),
+                      ),
                     ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      color: smartRTPrimaryColor,
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, DaftarKetuaPage.id);
-                },
-                child: Card(
-                  color: smartRTSecondaryColor,
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility_new_rounded,
-                      color: smartRTPrimaryColor,
-                    ),
-                    title: Text(
-                      'Daftar menjadi Ketua RT',
-                      style: smartRTTextLargeBold_Primary,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      color: smartRTPrimaryColor,
-                    ),
-                  ),
-                ),
-              ),
               GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, ReqUpdateRolePage.id);
@@ -203,26 +207,28 @@ class SayaPage extends StatelessWidget {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () async {},
-                child: Card(
-                  color: smartRTSecondaryColor,
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.logout,
-                      color: smartRTPrimaryColor,
+              AuthProvider.currentUser!.user_role == Role.Guest
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () async {},
+                      child: Card(
+                        color: smartRTSecondaryColor,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.logout,
+                            color: smartRTPrimaryColor,
+                          ),
+                          title: Text(
+                            'Keluarkan Jabatan',
+                            style: smartRTTextLargeBold_Primary,
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: smartRTPrimaryColor,
+                          ),
+                        ),
+                      ),
                     ),
-                    title: Text(
-                      'Keluarkan Jabatan',
-                      style: smartRTTextLargeBold_Primary,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      color: smartRTPrimaryColor,
-                    ),
-                  ),
-                ),
-              ),
               GestureDetector(
                 onTap: () async {
                   await context.read<AuthProvider>().logout();

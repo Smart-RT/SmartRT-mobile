@@ -1,4 +1,3 @@
-import 'package:smart_rt/models/event/event_task_detail.dart';
 import 'package:smart_rt/models/user/user.dart';
 
 class EventTaskDetailRating {

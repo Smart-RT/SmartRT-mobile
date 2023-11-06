@@ -73,15 +73,90 @@ class _BerandaPageState extends State<BerandaPage> {
   Function() funcBtn1WidgetPengurusRT = () {};
 
   void acara() async {
-    Navigator.pushNamed(context, AcaraPage.id);
+    if (user.area == null) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Anda baru dapat menggunakan fitur ini jika anda telah bergabung dengan wilayah anda!',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Navigator.pushNamed(context, AcaraPage.id);
+    }
   }
 
   void janjiTemu() async {
-    Navigator.pushNamed(context, ListJanjiTemuPage.id);
+    if (user.area == null) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Anda baru dapat menggunakan fitur ini jika anda telah bergabung dengan wilayah anda!',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Navigator.pushNamed(context, ListJanjiTemuPage.id);
+    }
   }
 
   void administrasi() async {
-    Navigator.pushNamed(context, AdministrationPage.id);
+    if (user.area == null) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Anda baru dapat menggunakan fitur ini jika anda telah bergabung dengan wilayah anda!',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Navigator.pushNamed(context, AdministrationPage.id);
+    }
   }
 
   void arisan() async {
@@ -113,18 +188,8 @@ class _BerandaPageState extends State<BerandaPage> {
     }
   }
 
-  void performaSaya() async {}
-  void kesehatan() async {
-    Navigator.pushNamed(context, KesehatankuPage.id);
-  }
-
-  void gabungWilayah() async {
-    Navigator.pushNamed(context, GabungWilayahPage.id);
-  }
-
-  void langgananPro() async {
-    int subscribeAmount = context.read<SettingProvider>().subscribeAmount;
-    if (user.area!.is_subscribe_pro == 0) {
+  void performaSaya() async {
+    if (user.area == null) {
       showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -133,47 +198,137 @@ class _BerandaPageState extends State<BerandaPage> {
             style: smartRTTextTitleCard,
           ),
           content: Text(
-            'Anda belum bergabung menjadi pengguna Smart RT Pro! Apakah anda berminat untuk mendaftar dan bergabung berlangganan untuk dapat mengakses semua fitur?\n\nBiaya Langganan : \n${CurrencyFormat.convertToIdr(subscribeAmount, 2)}/bulan',
+            'Anda baru dapat menggunakan fitur ini jika anda telah bergabung dengan wilayah anda!',
             style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
           ),
           actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0),
-                  ))),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context, KelebihanDanAturanLangganan.id);
-                  },
-                  child: Text(
-                    'DAFTAR SEKARANG!',
-                    style: smartRTTextLarge.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: smartRTQuaternaryColor),
-                  ),
-                ),
-              ),
-            ),
-            Center(
-              child: TextButton(
-                onPressed: () => Navigator.pop(context, 'Batal'),
-                child: Text(
-                  'Batal',
-                  style: smartRTTextNormal,
-                ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
           ],
         ),
       );
     } else {
-      Navigator.pushNamed(context, LanggananPage.id);
+      // Navigator.pushNamed(context, KesehatankuPage.id);
+      // Halaman Performa Saya
+    }
+  }
+
+  void kesehatan() async {
+    if (user.area == null) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Anda baru dapat menggunakan fitur ini jika anda telah bergabung dengan wilayah anda!',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Navigator.pushNamed(context, KesehatankuPage.id);
+    }
+  }
+
+  void gabungWilayah() async {
+    Navigator.pushNamed(context, GabungWilayahPage.id);
+  }
+
+  void langgananPro() async {
+    if (user.area == null) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Anda baru dapat menggunakan fitur ini jika anda telah bergabung dengan wilayah anda!',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      int subscribeAmount = context.read<SettingProvider>().subscribeAmount;
+      if (user.area!.is_subscribe_pro == 0) {
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: Text(
+              'Hai Sobat Pintar,',
+              style: smartRTTextTitleCard,
+            ),
+            content: Text(
+              'Anda belum bergabung menjadi pengguna Smart RT Pro! Apakah anda berminat untuk mendaftar dan bergabung berlangganan untuk dapat mengakses semua fitur?\n\nBiaya Langganan : \n${CurrencyFormat.convertToIdr(subscribeAmount, 2)}/bulan',
+              style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+            ),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ))),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, KelebihanDanAturanLangganan.id);
+                    },
+                    child: Text(
+                      'DAFTAR SEKARANG!',
+                      style: smartRTTextLarge.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: smartRTQuaternaryColor),
+                    ),
+                  ),
+                ),
+              ),
+              Center(
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context, 'Batal'),
+                  child: Text(
+                    'Batal',
+                    style: smartRTTextNormal,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      } else {
+        Navigator.pushNamed(context, LanggananPage.id);
+      }
     }
   }
 

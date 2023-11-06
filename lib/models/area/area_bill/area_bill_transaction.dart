@@ -1,5 +1,4 @@
 import 'package:smart_rt/models/user/user.dart';
-import 'package:smart_rt/models/area/area.dart';
 
 class AreaBillTransaction {
   int id = -1;

@@ -13,7 +13,6 @@ import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelan
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/cards/card_list_subscribe.dart';
-import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_detail_page.dart';
 
 class DaftarPelangganProPage extends StatefulWidget {
   static const String id = 'DaftarPelangganProPage';

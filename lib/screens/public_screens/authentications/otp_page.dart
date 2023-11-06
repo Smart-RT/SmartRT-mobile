@@ -59,8 +59,9 @@ class _OTPPageState extends State<OTPPage> {
               await FirebaseAuth.instance.signInWithCredential(authCredential);
 
           try {
-            var verifyDIO = await NetUtil().dioClient
-                .post('/verifyUID/${credential.user!.uid}');
+            var verifyDIO = await NetUtil()
+                .dioClient
+                .post('/users/verifyUID/${credential.user!.uid}');
             // Pindah ke login...
           } on DioError catch (e) {
             if (e.response != null) {
@@ -114,8 +115,13 @@ class _OTPPageState extends State<OTPPage> {
       UserCredential credential =
           await FirebaseAuth.instance.signInWithCredential(phoneCredential);
       try {
-        var verifyDIO =
-            await NetUtil().dioClient.post('/verifyUID/${credential.user!.uid}');
+        var verifyDIO = await NetUtil()
+            .dioClient
+            .post('/users/verifyUID/${credential.user!.uid}');
+        SmartRTSnackbar.show(context,
+            message: "Berhasil Verifikasi OTP",
+            backgroundColor: smartRTSuccessColor);
+        Navigator.pop(context);
         // Pindah ke login...
       } on DioError catch (e) {
         if (e.response != null) {
@@ -225,9 +231,6 @@ class _OTPPageState extends State<OTPPage> {
                             blurRadius: 10,
                           )
                         ],
-                        onCompleted: (v) {
-                          debugPrint("Completed");
-                        },
                         // onTap: () {
                         //   print("Pressed");
                         // },
