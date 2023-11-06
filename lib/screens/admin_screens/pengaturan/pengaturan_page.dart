@@ -8,7 +8,6 @@ import 'package:smart_rt/screens/admin_screens/pengaturan/karosel_beranda/karose
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_5.dart';
-import 'package:smart_rt/models/app_setting/app_setting.dart';
 
 class PengaturanPage extends StatefulWidget {
   static const String id = 'PengaturanPage';

@@ -169,6 +169,7 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
                         if (value == null || value.isEmpty) {
                           return 'Tidak boleh kosong';
                         }
+                        return null;
                       },
                     ),
                     SB_height15,
@@ -214,6 +215,7 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
                         if (value == null) {
                           return 'Panjang Periode tidak boleh kosong';
                         }
+                        return null;
                       },
                       onChanged: (value) {
                         setState(() {
@@ -249,6 +251,7 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
                         if (value == null || value.isEmpty) {
                           return 'Tidak boleh kosong';
                         }
+                        return null;
                       },
                     ),
                     SB_height15,
@@ -267,6 +270,7 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
                         if (val == null || val.isEmpty) {
                           return "Tanggal Mulai tidak boleh kosong";
                         }
+                        return null;
                       },
                       onSaved: (val) => print(val),
                     ),
@@ -297,6 +301,7 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
                         } else if (int.parse(value) <= 5000) {
                           return 'Tagihan Pertemuan tidak boleh dibawah 5000';
                         }
+                        return null;
                       },
                     ),
                     SB_height15,
@@ -312,6 +317,7 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
                         if (value == null || value.isEmpty) {
                           return 'Hadiah Pemenang tidak boleh kosong';
                         }
+                        return null;
                       },
                     ),
                     SB_height30,

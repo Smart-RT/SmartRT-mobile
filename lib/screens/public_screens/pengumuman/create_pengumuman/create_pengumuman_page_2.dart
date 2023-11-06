@@ -9,8 +9,6 @@ import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:smart_rt/providers/news_provider.dart';
-import 'package:smart_rt/screens/public_screens/home/public_home.dart';
-import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class CreatePengumumanPage2Argument {

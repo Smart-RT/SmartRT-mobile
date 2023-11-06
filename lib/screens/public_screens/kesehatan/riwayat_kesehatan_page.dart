@@ -1,5 +1,3 @@
-import 'dart:ffi';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:dio/dio.dart';
@@ -20,7 +18,6 @@ import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:ui' as ui;
 

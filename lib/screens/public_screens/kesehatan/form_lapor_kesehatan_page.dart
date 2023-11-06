@@ -254,6 +254,7 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
                   if (value == null) {
                     return 'Tidak boleh kosong';
                   }
+                  return null;
                 },
                 onChanged: (value) {
                   setState(() {
@@ -308,6 +309,7 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
                   if (value == null) {
                     return 'Tidak boleh kosong';
                   }
+                  return null;
                 },
                 onChanged: (value) {
                   setState(() {
@@ -351,6 +353,7 @@ class _FormLaporKesehatanPageState extends State<FormLaporKesehatanPage> {
                   if (value == null || value.isEmpty) {
                     return 'Tidak boleh kosong';
                   }
+                  return null;
                 },
               ),
             ],

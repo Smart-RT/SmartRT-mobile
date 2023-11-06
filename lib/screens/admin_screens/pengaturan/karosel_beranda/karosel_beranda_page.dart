@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:dio/dio.dart';
-import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/setting_provider.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 

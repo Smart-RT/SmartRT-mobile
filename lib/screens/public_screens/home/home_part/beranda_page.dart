@@ -33,7 +33,6 @@ import 'package:smart_rt/screens/public_screens/neighbourhood_head/rekomendasika
 import 'package:smart_rt/utilities/bool/checker_return_bool.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
-import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/cards/card_big_icon_text_home.dart';
 import 'package:smart_rt/widgets/cards/card_icon_with_text.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_button.dart';

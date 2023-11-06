@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +15,6 @@ import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
 import 'package:smart_rt/constants/config.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -206,6 +203,7 @@ class _AdministrationDetailPageState extends State<AdministrationDetailPage> {
                 if (value == null || value.isEmpty) {
                   return 'Tidak boleh kosong';
                 }
+                return null;
               },
             ),
           ),

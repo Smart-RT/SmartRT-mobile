@@ -8,7 +8,6 @@ import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/event_provider.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_user_1.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_user_with_cb.dart';
 import 'package:smart_rt/widgets/parts/explain_part.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';

@@ -152,6 +152,7 @@ class _AdministrationCreatePage1State extends State<AdministrationCreatePage1> {
                   if (value == null) {
                     return 'Tidak boleh kosong';
                   }
+                  return null;
                 },
                 onChanged: (value) {
                   setState(() {

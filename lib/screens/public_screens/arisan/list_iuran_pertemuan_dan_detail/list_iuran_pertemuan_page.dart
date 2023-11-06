@@ -5,15 +5,12 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/lottery_club/lottery_club_period.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
 import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_bill.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/screens/public_screens/arisan/list_iuran_pertemuan_dan_detail/list_iuran_pertemuan_detail_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
-import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_user_2.dart';
 

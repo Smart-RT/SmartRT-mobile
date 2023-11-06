@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_rt/constants/colors.dart';
-import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/area/area_bill/area_bill.dart';
@@ -8,12 +7,8 @@ import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/area_bill_provider.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_list_iuran_page_detail.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_data_4.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_user_1.dart';
-import 'package:smart_rt/widgets/parts/explain_part.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
-import 'package:smart_rt/utilities/string/string_format.dart';
 
 class LihatListIuranPage extends StatefulWidget {
   static const String id = 'LihatListIuranPage';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/screens/public_screens/test_screen2.dart';
 
 class TestScreen extends StatefulWidget {
   static const String id = 'TestScreen';

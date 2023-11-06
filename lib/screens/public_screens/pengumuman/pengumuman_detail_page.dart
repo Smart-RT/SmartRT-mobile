@@ -10,7 +10,6 @@ import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/screens/public_screens/image_view/image_view_page.dart';
-import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_2.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 

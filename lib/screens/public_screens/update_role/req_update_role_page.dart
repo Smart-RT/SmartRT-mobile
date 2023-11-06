@@ -41,6 +41,7 @@ class _ReqUpdateRolePageState extends State<ReqUpdateRolePage> {
                     if (value == null || value.isEmpty) {
                       return 'Nama tidak boleh kosong';
                     }
+                    return null;
                   },
                 ),
               ],

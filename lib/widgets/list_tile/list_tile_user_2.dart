@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
 

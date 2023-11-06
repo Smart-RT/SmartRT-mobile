@@ -76,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   if (value == null || value.isEmpty) {
                     return 'Nomor Telepon tidak boleh kosong';
                   }
+                  return null;
                 },
                 style: smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
                 decoration: InputDecoration(
@@ -106,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                   if (value == null || value.isEmpty) {
                     return 'Kata Sandi tidak boleh kosong';
                   }
+                  return null;
                 },
                 style: smartRTTextLarge.copyWith(color: smartRTSecondaryColor),
                 obscureText: _isObscure,

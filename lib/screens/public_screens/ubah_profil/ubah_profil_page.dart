@@ -1,14 +1,10 @@
-import 'dart:typed_data';
 
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:signature/signature.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
@@ -184,6 +180,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                       if (value == null || value.isEmpty) {
                                         return 'Nama tidak boleh kosong';
                                       }
+                                      return null;
                                     },
                                   ),
                                   Row(
@@ -202,9 +199,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                         onPressed: () {
                                           debugPrint(
                                               _fullNameUserController.text);
-                                          if (_fullNameUserController.text ==
-                                                  null ||
-                                              _fullNameUserController
+                                          if (_fullNameUserController
                                                   .text.isEmpty) {
                                             SmartRTSnackbar.show(context,
                                                 message:
@@ -314,6 +309,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                     if (value == null) {
                                       return 'Jenis Kelamin tidak boleh kosong';
                                     }
+                                    return null;
                                   },
                                   onChanged: (value) {
                                     setState(() {
@@ -419,6 +415,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                       if (val == null || val.isEmpty) {
                                         return "Tanggal Lahir tidak boleh kosong";
                                       }
+                                      return null;
                                     },
                                     onSaved: (val) => print(val),
                                     // controller: _tanggalLahirController,
@@ -512,6 +509,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                       if (value == null || value.isEmpty) {
                                         return 'Alamat tidak boleh kosong';
                                       }
+                                      return null;
                                     },
                                   ),
                                   Row(
@@ -528,9 +526,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          if (_addressUserController.text ==
-                                                  null ||
-                                              _addressUserController
+                                          if (_addressUserController
                                                   .text.isEmpty) {
                                             SmartRTSnackbar.show(context,
                                                 message:

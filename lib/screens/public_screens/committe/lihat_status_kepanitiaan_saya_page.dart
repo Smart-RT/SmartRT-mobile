@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/colors.dart';
@@ -7,7 +6,6 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/committe_provider.dart';
-import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
 import 'package:smart_rt/models/committe/committe.dart';

@@ -205,7 +205,9 @@ class _OTPPageState extends State<OTPPage> {
                         textStyle: smartRTTextLargeBold_Primary,
                         length: 6,
                         animationType: AnimationType.fade,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         pinTheme: PinTheme(
                             shape: PinCodeFieldShape.box,
                             borderRadius: BorderRadius.circular(5),

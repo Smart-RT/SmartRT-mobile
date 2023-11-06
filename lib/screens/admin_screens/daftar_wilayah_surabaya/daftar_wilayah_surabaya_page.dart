@@ -673,6 +673,7 @@ class _DaftarWilayahFilterState extends State<DaftarWilayahFilter> {
               if (value == null) {
                 return 'Kecamatan tidak boleh kosong';
               }
+              return null;
             },
             value: selectedKecamatan.isNotEmpty ? selectedKecamatan : null,
             onChanged: (value) {
@@ -773,6 +774,7 @@ class _DaftarWilayahFilterState extends State<DaftarWilayahFilter> {
               if (value == null) {
                 return 'Kelurahan tidak boleh kosong';
               }
+              return null;
             },
             value: selectedKelurahan.isNotEmpty ? selectedKelurahan : null,
             onChanged: _filteredKelurahan.isNotEmpty

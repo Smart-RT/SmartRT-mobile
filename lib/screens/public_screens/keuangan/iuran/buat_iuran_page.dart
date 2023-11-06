@@ -1,4 +1,3 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,10 +5,7 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/area_bill_provider.dart';
-import 'package:smart_rt/providers/arisan_provider.dart';
-import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
-import 'package:smart_rt/widgets/parts/explain_part.dart';
 
 class BuatIuranPage extends StatefulWidget {
   static const String id = 'BuatIuranPage';

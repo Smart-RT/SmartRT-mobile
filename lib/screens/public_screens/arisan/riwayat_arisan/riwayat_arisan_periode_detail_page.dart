@@ -8,7 +8,6 @@ import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_ar
 import 'package:smart_rt/screens/public_screens/arisan/anggota_periode/anggota_periode_page.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_2.dart';
 
 class RiwayatArisanPeriodeDetailArguments {

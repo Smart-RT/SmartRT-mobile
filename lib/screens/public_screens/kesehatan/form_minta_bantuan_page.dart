@@ -115,6 +115,7 @@ class _FormMintaBantuanPageState extends State<FormMintaBantuanPage> {
                   if (value == null) {
                     return 'Tingkat Kebutuhan tidak boleh kosong';
                   }
+                  return null;
                 },
                 onChanged: (value) {
                   setState(() {
@@ -164,6 +165,7 @@ class _FormMintaBantuanPageState extends State<FormMintaBantuanPage> {
                   if (value == null) {
                     return 'Jenis Kebutuhan tidak boleh kosong';
                   }
+                  return null;
                 },
                 onChanged: (value) {
                   setState(() {
@@ -187,6 +189,7 @@ class _FormMintaBantuanPageState extends State<FormMintaBantuanPage> {
                   if (value == null || value.isEmpty) {
                     return 'Catatan Kebutuhan tidak boleh kosong';
                   }
+                  return null;
                 },
               ),
             ],

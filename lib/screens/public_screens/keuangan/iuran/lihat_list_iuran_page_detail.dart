@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/area/area_bill/area_bill.dart';
-import 'package:smart_rt/models/subscribe/pro_subscribe_bill.dart';
 import 'package:smart_rt/providers/area_bill_provider.dart';
-import 'package:smart_rt/providers/subscribe_provider.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_bulan_page.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_pembayar_page.dart';
-import 'package:smart_rt/screens/public_screens/langganan/langganan_page_detail_2.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
-import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
 
 class LihatListIuranPageDetailArguments {

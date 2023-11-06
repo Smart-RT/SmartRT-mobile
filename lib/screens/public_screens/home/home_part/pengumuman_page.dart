@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,6 @@ import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_1.dart';
 import 'package:smart_rt/screens/public_screens/pengumuman/pengumuman_detail_page.dart';
-import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_data_3.dart';
 
 class PengumumanPage extends StatefulWidget {

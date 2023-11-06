@@ -1,5 +1,4 @@
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/colors.dart';
@@ -8,8 +7,6 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/event/event.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/event_provider.dart';
-import 'package:smart_rt/screens/public_screens/acara/acara_page.dart';
-import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/parts/explain_part.dart';
 import 'package:smart_rt/providers/auth_provider.dart';

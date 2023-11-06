@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';

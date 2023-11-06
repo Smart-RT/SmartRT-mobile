@@ -1,23 +1,14 @@
 import 'dart:typed_data';
 
-import 'package:date_time_picker/date_time_picker.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:signature/signature.dart';
 import 'package:smart_rt/constants/colors.dart';
-import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
-import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class TandaTanganSayaCanvasPage extends StatefulWidget {
   static const String id = 'TandaTanganSayaCanvasPage';

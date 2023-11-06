@@ -12,7 +12,6 @@ import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_ar
 import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
-import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 
 class PembayaranIuranArisanPage2Arguments {

@@ -10,7 +10,6 @@ import 'package:smart_rt/screens/public_screens/home/home_part/pengumuman_page.d
 import 'package:smart_rt/screens/public_screens/home/home_part/saya_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/tugas_page.dart';
 import 'package:smart_rt/models/news/news.dart';
-import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class PublicHome extends StatefulWidget {
   static const String id = 'PublicHome';

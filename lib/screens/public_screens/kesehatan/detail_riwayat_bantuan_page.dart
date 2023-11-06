@@ -9,7 +9,6 @@ import 'package:smart_rt/models/health/health_task_help.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
-import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
@@ -179,6 +178,7 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                 if (value == null || value.isEmpty) {
                   return 'Tidak boleh kosong';
                 }
+                return null;
               },
             ),
           ),
@@ -272,6 +272,7 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                 if (value == null || value.isEmpty) {
                   return 'Tidak boleh kosong';
                 }
+                return null;
               },
             ),
           ),

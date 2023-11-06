@@ -1,22 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/area/area_bill/area_bill.dart';
 import 'package:smart_rt/models/area/area_bill/area_bill_transaction.dart';
-import 'package:smart_rt/models/lottery_club/lottery_club_period_detail.dart';
-import 'package:smart_rt/models/lottery_club/lottery_club_period_detail_bill.dart';
 import 'package:smart_rt/providers/area_bill_provider.dart';
-import 'package:smart_rt/screens/public_screens/arisan/pembayaran_arisan/pembayaran_iuran_arisan_page_1.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_detail_page.dart';
-import 'package:smart_rt/screens/public_screens/arisan/riwayat_arisan/riwayat_arisan_pertemuan_page.dart';
-import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
-import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 

@@ -149,6 +149,7 @@ class _GabungWilayahPageState extends State<GabungWilayahPage> {
                           if (value == null || value.isEmpty) {
                             return 'Kode Wilayah tidak boleh kosong';
                           }
+                          return null;
                         },
                       ),
                     ],

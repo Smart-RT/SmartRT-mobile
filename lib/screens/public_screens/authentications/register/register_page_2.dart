@@ -102,6 +102,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                     if (value == null || value.isEmpty) {
                       return 'Nomor Telepon tidak boleh kosong';
                     }
+                    return null;
                   },
                 ),
                 SB_height15,
@@ -130,6 +131,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                     if (value == null || value.isEmpty) {
                       return 'Kata Sandi tidak boleh kosong';
                     }
+                    return null;
                   },
                 ),
                 SB_height15,

@@ -16,24 +16,7 @@ ThemeData getThemeData() {
 
     // Define the default brightness and colors.
     brightness: Brightness.light,
-    backgroundColor: smartRTPrimaryColor,
     scaffoldBackgroundColor: smartRTSecondaryColor,
-    // primaryColor: Color(0xff311c0a),
-    primarySwatch: const MaterialColor(
-      0xff311c0a,
-      <int, Color>{
-        50: Color(0xfff1e9de),
-        100: Color(0xffd5c7b9),
-        200: Color(0xffb4a290),
-        300: Color(0xff947e67),
-        400: Color(0xff7c6449),
-        500: Color(0xff644a2c),
-        600: Color(0xff5a4126),
-        700: Color(0xff4c361e),
-        800: Color(0xff3f2916),
-        900: Color(0xff311c0a)
-      },
-    ),
 
     // Define the default font family.
     fontFamily: 'Rubik',
@@ -86,12 +69,26 @@ ThemeData getThemeData() {
     // Define the default style of 'Elevated Button'
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: smartRTActiveColor2,
+        backgroundColor: smartRTActiveColor2,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
       ),
-    ),
+    ), colorScheme: ColorScheme.fromSwatch(primarySwatch: const MaterialColor(
+      0xff311c0a,
+      <int, Color>{
+        50: Color(0xfff1e9de),
+        100: Color(0xffd5c7b9),
+        200: Color(0xffb4a290),
+        300: Color(0xff947e67),
+        400: Color(0xff7c6449),
+        500: Color(0xff644a2c),
+        600: Color(0xff5a4126),
+        700: Color(0xff4c361e),
+        800: Color(0xff3f2916),
+        900: Color(0xff311c0a)
+      },
+    )).copyWith(background: smartRTPrimaryColor),
   );
 }

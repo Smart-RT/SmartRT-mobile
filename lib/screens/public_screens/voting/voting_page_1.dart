@@ -11,11 +11,8 @@ import 'package:im_stepper/stepper.dart';
 import 'package:smart_rt/providers/voting_provider.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
-import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
-import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
-import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_kandidat_vote.dart';
 

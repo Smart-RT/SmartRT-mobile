@@ -1,7 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
@@ -126,6 +125,7 @@ class _CreatePertemuanSelanjutnyaPageState
                       if (value == null || value.isEmpty) {
                         return 'Tidak boleh kosong';
                       }
+                      return null;
                     },
                   ),
                   SB_height15,
@@ -150,6 +150,7 @@ class _CreatePertemuanSelanjutnyaPageState
                       if (val == null || val.isEmpty) {
                         return "Tanggal Pertemuan tidak boleh kosong";
                       }
+                      return null;
                     },
                     onSaved: (val) => print(val),
                   ),

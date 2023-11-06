@@ -4,14 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
-import 'package:smart_rt/models/health/disease_group.dart';
-import 'package:smart_rt/models/health/health_task_help.dart';
-import 'package:smart_rt/models/health/user_health_report.dart';
 import 'package:smart_rt/models/user/user_role_request.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/konfirmasi_gabung_wilayah_page.dart';
-import 'package:smart_rt/screens/public_screens/kesehatan/laporan_warga_page.dart';
-import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
-import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_kesehatan_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 

@@ -105,6 +105,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                         if (value == null || value.isEmpty) {
                           return 'Nama tidak boleh kosong';
                         }
+                        return null;
                       },
                     ),
                     SB_height30,
@@ -125,6 +126,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                         if (value == null || value.isEmpty) {
                           return 'Alamat tidak boleh kosong';
                         }
+                        return null;
                       },
                     ),
                     SB_height15,
@@ -209,6 +211,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                         if (value == null) {
                           return 'Kecamatan tidak boleh kosong';
                         }
+                        return null;
                       },
                       onChanged: (value) {
                         setState(() {
@@ -314,6 +317,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                           if (value == null) {
                             return 'Kelurahan tidak boleh kosong';
                           }
+                          return null;
                         },
                         onChanged: _kecamatanSelectedValue.isNotEmpty
                             ? (value) {
@@ -342,6 +346,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                               if (value == null || value.isEmpty) {
                                 return 'Nomor RT tidak boleh kosong';
                               }
+                              return null;
                             },
                           ),
                         ),
@@ -359,6 +364,7 @@ class _DaftarKetuaFormPage1State extends State<DaftarKetuaFormPage1> {
                               if (value == null || value.isEmpty) {
                                 return 'Nomor RW tidak boleh kosong';
                               }
+                              return null;
                             },
                           ),
                         ),
