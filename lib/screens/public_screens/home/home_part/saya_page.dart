@@ -73,7 +73,7 @@ class SayaPage extends StatelessWidget {
           ),
         ),
         Container(
-          height: 400,
+          height: 500,
           child: ListView(
             children: <Widget>[
               GestureDetector(
@@ -120,7 +120,7 @@ class SayaPage extends StatelessWidget {
                   ),
                 ),
               ),
-              AuthProvider.currentUser!.user_role == Role.Ketua_RT
+              AuthProvider.currentUser!.user_role != Role.Guest
                   ? Container()
                   : GestureDetector(
                       onTap: () {
@@ -144,7 +144,7 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              AuthProvider.currentUser!.user_role == Role.Ketua_RT
+              AuthProvider.currentUser!.user_role != Role.Guest
                   ? Container()
                   : GestureDetector(
                       onTap: () {
@@ -168,28 +168,38 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, ReqUpdateRolePage.id);
-                },
-                child: Card(
-                  color: smartRTSecondaryColor,
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility_new_rounded,
-                      color: smartRTPrimaryColor,
-                    ),
-                    title: Text(
-                      'Update Jabatan',
-                      style: smartRTTextLargeBold_Primary,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      color: smartRTPrimaryColor,
-                    ),
-                  ),
-                ),
-              ),
+              ![Role.Guest, Role.Warga]
+                      .contains(AuthProvider.currentUser!.user_role)
+                  ? Container()
+                  : (AuthProvider.currentUser!.area!.ketua_id != null &&
+                          AuthProvider.currentUser!.area!.wakil_ketua_id !=
+                              null &&
+                          AuthProvider.currentUser!.area!.sekretaris_id !=
+                              null &&
+                          AuthProvider.currentUser!.area!.bendahara_id != null)
+                      ? Container()
+                      : GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, ReqUpdateRolePage.id);
+                          },
+                          child: Card(
+                            color: smartRTSecondaryColor,
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.accessibility_new_rounded,
+                                color: smartRTPrimaryColor,
+                              ),
+                              title: Text(
+                                'Update Jabatan',
+                                style: smartRTTextLargeBold_Primary,
+                              ),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                color: smartRTPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
               Card(
                 color: smartRTSecondaryColor,
                 child: ListTile(

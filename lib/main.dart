@@ -100,7 +100,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
       builder: (context, child) {
         ApplicationProvider.context = context;
         return MaterialApp(
-          title: 'SmartRT',
+          title: 'SmartRT Mobile',
           theme: getThemeData(),
           initialRoute: routeStart,
           onGenerateRoute: Routes.generateRoute,
