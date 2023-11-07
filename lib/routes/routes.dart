@@ -25,6 +25,7 @@ import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_p
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_form_page_3.dart';
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/pdf_screen/pdf_screen.dart';
+import 'package:smart_rt/screens/public_screens/detail_wilayah/detail_wilayah.dart';
 
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
 import 'package:smart_rt/screens/public_screens/administration/administration_detail_page.dart';
@@ -156,6 +157,10 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           ApplicationProvider.context = context;
           return const PublicHome();
+        });
+      case DetailWilayah.id:
+        return MaterialPageRoute(builder: (context) {
+          return const DetailWilayah();
         });
       case GabungWilayahPage.id:
         return MaterialPageRoute(builder: (context) {

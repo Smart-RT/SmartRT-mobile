@@ -7,6 +7,7 @@ import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
+import 'package:smart_rt/screens/public_screens/detail_wilayah/detail_wilayah.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
@@ -159,6 +160,32 @@ class SayaPage extends StatelessWidget {
                           ),
                           title: Text(
                             'Daftar menjadi Ketua RT',
+                            style: smartRTTextLargeBold_Primary,
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: smartRTPrimaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+              ![Role.Guest, Role.Warga]
+                          .contains(AuthProvider.currentUser!.user_role) &&
+                      AuthProvider.currentUser!.area != null
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, DetailWilayah.id);
+                      },
+                      child: Card(
+                        color: smartRTSecondaryColor,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.map,
+                            color: smartRTPrimaryColor,
+                          ),
+                          title: Text(
+                            'Detail Wilayah',
                             style: smartRTTextLargeBold_Primary,
                           ),
                           trailing: Icon(
