@@ -234,7 +234,7 @@ class AuthProvider extends ApplicationProvider {
 
       Response<dynamic> resp =
           await NetUtil().dioClient.post('/users/reqUserRole', data: formData);
-
+      debugPrint(resp.data.toString());
       currentUser!.user_role_requests
           .insert(0, UserRoleRequest.fromData(resp.data));
       currentUser!.full_name = namaLengkap;
