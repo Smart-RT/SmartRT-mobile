@@ -100,7 +100,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
       builder: (context, child) {
         ApplicationProvider.context = context;
         return MaterialApp(
-          title: 'Flutter Demo',
+          title: 'SmartRT',
           theme: getThemeData(),
           initialRoute: routeStart,
           onGenerateRoute: Routes.generateRoute,
