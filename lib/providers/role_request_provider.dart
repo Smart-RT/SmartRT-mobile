@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:smart_rt/models/user/user_role_request.dart';
+import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 
 class RoleRequestProvider extends ChangeNotifier {
@@ -34,7 +35,6 @@ class RoleRequestProvider extends ChangeNotifier {
       required int index,
       required String tenureEndAt}) async {
     try {
-      debugPrint('sadsada');
       UserRoleRequest data = listUserRoleReqKetuaRT[index];
       Response<dynamic> resp = await NetUtil()
           .dioClient
@@ -44,7 +44,9 @@ class RoleRequestProvider extends ChangeNotifier {
         "tenure_end_at": tenureEndAt
       });
 
-      debugPrint('asdsadadadsdsa');
+      listUserRoleReqKetuaRT[index].confirmater_id =
+          AuthProvider.currentUser!.id;
+      listUserRoleReqKetuaRT[index].accepted_at = DateTime.now();
 
       notifyListeners();
 

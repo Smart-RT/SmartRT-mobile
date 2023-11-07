@@ -33,58 +33,6 @@ class DetailRequestRolePage extends StatefulWidget {
 }
 
 class _DetailRequestRolePageState extends State<DetailRequestRolePage> {
-  String status = '';
-  Color statusColor = smartRTStatusYellowColor;
-  String namaPemohon = '';
-  String jkPemohon = '';
-  String umurPemohon = '';
-  String alamatPemohon = '';
-  String kelahiranPemohon = '';
-  String rtrw = '';
-  String kecamatan = '';
-  String kelurahan = '';
-  String createdAt = '';
-  String confirmationAt = '';
-  bool isConfirmated = true;
-
-  void getData({required UserRoleRequest dataKonfirmasi}) async {
-    if (dataKonfirmasi.confirmater_id == null) {
-      isConfirmated = false;
-      status = 'Menunggu Konfirmasi';
-      statusColor = smartRTStatusYellowColor;
-    } else if (dataKonfirmasi.accepted_at != null) {
-      status = 'Diterima';
-      statusColor = smartRTStatusGreenColor;
-    } else {
-      status = 'Ditolak';
-      statusColor = smartRTStatusRedColor;
-    }
-
-    namaPemohon = dataKonfirmasi.data_user_requester!.full_name;
-    jkPemohon = dataKonfirmasi.data_user_requester!.gender;
-    umurPemohon = StringFormat.ageNow(
-        bornDate: dataKonfirmasi.data_user_requester!.born_date!);
-    kelahiranPemohon = StringFormat.formatDate(
-        dateTime: dataKonfirmasi.data_user_requester!.born_date!,
-        isWithTime: false);
-    alamatPemohon = dataKonfirmasi.data_user_requester!.address ?? '-';
-    rtrw = StringFormat.formatRTRW(
-        rtNum: dataKonfirmasi.rt_num.toString(),
-        rwNum: dataKonfirmasi.rw_num.toString());
-    kecamatan = StringFormat.kecamatanFormat(
-        kecamatan: dataKonfirmasi.sub_district_id!.name);
-    kelurahan = StringFormat.kelurahanFormat(
-        kelurahan: dataKonfirmasi.urban_village_id!.name);
-    createdAt =
-        DateFormat('d MMMM y', 'id_ID').format(dataKonfirmasi.created_at);
-    if (isConfirmated) {
-      confirmationAt = DateFormat('d MMMM y HH:mm', 'id_ID')
-          .format(dataKonfirmasi.rejected_at ?? dataKonfirmasi.accepted_at!);
-    }
-
-    setState(() {});
-  }
-
   void terimaPermintaan({required UserRoleRequest dataKonfirmasi}) async {
     final _tenureEndAtDate = TextEditingController();
     showDialog<String>(
@@ -211,7 +159,52 @@ class _DetailRequestRolePageState extends State<DetailRequestRolePage> {
     int index = widget.args.index;
     UserRoleRequest dataKonfirmasi =
         context.watch<RoleRequestProvider>().listUserRoleReqKetuaRT[index];
-    getData(dataKonfirmasi: dataKonfirmasi);
+    String status = '';
+    Color statusColor = smartRTStatusYellowColor;
+    String namaPemohon = '';
+    String jkPemohon = '';
+    String umurPemohon = '';
+    String alamatPemohon = '';
+    String kelahiranPemohon = '';
+    String rtrw = '';
+    String kecamatan = '';
+    String kelurahan = '';
+    String createdAt = '';
+    String confirmationAt = '';
+    bool isConfirmated = true;
+    if (dataKonfirmasi.confirmater_id == null) {
+      isConfirmated = false;
+      status = 'Menunggu Konfirmasi';
+      statusColor = smartRTStatusYellowColor;
+    } else if (dataKonfirmasi.accepted_at != null) {
+      status = 'Diterima';
+      statusColor = smartRTStatusGreenColor;
+    } else {
+      status = 'Ditolak';
+      statusColor = smartRTStatusRedColor;
+    }
+
+    namaPemohon = dataKonfirmasi.data_user_requester!.full_name;
+    jkPemohon = dataKonfirmasi.data_user_requester!.gender;
+    umurPemohon = StringFormat.ageNow(
+        bornDate: dataKonfirmasi.data_user_requester!.born_date!);
+    kelahiranPemohon = StringFormat.formatDate(
+        dateTime: dataKonfirmasi.data_user_requester!.born_date!,
+        isWithTime: false);
+    alamatPemohon = dataKonfirmasi.data_user_requester!.address ?? '-';
+    rtrw = StringFormat.formatRTRW(
+        rtNum: dataKonfirmasi.rt_num.toString(),
+        rwNum: dataKonfirmasi.rw_num.toString());
+    kecamatan = StringFormat.kecamatanFormat(
+        kecamatan: dataKonfirmasi.sub_district_id!.name);
+    kelurahan = StringFormat.kelurahanFormat(
+        kelurahan: dataKonfirmasi.urban_village_id!.name);
+    createdAt =
+        DateFormat('d MMMM y', 'id_ID').format(dataKonfirmasi.created_at);
+    if (isConfirmated) {
+      confirmationAt = DateFormat('d MMMM y HH:mm', 'id_ID')
+          .format(dataKonfirmasi.rejected_at ?? dataKonfirmasi.accepted_at!);
+    }
 
     return Scaffold(
       appBar: AppBar(),
