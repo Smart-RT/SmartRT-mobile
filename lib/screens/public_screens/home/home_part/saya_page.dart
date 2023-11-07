@@ -171,12 +171,12 @@ class SayaPage extends StatelessWidget {
               ![Role.Guest, Role.Warga]
                       .contains(AuthProvider.currentUser!.user_role)
                   ? Container()
-                  : (AuthProvider.currentUser!.area!.ketua_id != null &&
-                          AuthProvider.currentUser!.area!.wakil_ketua_id !=
+                  : (AuthProvider.currentUser!.area?.ketua_id != null &&
+                          AuthProvider.currentUser!.area?.wakil_ketua_id !=
                               null &&
-                          AuthProvider.currentUser!.area!.sekretaris_id !=
+                          AuthProvider.currentUser!.area?.sekretaris_id !=
                               null &&
-                          AuthProvider.currentUser!.area!.bendahara_id != null)
+                          AuthProvider.currentUser!.area?.bendahara_id != null)
                       ? Container()
                       : GestureDetector(
                           onTap: () {
