@@ -33,15 +33,16 @@ class RoleRequestProvider extends ChangeNotifier {
   Future<bool> confirmationUserRoleReqKetua(
       {required bool isAccepted,
       required int index,
-      required String tenureEndAt}) async {
+      required String tenureEndAt,
+      required String notes}) async {
     try {
       UserRoleRequest data = listUserRoleReqKetuaRT[index];
-      Response<dynamic> resp = await NetUtil()
-          .dioClient
-          .patch('/users/update/roleReq/ketua', data: {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.patch('/users/update/roleReq/ketua', data: {
         "idRoleReq": data.id,
         "isAccepted": isAccepted,
-        "tenure_end_at": tenureEndAt
+        "tenure_end_at": tenureEndAt,
+        "notes": notes
       });
 
       listUserRoleReqKetuaRT[index].confirmater_id =

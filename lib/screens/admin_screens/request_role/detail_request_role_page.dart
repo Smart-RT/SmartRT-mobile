@@ -79,7 +79,8 @@ class _DetailRequestRolePageState extends State<DetailRequestRolePage> {
                         .confirmationUserRoleReqKetua(
                             index: widget.args.index,
                             isAccepted: true,
-                            tenureEndAt: _tenureEndAtDate.text);
+                            tenureEndAt: _tenureEndAtDate.text,
+                            notes: '');
 
                     if (isSukses) {
                       Navigator.pop(context);
@@ -124,6 +125,10 @@ class _DetailRequestRolePageState extends State<DetailRequestRolePage> {
           style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
         ),
         actions: <Widget>[
+          TextField(
+              controller: _alasanController,
+              decoration: InputDecoration(
+                  labelText: "Alasan", hintText: 'Alasan Penolakan')),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -140,7 +145,30 @@ class _DetailRequestRolePageState extends State<DetailRequestRolePage> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (_alasanController.text.isEmpty) {
+                    SmartRTSnackbar.show(context,
+                        message:
+                            'Anda wajib mengisikan alasan penolakan jabatan!',
+                        backgroundColor: smartRTErrorColor);
+                  } else {
+                    bool isSukses = await context
+                        .read<RoleRequestProvider>()
+                        .confirmationUserRoleReqKetua(
+                            index: widget.args.index,
+                            isAccepted: false,
+                            tenureEndAt: '01-01-2000',
+                            notes: _alasanController.text);
+
+                    if (isSukses) {
+                      Navigator.pop(context);
+                      await context
+                          .read<RoleRequestProvider>()
+                          .getUserRoleReqKetuaData();
+                      setState(() {});
+                    }
+                  }
+                },
                 child: Text(
                   'TOLAK LAPORAN',
                   style: smartRTTextNormal.copyWith(
