@@ -42,6 +42,11 @@ class _ListIuranPertemuanPageState extends State<ListIuranPertemuanPage> {
   List<LotteryClubPeriodDetailBill> listDataPembayaran = [];
   User user = AuthProvider.currentUser!;
 
+  // filters
+  TextEditingController _nameFilter = TextEditingController();
+  bool sudahBayarFilter = true;
+  bool belumBayarFilter = true;
+
   void getData() async {
     idPertemuan = widget.args.idPertemuan;
     pertemuanKe = widget.args.pertemuanKe;
@@ -70,6 +75,18 @@ class _ListIuranPertemuanPageState extends State<ListIuranPertemuanPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<LotteryClubPeriodDetailBill> listDataPembayaranFiltered = [];
+    listDataPembayaran.forEach((element) {
+      if (((sudahBayarFilter && element.updated_at != null) ||
+              (belumBayarFilter && element.updated_at == null)) &&
+          (_nameFilter.text.isNotEmpty &&
+                  element.data_user!.full_name
+                      .toUpperCase()
+                      .contains(_nameFilter.text.toUpperCase()) ||
+              _nameFilter.text.isEmpty)) {
+        listDataPembayaranFiltered.add(element);
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
@@ -93,56 +110,108 @@ class _ListIuranPertemuanPageState extends State<ListIuranPertemuanPage> {
                   textAlign: TextAlign.center,
                 ),
                 SB_height15,
+                Container(
+                  width: double.infinity,
+                  child: Text('Filter:', style: smartRTTextNormalBold_Primary),
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Wrap(
+                    spacing: 15,
+                    children: [
+                      Container(
+                          child: TextField(
+                              controller: _nameFilter,
+                              onChanged: (value) => setState(() {}),
+                              decoration: InputDecoration(hintText: 'Nama'))),
+                      GestureDetector(
+                        onTap: () => setState(
+                            () => sudahBayarFilter = !sudahBayarFilter),
+                        child: Chip(
+                          label: Text('Sudah Bayar'),
+                          backgroundColor: sudahBayarFilter
+                              ? smartRTActiveColor
+                              : Colors.grey,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => setState(
+                            () => belumBayarFilter = !belumBayarFilter),
+                        child: Chip(
+                          label: Text('Belum Bayar'),
+                          backgroundColor: belumBayarFilter
+                              ? smartRTActiveColor
+                              : Colors.grey,
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              separatorBuilder: (context, int) {
-                return Divider(
-                  color: smartRTPrimaryColor,
-                  height: 5,
-                  thickness: 5,
-                );
-              },
-              itemCount: listDataPembayaran.length,
-              itemBuilder: (context, index) {
-                return ListTileUser2(
-                  photoPathURL:
-                      '${backendURL}/public/uploads/users/${listDataPembayaran[index].data_user!.id}/profile_picture/',
-                  photo: listDataPembayaran[index].data_user!.photo_profile_img,
-                  initialName: StringFormat.initialName(
-                      listDataPembayaran[index].data_user!.full_name),
-                  fullName: listDataPembayaran[index].data_user!.full_name,
-                  address:
-                      listDataPembayaran[index].data_user!.address.toString(),
-                  tileColor: listDataPembayaran[index].status == 0
-                      ? smartRTErrorColor
-                      : smartRTSuccessColor,
-                  paymentDate: listDataPembayaran[index].updated_at == null
-                      ? ''
-                      : DateFormat('d MMMM y', 'id_ID')
-                          .format(listDataPembayaran[index].updated_at!),
-                  via: listDataPembayaran[index].status == 0
-                      ? ''
-                      : listDataPembayaran[index].payment_type ==
-                              'bank_transfer'
-                          ? 'Transfer Bank (${listDataPembayaran[index].acquiring_bank!.toUpperCase()})'
-                          : 'Tunai',
-                  onTap: () {
-                    ListIuranPertemuanDetailArgument arguments =
-                        ListIuranPertemuanDetailArgument(
-                            dataPertemuan: widget.args.dataPertemuan,
-                            typeFrom: widget.args.typeFrom,
-                            dataPembayaran: listDataPembayaran[index],
-                            pertemuanKe: pertemuanKe);
-                    Navigator.pushNamed(
-                        context, ListIuranPertemuanDetailPage.id,
-                        arguments: arguments);
-                  },
-                );
-              },
-            ),
+            child: listDataPembayaranFiltered.length <= 0
+                ? Container(
+                    child: Text("Tidak ada data..."),
+                  )
+                : ListView.separated(
+                    separatorBuilder: (context, int) {
+                      return Divider(
+                        color: smartRTPrimaryColor,
+                        height: 5,
+                        thickness: 5,
+                      );
+                    },
+                    itemCount: listDataPembayaranFiltered.length,
+                    itemBuilder: (context, index) {
+                      return ListTileUser2(
+                        photoPathURL:
+                            '${backendURL}/public/uploads/users/${listDataPembayaranFiltered[index].data_user!.id}/profile_picture/',
+                        photo: listDataPembayaranFiltered[index]
+                            .data_user!
+                            .photo_profile_img,
+                        initialName: StringFormat.initialName(
+                            listDataPembayaranFiltered[index]
+                                .data_user!
+                                .full_name),
+                        fullName: listDataPembayaranFiltered[index]
+                            .data_user!
+                            .full_name,
+                        address: listDataPembayaranFiltered[index]
+                            .data_user!
+                            .address
+                            .toString(),
+                        tileColor: listDataPembayaranFiltered[index].status == 0
+                            ? smartRTErrorColor
+                            : smartRTSuccessColor,
+                        paymentDate: listDataPembayaranFiltered[index]
+                                    .updated_at ==
+                                null
+                            ? ''
+                            : DateFormat('d MMMM y', 'id_ID').format(
+                                listDataPembayaranFiltered[index].updated_at!),
+                        via: listDataPembayaranFiltered[index].status == 0
+                            ? ''
+                            : listDataPembayaranFiltered[index].payment_type ==
+                                    'bank_transfer'
+                                ? 'Transfer Bank (${listDataPembayaranFiltered[index].acquiring_bank!.toUpperCase()})'
+                                : 'Tunai',
+                        onTap: () {
+                          ListIuranPertemuanDetailArgument arguments =
+                              ListIuranPertemuanDetailArgument(
+                                  dataPertemuan: widget.args.dataPertemuan,
+                                  typeFrom: widget.args.typeFrom,
+                                  dataPembayaran:
+                                      listDataPembayaranFiltered[index],
+                                  pertemuanKe: pertemuanKe);
+                          Navigator.pushNamed(
+                              context, ListIuranPertemuanDetailPage.id,
+                              arguments: arguments);
+                        },
+                      );
+                    },
+                  ),
           ),
         ],
       ),
