@@ -11,6 +11,7 @@ import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class SettingProvider extends ChangeNotifier {
   int subscribeAmount = 0;
+  List<Map<String, dynamic>> karosel = [];
 
   void updateListener() => notifyListeners();
 
@@ -37,6 +38,24 @@ class SettingProvider extends ChangeNotifier {
       await NetUtil().dioClient.patch('/setting/update/subscribe-amount',
           data: {"subscribe_amount": subcribeAmount});
       getDataSubscribeAmount();
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+      return false;
+    }
+  }
+
+  Future<bool> getKarosel() async {
+    try {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.get('/setting/carousel/home/');
+      karosel.clear();
+      resp.data.forEach((item) {
+        karosel.add({"about": item['about'], "detail": item['detail']});
+      });
+      notifyListeners();
       return true;
     } on DioError catch (e) {
       if (e.response != null) {

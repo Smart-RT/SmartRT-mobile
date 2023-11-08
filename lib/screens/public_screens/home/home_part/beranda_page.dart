@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/committe/committe.dart';
@@ -358,7 +359,7 @@ class _BerandaPageState extends State<BerandaPage> {
 
   void getData() async {
     await context.read<CommitteProvider>().getDataMyCommitteActive();
-
+    await context.read<SettingProvider>().getKarosel();
     if (user.area != null) {
       if (user.is_committe == 0) {
         await context
@@ -804,6 +805,9 @@ class _BerandaPageState extends State<BerandaPage> {
           DateFormat('d MMMM y', 'id_ID').format(_dateTenureEnd);
     }
 
+    List<Map<String, dynamic>> karosel =
+        context.watch<SettingProvider>().karosel;
+
     List<String> list = [
       'assets/img/carousel/1.png',
       'assets/img/carousel/2.png',
@@ -818,16 +822,24 @@ class _BerandaPageState extends State<BerandaPage> {
           Column(
             children: [
               CarouselSlider(
-                options: CarouselOptions(autoPlay: true, viewportFraction: 1),
-                items: list
-                    .map((item) => Container(
-                          child: Image.asset(
-                            item,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ))
-                    .toList(),
-              ),
+                  options: CarouselOptions(autoPlay: true, viewportFraction: 1),
+                  items: karosel
+                      .map((item) => Container(
+                            child: Image.network(
+                              '${backendURL}/public/uploads/carousel-home/${item["detail"]}',
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ))
+                      .toList()
+                  // items: list
+                  //     .map((item) => Container(
+                  //           child: Image.asset(
+                  //             item,
+                  //             fit: BoxFit.fitWidth,
+                  //           ),
+                  //         ))
+                  //     .toList(),
+                  ),
               Divider(
                 color: smartRTPrimaryColor,
                 thickness: 10,
