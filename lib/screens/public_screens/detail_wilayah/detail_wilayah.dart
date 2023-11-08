@@ -22,14 +22,14 @@ class DetailWilayah extends StatelessWidget {
         children: [
           ListTile(
             leading: Icon(Icons.person),
-            dense: true,
+            dense: false,
             title: Text("Ketua"),
             subtitle:
                 Text(area.ketua_id != null ? area.ketua_id!.full_name : ""),
           ),
           ListTile(
             leading: Icon(Icons.person),
-            dense: true,
+            dense: false,
             title: Text("Wakil Ketua"),
             subtitle: Text(area.wakil_ketua_id != null
                 ? area.wakil_ketua_id!.full_name
@@ -37,7 +37,7 @@ class DetailWilayah extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.person),
-            dense: true,
+            dense: false,
             title: Text("Sekretaris"),
             subtitle: Text(area.sekretaris_id != null
                 ? area.sekretaris_id!.full_name
@@ -45,7 +45,7 @@ class DetailWilayah extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.person),
-            dense: true,
+            dense: false,
             title: Text("Bendahara"),
             subtitle: Text(area.bendahara_id != null
                 ? area.bendahara_id!.full_name

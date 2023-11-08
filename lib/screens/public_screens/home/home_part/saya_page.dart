@@ -169,9 +169,9 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              ![Role.Guest, Role.Warga]
+              [Role.Guest, Role.Warga]
                           .contains(AuthProvider.currentUser!.user_role) &&
-                      AuthProvider.currentUser!.area != null
+                      AuthProvider.currentUser!.area == null
                   ? Container()
                   : GestureDetector(
                       onTap: () {
