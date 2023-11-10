@@ -254,6 +254,34 @@ class AuthProvider extends ApplicationProvider {
     }
   }
 
+  Future<bool> reqPengurusWilayah(
+      {required BuildContext context, required String request_code}) async {
+    try {
+      Response<dynamic> resp = await NetUtil().dioClient.post(
+          '/users/reqUserRole',
+          data: {"request_code": request_code, "request_role": 4});
+      if (resp.statusCode.toString() == '200') {
+        UserRoleRequest response = UserRoleRequest.fromData(resp.data);
+        currentUser!.user_role_requests.insert(0, response);
+        notifyListeners();
+        saveUserDataToStorage();
+        SmartRTSnackbar.show(context,
+            message: 'Berhasil Request Pengurus!',
+            backgroundColor: smartRTSuccessColor);
+      }
+
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+        SmartRTSnackbar.show(context,
+            message: e.response!.data.toString(),
+            backgroundColor: smartRTErrorColor);
+      }
+      return false;
+    }
+  }
+
   Future<bool> reqGabungWilayah({
     required BuildContext context,
     required String request_code,
