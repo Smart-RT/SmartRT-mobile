@@ -9,6 +9,7 @@ import 'package:smart_rt/screens/public_screens/authentications/login_page.dart'
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/public_screens/detail_wilayah/detail_wilayah.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/konfirmasi_request_jabatan/konfirmasi_request_jabatan.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
@@ -186,6 +187,31 @@ class SayaPage extends StatelessWidget {
                           ),
                           title: Text(
                             'Detail Wilayah',
+                            style: smartRTTextLargeBold_Primary,
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: smartRTPrimaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+              AuthProvider.currentUser!.user_role != Role.Ketua_RT
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, KonfirmasiRequestJabatan.id);
+                      },
+                      child: Card(
+                        color: smartRTSecondaryColor,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.check,
+                            color: smartRTPrimaryColor,
+                          ),
+                          title: Text(
+                            'Konfirmasi Request Jabatan',
                             style: smartRTTextLargeBold_Primary,
                           ),
                           trailing: Icon(
