@@ -37,7 +37,7 @@ class RoleRequestProvider extends ChangeNotifier {
       Response<dynamic> resp = await NetUtil()
           .dioClient
           .get('/users/getRoleRequest/typeReqRole/warga/isConfirmation/no');
-      listUserRoleReqWargaDikonfirmasi.clear();
+      listUserRoleReqWargaPermohonan.clear();
       listUserRoleReqWargaPermohonan
           .addAll((resp.data).map<UserRoleRequest>((request) {
         return UserRoleRequest.fromData(request);
