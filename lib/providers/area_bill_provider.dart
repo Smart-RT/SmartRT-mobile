@@ -10,6 +10,7 @@ class AreaBillProvider extends ChangeNotifier {
   List<AreaBill> listAreaBill = [];
   List<AreaBillTransaction> listPembayar = [];
   List<AreaBillRepeatDetail> listBulanan = [];
+  Map<String, Future> futures = {};
 
   void updateListener() => notifyListeners();
 
