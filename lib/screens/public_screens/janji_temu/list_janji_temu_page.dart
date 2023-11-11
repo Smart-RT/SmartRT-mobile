@@ -1,15 +1,15 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/meet/meeting.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/providers/meeting_provider.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_detail_page.dart';
-import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/cards/card_with_time_location.dart';
 
 class ListJanjiTemuPage extends StatefulWidget {
@@ -21,58 +21,56 @@ class ListJanjiTemuPage extends StatefulWidget {
 }
 
 class _ListJanjiTemuPageState extends State<ListJanjiTemuPage> {
-  List<Meeting> listMeetingPermohonan = [];
-  List<Meeting> listMeetingTerjadwalkan = [];
-  List<Meeting> listMeetingTelahBerlalu = [];
-  List<Meeting> listMeetingStatusNegative = [];
   User user = AuthProvider.currentUser!;
 
-  void getData() async {
-    Response<dynamic> respPermohonan =
-        await NetUtil().dioClient.get('/meet/get/status/permohonan');
-    listMeetingPermohonan.clear();
-    listMeetingPermohonan.addAll((respPermohonan.data).map<Meeting>((request) {
-      return Meeting.fromData(request);
-    }));
-
-    Response<dynamic> respTerjadwalkan =
-        await NetUtil().dioClient.get('/meet/get/status/terjadwalkan');
-    listMeetingTerjadwalkan.clear();
-    listMeetingTerjadwalkan
-        .addAll((respTerjadwalkan.data).map<Meeting>((request) {
-      return Meeting.fromData(request);
-    }));
-
-    Response<dynamic> respTelahBerlalu =
-        await NetUtil().dioClient.get('/meet/get/status/telah-berlalu');
-    listMeetingTelahBerlalu.clear();
-    listMeetingTelahBerlalu
-        .addAll((respTelahBerlalu.data).map<Meeting>((request) {
-      return Meeting.fromData(request);
-    }));
-
-    Response<dynamic> respStatusNegative =
-        await NetUtil().dioClient.get('/meet/get/status/status-negative');
-    listMeetingStatusNegative.clear();
-    listMeetingStatusNegative
-        .addAll((respStatusNegative.data).map<Meeting>((request) {
-      return Meeting.fromData(request);
-    }));
-
-    debugPrint(listMeetingPermohonan.length.toString());
-
-    setState(() {});
+  Future<void> getData() async {
+    context
+            .read<MeetingProvider>()
+            .futures['${ListJanjiTemuDetailPage.id}-getpermohonan'] =
+        context.read<MeetingProvider>().getPermohonan();
+    context
+            .read<MeetingProvider>()
+            .futures['${ListJanjiTemuDetailPage.id}-getterjadwalkan'] =
+        context.read<MeetingProvider>().getTerjadwalkan();
+    context
+            .read<MeetingProvider>()
+            .futures['${ListJanjiTemuDetailPage.id}-gettelahberlalu'] =
+        context.read<MeetingProvider>().getTelahBerlalu();
+    context
+            .read<MeetingProvider>()
+            .futures['${ListJanjiTemuDetailPage.id}-getstatusnegative'] =
+        context.read<MeetingProvider>().getStatusNegative();
+    context.read<MeetingProvider>().updateListener();
+    await context
+        .read<MeetingProvider>()
+        .futures['${ListJanjiTemuDetailPage.id}-getpermohonan'];
+    await context
+        .read<MeetingProvider>()
+        .futures['${ListJanjiTemuDetailPage.id}-getterjadwalkan'];
+    await context
+        .read<MeetingProvider>()
+        .futures['${ListJanjiTemuDetailPage.id}-gettelahberlalu'];
+    await context
+        .read<MeetingProvider>()
+        .futures['${ListJanjiTemuDetailPage.id}-getstatusnegative'];
   }
 
   @override
   void initState() {
-    // TODO: implement initState
-    getData();
     super.initState();
+    getData();
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Meeting> listMeetingPermohonan =
+        context.watch<MeetingProvider>().listMeetingPermohonan;
+    List<Meeting> listMeetingTerjadwalkan =
+        context.watch<MeetingProvider>().listMeetingTerjadwalkan;
+    List<Meeting> listMeetingTelahBerlalu =
+        context.watch<MeetingProvider>().listMeetingTelahBerlalu;
+    List<Meeting> listMeetingStatusNegative =
+        context.watch<MeetingProvider>().listMeetingStatusNegative;
     return DefaultTabController(
       initialIndex: 0,
       length: 4,
@@ -107,233 +105,395 @@ class _ListJanjiTemuPageState extends State<ListJanjiTemuPage> {
           ),
         ),
         body: TabBarView(
-          children: <Widget>[
-            listMeetingTerjadwalkan.isNotEmpty
-                ? ListView.separated(
-                    separatorBuilder: (context, int) {
-                      return Divider(
-                        color: smartRTPrimaryColor,
-                        thickness: 1,
-                        height: 5,
-                      );
-                    },
-                    itemCount: listMeetingTerjadwalkan.length,
-                    itemBuilder: (context, index) {
-                      return Column(
+          children: [
+            RefreshIndicator(
+              onRefresh: () => getData(),
+              child: FutureBuilder(
+                future: context
+                    .watch<MeetingProvider>()
+                    .futures['${ListJanjiTemuDetailPage.id}-getterjadwalkan'],
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
                         children: [
-                          CardWithTimeLocation(
-                            title: listMeetingTerjadwalkan[index].title,
-                            onTap: () async {
-                              Navigator.pushNamed(
-                                  context, ListJanjiTemuDetailPage.id,
-                                  arguments: ListJanjiTemuDetailPageArgument(
-                                      dataJanjiTemu:
-                                          listMeetingTerjadwalkan[index]));
-                            },
-                            subtitle: listMeetingTerjadwalkan[index].detail,
-                            dateTime: DateFormat('d MMMM y HH:mm', 'id_ID')
-                                .format(listMeetingTerjadwalkan[index]
-                                    .meet_datetime),
-                            location: listMeetingTerjadwalkan[index]
-                                        .new_respondent_by ==
-                                    null
-                                ? 'Rumah ${listMeetingTerjadwalkan[index].origin_respondent_by!.full_name}\n${listMeetingTerjadwalkan[index].origin_respondent_by!.address!}'
-                                : 'Rumah ${listMeetingTerjadwalkan[index].new_respondent_by!.full_name}\n${listMeetingTerjadwalkan[index].new_respondent_by!.address!}',
-                          ),
-                          if (index == listMeetingTerjadwalkan.length - 1)
-                            Divider(
+                          Text('Terjadi kesalahan, mohon refresh data...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Sedang mengambil data, mohon tunggu...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return listMeetingTerjadwalkan.isNotEmpty
+                      ? ListView.separated(
+                          separatorBuilder: (context, int) {
+                            return Divider(
                               color: smartRTPrimaryColor,
                               thickness: 1,
                               height: 5,
-                            ),
-                        ],
-                      );
-                    },
-                  )
-                : Center(
-                    child: Text(
-                      "Tidak ada Janji Temu",
-                      style: smartRTTextLarge.copyWith(
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-            listMeetingPermohonan.isNotEmpty
-                ? ListView.separated(
-                    separatorBuilder: (context, int) {
-                      return Divider(
-                        color: smartRTPrimaryColor,
-                        thickness: 1,
-                        height: 5,
-                      );
-                    },
-                    itemCount: listMeetingPermohonan.length,
-                    itemBuilder: (context, index) {
-                      return Column(
+                            );
+                          },
+                          itemCount: listMeetingTerjadwalkan.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                CardWithTimeLocation(
+                                  title: listMeetingTerjadwalkan[index].title,
+                                  onTap: () async {
+                                    Navigator.pushNamed(
+                                        context, ListJanjiTemuDetailPage.id,
+                                        arguments:
+                                            ListJanjiTemuDetailPageArgument(
+                                                dataJanjiTemu:
+                                                    listMeetingTerjadwalkan[
+                                                        index]));
+                                  },
+                                  subtitle:
+                                      listMeetingTerjadwalkan[index].detail,
+                                  dateTime:
+                                      DateFormat('d MMMM y HH:mm', 'id_ID')
+                                          .format(listMeetingTerjadwalkan[index]
+                                              .meet_datetime),
+                                  location: listMeetingTerjadwalkan[index]
+                                              .new_respondent_by ==
+                                          null
+                                      ? 'Rumah ${listMeetingTerjadwalkan[index].origin_respondent_by!.full_name}\n${listMeetingTerjadwalkan[index].origin_respondent_by!.address!}'
+                                      : 'Rumah ${listMeetingTerjadwalkan[index].new_respondent_by!.full_name}\n${listMeetingTerjadwalkan[index].new_respondent_by!.address!}',
+                                ),
+                                if (index == listMeetingTerjadwalkan.length - 1)
+                                  Divider(
+                                    color: smartRTPrimaryColor,
+                                    thickness: 1,
+                                    height: 5,
+                                  ),
+                              ],
+                            );
+                          },
+                        )
+                      : ListView(
+                          children: [
+                            SB_height15,
+                            Center(
+                              child: Text(
+                                "Tidak ada Janji Temu",
+                                style: smartRTTextLarge.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          ],
+                        );
+                },
+              ),
+            ),
+            RefreshIndicator(
+              onRefresh: () => getData(),
+              child: FutureBuilder(
+                future: context
+                    .watch<MeetingProvider>()
+                    .futures['${ListJanjiTemuDetailPage.id}-getpermohonan'],
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
                         children: [
-                          CardWithTimeLocation(
-                            title: listMeetingPermohonan[index].title,
-                            onTap: () async {
-                              Navigator.pushNamed(
-                                  context, ListJanjiTemuDetailPage.id,
-                                  arguments: ListJanjiTemuDetailPageArgument(
-                                      dataJanjiTemu:
-                                          listMeetingPermohonan[index]));
-                            },
-                            subtitle: listMeetingPermohonan[index].detail,
-                            dateTime: DateFormat('d MMMM y HH:mm', 'id_ID')
-                                .format(
-                                    listMeetingPermohonan[index].meet_datetime),
-                            location: listMeetingPermohonan[index]
-                                        .new_respondent_by ==
-                                    null
-                                ? 'Rumah ${listMeetingPermohonan[index].origin_respondent_by!.full_name}\n${listMeetingPermohonan[index].origin_respondent_by!.address!}'
-                                : 'Rumah ${listMeetingPermohonan[index].new_respondent_by!.full_name}\n${listMeetingPermohonan[index].new_respondent_by!.address!}',
-                            status: (listMeetingPermohonan[index]
-                                        .created_by!
-                                        .id ==
-                                    listMeetingPermohonan[index]
-                                        .meet_datetime_negotiated_by!
-                                        .id)
-                                ? 'Menunggu Konfirmasi Responden\n(${listMeetingPermohonan[index].new_respondent_by == null ? listMeetingPermohonan[index].origin_respondent_by!.full_name : listMeetingPermohonan[index].new_respondent_by!.full_name})'
-                                : 'Menunggu Konfirmasi Pemohon',
-                          ),
-                          if (index == listMeetingPermohonan.length - 1)
-                            Divider(
+                          Text('Terjadi kesalahan, mohon refresh data...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Sedang mengambil data, mohon tunggu...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return listMeetingPermohonan.isNotEmpty
+                      ? ListView.separated(
+                          separatorBuilder: (context, int) {
+                            return Divider(
                               color: smartRTPrimaryColor,
                               thickness: 1,
                               height: 5,
-                            ),
-                        ],
-                      );
-                    },
-                  )
-                : Center(
-                    child: Text(
-                      "Tidak ada Janji Temu",
-                      style: smartRTTextLarge.copyWith(
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-            listMeetingTelahBerlalu.isNotEmpty
-                ? ListView.separated(
-                    separatorBuilder: (context, int) {
-                      return Divider(
-                        color: smartRTPrimaryColor,
-                        thickness: 1,
-                        height: 5,
-                      );
-                    },
-                    itemCount: listMeetingTelahBerlalu.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          CardWithTimeLocation(
-                            title: listMeetingTelahBerlalu[index].title,
-                            onTap: () async {
-                              Navigator.pushNamed(
-                                  context, ListJanjiTemuDetailPage.id,
-                                  arguments: ListJanjiTemuDetailPageArgument(
-                                      dataJanjiTemu:
-                                          listMeetingTelahBerlalu[index]));
-                            },
-                            subtitle: listMeetingTelahBerlalu[index].detail,
-                            dateTime: DateFormat('d MMMM y HH:mm', 'id_ID')
-                                .format(listMeetingTelahBerlalu[index]
-                                    .meet_datetime),
-                            location: listMeetingTelahBerlalu[index]
-                                        .new_respondent_by ==
-                                    null
-                                ? 'Rumah ${listMeetingTelahBerlalu[index].origin_respondent_by!.full_name}\n${listMeetingTelahBerlalu[index].origin_respondent_by!.address!}'
-                                : 'Rumah ${listMeetingTelahBerlalu[index].new_respondent_by!.full_name}\n${listMeetingTelahBerlalu[index].new_respondent_by!.address!}',
-                            status: (listMeetingTelahBerlalu[index].status == 0)
-                                ? 'Tidak Terkonfirmasi'
-                                : 'Selesai',
-                          ),
-                          if (index == listMeetingTelahBerlalu.length - 1)
-                            Divider(
-                              color: smartRTPrimaryColor,
-                              thickness: 1,
-                              height: 5,
-                            ),
-                        ],
-                      );
-                    },
-                  )
-                : Center(
-                    child: Text(
-                      "Tidak ada Janji Temu",
-                      style: smartRTTextLarge.copyWith(
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-            listMeetingStatusNegative.isNotEmpty
-                ? ListView.separated(
-                    separatorBuilder: (context, int) {
-                      return Divider(
-                        color: smartRTPrimaryColor,
-                        thickness: 1,
-                        height: 5,
-                      );
-                    },
-                    itemCount: listMeetingStatusNegative.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          CardWithTimeLocation(
-                              title: listMeetingStatusNegative[index].title,
-                              onTap: () async {
-                                Navigator.pushNamed(
-                                    context, ListJanjiTemuDetailPage.id,
-                                    arguments: ListJanjiTemuDetailPageArgument(
-                                        dataJanjiTemu:
-                                            listMeetingStatusNegative[index]));
-                              },
-                              subtitle: listMeetingStatusNegative[index].detail,
-                              dateTime: DateFormat('d MMMM y HH:mm', 'id_ID')
-                                  .format(listMeetingStatusNegative[index]
-                                      .meet_datetime),
-                              location: listMeetingStatusNegative[index].new_respondent_by == null
-                                  ? 'Rumah ${listMeetingStatusNegative[index].origin_respondent_by!.full_name}\n${listMeetingStatusNegative[index].origin_respondent_by!.address!}'
-                                  : 'Rumah ${listMeetingStatusNegative[index].new_respondent_by!.full_name}\n${listMeetingStatusNegative[index].new_respondent_by!.address!}',
-                              status: (listMeetingStatusNegative[index].status == -1 &&
-                                      listMeetingStatusNegative[index]
-                                              .confirmated_by!
-                                              .id !=
-                                          listMeetingStatusNegative[index]
+                            );
+                          },
+                          itemCount: listMeetingPermohonan.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                CardWithTimeLocation(
+                                  title: listMeetingPermohonan[index].title,
+                                  onTap: () async {
+                                    Navigator.pushNamed(
+                                        context, ListJanjiTemuDetailPage.id,
+                                        arguments:
+                                            ListJanjiTemuDetailPageArgument(
+                                                dataJanjiTemu:
+                                                    listMeetingPermohonan[
+                                                        index]));
+                                  },
+                                  subtitle: listMeetingPermohonan[index].detail,
+                                  dateTime:
+                                      DateFormat('d MMMM y HH:mm', 'id_ID')
+                                          .format(listMeetingPermohonan[index]
+                                              .meet_datetime),
+                                  location: listMeetingPermohonan[index]
+                                              .new_respondent_by ==
+                                          null
+                                      ? 'Rumah ${listMeetingPermohonan[index].origin_respondent_by!.full_name}\n${listMeetingPermohonan[index].origin_respondent_by!.address!}'
+                                      : 'Rumah ${listMeetingPermohonan[index].new_respondent_by!.full_name}\n${listMeetingPermohonan[index].new_respondent_by!.address!}',
+                                  status: (listMeetingPermohonan[index]
                                               .created_by!
+                                              .id ==
+                                          listMeetingPermohonan[index]
+                                              .meet_datetime_negotiated_by!
                                               .id)
-                                  ? 'Ditolak oleh Responden'
-                                  : (listMeetingStatusNegative[index].status == -1 &&
-                                          listMeetingStatusNegative[index]
-                                                  .confirmated_by!
-                                                  .id ==
-                                              listMeetingStatusNegative[index]
-                                                  .created_by!
-                                                  .id)
-                                      ? 'Ditolak oleh Pemohon'
-                                      : listMeetingStatusNegative[index].created_by!.id ==
-                                              listMeetingStatusNegative[index]
-                                                  .confirmated_by!
-                                                  .id
-                                          ? 'Dibatalkan oleh Pemohon'
-                                          : 'Dibatalkan oleh Responden'),
-                          if (index == listMeetingStatusNegative.length - 1)
-                            Divider(
+                                      ? 'Menunggu Konfirmasi Responden\n(${listMeetingPermohonan[index].new_respondent_by == null ? listMeetingPermohonan[index].origin_respondent_by!.full_name : listMeetingPermohonan[index].new_respondent_by!.full_name})'
+                                      : 'Menunggu Konfirmasi Pemohon',
+                                ),
+                                if (index == listMeetingPermohonan.length - 1)
+                                  Divider(
+                                    color: smartRTPrimaryColor,
+                                    thickness: 1,
+                                    height: 5,
+                                  ),
+                              ],
+                            );
+                          },
+                        )
+                      : ListView(
+                          children: [
+                            SB_height15,
+                            Center(
+                              child: Text(
+                                "Tidak ada Janji Temu",
+                                style: smartRTTextLarge.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          ],
+                        );
+                },
+              ),
+            ),
+            RefreshIndicator(
+              onRefresh: () => getData(),
+              child: FutureBuilder(
+                future: context
+                    .watch<MeetingProvider>()
+                    .futures['${ListJanjiTemuDetailPage.id}-gettelahberlalu'],
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Terjadi kesalahan, mohon refresh data...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Sedang mengambil data, mohon tunggu...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return listMeetingTelahBerlalu.isNotEmpty
+                      ? ListView.separated(
+                          separatorBuilder: (context, int) {
+                            return Divider(
                               color: smartRTPrimaryColor,
                               thickness: 1,
                               height: 5,
-                            ),
+                            );
+                          },
+                          itemCount: listMeetingTelahBerlalu.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                CardWithTimeLocation(
+                                  title: listMeetingTelahBerlalu[index].title,
+                                  onTap: () async {
+                                    Navigator.pushNamed(
+                                        context, ListJanjiTemuDetailPage.id,
+                                        arguments:
+                                            ListJanjiTemuDetailPageArgument(
+                                                dataJanjiTemu:
+                                                    listMeetingTelahBerlalu[
+                                                        index]));
+                                  },
+                                  subtitle:
+                                      listMeetingTelahBerlalu[index].detail,
+                                  dateTime:
+                                      DateFormat('d MMMM y HH:mm', 'id_ID')
+                                          .format(listMeetingTelahBerlalu[index]
+                                              .meet_datetime),
+                                  location: listMeetingTelahBerlalu[index]
+                                              .new_respondent_by ==
+                                          null
+                                      ? 'Rumah ${listMeetingTelahBerlalu[index].origin_respondent_by!.full_name}\n${listMeetingTelahBerlalu[index].origin_respondent_by!.address!}'
+                                      : 'Rumah ${listMeetingTelahBerlalu[index].new_respondent_by!.full_name}\n${listMeetingTelahBerlalu[index].new_respondent_by!.address!}',
+                                  status:
+                                      (listMeetingTelahBerlalu[index].status ==
+                                              0)
+                                          ? 'Tidak Terkonfirmasi'
+                                          : 'Selesai',
+                                ),
+                                if (index == listMeetingTelahBerlalu.length - 1)
+                                  Divider(
+                                    color: smartRTPrimaryColor,
+                                    thickness: 1,
+                                    height: 5,
+                                  ),
+                              ],
+                            );
+                          },
+                        )
+                      : ListView(
+                          children: [
+                            SB_height15,
+                            Center(
+                              child: Text(
+                                "Tidak ada Janji Temu",
+                                style: smartRTTextLarge.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          ],
+                        );
+                },
+              ),
+            ),
+            RefreshIndicator(
+              onRefresh: () => getData(),
+              child: FutureBuilder(
+                future: context
+                    .watch<MeetingProvider>()
+                    .futures['${ListJanjiTemuDetailPage.id}-getstatusnegative'],
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Terjadi kesalahan, mohon refresh data...'),
                         ],
-                      );
-                    },
-                  )
-                : Center(
-                    child: Text(
-                      "Tidak ada Janji Temu",
-                      style: smartRTTextLarge.copyWith(
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                      ),
+                    );
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Sedang mengambil data, mohon tunggu...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return listMeetingStatusNegative.isNotEmpty
+                      ? ListView.separated(
+                          separatorBuilder: (context, int) {
+                            return Divider(
+                              color: smartRTPrimaryColor,
+                              thickness: 1,
+                              height: 5,
+                            );
+                          },
+                          itemCount: listMeetingStatusNegative.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                CardWithTimeLocation(
+                                    title:
+                                        listMeetingStatusNegative[index].title,
+                                    onTap: () async {
+                                      Navigator.pushNamed(
+                                          context, ListJanjiTemuDetailPage.id,
+                                          arguments:
+                                              ListJanjiTemuDetailPageArgument(
+                                                  dataJanjiTemu:
+                                                      listMeetingStatusNegative[
+                                                          index]));
+                                    },
+                                    subtitle:
+                                        listMeetingStatusNegative[index].detail,
+                                    dateTime: DateFormat('d MMMM y HH:mm', 'id_ID')
+                                        .format(listMeetingStatusNegative[index]
+                                            .meet_datetime),
+                                    location: listMeetingStatusNegative[index].new_respondent_by == null
+                                        ? 'Rumah ${listMeetingStatusNegative[index].origin_respondent_by!.full_name}\n${listMeetingStatusNegative[index].origin_respondent_by!.address!}'
+                                        : 'Rumah ${listMeetingStatusNegative[index].new_respondent_by!.full_name}\n${listMeetingStatusNegative[index].new_respondent_by!.address!}',
+                                    status: (listMeetingStatusNegative[index].status == -1 &&
+                                            listMeetingStatusNegative[index].confirmated_by!.id !=
+                                                listMeetingStatusNegative[index]
+                                                    .created_by!
+                                                    .id)
+                                        ? 'Ditolak oleh Responden'
+                                        : (listMeetingStatusNegative[index].status == -1 &&
+                                                listMeetingStatusNegative[index]
+                                                        .confirmated_by!
+                                                        .id ==
+                                                    listMeetingStatusNegative[index]
+                                                        .created_by!
+                                                        .id)
+                                            ? 'Ditolak oleh Pemohon'
+                                            : listMeetingStatusNegative[index].created_by!.id ==
+                                                    listMeetingStatusNegative[index].confirmated_by!.id
+                                                ? 'Dibatalkan oleh Pemohon'
+                                                : 'Dibatalkan oleh Responden'),
+                                if (index ==
+                                    listMeetingStatusNegative.length - 1)
+                                  Divider(
+                                    color: smartRTPrimaryColor,
+                                    thickness: 1,
+                                    height: 5,
+                                  ),
+                              ],
+                            );
+                          },
+                        )
+                      : ListView(
+                          children: [
+                            SB_height15,
+                            Center(
+                              child: Text(
+                                "Tidak ada Janji Temu",
+                                style: smartRTTextLarge.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          ],
+                        );
+                },
+              ),
+            ),
           ],
         ),
       ),

@@ -14,6 +14,7 @@ import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/committe_provider.dart';
 import 'package:smart_rt/providers/event_provider.dart';
 import 'package:smart_rt/providers/health_provider.dart';
+import 'package:smart_rt/providers/meeting_provider.dart';
 import 'package:smart_rt/providers/neighbourhood_head_provider.dart';
 import 'package:smart_rt/providers/news_provider.dart';
 import 'package:smart_rt/providers/population_provider.dart';
@@ -96,6 +97,7 @@ class _SmartRTAppState extends State<SmartRTApp> {
         ChangeNotifierProvider(
             create: ((context) => NeighbourhoodHeadProvider())),
         ChangeNotifierProvider(create: ((context) => AreaBillProvider())),
+        ChangeNotifierProvider(create: ((context) => MeetingProvider())),
       ],
       builder: (context, child) {
         ApplicationProvider.context = context;
