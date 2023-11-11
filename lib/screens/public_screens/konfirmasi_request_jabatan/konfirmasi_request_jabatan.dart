@@ -19,12 +19,19 @@ class KonfirmasiRequestJabatan extends StatefulWidget {
 }
 
 class _KonfirmasiRequestJabatanState extends State<KonfirmasiRequestJabatan> {
+  Future<void> getData() async {
+    context.read<RoleRequestProvider>().futures[KonfirmasiRequestJabatan.id] =
+        context.read<RoleRequestProvider>().getUserRoleReqPengurusData();
+    context.read<RoleRequestProvider>().updateListener();
+    await context
+        .read<RoleRequestProvider>()
+        .futures[KonfirmasiRequestJabatan.id];
+  }
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      context.read<RoleRequestProvider>().getUserRoleReqPengurusData();
-    });
+    getData();
   }
 
   @override
@@ -54,95 +61,162 @@ class _KonfirmasiRequestJabatanState extends State<KonfirmasiRequestJabatan> {
         body: Container(
             child: TabBarView(
           children: [
-            permohonan.length <= 0
-                ? ListView(
-                    children: [
-                      SB_height15,
-                      Center(
-                        child: Text(
-                          "Tidak ada riwayat",
-                          style: smartRTTextLarge.copyWith(
-                              fontWeight: FontWeight.bold),
-                        ),
+            RefreshIndicator(
+              onRefresh: () => getData(),
+              child: FutureBuilder(
+                future: context
+                    .watch<RoleRequestProvider>()
+                    .futures[KonfirmasiRequestJabatan.id],
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Terjadi kesalahan, mohon refresh data...'),
+                        ],
                       ),
-                    ],
-                  )
-                : ListView.separated(
-                    itemCount: permohonan.length,
-                    separatorBuilder: (context, indx) {
-                      return Divider(
-                        color: smartRTPrimaryColor,
-                        thickness: 1,
-                        height: 5,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      return CardListTileWithStatusColor(
-                        title: permohonan[index].data_user_requester!.full_name,
-                        subtitle:
-                            permohonan[index].data_user_requester!.address ??
-                                '',
-                        bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(permohonan[index].created_at)}',
-                        statusColor: smartRTStatusYellowColor,
-                        onTap: () {
-                          DetailKonfirmasiRequestJabatanArguments args =
-                              DetailKonfirmasiRequestJabatanArguments(
-                                  dataKonfirmasi: permohonan[index]);
-                          Navigator.pushNamed(
-                              context, DetailKonfirmasiRequestJabatanPage.id,
-                              arguments: args);
-                        },
-                      );
-                    },
-                  ),
-            telahKonfirmasi.length <= 0
-                ? ListView(
-                    children: [
-                      SB_height15,
-                      Center(
-                        child: Text(
-                          "Tidak ada riwayat",
-                          style: smartRTTextLarge.copyWith(
-                              fontWeight: FontWeight.bold),
-                        ),
+                    );
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Sedang mengambil data, mohon tunggu...'),
+                        ],
                       ),
-                    ],
-                  )
-                : ListView.separated(
-                    itemCount: telahKonfirmasi.length,
-                    separatorBuilder: (context, indx) {
-                      return Divider(
-                        color: smartRTPrimaryColor,
-                        thickness: 1,
-                        height: 5,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      return CardListTileWithStatusColor(
-                        title: telahKonfirmasi[index]
-                            .data_user_requester!
-                            .full_name,
-                        subtitle: telahKonfirmasi[index]
-                                .data_user_requester!
-                                .address ??
-                            '',
-                        bottomText:
-                            'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(telahKonfirmasi[index].created_at)}',
-                        statusColor: telahKonfirmasi[index].accepted_at == null
-                            ? smartRTErrorColor
-                            : smartRTSuccessColor,
-                        onTap: () {
-                          DetailKonfirmasiRequestJabatanArguments args =
-                              DetailKonfirmasiRequestJabatanArguments(
-                                  dataKonfirmasi: telahKonfirmasi[index]);
-                          Navigator.pushNamed(
-                              context, DetailKonfirmasiRequestJabatanPage.id,
-                              arguments: args);
-                        },
-                      );
-                    },
-                  )
+                    );
+                  }
+                  return permohonan.length <= 0
+                      ? ListView(
+                          children: [
+                            SB_height15,
+                            Center(
+                              child: Text(
+                                "Tidak ada riwayat",
+                                style: smartRTTextLarge.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        )
+                      : ListView.separated(
+                          itemCount: permohonan.length,
+                          separatorBuilder: (context, indx) {
+                            return Divider(
+                              color: smartRTPrimaryColor,
+                              thickness: 1,
+                              height: 5,
+                            );
+                          },
+                          itemBuilder: (context, index) {
+                            return CardListTileWithStatusColor(
+                              title: permohonan[index]
+                                  .data_user_requester!
+                                  .full_name,
+                              subtitle: permohonan[index]
+                                      .data_user_requester!
+                                      .address ??
+                                  '',
+                              bottomText:
+                                  'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(permohonan[index].created_at)}',
+                              statusColor: smartRTStatusYellowColor,
+                              onTap: () {
+                                DetailKonfirmasiRequestJabatanArguments args =
+                                    DetailKonfirmasiRequestJabatanArguments(
+                                        dataKonfirmasi: permohonan[index]);
+                                Navigator.pushNamed(context,
+                                    DetailKonfirmasiRequestJabatanPage.id,
+                                    arguments: args);
+                              },
+                            );
+                          },
+                        );
+                },
+              ),
+            ),
+            RefreshIndicator(
+              onRefresh: () => getData(),
+              child: FutureBuilder(
+                future: context
+                    .watch<RoleRequestProvider>()
+                    .futures[KonfirmasiRequestJabatan.id],
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Terjadi kesalahan, mohon refresh data...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: ListView(
+                        children: [
+                          Text('Sedang mengambil data, mohon tunggu...'),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return telahKonfirmasi.length <= 0
+                      ? ListView(
+                          children: [
+                            SB_height15,
+                            Center(
+                              child: Text(
+                                "Tidak ada riwayat",
+                                style: smartRTTextLarge.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        )
+                      : ListView.separated(
+                          itemCount: telahKonfirmasi.length,
+                          separatorBuilder: (context, indx) {
+                            return Divider(
+                              color: smartRTPrimaryColor,
+                              thickness: 1,
+                              height: 5,
+                            );
+                          },
+                          itemBuilder: (context, index) {
+                            return CardListTileWithStatusColor(
+                              title: telahKonfirmasi[index]
+                                  .data_user_requester!
+                                  .full_name,
+                              subtitle: telahKonfirmasi[index]
+                                      .data_user_requester!
+                                      .address ??
+                                  '',
+                              bottomText:
+                                  'Tanggal dibuat : ${DateFormat('d MMMM y', 'id_ID').format(telahKonfirmasi[index].created_at)}',
+                              statusColor:
+                                  telahKonfirmasi[index].accepted_at == null
+                                      ? smartRTErrorColor
+                                      : smartRTSuccessColor,
+                              onTap: () {
+                                DetailKonfirmasiRequestJabatanArguments args =
+                                    DetailKonfirmasiRequestJabatanArguments(
+                                        dataKonfirmasi: telahKonfirmasi[index]);
+                                Navigator.pushNamed(context,
+                                    DetailKonfirmasiRequestJabatanPage.id,
+                                    arguments: args);
+                              },
+                            );
+                          },
+                        );
+                },
+              ),
+            )
           ],
         )),
       ),

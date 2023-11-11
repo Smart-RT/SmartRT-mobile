@@ -8,6 +8,7 @@ import 'package:smart_rt/utilities/net_util.dart';
 class RoleRequestProvider extends ChangeNotifier {
   List<UserRoleRequest> listUserRoleReqKetuaRT = [];
   List<UserRoleRequest> listUserRoleReqPengurus = [];
+  Map<String, Future> futures = {};
 
   void updateListener() => notifyListeners();
 
