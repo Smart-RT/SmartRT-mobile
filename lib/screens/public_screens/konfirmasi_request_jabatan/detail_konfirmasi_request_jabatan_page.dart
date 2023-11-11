@@ -163,7 +163,7 @@ class _DetailKonfirmasiRequestJabatanPageState
           u.area!.wakil_ketua_id =
               widget.args.dataKonfirmasi.data_user_requester!;
         }
-        print('MASUK SINI , TERIMA KASIH');
+
         context.read<AuthProvider>().user = u;
         context.read<AuthProvider>().saveUserDataToStorage();
         context.read<AuthProvider>().updateListener();
