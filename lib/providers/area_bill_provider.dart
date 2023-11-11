@@ -192,4 +192,25 @@ class AreaBillProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> nonAktifkanIuran({required AreaBill bill}) async {
+    try {
+      Response<dynamic> resp = await NetUtil()
+          .dioClient
+          .patch('/iuran/update/nonaktifkan/${bill.id}');
+
+      if (resp.statusCode.toString() == '200') {
+        int index = listAreaBill.indexOf(bill);
+        listAreaBill[index].status = 0;
+      }
+      notifyListeners();
+
+      return true;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+    return false;
+  }
 }

@@ -9,6 +9,7 @@ import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_list_iuran_
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class LihatListIuranPage extends StatefulWidget {
   static const String id = 'LihatListIuranPage';
@@ -20,11 +21,68 @@ class LihatListIuranPage extends StatefulWidget {
 
 class LihatListIuranPageState extends State<LihatListIuranPage> {
   User user = AuthProvider.currentUser!;
-
+  int popupval = 0;
   void getData() async {
     await context
         .read<AreaBillProvider>()
         .getAreaBillByAreaID(areaID: user.area_id!);
+  }
+
+  void nonAktifkanIuran(BuildContext context, AreaBill bill) async {
+    // show confirmasi
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          'Hai Sobat Pintar,',
+          style: smartRTTextTitleCard,
+        ),
+        content: Text(
+          'Apakah anda yakin menonaktifkan Iuran ${bill.name}?',
+          style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+        ),
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 'Batal');
+                },
+                child: Text(
+                  'Batal',
+                  style: smartRTTextNormal.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () async {
+                  bool success = await context
+                      .read<AreaBillProvider>()
+                      .nonAktifkanIuran(bill: bill);
+                  if (success) {
+                    SmartRTSnackbar.show(context,
+                        message: 'Berhasil menonaktifkan iuran!',
+                        backgroundColor: smartRTSuccessColor);
+                    Navigator.pop(context);
+                  } else {
+                    SmartRTSnackbar.show(context,
+                        message: 'Gagal menonaktifkan iuran',
+                        backgroundColor: smartRTErrorColor);
+                  }
+                },
+                child: Text(
+                  'NONAKTIFKAN',
+                  style: smartRTTextNormal.copyWith(
+                      fontWeight: FontWeight.bold, color: smartRTErrorColor2),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -55,6 +113,21 @@ class LihatListIuranPageState extends State<LihatListIuranPage> {
               Padding(
                 padding: paddingCard,
                 child: ListTile(
+                    trailing: listIuran[index].is_repeated == 1 &&
+                            listIuran[index].status == 1
+                        ? PopupMenuButton(
+                            initialValue: popupval,
+                            onSelected: (value) {
+                              nonAktifkanIuran(context, listIuran[index]);
+                            },
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                child: Text('Nonaktifkan Iuran'),
+                                value: 1,
+                              )
+                            ],
+                          )
+                        : null,
                     onTap: () {
                       Navigator.pushNamed(context, LihatListIuranPageDetail.id,
                           arguments:
