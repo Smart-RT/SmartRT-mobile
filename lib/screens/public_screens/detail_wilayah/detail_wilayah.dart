@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/models/area/area.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
 
 class DetailWilayah extends StatelessWidget {
   static const String id = 'DetailWilayahPage';
   const DetailWilayah({super.key});
+
+  String initialName(String full_name) {
+    if (full_name == '') {
+      return '';
+    } else if (full_name.contains(' ')) {
+      List<String> nama = full_name.toUpperCase().split(' ');
+      return '${nama[0][0]}${nama[1][0]}';
+    } else if (full_name.length < 2) {
+      return full_name.toUpperCase();
+    } else {
+      return '${full_name[0]}${full_name[1]}'.toUpperCase();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,30 +34,56 @@ class DetailWilayah extends StatelessWidget {
           child: ListView(
         children: [
           ListTile(
-            leading: Icon(Icons.person),
-            dense: false,
-            title: Text("Ketua"),
-            subtitle:
-                Text(area.ketua_id != null ? area.ketua_id!.full_name : ""),
+            leading: CircleAvatarLoader(
+              radius: 30,
+              photoPathUrl:
+                  '${backendURL}/public/uploads/users/${area.ketua_id!.id}/profile_picture/',
+              photo: area.ketua_id!.photo_profile_img,
+              initials: initialName(area.ketua_id!.full_name),
+            ),
+            title: Text('Ketua'),
+            subtitle: Text(area.ketua_id!.full_name),
           ),
           ListTile(
-            leading: Icon(Icons.person),
-            dense: false,
-            title: Text("Wakil Ketua"),
+            leading: CircleAvatarLoader(
+              radius: 30,
+              photoPathUrl:
+                  '${backendURL}/public/uploads/users/${area.wakil_ketua_id?.id ?? ''}/profile_picture/',
+              photo: area.wakil_ketua_id?.photo_profile_img ?? '',
+              initials: area.wakil_ketua_id != null
+                  ? initialName(area.wakil_ketua_id!.full_name)
+                  : '?',
+            ),
+            title: Text('Wakil Ketua'),
             subtitle: Text(area.wakil_ketua_id != null
                 ? area.wakil_ketua_id!.full_name
                 : "Belum Ada, Kode: ${area.wakil_ketua_code}"),
           ),
           ListTile(
-            leading: Icon(Icons.person),
-            dense: false,
+            leading: CircleAvatarLoader(
+              radius: 30,
+              photoPathUrl:
+                  '${backendURL}/public/uploads/users/${area.sekretaris_id?.id ?? ''}/profile_picture/',
+              photo: area.sekretaris_id?.photo_profile_img ?? '',
+              initials: area.sekretaris_id != null
+                  ? initialName(area.sekretaris_id!.full_name)
+                  : '?',
+            ),
             title: Text("Sekretaris"),
             subtitle: Text(area.sekretaris_id != null
                 ? area.sekretaris_id!.full_name
                 : "Belum Ada, Kode: ${area.sekretaris_code}"),
           ),
           ListTile(
-            leading: Icon(Icons.person),
+            leading: CircleAvatarLoader(
+              radius: 30,
+              photoPathUrl:
+                  '${backendURL}/public/uploads/users/${area.bendahara_id?.id ?? ''}/profile_picture/',
+              photo: area.bendahara_id?.photo_profile_img ?? '',
+              initials: area.bendahara_id != null
+                  ? initialName(area.bendahara_id!.full_name)
+                  : '?',
+            ),
             dense: false,
             title: Text("Bendahara"),
             subtitle: Text(area.bendahara_id != null
