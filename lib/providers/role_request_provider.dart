@@ -8,9 +8,47 @@ import 'package:smart_rt/utilities/net_util.dart';
 class RoleRequestProvider extends ChangeNotifier {
   List<UserRoleRequest> listUserRoleReqKetuaRT = [];
   List<UserRoleRequest> listUserRoleReqPengurus = [];
+  List<UserRoleRequest> listUserRoleReqWargaPermohonan = [];
+  List<UserRoleRequest> listUserRoleReqWargaDikonfirmasi = [];
   Map<String, Future> futures = {};
 
   void updateListener() => notifyListeners();
+
+  Future<void> getUserRoleReqWargaYes() async {
+    try {
+      Response<dynamic> resp = await NetUtil()
+          .dioClient
+          .get('/users/getRoleRequest/typeReqRole/warga/isConfirmation/yes');
+      listUserRoleReqWargaDikonfirmasi.clear();
+      listUserRoleReqWargaDikonfirmasi
+          .addAll((resp.data).map<UserRoleRequest>((request) {
+        return UserRoleRequest.fromData(request);
+      }));
+      notifyListeners();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+  }
+
+  Future<void> getUserRoleReqWargaNo() async {
+    try {
+      Response<dynamic> resp = await NetUtil()
+          .dioClient
+          .get('/users/getRoleRequest/typeReqRole/warga/isConfirmation/no');
+      listUserRoleReqWargaDikonfirmasi.clear();
+      listUserRoleReqWargaPermohonan
+          .addAll((resp.data).map<UserRoleRequest>((request) {
+        return UserRoleRequest.fromData(request);
+      }));
+      notifyListeners();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+  }
 
   Future<void> getUserRoleReqPengurusData() async {
     try {
