@@ -122,7 +122,7 @@ class _DetailKonfirmasiRequestJabatanPageState
   void updateKonfirmasi(String typeConfirmation) async {
     Response<dynamic> resp = await NetUtil()
         .dioClient
-        .patch('/users/update/roleReq/warga', data: {
+        .patch('/users/update/roleReq/pengurus', data: {
       "idRoleReq": widget.args.dataKonfirmasi.id,
       "typeConfirmation": typeConfirmation
     });
