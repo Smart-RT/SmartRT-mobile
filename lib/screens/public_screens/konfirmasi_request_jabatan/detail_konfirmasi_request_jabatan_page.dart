@@ -150,6 +150,23 @@ class _DetailKonfirmasiRequestJabatanPageState
               widget.args.dataKonfirmasi.data_user_requester!.user_role,
           "after_user_role_id": widget.args.dataKonfirmasi.request_code,
         });
+
+        // Update halaman saya, update area id dari current user
+        User u = context.read<AuthProvider>().user!;
+        if (widget.args.dataKonfirmasi.request_role == 4) {
+          u.area!.bendahara_id =
+              widget.args.dataKonfirmasi.data_user_requester!;
+        } else if (widget.args.dataKonfirmasi.request_role == 5) {
+          u.area!.sekretaris_id =
+              widget.args.dataKonfirmasi.data_user_requester!;
+        } else if (widget.args.dataKonfirmasi.request_role == 6) {
+          u.area!.wakil_ketua_id =
+              widget.args.dataKonfirmasi.data_user_requester!;
+        }
+        print('MASUK SINI , TERIMA KASIH');
+        context.read<AuthProvider>().user = u;
+        context.read<AuthProvider>().saveUserDataToStorage();
+        context.read<AuthProvider>().updateListener();
       } else {
         context
             .read<RoleRequestProvider>()
