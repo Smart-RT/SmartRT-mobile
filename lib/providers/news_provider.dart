@@ -8,6 +8,7 @@ import 'package:smart_rt/utilities/net_util.dart';
 class NewsProvider extends ChangeNotifier {
   List<News> dataListNews = [];
   List<News> get news => dataListNews;
+  Map<String, Future> futures = {};
   set news(List<News> value) {
     dataListNews = value;
   }

@@ -23,8 +23,11 @@ class PengumumanPage extends StatefulWidget {
 class _PengumumanPageState extends State<PengumumanPage> {
   User user = AuthProvider.currentUser!;
 
-  void getData() async {
-    await context.read<NewsProvider>().getDataListNews();
+  Future<void> getData() async {
+    context.read<NewsProvider>().futures[PengumumanPage.id] =
+        context.read<NewsProvider>().getDataListNews();
+    context.read<NewsProvider>().updateListener();
+    await context.read<NewsProvider>().futures[PengumumanPage.id];
   }
 
   @override
@@ -36,44 +39,77 @@ class _PengumumanPageState extends State<PengumumanPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<News> listPengumuman = context.watch<NewsProvider>().dataListNews;
     return Scaffold(
-      body: listPengumuman.isNotEmpty
-          ? ListView.separated(
-              separatorBuilder: (context, int) {
-                return Divider(
-                  color: smartRTPrimaryColor,
-                  thickness: 1,
-                  height: 5,
+      body: RefreshIndicator(
+        onRefresh: () => getData(),
+        child: FutureBuilder(
+            future: context.watch<NewsProvider>().futures[PengumumanPage.id],
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Container(
+                  margin: EdgeInsets.all(15),
+                  child: ListView(
+                    children: [
+                      Text('Terjadi kesalahan, mohon refresh data...'),
+                    ],
+                  ),
                 );
-              },
-              itemCount: listPengumuman.length,
-              itemBuilder: (context, index) {
-                return ListTileData3(
-                  title: listPengumuman[index].title,
-                  detail: listPengumuman[index].detail,
-                  createdAt: DateFormat('d MMMM y', 'id_ID')
-                      .format(listPengumuman[index].created_at),
-                  imgNetworkDirect: listPengumuman[index].file_img == null ||
-                          listPengumuman[index].file_img == ''
-                      ? ''
-                      : '${backendURL}/public/uploads/pengumuman/file_lampiran/${listPengumuman[index].id}/${listPengumuman[index].file_img}',
-                  onTap: () async {
-                    PengumumanDetailPageArgument args =
-                        PengumumanDetailPageArgument(
-                            dataPengumuman: listPengumuman[index]);
-                    Navigator.pushNamed(context, PengumumanDetailPage.id,
-                        arguments: args);
-                  },
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  margin: EdgeInsets.all(15),
+                  child: ListView(
+                    children: [
+                      Text('Sedang mengambil data, mohon tunggu...'),
+                    ],
+                  ),
                 );
-              },
-            )
-          : Center(
-              child: Text(
-                "Tidak ada Pengumuman",
-                style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
+              }
+
+              List<News> listPengumuman =
+                  context.watch<NewsProvider>().dataListNews;
+              return listPengumuman.isNotEmpty
+                  ? ListView.separated(
+                      separatorBuilder: (context, int) {
+                        return Divider(
+                          color: smartRTPrimaryColor,
+                          thickness: 1,
+                          height: 5,
+                        );
+                      },
+                      itemCount: listPengumuman.length,
+                      itemBuilder: (context, index) {
+                        return ListTileData3(
+                          title: listPengumuman[index].title,
+                          detail: listPengumuman[index].detail,
+                          createdAt: DateFormat('d MMMM y', 'id_ID')
+                              .format(listPengumuman[index].created_at),
+                          imgNetworkDirect: listPengumuman[index].file_img ==
+                                      null ||
+                                  listPengumuman[index].file_img == ''
+                              ? ''
+                              : '${backendURL}/public/uploads/pengumuman/file_lampiran/${listPengumuman[index].id}/${listPengumuman[index].file_img}',
+                          onTap: () async {
+                            PengumumanDetailPageArgument args =
+                                PengumumanDetailPageArgument(
+                                    dataPengumuman: listPengumuman[index]);
+                            Navigator.pushNamed(
+                                context, PengumumanDetailPage.id,
+                                arguments: args);
+                          },
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        "Tidak ada Pengumuman",
+                        style: smartRTTextLarge.copyWith(
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+            }),
+      ),
       floatingActionButton:
           (user.user_role != Role.Guest && user.user_role != Role.Warga)
               ? SizedBox(

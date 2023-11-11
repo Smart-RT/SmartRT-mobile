@@ -27,6 +27,7 @@ class LihatListIuranPageState extends State<LihatListIuranPage> {
     context.read<AreaBillProvider>().futures[LihatListIuranPage.id] = context
         .read<AreaBillProvider>()
         .getAreaBillByAreaID(areaID: user.area_id!);
+    context.read<AreaBillProvider>().updateListener();
     await context.read<AreaBillProvider>().futures[LihatListIuranPage.id];
   }
 
