@@ -5,8 +5,6 @@ import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/meet/meeting.dart';
-import 'package:smart_rt/models/user/user.dart';
-import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/providers/meeting_provider.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/buat_janji_temu_page.dart';
 import 'package:smart_rt/screens/public_screens/janji_temu/list_janji_temu_detail_page.dart';
@@ -21,8 +19,6 @@ class ListJanjiTemuPage extends StatefulWidget {
 }
 
 class _ListJanjiTemuPageState extends State<ListJanjiTemuPage> {
-  User user = AuthProvider.currentUser!;
-
   Future<void> getData() async {
     context
             .read<MeetingProvider>()
