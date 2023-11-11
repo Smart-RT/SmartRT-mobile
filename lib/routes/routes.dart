@@ -82,6 +82,7 @@ import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_bulan
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_pembayar_page_detail.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/pembayaran_tf/pembayaran_tf_page_1.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/pembayaran_tf/pembayaran_tf_page_2.dart';
+import 'package:smart_rt/screens/public_screens/konfirmasi_request_jabatan/detail_konfirmasi_request_jabatan_page.dart';
 import 'package:smart_rt/screens/public_screens/konfirmasi_request_jabatan/konfirmasi_request_jabatan.dart';
 import 'package:smart_rt/screens/public_screens/langganan/kelebihan_dan_aturan_langganan_page.dart';
 import 'package:smart_rt/screens/public_screens/langganan/langganan_page.dart';
@@ -371,6 +372,12 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return DetailKonfirmasiGabungWilayahPage(
             args: settings.arguments as DetailKonfirmasiGabungWilayahArguments,
+          );
+        });
+      case DetailKonfirmasiRequestJabatanPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return DetailKonfirmasiRequestJabatanPage(
+            args: settings.arguments as DetailKonfirmasiRequestJabatanArguments,
           );
         });
       // === END

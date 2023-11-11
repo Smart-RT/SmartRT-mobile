@@ -7,8 +7,28 @@ import 'package:smart_rt/utilities/net_util.dart';
 
 class RoleRequestProvider extends ChangeNotifier {
   List<UserRoleRequest> listUserRoleReqKetuaRT = [];
+  List<UserRoleRequest> listUserRoleReqPengurus = [];
 
   void updateListener() => notifyListeners();
+
+  Future<void> getUserRoleReqPengurusData() async {
+    try {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.get('/users/getRoleRequests');
+      if (resp.statusCode.toString() == '200') {
+        listUserRoleReqPengurus.clear();
+        listUserRoleReqPengurus
+            .addAll((resp.data).map<UserRoleRequest>((request) {
+          return UserRoleRequest.fromData(request);
+        }));
+      }
+      notifyListeners();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+  }
 
   Future<void> getUserRoleReqKetuaData() async {
     try {
