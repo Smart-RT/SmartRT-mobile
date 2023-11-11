@@ -22,6 +22,7 @@ class SayaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User currentUser = context.watch<AuthProvider>().user!;
     return Column(
       children: [
         Container(
@@ -34,9 +35,9 @@ class SayaPage extends StatelessWidget {
                   child: CircleAvatarLoader(
                 radius: 50,
                 photoPathUrl:
-                    '${backendURL}/public/uploads/users/${AuthProvider.currentUser!.id}/profile_picture/',
-                photo: context.watch<AuthProvider>().user?.photo_profile_img,
-                initials: context.watch<AuthProvider>().user!.initialName(),
+                    '${backendURL}/public/uploads/users/${currentUser.id}/profile_picture/',
+                photo: currentUser.photo_profile_img,
+                initials: currentUser.initialName(),
               )),
               // Expanded(
               //     child: Icon(
@@ -51,22 +52,21 @@ class SayaPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        AuthProvider.currentUser!.full_name,
+                        currentUser.full_name,
                         style: smartRTTextLargeBold_Secondary,
                       ),
                       Visibility(
-                        visible: AuthProvider.currentUser!.address == null ||
-                                AuthProvider.currentUser!.address == ''
+                        visible: currentUser.address == null ||
+                                currentUser.address == ''
                             ? false
                             : true,
                         child: Text(
-                          AuthProvider.currentUser!.address.toString(),
+                          currentUser.address.toString(),
                           style: smartRTTextLarge_Secondary,
                         ),
                       ),
                       Text(
-                        AuthProvider.currentUser!.user_role.name
-                            .replaceAll("_", " "),
+                        currentUser.user_role.name.replaceAll("_", " "),
                         style: smartRTTextLarge_Secondary,
                       ),
                     ],
@@ -122,7 +122,7 @@ class SayaPage extends StatelessWidget {
                   ),
                 ),
               ),
-              AuthProvider.currentUser!.user_role != Role.Guest
+              currentUser.user_role != Role.Guest
                   ? Container()
                   : GestureDetector(
                       onTap: () {
@@ -146,7 +146,7 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              AuthProvider.currentUser!.user_role != Role.Guest
+              currentUser.user_role != Role.Guest
                   ? Container()
                   : GestureDetector(
                       onTap: () {
@@ -170,9 +170,8 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              [Role.Guest, Role.Warga]
-                          .contains(AuthProvider.currentUser!.user_role) &&
-                      AuthProvider.currentUser!.area == null
+              [Role.Guest, Role.Warga].contains(currentUser.user_role) &&
+                      currentUser.area == null
                   ? Container()
                   : GestureDetector(
                       onTap: () {
@@ -196,7 +195,7 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              AuthProvider.currentUser!.user_role != Role.Ketua_RT
+              currentUser.user_role != Role.Ketua_RT
                   ? Container()
                   : GestureDetector(
                       onTap: () {
@@ -221,15 +220,12 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              ![Role.Guest, Role.Warga]
-                      .contains(AuthProvider.currentUser!.user_role)
+              ![Role.Guest, Role.Warga].contains(currentUser.user_role)
                   ? Container()
-                  : (AuthProvider.currentUser!.area?.ketua_id != null &&
-                          AuthProvider.currentUser!.area?.wakil_ketua_id !=
-                              null &&
-                          AuthProvider.currentUser!.area?.sekretaris_id !=
-                              null &&
-                          AuthProvider.currentUser!.area?.bendahara_id != null)
+                  : (currentUser.area?.ketua_id != null &&
+                          currentUser.area?.wakil_ketua_id != null &&
+                          currentUser.area?.sekretaris_id != null &&
+                          currentUser.area?.bendahara_id != null)
                       ? Container()
                       : GestureDetector(
                           onTap: () {
@@ -270,7 +266,7 @@ class SayaPage extends StatelessWidget {
                   ),
                 ),
               ),
-              AuthProvider.currentUser!.user_role == Role.Guest
+              currentUser.user_role == Role.Guest
                   ? Container()
                   : GestureDetector(
                       onTap: () async {},
