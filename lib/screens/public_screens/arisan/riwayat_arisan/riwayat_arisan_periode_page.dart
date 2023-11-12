@@ -33,7 +33,7 @@ class _RiwayatArisanPeriodePageState extends State<RiwayatArisanPeriodePage> {
   String type = '';
   List<LotteryClubPeriod> listPeriodeArisan = [];
 
-  void getData() async {
+  Future<void> getData() async {
     type = widget.args.type.toLowerCase();
     Response<dynamic> resp =
         await NetUtil().dioClient.get('/lotteryClubs/get/periods');
@@ -46,9 +46,10 @@ class _RiwayatArisanPeriodePageState extends State<RiwayatArisanPeriodePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    getData();
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      await getData();
+    });
   }
 
   @override
@@ -73,50 +74,62 @@ class _RiwayatArisanPeriodePageState extends State<RiwayatArisanPeriodePage> {
             ),
             listPeriodeArisan.isNotEmpty
                 ? Expanded(
-                    child: ListView.separated(
-                      separatorBuilder: (context, int) {
-                        return Divider(
-                          color: smartRTPrimaryColor,
-                          height: 5,
-                        );
-                      },
-                      itemCount: listPeriodeArisan.length,
-                      itemBuilder: (context, index) {
-                        return CardRiwayatArisanWilayah(
-                          periodeKe: listPeriodeArisan[index].period.toString(),
-                          status: listPeriodeArisan[index].meet_ctr <
-                                  listPeriodeArisan[index].total_meets
-                              ? 'Berlangsung'
-                              : 'Selesai',
-                          statusTextColor: listPeriodeArisan[index].meet_ctr <
-                                  listPeriodeArisan[index].total_meets
-                              ? smartRTStatusYellowColor
-                              : smartRTQuaternaryColor,
-                          totalPertemuan:
-                              '${listPeriodeArisan[index].total_meets}x (${listPeriodeArisan[index].year_limit == 0 ? '6 bulan' : '${listPeriodeArisan[index].year_limit.toString()} tahun'})',
-                          totalAnggota:
-                              '${listPeriodeArisan[index].total_members} orang',
-                          iuran: CurrencyFormat.convertToIdr(
-                              listPeriodeArisan[index].bill_amount, 2),
-                          onTap: () async {
-                            RiwayatArisanPeriodeDetailArguments args =
-                                RiwayatArisanPeriodeDetailArguments(
-                              dataPeriodeArisan: listPeriodeArisan[index],
-                            );
-                            Navigator.pushNamed(
-                                context, RiwayatArisanPeriodeDetailPage.id,
-                                arguments: args);
-                          },
-                        );
-                      },
+                    child: RefreshIndicator(
+                      onRefresh: () => getData(),
+                      child: ListView.separated(
+                        separatorBuilder: (context, int) {
+                          return Divider(
+                            color: smartRTPrimaryColor,
+                            height: 5,
+                          );
+                        },
+                        itemCount: listPeriodeArisan.length,
+                        itemBuilder: (context, index) {
+                          return CardRiwayatArisanWilayah(
+                            periodeKe:
+                                listPeriodeArisan[index].period.toString(),
+                            status: listPeriodeArisan[index].meet_ctr <
+                                    listPeriodeArisan[index].total_meets
+                                ? 'Berlangsung'
+                                : 'Selesai',
+                            statusTextColor: listPeriodeArisan[index].meet_ctr <
+                                    listPeriodeArisan[index].total_meets
+                                ? smartRTStatusYellowColor
+                                : smartRTQuaternaryColor,
+                            totalPertemuan:
+                                '${listPeriodeArisan[index].total_meets}x (${listPeriodeArisan[index].year_limit == 0 ? '6 bulan' : '${listPeriodeArisan[index].year_limit.toString()} tahun'})',
+                            totalAnggota:
+                                '${listPeriodeArisan[index].total_members} orang',
+                            iuran: CurrencyFormat.convertToIdr(
+                                listPeriodeArisan[index].bill_amount, 2),
+                            onTap: () async {
+                              RiwayatArisanPeriodeDetailArguments args =
+                                  RiwayatArisanPeriodeDetailArguments(
+                                dataPeriodeArisan: listPeriodeArisan[index],
+                              );
+                              Navigator.pushNamed(
+                                  context, RiwayatArisanPeriodeDetailPage.id,
+                                  arguments: args);
+                            },
+                          );
+                        },
+                      ),
                     ),
                   )
                 : Expanded(
-                    child: Center(
-                      child: Text(
-                        'Tidak ada Riwayat Arisan',
-                        style: smartRTTextLarge.copyWith(
-                            fontWeight: FontWeight.bold),
+                    child: RefreshIndicator(
+                      onRefresh: () => getData(),
+                      child: ListView(
+                        children: [
+                          SB_height15,
+                          Center(
+                            child: Text(
+                              'Tidak ada Riwayat Arisan',
+                              style: smartRTTextLarge.copyWith(
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
