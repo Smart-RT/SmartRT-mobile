@@ -166,16 +166,28 @@ class _TugasSayaPageState extends State<TugasSayaPage> {
     );
   }
 
-  void getData() async {
+  Future<void> getData() async {
     Response<dynamic> resp =
         await NetUtil().dioClient.get('/event/task/detail/list/get/mine');
+    listTugasSemua.clear();
     listTugasSemua.addAll((resp.data).map<EventTaskDetail>((request) {
       return EventTaskDetail.fromData(request);
     }));
-    debugPrint(listTugasSemua.length.toString());
+    listTugasHariIni.clear();
+    listTugasTelahBerlalu.clear();
+    listTugasAkanDatang.clear();
     getDataFilter();
-    listTugas = listTugasHariIni;
-    setState(() {});
+    setState(() {
+      if (_waktuSelectedItem == '0') {
+        listTugas = listTugasHariIni;
+      } else if (_waktuSelectedItem == '1') {
+        listTugas = listTugasAkanDatang;
+      } else if (_waktuSelectedItem == '2') {
+        listTugas = listTugasTelahBerlalu;
+      } else if (_waktuSelectedItem == '3') {
+        listTugas = listTugasSemua;
+      }
+    });
   }
 
   void getDataFilter() async {
@@ -205,13 +217,13 @@ class _TugasSayaPageState extends State<TugasSayaPage> {
         }
       }
     }
+    setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
-    getData();
     super.initState();
+    getData();
   }
 
   @override
@@ -321,15 +333,23 @@ class _TugasSayaPageState extends State<TugasSayaPage> {
           ),
           if (listTugas.isEmpty)
             Expanded(
-                child: Center(
-              child: Text(
-                'Tidak ada Tugas',
-                style: smartRTTextLarge,
+                child: RefreshIndicator(
+              onRefresh: () => getData(),
+              child: ListView(
+                children: [
+                  Center(
+                    child: Text(
+                      'Tidak ada Tugas',
+                      style: smartRTTextLarge,
+                    ),
+                  )
+                ],
               ),
             )),
           if (listTugas.isNotEmpty)
             Expanded(
-              child: Scrollbar(
+              child: RefreshIndicator(
+                onRefresh: () => getData(),
                 child: ListView.separated(
                   separatorBuilder: (context, int) {
                     return Divider(
