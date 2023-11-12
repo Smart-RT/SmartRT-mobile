@@ -47,6 +47,15 @@ class _ArisanPageState extends State<ArisanPage> {
 
   void getListPage() {
     listPage = {
+      0: {
+        "preTitle": "",
+        "preTitleStyleColor": smartRTPrimaryColor,
+        "title": "",
+        "titleStyleColor": smartRTPrimaryColor,
+        "subTitle": "",
+        "subTitleStyleColor": smartRTPrimaryColor,
+        "listMenu": []
+      },
       // ROLE 3-6, ! LOTTERY_CLUBS
       1: {
         "preTitle": "Wilayah Anda Belum Membuka Arisan",
