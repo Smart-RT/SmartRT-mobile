@@ -74,8 +74,7 @@ class SayaPage extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          height: 500,
+        Expanded(
           child: ListView(
             children: <Widget>[
               GestureDetector(
