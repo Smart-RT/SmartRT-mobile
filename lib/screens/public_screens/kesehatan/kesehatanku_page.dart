@@ -65,9 +65,8 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    getData();
     super.initState();
+    getData();
   }
 
   @override
