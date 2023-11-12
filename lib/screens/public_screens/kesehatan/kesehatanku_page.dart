@@ -281,7 +281,7 @@ class _KesehatankuPageState extends State<KesehatankuPage> {
                       title: 'Warga tidak sehat?',
                       subtitle:
                           'Buat laporan kesehatan warga anda segera agar warga anda dapat penanganan dari pengurus RT secara tepat dan cepat.',
-                      buttonText: 'BUAT LAPOORAN',
+                      buttonText: 'BUAT LAPORAN',
                       onTapButton: () async {
                         Navigator.pushNamed(
                             context, FormLaporKesehatanChooseUserPage.id);
