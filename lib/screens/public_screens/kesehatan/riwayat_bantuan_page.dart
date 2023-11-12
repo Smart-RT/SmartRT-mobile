@@ -39,53 +39,6 @@ class _RiwayatBantuanPageState extends State<RiwayatBantuanPage> {
             context: context, is_all: type == "Semua" ? 'yes' : 'no');
     context.read<HealthProvider>().updateListener();
     await context.read<HealthProvider>().futures['RiwayatBantuanPage.id-$type'];
-    // Response<dynamic> resp;
-    // if (type == 'Semua') {
-    //   appbarTitle = 'Riwayat Bantuan Wilayah';
-    //   resp = await NetUtil()
-    //       .dioClient
-    //       .get('/health/healthTaskHelp/list/0/is-all/yes');
-    //   listPermohonan.addAll((resp.data).map<HealthTaskHelp>((request) {
-    //     return HealthTaskHelp.fromData(request);
-    //   }));
-
-    //   resp = await NetUtil()
-    //       .dioClient
-    //       .get('/health/healthTaskHelp/list/1/is-all/yes');
-    //   listDiproses.addAll((resp.data).map<HealthTaskHelp>((request) {
-    //     return HealthTaskHelp.fromData(request);
-    //   }));
-
-    //   resp = await NetUtil()
-    //       .dioClient
-    //       .get('/health/healthTaskHelp/list/telahBerlalu/is-all/yes');
-    //   listTelahBerlalu.addAll((resp.data).map<HealthTaskHelp>((request) {
-    //     return HealthTaskHelp.fromData(request);
-    //   }));
-    // } else {
-    //   resp = await NetUtil()
-    //       .dioClient
-    //       .get('/health/healthTaskHelp/list/0/is-all/no');
-    //   listPermohonan.addAll((resp.data).map<HealthTaskHelp>((request) {
-    //     return HealthTaskHelp.fromData(request);
-    //   }));
-
-    //   resp = await NetUtil()
-    //       .dioClient
-    //       .get('/health/healthTaskHelp/list/1/is-all/no');
-    //   listDiproses.addAll((resp.data).map<HealthTaskHelp>((request) {
-    //     return HealthTaskHelp.fromData(request);
-    //   }));
-
-    //   resp = await NetUtil()
-    //       .dioClient
-    //       .get('/health/healthTaskHelp/list/telahBerlalu/is-all/no');
-    //   listTelahBerlalu.addAll((resp.data).map<HealthTaskHelp>((request) {
-    //     return HealthTaskHelp.fromData(request);
-    //   }));
-    // }
-
-    // setState(() {});
   }
 
   String getHelpType(String text) {
