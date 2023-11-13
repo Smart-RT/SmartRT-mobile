@@ -18,6 +18,7 @@ import 'package:smart_rt/providers/setting_provider.dart';
 import 'package:smart_rt/providers/voting_provider.dart';
 import 'package:smart_rt/screens/public_screens/langganan/kelebihan_dan_aturan_langganan_page.dart';
 import 'package:smart_rt/screens/public_screens/langganan/langganan_page.dart';
+import 'package:smart_rt/screens/public_screens/performa_saya/performa_saya.dart';
 import 'package:smart_rt/screens/public_screens/voting/voting_absensi_page.dart';
 import 'package:smart_rt/screens/public_screens/voting/voting_page_1.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
@@ -213,7 +214,7 @@ class _BerandaPageState extends State<BerandaPage> {
         ),
       );
     } else {
-      // Navigator.pushNamed(context, KesehatankuPage.id);
+      Navigator.pushNamed(context, PerformaSayaPage.id);
       // Halaman Performa Saya
     }
   }

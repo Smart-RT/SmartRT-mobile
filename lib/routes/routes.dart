@@ -96,6 +96,7 @@ import 'package:smart_rt/screens/public_screens/neighbourhood_head/rekomendasika
 import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_1.dart';
 import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_2.dart';
 import 'package:smart_rt/screens/public_screens/pengumuman/pengumuman_detail_page.dart';
+import 'package:smart_rt/screens/public_screens/performa_saya/performa_saya.dart';
 
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_canvas_page.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
@@ -188,6 +189,11 @@ class Routes {
       case TandaTanganSayaPage.id:
         return MaterialPageRoute(builder: (context) {
           return const TandaTanganSayaPage();
+        });
+
+      case PerformaSayaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const PerformaSayaPage();
         });
 
       case DaftarKetuaPage.id:
