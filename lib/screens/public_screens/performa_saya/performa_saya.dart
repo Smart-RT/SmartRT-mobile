@@ -58,11 +58,6 @@ class _PerformaSayaPageState extends State<PerformaSayaPage> {
           chartData[2]['count'] = ratings.where((r) => r.rating == 3).length;
           chartData[3]['count'] = ratings.where((r) => r.rating == 4).length;
           chartData[4]['count'] = ratings.where((r) => r.rating == 5).length;
-          // "event_count": 3,
-          // "event_active_count": 3,
-          // "event_reject_count": 0,
-          // "event_kick_count": 0,
-          // "average": 4.25,
         });
       }
     } on DioError catch (e) {
