@@ -92,6 +92,7 @@ import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_k
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_kandidat/lihat_semua_kandidat_page_detail.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_status_kandidat_calon_pengurus_rt_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/rekomendasikan_kandidat_page.dart';
+import 'package:smart_rt/screens/public_screens/notification/notification_screen.dart';
 
 import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_1.dart';
 import 'package:smart_rt/screens/public_screens/pengumuman/create_pengumuman/create_pengumuman_page_2.dart';
@@ -160,6 +161,10 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           ApplicationProvider.context = context;
           return const PublicHome();
+        });
+      case NotificationScreen.id:
+        return MaterialPageRoute(builder: (context) {
+          return const NotificationScreen();
         });
       case DetailWilayah.id:
         return MaterialPageRoute(builder: (context) {

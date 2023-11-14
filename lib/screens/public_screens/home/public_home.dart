@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/providers/notification_provider.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/beranda_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/keuangan_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/pengumuman_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/saya_page.dart';
 import 'package:smart_rt/screens/public_screens/home/home_part/tugas_page.dart';
 import 'package:smart_rt/models/news/news.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:smart_rt/screens/public_screens/notification/notification_screen.dart';
 
 class PublicHome extends StatefulWidget {
   static const String id = 'PublicHome';
@@ -39,8 +43,11 @@ class _PublicHomeState extends State<PublicHome> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      // get notification data...
+      await context.read<NotificationProvider>().getNotifications(context);
+    });
   }
 
   @override
@@ -65,8 +72,21 @@ class _PublicHomeState extends State<PublicHome> {
               )
             : const SizedBox(),
         actions: [
-          Icon(Icons.notifications),
-          SB_width25,
+          badges.Badge(
+            showBadge: context.watch<NotificationProvider>().totalUnread > 0,
+            badgeContent: Text(
+              context.watch<NotificationProvider>().totalUnread.toString(),
+              style: TextStyle(fontSize: 10),
+            ),
+            position: badges.BadgePosition.topEnd(top: 0, end: 5),
+            child: IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () async {
+                Navigator.pushNamed(context, NotificationScreen.id);
+              },
+            ),
+          ),
+          SB_width15
         ],
       ),
       body: Center(
