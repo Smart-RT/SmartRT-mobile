@@ -9,6 +9,7 @@ import 'package:smart_rt/providers/population_provider.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/daftar_akun_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/daftar_wilayah_surabaya_page.dart';
+import 'package:smart_rt/screens/admin_screens/laporan_kesehatan/laporan_kesehatan_admin.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
 import 'package:smart_rt/widgets/cards/card_list_tile_with_button.dart';
 import 'package:smart_rt/screens/admin_screens/pengaturan/pengaturan_page.dart';
@@ -272,10 +273,8 @@ class _BerandaAdminPageState extends State<BerandaAdminPage> {
                 style: smartRTTextLarge_Primary,
               ),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.pop(context);
+                Navigator.pushNamed(context, LaporanKesehatanAdmin.id);
               },
             ),
             Divider(
