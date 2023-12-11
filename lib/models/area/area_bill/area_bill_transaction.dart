@@ -1,3 +1,4 @@
+import 'package:smart_rt/models/area/area_bill/area_bill.dart';
 import 'package:smart_rt/models/user/user.dart';
 
 class AreaBillTransaction {
@@ -19,6 +20,7 @@ class AreaBillTransaction {
   DateTime? midtrans_created_at;
   DateTime? midtrans_expired_at;
   User? dataUser;
+  AreaBill? dataAreaBill;
 
   AreaBillTransaction.fromData(Map<String, dynamic> data) {
     if (data['id'] != null) {
@@ -80,6 +82,9 @@ class AreaBillTransaction {
     if (data['dataUser'] != null) {
       dataUser = User.fromData(data['dataUser']);
     }
+    if (data['dataAreaBill'] != null) {
+      dataAreaBill = AreaBill.fromData(data['dataAreaBill']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -102,6 +107,7 @@ class AreaBillTransaction {
       'midtrans_created_at': midtrans_created_at,
       'midtrans_expired_at': midtrans_expired_at,
       'dataUser': dataUser,
+      'dataAreaBill': dataAreaBill,
     };
   }
 }

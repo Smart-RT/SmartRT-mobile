@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:smart_rt/models/area/area_bill/area_bill.dart';
 import 'package:smart_rt/models/area/area_bill/area_bill_repeat_detail.dart';
 import 'package:smart_rt/models/area/area_bill/area_bill_transaction.dart';
@@ -10,6 +11,7 @@ class AreaBillProvider extends ChangeNotifier {
   List<AreaBill> listAreaBill = [];
   List<AreaBillTransaction> listPembayar = [];
   List<AreaBillRepeatDetail> listBulanan = [];
+  List<AreaBillTransaction> listTransaksi = [];
   Map<String, Future> futures = {};
 
   void updateListener() => notifyListeners();
@@ -100,6 +102,38 @@ class AreaBillProvider extends ChangeNotifier {
           return AreaBillRepeatDetail.fromData(request);
         }));
       }
+      notifyListeners();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+  }
+
+  Future<void> getAllTransaksiByAreaId({
+    required int areaID,
+    required String yearMonth,
+  }) async {
+    try {
+      Response<dynamic>? resp;
+      debugPrint('yearMonth : $yearMonth');
+      if (yearMonth == '') {
+        resp = await NetUtil()
+            .dioClient
+            .get('/iuran/transaksi/get/all/by-area/$areaID');
+      } else {
+        resp = await NetUtil().dioClient.get(
+            '/iuran/transaksi/get/filtered/by-area/$areaID/yearMonth/$yearMonth');
+        debugPrint("MASOKKK");
+      }
+
+      if (resp.statusCode.toString() == '200') {
+        listTransaksi.clear();
+        listTransaksi.addAll((resp.data).map<AreaBillTransaction>((request) {
+          return AreaBillTransaction.fromData(request);
+        }));
+      }
+      debugPrint(listTransaksi.length.toString());
       notifyListeners();
     } on DioError catch (e) {
       if (e.response != null) {
