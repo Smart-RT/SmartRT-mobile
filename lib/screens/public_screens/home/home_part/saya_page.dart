@@ -15,6 +15,7 @@ import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_s
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
 import 'package:smart_rt/screens/public_screens/update_role/req_update_role_page.dart';
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
+import 'package:smart_rt/screens/public_screens/data_warga/data_warga.dart';
 
 class SayaPage extends StatelessWidget {
   const SayaPage({
@@ -171,7 +172,7 @@ class SayaPage extends StatelessWidget {
                       ),
                     ),
               [Role.Guest, Role.Warga].contains(currentUser.user_role) &&
-                      currentUser.area == null
+                      currentUser.area != null
                   ? Container()
                   : GestureDetector(
                       onTap: () {
@@ -186,6 +187,31 @@ class SayaPage extends StatelessWidget {
                           ),
                           title: Text(
                             'Detail Wilayah',
+                            style: smartRTTextLargeBold_Primary,
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: smartRTPrimaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+              [Role.Guest, Role.Warga].contains(currentUser.user_role) &&
+                      currentUser.area != null
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, DataWargaPage.id);
+                      },
+                      child: Card(
+                        color: smartRTSecondaryColor,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.people,
+                            color: smartRTPrimaryColor,
+                          ),
+                          title: Text(
+                            'Data Warga',
                             style: smartRTTextLargeBold_Primary,
                           ),
                           trailing: Icon(
