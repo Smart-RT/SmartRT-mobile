@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,6 +10,10 @@ import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'dart:ui' as ui;
 
 class LaporanKesehatanAdmin extends StatefulWidget {
   static const String id = 'LaporanKesehatanAdmin';
@@ -22,6 +28,9 @@ class _LaporanKesehatanAdminState extends State<LaporanKesehatanAdmin> {
   List<Map<String, dynamic>> dataJumlahWilayah = [];
   List<Map<String, dynamic>> dataJumlahPenyakit = [];
   List<Map<String, dynamic>> dataPenyakitPerWilayah = [];
+  GlobalKey<SfCartesianChartState> _chartPenyakitWilayah = GlobalKey();
+  GlobalKey<SfCartesianChartState> _chartPenyakitKategori = GlobalKey();
+  GlobalKey<SfCartesianChartState> _chartPenyakitWilayahKategori = GlobalKey();
   Future<void> getData() async {
     try {
       Response<dynamic> resp = await NetUtil().dioClient.get(
@@ -52,6 +61,76 @@ class _LaporanKesehatanAdminState extends State<LaporanKesehatanAdmin> {
         debugPrint(e.response!.data.toString());
       }
     }
+  }
+
+  void exportPDF() async {
+    final pdf = pw.Document();
+
+    // Ambil image per chart
+    ui.Image imageDataWilayah =
+        await _chartPenyakitWilayah.currentState!.toImage(pixelRatio: 3.0);
+    ui.Image imageDataKategori =
+        await _chartPenyakitKategori.currentState!.toImage(pixelRatio: 3.0);
+    ui.Image imageDataWilayahKategori = await _chartPenyakitWilayahKategori
+        .currentState!
+        .toImage(pixelRatio: 3.0);
+    ByteData? bytesDataWilayah =
+        await imageDataWilayah.toByteData(format: ui.ImageByteFormat.png);
+    ByteData? bytesDataKategori =
+        await imageDataKategori.toByteData(format: ui.ImageByteFormat.png);
+    ByteData? bytesDataWilayahKategori = await imageDataWilayahKategori
+        .toByteData(format: ui.ImageByteFormat.png);
+    Uint8List imageBytesDataWilayah = bytesDataWilayah!.buffer.asUint8List(
+        bytesDataWilayah.offsetInBytes, bytesDataWilayah.lengthInBytes);
+    Uint8List imageBytesDataKategori = bytesDataKategori!.buffer.asUint8List(
+        bytesDataKategori.offsetInBytes, bytesDataKategori.lengthInBytes);
+    Uint8List imageBytesDataWilayahKategori = bytesDataWilayahKategori!.buffer
+        .asUint8List(bytesDataWilayahKategori.offsetInBytes,
+            bytesDataWilayahKategori.lengthInBytes);
+
+    pw.MemoryImage chartImageDataWilayah =
+        pw.MemoryImage(imageBytesDataWilayah);
+    pw.MemoryImage chartImageDataKategori =
+        pw.MemoryImage(imageBytesDataKategori);
+    pw.MemoryImage chartImageDataWilayahKategori =
+        pw.MemoryImage(imageBytesDataWilayahKategori);
+
+    pdf.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      build: (context) {
+        return [
+          pw.Column(
+            mainAxisSize: pw.MainAxisSize.max,
+            children: [
+              pw.Image(chartImageDataWilayah),
+              pw.Image(chartImageDataKategori),
+              pw.Column(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                children: dataJumlahPenyakit.map((e) {
+                  int index = dataJumlahPenyakit.indexOf(e);
+                  String huruf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[index];
+                  return pw.Text('$huruf: ${e['nama']}');
+                }).toList(),
+              ),
+              pw.Image(chartImageDataWilayahKategori),
+              pw.Column(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                children: dataJumlahPenyakit.map((e) {
+                  int index = dataJumlahPenyakit.indexOf(e);
+                  String huruf = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[index];
+                  return pw.Text('$huruf: ${e['nama']}');
+                }).toList(),
+              )
+            ],
+          ),
+        ];
+      },
+    ));
+
+    await Printing.layoutPdf(
+        onLayout: (PdfPageFormat format) async => pdf.save());
   }
 
   @override
@@ -118,6 +197,7 @@ class _LaporanKesehatanAdminState extends State<LaporanKesehatanAdmin> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SfCartesianChart(
+                        key: _chartPenyakitWilayah,
                         title: ChartTitle(
                             text: 'Jumlah Penyakit Berdasarkan Wilayah',
                             textStyle: smartRTTextLargeBold_Primary),
@@ -125,27 +205,34 @@ class _LaporanKesehatanAdminState extends State<LaporanKesehatanAdmin> {
                         primaryYAxis: NumericAxis(),
                         series: [
                           ColumnSeries(
-                            dataSource: dataJumlahWilayah,
-                            xValueMapper: (Map<String, dynamic> datum, index) =>
-                                datum['nama'],
-                            yValueMapper: (Map<String, dynamic> datum, index) =>
-                                datum['jumlah'],
-                          )
+                              dataSource: dataJumlahWilayah,
+                              xValueMapper:
+                                  (Map<String, dynamic> datum, index) =>
+                                      datum['nama'],
+                              yValueMapper:
+                                  (Map<String, dynamic> datum, index) =>
+                                      datum['jumlah'],
+                              dataLabelSettings: DataLabelSettings(
+                                  isVisible: true, showZeroValue: false))
                         ],
                       ),
                       SfCartesianChart(
+                        key: _chartPenyakitKategori,
                         title: ChartTitle(
                             text: 'Jumlah Penyakit Berdasarkan Kategori',
                             textStyle: smartRTTextLargeBold_Primary),
                         primaryXAxis: CategoryAxis(),
                         series: [
                           ColumnSeries(
-                            dataSource: dataJumlahPenyakit,
-                            xValueMapper: (Map<String, dynamic> datum, index) =>
-                                'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[index],
-                            yValueMapper: (Map<String, dynamic> datum, index) =>
-                                datum['jumlah'],
-                          )
+                              dataSource: dataJumlahPenyakit,
+                              xValueMapper:
+                                  (Map<String, dynamic> datum, index) =>
+                                      'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[index],
+                              yValueMapper:
+                                  (Map<String, dynamic> datum, index) =>
+                                      datum['jumlah'],
+                              dataLabelSettings: DataLabelSettings(
+                                  isVisible: true, showZeroValue: false))
                         ],
                       ),
                       Column(
@@ -158,6 +245,7 @@ class _LaporanKesehatanAdminState extends State<LaporanKesehatanAdmin> {
                         }).toList(),
                       ),
                       SfCartesianChart(
+                          key: _chartPenyakitWilayahKategori,
                           title: ChartTitle(
                               text:
                                   'Jumlah Penyakit Berdasarkan Kategori Per Wilayah',
@@ -165,7 +253,11 @@ class _LaporanKesehatanAdminState extends State<LaporanKesehatanAdmin> {
                           primaryXAxis: CategoryAxis(),
                           primaryYAxis: NumericAxis(),
                           legend: Legend(
-                              isVisible: true, position: LegendPosition.bottom),
+                              isVisible: true,
+                              position: LegendPosition.bottom,
+                              overflowMode: LegendItemOverflowMode.wrap,
+                              width: '100%',
+                              height: '100%'),
                           series: dataPenyakitPerWilayah.map((wilayah) {
                             return StackedColumnSeries(
                                 name: wilayah['wilayah'],
@@ -200,7 +292,9 @@ class _LaporanKesehatanAdminState extends State<LaporanKesehatanAdmin> {
       bottomNavigationBar: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            exportPDF();
+          },
           child: Text(
             'Cetak Laporan',
             style: smartRTTextLargeBold_Secondary,
