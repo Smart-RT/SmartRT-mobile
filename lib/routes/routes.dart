@@ -4,6 +4,7 @@ import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelan
 import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page_detail.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_bill_page.dart';
 import 'package:smart_rt/screens/admin_screens/pengaturan/karosel_beranda/karosel_beranda_page.dart';
+import 'package:smart_rt/screens/admin_screens/laporan_kesehatan/laporan_kesehatan_admin.dart';
 
 import 'package:smart_rt/screens/admin_screens/pengaturan/pengaturan_page.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_akun/buat_akun_admin_page.dart';
@@ -628,6 +629,10 @@ class Routes {
           return LihatWargaPage(
             args: settings.arguments as LihatWargaPageArguments,
           );
+        });
+      case LaporanKesehatanAdmin.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LaporanKesehatanAdmin();
         });
       case PengaturanPage.id:
         return MaterialPageRoute(builder: (context) {
