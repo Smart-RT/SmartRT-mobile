@@ -194,6 +194,14 @@ class RiwayatTransaksiState extends State<RiwayatTransaksi> {
                                 textAlign: pw.TextAlign.left,
                               ),
                               pw.Text(
+                                'Pembayaran untuk ${trans.dataAreaBill!.name}',
+                                style: pw.TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: pw.FontWeight.bold,
+                                ),
+                                textAlign: pw.TextAlign.left,
+                              ),
+                              pw.Text(
                                 'Transaksi via ${trans.payment_type ?? 'Bank Tranfer'}',
                                 style: pw.TextStyle(
                                   fontSize: 15,
@@ -399,6 +407,10 @@ class RiwayatTransaksiState extends State<RiwayatTransaksi> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.stretch,
                                           children: [
+                                            Text(
+                                              'Pembayaran untuk ${listTransaksi[index].dataAreaBill!.name}',
+                                              style: smartRTTextNormal,
+                                            ),
                                             Text(
                                               'Transaksi via ${listTransaksi[index].payment_type ?? 'Bank Transfer'}',
                                               style: smartRTTextNormal,

@@ -9,7 +9,9 @@ import 'package:smart_rt/screens/public_screens/authentications/login_page.dart'
 import 'package:smart_rt/screens/public_screens/daftar_ketua/daftar_ketua_page.dart';
 import 'package:smart_rt/screens/public_screens/detail_wilayah/detail_wilayah.dart';
 import 'package:smart_rt/screens/public_screens/gabung_wilayah/gabung_wilayah_page.dart';
+import 'package:smart_rt/screens/public_screens/kesehatan/laporan_warga_page.dart';
 import 'package:smart_rt/screens/public_screens/konfirmasi_request_jabatan/konfirmasi_request_jabatan.dart';
+import 'package:smart_rt/screens/public_screens/laporan/laporan_rw_page.dart';
 import 'package:smart_rt/screens/public_screens/performa_saya/performa_saya.dart';
 import 'package:smart_rt/screens/public_screens/tanda_tangan_saya/tanda_tangan_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/ubah_profil/ubah_profil_page.dart';
@@ -221,6 +223,29 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
+              if (currentUser.user_role == Role.Ketua_RT)
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, LaporanRWPage.id);
+                  },
+                  child: Card(
+                    color: smartRTSecondaryColor,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.assignment,
+                        color: smartRTPrimaryColor,
+                      ),
+                      title: Text(
+                        'Laporan untuk RW',
+                        style: smartRTTextLargeBold_Primary,
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: smartRTPrimaryColor,
+                      ),
+                    ),
+                  ),
+                ),
               currentUser.user_role != Role.Ketua_RT
                   ? Container()
                   : GestureDetector(
