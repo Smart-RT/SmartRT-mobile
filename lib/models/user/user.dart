@@ -220,3 +220,8 @@ class User {
     }
   }
 }
+
+class User2 extends User {
+  int jumlah_task = 0;
+  User2.fromData(super.data) : super.fromData();
+}
