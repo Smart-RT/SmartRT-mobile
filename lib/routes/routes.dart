@@ -92,6 +92,7 @@ import 'package:smart_rt/screens/public_screens/langganan/kelebihan_dan_aturan_l
 import 'package:smart_rt/screens/public_screens/langganan/langganan_page.dart';
 import 'package:smart_rt/screens/public_screens/langganan/langganan_page_detail_1.dart';
 import 'package:smart_rt/screens/public_screens/langganan/langganan_page_detail_2.dart';
+import 'package:smart_rt/screens/public_screens/laporan/laporan_rw_page.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_kandidat/lihat_semua_kandidat_page.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_kandidat/lihat_semua_kandidat_page_detail.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_status_kandidat_calon_pengurus_rt_saya_page.dart';
@@ -657,6 +658,10 @@ class Routes {
       case DaftarPelangganProPage.id:
         return MaterialPageRoute(builder: (context) {
           return const DaftarPelangganProPage();
+        });
+      case LaporanRWPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const LaporanRWPage();
         });
       case DaftarPelangganProPageDetail.id:
         return MaterialPageRoute(builder: (context) {
