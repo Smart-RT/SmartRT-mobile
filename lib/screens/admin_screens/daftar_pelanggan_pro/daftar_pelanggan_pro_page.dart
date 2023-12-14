@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
@@ -8,11 +9,17 @@ import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/area/area.dart';
 import 'package:smart_rt/models/area/sub_district.dart';
 import 'package:smart_rt/models/area/urban_village.dart';
+import 'package:smart_rt/models/subscribe/pro_subscribe_bill.dart';
 import 'package:smart_rt/providers/subscribe_provider.dart';
 import 'package:smart_rt/screens/admin_screens/daftar_pelanggan_pro/daftar_pelanggan_pro_page_detail.dart';
 import 'package:smart_rt/utilities/net_util.dart';
+import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/cards/card_list_subscribe.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'dart:ui' as ui;
 
 class DaftarPelangganProPage extends StatefulWidget {
   static const String id = 'DaftarPelangganProPage';
@@ -141,9 +148,629 @@ class _DaftarPelangganProPageState extends State<DaftarPelangganProPage> {
     setState(() {});
   }
 
+  void exportPDF() async {
+    final pdf = pw.Document();
+    List<Area> dataArea = [];
+    List<ProSubscribeBill> dataTagihan = [];
+    Response<dynamic> resp =
+        await NetUtil().dioClient.get("/subscribe-pro/laporan");
+    if (resp.data != null) {
+      dataArea.clear();
+      dataArea
+          .addAll(resp.data['data_area'].map<Area>((a) => Area.fromData(a)));
+      dataTagihan.clear();
+      dataTagihan.addAll(resp.data['data_tagihan']
+          .map<ProSubscribeBill>((psb) => ProSubscribeBill.fromData(psb)));
+      pdf.addPage(pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        build: (context) {
+          return [
+            pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+              children: [
+                pw.Text('LAPORAN DAFTAR LANGGANAN PRO',
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                    textAlign: pw.TextAlign.center),
+                pw.Divider(
+                  height: 30,
+                  thickness: 5,
+                  color: PdfColor.fromHex('#000000'),
+                ),
+              ],
+            ),
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child: pw.Text('Jumlah Wilayah Terdaftar',
+                            style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                            )))),
+                pw.Expanded(
+                    flex: 2,
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child:
+                            pw.Text(': ${resp.data['jumlah_area']} Wilayah'))),
+              ],
+            ),
+            pw.SizedBox(height: 5),
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child: pw.Text('Jumlah Wilayah Langganan Pro',
+                            style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                            )))),
+                pw.Expanded(
+                    flex: 2,
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child: pw.Text(
+                            ': ${resp.data['jumlah_area_pro']} Wilayah'))),
+              ],
+            ),
+            pw.SizedBox(height: 5),
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child: pw.Text('Jumlah Wilayah Belum Langganan Pro',
+                            style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold,
+                            )))),
+                pw.Expanded(
+                    flex: 2,
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child: pw.Text(
+                            ': ${resp.data['jumlah_area_belum_pro']} Wilayah'))),
+              ],
+            ),
+            pw.SizedBox(height: 5),
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child:
+                            pw.Text('Jumlah Wilayah Pro Sudah Lunas Bulan ini',
+                                style: pw.TextStyle(
+                                  fontWeight: pw.FontWeight.bold,
+                                )))),
+                pw.Expanded(
+                    flex: 2,
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child: pw.Text(
+                            ': ${resp.data['jumlah_pro_sudah_bayar']} Wilayah'))),
+              ],
+            ),
+            pw.SizedBox(height: 5),
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              children: [
+                pw.Expanded(
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child:
+                            pw.Text('Jumlah Wilayah Pro Belum Lunas Bulan ini',
+                                style: pw.TextStyle(
+                                  fontWeight: pw.FontWeight.bold,
+                                )))),
+                pw.Expanded(
+                    flex: 2,
+                    child: pw.Align(
+                        alignment: pw.Alignment.centerLeft,
+                        child: pw.Text(
+                            ': ${resp.data['jumlah_pro_belum_bayar']} Wilayah'))),
+              ],
+            ),
+            pw.SizedBox(height: 25),
+            pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+              children: [
+                pw.Text('DAFTAR WILAYAH LANGGANAN PRO',
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                    textAlign: pw.TextAlign.center),
+                pw.Divider(
+                  height: 30,
+                  thickness: 5,
+                  color: PdfColor.fromHex('#000000'),
+                ),
+              ],
+            ),
+            ...listArea.where((e) => e.is_subscribe_pro == 1).map(
+              (e) {
+                return [
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Expanded(
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                  'o Kec. ${e.data_kecamatan!.name}, Kel. ${e.data_kelurahan!.name}, RW ${e.rw_num} / RT ${e.rt_num}',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                    ],
+                  ),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Expanded(
+                          flex: 1,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('Status Tagihan Bulan Ini',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                ': ${e.dataSubscribe!.status == 0 ? 'Menunggu Pembayaran' : e.dataSubscribe!.status == 1 ? 'Sudah Membayar' : 'Berhenti Berlangganan'}',
+                              ))),
+                    ],
+                  ),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Expanded(
+                          flex: 1,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('Total Populasi',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                ': ${e.total_population} pengguna aplikasi',
+                              ))),
+                    ],
+                  ),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Expanded(
+                          flex: 1,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('Data Ketua RT',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                ': ${e.ketua_id!.full_name} ${e.ketua_id?.born_date != null ? '(${StringFormat.ageNow(bornDate: e.ketua_id!.born_date!)})' : ''}',
+                              ))),
+                    ],
+                  ),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Expanded(
+                          flex: 1,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                ': ${e.ketua_id!.address ?? '-'}',
+                              ))),
+                    ],
+                  ),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Expanded(
+                          flex: 1,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                ': ${e.ketua_id!.phone}',
+                              ))),
+                    ],
+                  ),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Expanded(
+                          flex: 1,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('Pembayaran Terakhir',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                ': ${e.dataSubscribe!.latest_payment_at != null ? StringFormat.formatDate(dateTime: e.dataSubscribe!.latest_payment_at!, isWithTime: true) : '-'}',
+                              ))),
+                    ],
+                  ),
+                  if (e.dataSubscribe!.latest_payment_at != null)
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                            flex: 1,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('Pembayaran Selanjutnya',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text(
+                                  ': ${StringFormat.formatDate(dateTime: e.dataSubscribe!.latest_payment_at!.add(Duration(days: 30)), isWithTime: false)}',
+                                ))),
+                      ],
+                    ),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Expanded(
+                          flex: 1,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text('Batas Akhir Pembayaran',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                  )))),
+                      pw.Expanded(
+                          flex: 5,
+                          child: pw.Align(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                ': ${e.dataSubscribe!.latest_payment_at != null ? StringFormat.formatDate(dateTime: e.dataSubscribe!.latest_payment_at!.add(Duration(days: 37)), isWithTime: false) : StringFormat.formatDate(dateTime: e.dataSubscribe!.created_at.add(Duration(days: 7)), isWithTime: false)}',
+                              ))),
+                    ],
+                  ),
+                  if (dataTagihan.where((dt) => dt.area_id == e.id).length >
+                      0) ...[
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                            flex: 1,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('Data Tagihan:',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text(
+                                  '',
+                                ))),
+                      ],
+                    ),
+                    ...dataTagihan.where((dt) => dt.area_id == e.id).map((pbs) {
+                      return pw.Row(
+                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                        children: [
+                          pw.Expanded(
+                              flex: 1,
+                              child: pw.Align(
+                                  alignment: pw.Alignment.centerLeft,
+                                  child: pw.Text('',
+                                      style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold,
+                                      )))),
+                          pw.Expanded(
+                              flex: 10,
+                              child: pw.Align(
+                                  alignment: pw.Alignment.centerLeft,
+                                  child: pw.Text(
+                                    'o Tagihan ${DateFormat('MMMM y', 'id_ID').format(pbs.created_at)}, ${CurrencyFormat.convertToIdr(pbs.bill_amount, 2)} (${pbs.status == 0 ? 'Menunggu Pembayaran' : 'Selesai'})',
+                                  ))),
+                        ],
+                      );
+                    })
+                  ],
+                  pw.SizedBox(height: 15),
+                ];
+              },
+            ).reduce((a, b) => [...a, ...b]),
+            pw.SizedBox(height: 25),
+            pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+              children: [
+                pw.Text('DAFTAR WILAYAH BELUM PRO',
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                    textAlign: pw.TextAlign.center),
+                pw.Divider(
+                  height: 30,
+                  thickness: 5,
+                  color: PdfColor.fromHex('#000000'),
+                ),
+              ],
+            ),
+            if (listArea.where((e) => e.is_subscribe_pro == 0).length > 0)
+              ...listArea.where((e) => e.is_subscribe_pro == 0).map(
+                (e) {
+                  return [
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text(
+                                    'o Kec. ${e.data_kecamatan!.name}, Kel. ${e.data_kelurahan!.name}, RW ${e.rw_num} / RT ${e.rt_num}',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                      ],
+                    ),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                            flex: 1,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('Total Populasi',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text(
+                                    ': ${e.total_population} pengguna aplikasi',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                      ],
+                    ),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                            flex: 1,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('Data Ketua RT',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text(
+                                    ': ${e.ketua_id!.full_name} ${e.ketua_id?.born_date != null ? '(${StringFormat.ageNow(bornDate: e.ketua_id!.born_date!)})' : ''}',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                      ],
+                    ),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                            flex: 1,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child:
+                                    pw.Text(': ${e.ketua_id!.address ?? '-'}',
+                                        style: pw.TextStyle(
+                                          fontWeight: pw.FontWeight.bold,
+                                        )))),
+                      ],
+                    ),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                            flex: 1,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text('',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                        pw.Expanded(
+                            flex: 5,
+                            child: pw.Align(
+                                alignment: pw.Alignment.centerLeft,
+                                child: pw.Text(': ${e.ketua_id!.phone}',
+                                    style: pw.TextStyle(
+                                      fontWeight: pw.FontWeight.bold,
+                                    )))),
+                      ],
+                    ),
+                    pw.SizedBox(height: 15),
+                  ];
+                },
+              ).reduce((a, b) => [...a, ...b])
+            else ...[
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                children: [
+                  pw.Expanded(
+                      child: pw.Align(
+                          alignment: pw.Alignment.centerLeft,
+                          child: pw.Text('Belum Ada Data',
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                              )))),
+                ],
+              ),
+            ]
+          ];
+        },
+      ));
+
+      await Printing.layoutPdf(
+          onLayout: (PdfPageFormat format) async => pdf.save());
+    }
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     loadKecamatan();
     loadKelurahan();
     getData();
@@ -180,6 +807,12 @@ class _DaftarPelangganProPageState extends State<DaftarPelangganProPage> {
                   filterDialog();
                 },
                 child: Icon(Icons.filter_alt)),
+            SB_width15,
+            GestureDetector(
+                onTap: () {
+                  exportPDF();
+                },
+                child: Icon(Icons.picture_as_pdf)),
             SB_width15,
           ],
         ),
