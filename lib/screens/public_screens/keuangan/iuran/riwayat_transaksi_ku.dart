@@ -17,15 +17,15 @@ import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 
-class RiwayatTransaksi extends StatefulWidget {
-  static const String id = 'RiwayatTransaksi';
-  const RiwayatTransaksi({Key? key}) : super(key: key);
+class RiwayatTransaksiKu extends StatefulWidget {
+  static const String id = 'RiwayatTransaksiKu';
+  const RiwayatTransaksiKu({Key? key}) : super(key: key);
 
   @override
-  State<RiwayatTransaksi> createState() => RiwayatTransaksiState();
+  State<RiwayatTransaksiKu> createState() => RiwayatTransaksiKuState();
 }
 
-class RiwayatTransaksiState extends State<RiwayatTransaksi> {
+class RiwayatTransaksiKuState extends State<RiwayatTransaksiKu> {
   User user = AuthProvider.currentUser!;
   DateTime? _selected;
   DateTime monthYearCreated = DateTime(2023);
@@ -35,11 +35,10 @@ class RiwayatTransaksiState extends State<RiwayatTransaksi> {
   String _filterSelected = '0';
 
   Future<void> getData() async {
-    context.read<AreaBillProvider>().futures[RiwayatTransaksi.id] = context
-        .read<AreaBillProvider>()
-        .getAllTransaksiByAreaId(areaID: user.area_id!, yearMonth: yearMonth);
+    context.read<AreaBillProvider>().futures[RiwayatTransaksiKu.id] =
+        context.read<AreaBillProvider>().getMyTransaksi(yearMonth: yearMonth);
     context.read<AreaBillProvider>().updateListener();
-    await context.read<AreaBillProvider>().futures[RiwayatTransaksi.id];
+    await context.read<AreaBillProvider>().futures[RiwayatTransaksiKu.id];
     _filter = [
       DropdownMenuItem(
         value: '0',
@@ -75,169 +74,6 @@ class RiwayatTransaksiState extends State<RiwayatTransaksi> {
     }
   }
 
-  // PDF
-  Future<void> _createPDF(
-      {required List<AreaBillTransaction> listTransaksi}) async {
-    String wilayah =
-        'Kec. ${user.data_sub_district!.name}, Kel. ${user.data_urban_village!.name.substring(10)}\nRW ${user.rw_num} / RT ${user.rt_num}';
-
-    final pdf = pw.Document();
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return [
-            pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-              children: [
-                pw.Text('RIWAYAT TRANSAKSI',
-                    style: pw.TextStyle(
-                      fontSize: 20,
-                      fontWeight: pw.FontWeight.bold,
-                    ),
-                    textAlign: pw.TextAlign.center),
-                pw.Text(wilayah,
-                    style: pw.TextStyle(
-                      fontSize: 15,
-                      fontWeight: pw.FontWeight.bold,
-                    ),
-                    textAlign: pw.TextAlign.center),
-                pw.Divider(
-                  height: 30,
-                  thickness: 5,
-                  color: PdfColor.fromHex('#000000'),
-                ),
-                pw.Row(children: [
-                  pw.Expanded(
-                    child: pw.Text(
-                      'Waktu',
-                      style: pw.TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  pw.Text(
-                    ' : ',
-                    style: pw.TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  pw.Expanded(
-                    flex: 3,
-                    child: pw.Text(
-                      bulanTahun == ''
-                          ? 'Semua'
-                          : bulanTahun.substring(1, bulanTahun.length - 1),
-                      style: pw.TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ]),
-                pw.Row(children: [
-                  pw.Expanded(
-                    child: pw.Text(
-                      'Total Transaksi',
-                      style: pw.TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                  pw.Text(
-                    ' : ',
-                    style: pw.TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  pw.Expanded(
-                    flex: 3,
-                    child: pw.Text(
-                      CurrencyFormat.convertToIdr(
-                          listTransaksi
-                              .map(
-                                (e) => e.bill_amount,
-                              )
-                              .reduce(
-                                (value, element) => value + element,
-                              ),
-                          2),
-                      style: pw.TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ]),
-                pw.Divider(
-                  height: 30,
-                  thickness: 1,
-                  color: PdfColor.fromHex('#000000'),
-                ),
-              ],
-            ),
-            ...listTransaksi.map((trans) {
-              return [
-                pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      pw.Expanded(child: pw.Text('o')),
-                      pw.Expanded(
-                        flex: 10,
-                        child: pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: [
-                              pw.Text(
-                                'Pembayaran oleh ${trans.dataUser!.full_name}',
-                                style: pw.TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: pw.FontWeight.bold,
-                                ),
-                                textAlign: pw.TextAlign.left,
-                              ),
-                              pw.Text(
-                                'Pembayaran untuk ${trans.dataAreaBill!.name}',
-                                style: pw.TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: pw.FontWeight.bold,
-                                ),
-                                textAlign: pw.TextAlign.left,
-                              ),
-                              pw.Text(
-                                'Transaksi via ${trans.payment_type ?? 'Bank Tranfer'}',
-                                style: pw.TextStyle(
-                                  fontSize: 15,
-                                ),
-                                textAlign: pw.TextAlign.left,
-                              ),
-                              pw.Text(
-                                StringFormat.formatDate(
-                                    dateTime: trans.updated_at!),
-                                style: pw.TextStyle(
-                                  fontSize: 15,
-                                ),
-                                textAlign: pw.TextAlign.left,
-                              ),
-                            ]),
-                      ),
-                      pw.Text(
-                        '+${CurrencyFormat.convertToIdr(trans.bill_amount, 0)}',
-                        style: pw.TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ]),
-                pw.SizedBox(height: 15)
-              ];
-            }).reduce((a, b) => [...a, ...b])
-          ];
-        },
-      ),
-    );
-
-    await Printing.layoutPdf(
-        onLayout: (PdfPageFormat format) async => pdf.save());
-  }
-  // ===
-
   @override
   void initState() {
     getData();
@@ -247,25 +83,17 @@ class RiwayatTransaksiState extends State<RiwayatTransaksi> {
   @override
   Widget build(BuildContext context) {
     List<AreaBillTransaction> listTransaksi =
-        context.watch<AreaBillProvider>().listTransaksi;
+        context.watch<AreaBillProvider>().listTransaksiKu;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Riwayat Transaksi'),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              _createPDF(listTransaksi: listTransaksi);
-            },
-            child: Icon(Icons.picture_as_pdf),
-          ),
-          SB_width15,
-        ],
+        title: Text('Riwayat Transaksiku'),
       ),
       body: RefreshIndicator(
         onRefresh: () => getData(),
         child: FutureBuilder(
-            future:
-                context.watch<AreaBillProvider>().futures[RiwayatTransaksi.id],
+            future: context
+                .watch<AreaBillProvider>()
+                .futures[RiwayatTransaksiKu.id],
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Container(
@@ -370,7 +198,7 @@ class RiwayatTransaksiState extends State<RiwayatTransaksi> {
                     child: (snapshot.connectionState == ConnectionState.done &&
                             context
                                 .watch<AreaBillProvider>()
-                                .listTransaksi
+                                .listTransaksiKu
                                 .isEmpty)
                         ? Center(
                             child: Text(

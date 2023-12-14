@@ -12,7 +12,10 @@ class AreaBillProvider extends ChangeNotifier {
   List<AreaBillTransaction> listPembayar = [];
   List<AreaBillRepeatDetail> listBulanan = [];
   List<AreaBillTransaction> listTransaksi = [];
+  List<AreaBillTransaction> listTransaksiKu = [];
+  List<AreaBillTransaction> listTagihanKu = [];
   Map<String, Future> futures = {};
+  int totalTagihanSaya = 0;
 
   void updateListener() => notifyListeners();
 
@@ -39,6 +42,21 @@ class AreaBillProvider extends ChangeNotifier {
         debugPrint(e.response!.data.toString());
       }
       return false;
+    }
+  }
+
+  Future<void> getTotalTagihanKu() async {
+    try {
+      Response<dynamic> resp =
+          await NetUtil().dioClient.get('/iuran/get/my/bills');
+      if (resp.statusCode.toString() == '200') {
+        totalTagihanSaya = resp.data;
+      }
+      notifyListeners();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
     }
   }
 
@@ -134,6 +152,64 @@ class AreaBillProvider extends ChangeNotifier {
         }));
       }
       debugPrint(listTransaksi.length.toString());
+      notifyListeners();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+  }
+
+  Future<void> getMyTransaksi({
+    required String yearMonth,
+  }) async {
+    try {
+      Response<dynamic>? resp;
+      debugPrint('yearMonth : $yearMonth');
+      if (yearMonth == '') {
+        resp = await NetUtil().dioClient.get('/iuran/transaksi/get/my');
+      } else {
+        resp = await NetUtil()
+            .dioClient
+            .get('/iuran/transaksi/get/my/filtered/yearMonth/$yearMonth');
+      }
+
+      if (resp.statusCode.toString() == '200') {
+        listTransaksiKu.clear();
+        listTransaksiKu.addAll((resp.data).map<AreaBillTransaction>((request) {
+          return AreaBillTransaction.fromData(request);
+        }));
+      }
+      debugPrint(listTransaksiKu.length.toString());
+      notifyListeners();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+  }
+
+  Future<void> getMyAllTagihan({
+    required String yearMonth,
+  }) async {
+    try {
+      Response<dynamic>? resp;
+      debugPrint('yearMonth : $yearMonth');
+      if (yearMonth == '') {
+        resp = await NetUtil().dioClient.get('/iuran/not-paid/get/my');
+      } else {
+        resp = await NetUtil()
+            .dioClient
+            .get('/iuran/not-paid/get/my/filtered/yearMonth/$yearMonth');
+      }
+
+      if (resp.statusCode.toString() == '200') {
+        listTagihanKu.clear();
+        listTagihanKu.addAll((resp.data).map<AreaBillTransaction>((request) {
+          return AreaBillTransaction.fromData(request);
+        }));
+      }
+      debugPrint(listTagihanKu.length.toString());
       notifyListeners();
     } on DioError catch (e) {
       if (e.response != null) {

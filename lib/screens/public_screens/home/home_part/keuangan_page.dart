@@ -1,12 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/user/user.dart';
+import 'package:smart_rt/providers/area_bill_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/buat_iuran_page.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_list_iuran_page.dart';
-import 'package:smart_rt/screens/public_screens/keuangan/iuran/riwayat_transaksi.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/riwayat_transaksi_ku.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/riwayat_transaksi_wilayah.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/tagihan_saya_page.dart';
+import 'package:smart_rt/utilities/net_util.dart';
+import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 
 class KeuanganPage extends StatefulWidget {
@@ -20,9 +27,20 @@ class KeuanganPage extends StatefulWidget {
 
 class _KeuanganPageState extends State<KeuanganPage> {
   User user = AuthProvider.currentUser!;
+  void getData() async {
+    await context.read<AreaBillProvider>().getTotalTagihanKu();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    int totalTagihanKu = context.watch<AreaBillProvider>().totalTagihanSaya;
     return Column(
       children: [
         Container(
@@ -40,7 +58,7 @@ class _KeuanganPageState extends State<KeuanganPage> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'IDR 0,00',
+                  CurrencyFormat.convertToIdr(totalTagihanKu, 2),
                   style: smartRTTextTitle.copyWith(color: smartRTErrorColor),
                   textAlign: TextAlign.center,
                 ),
@@ -53,20 +71,26 @@ class _KeuanganPageState extends State<KeuanganPage> {
             children: <Widget>[
               ListTileArisan(
                 title: 'Tagihan Saya',
-                onTap: () {},
-              ),
-              Divider(
-                thickness: 1,
-              ),
-              ListTileArisan(
-                title: 'Buat Iuran',
                 onTap: () {
-                  Navigator.pushNamed(context, BuatIuranPage.id);
+                  Navigator.pushNamed(context, TagihanSayaPage.id);
                 },
               ),
               Divider(
                 thickness: 1,
               ),
+              if (user.user_role == Role.Ketua_RT ||
+                  user.user_role == Role.Bendahara)
+                ListTileArisan(
+                  title: 'Buat Iuran',
+                  onTap: () {
+                    Navigator.pushNamed(context, BuatIuranPage.id);
+                  },
+                ),
+              if (user.user_role == Role.Ketua_RT ||
+                  user.user_role == Role.Bendahara)
+                Divider(
+                  thickness: 1,
+                ),
               ListTileArisan(
                 title: 'Lihat Semua Iuran',
                 onTap: () {
@@ -76,21 +100,28 @@ class _KeuanganPageState extends State<KeuanganPage> {
               Divider(
                 thickness: 1,
               ),
-              (user.user_role == Role.Ketua_RT ||
-                      user.user_role == Role.Bendahara)
-                  ? ListTileArisan(
-                      title: 'Riwayat Transaksi Wilayah',
-                      onTap: () {
-                        Navigator.pushNamed(context, RiwayatTransaksi.id);
-                      },
-                    )
-                  : SizedBox(),
-              (user.user_role == Role.Ketua_RT ||
-                      user.user_role == Role.Bendahara)
-                  ? Divider(
-                      thickness: 1,
-                    )
-                  : SizedBox(),
+              ListTileArisan(
+                title: 'Riwayat Transaksiku',
+                onTap: () {
+                  Navigator.pushNamed(context, RiwayatTransaksiKu.id);
+                },
+              ),
+              Divider(
+                thickness: 1,
+              ),
+              if (user.user_role == Role.Ketua_RT ||
+                  user.user_role == Role.Bendahara)
+                ListTileArisan(
+                  title: 'Riwayat Transaksi Wilayah',
+                  onTap: () {
+                    Navigator.pushNamed(context, RiwayatTransaksiWilayah.id);
+                  },
+                ),
+              if (user.user_role == Role.Ketua_RT ||
+                  user.user_role == Role.Bendahara)
+                Divider(
+                  thickness: 1,
+                ),
             ],
           ),
         )

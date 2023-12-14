@@ -15,30 +15,27 @@ import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
 
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/pembayaran_tf/pembayaran_tf_page_1.dart';
 
-class LihatSemuaPembayarPageDetailArguments {
+class TagihanSayaPageDetailArguments {
   int index;
   AreaBill dataAreaBill;
   int? areaBillRepeatDetailID;
-  LihatSemuaPembayarPageDetailArguments({
+  TagihanSayaPageDetailArguments({
     required this.index,
     required this.dataAreaBill,
     this.areaBillRepeatDetailID,
   });
 }
 
-class LihatSemuaPembayarPageDetail extends StatefulWidget {
-  static const String id = 'LihatSemuaPembayarPageDetail';
-  LihatSemuaPembayarPageDetailArguments args;
-  LihatSemuaPembayarPageDetail({Key? key, required this.args})
-      : super(key: key);
+class TagihanSayaPageDetail extends StatefulWidget {
+  static const String id = 'TagihanSayaPageDetail';
+  TagihanSayaPageDetailArguments args;
+  TagihanSayaPageDetail({Key? key, required this.args}) : super(key: key);
 
   @override
-  State<LihatSemuaPembayarPageDetail> createState() =>
-      _LihatSemuaPembayarPageDetailState();
+  State<TagihanSayaPageDetail> createState() => _TagihanSayaPageDetailState();
 }
 
-class _LihatSemuaPembayarPageDetailState
-    extends State<LihatSemuaPembayarPageDetail> {
+class _TagihanSayaPageDetailState extends State<TagihanSayaPageDetail> {
   User user = AuthProvider.currentUser!;
 
   void konfirmasiBayarCash({required AreaBillTransaction dataTagihan}) async {
@@ -118,7 +115,7 @@ class _LihatSemuaPembayarPageDetailState
     int index = widget.args.index;
     AreaBill dataAreaBill = widget.args.dataAreaBill;
     AreaBillTransaction dataTagihan =
-        context.watch<AreaBillProvider>().listPembayar[index];
+        context.watch<AreaBillProvider>().listTagihanKu[index];
     return Scaffold(
       appBar: AppBar(
         title: const Text(''),

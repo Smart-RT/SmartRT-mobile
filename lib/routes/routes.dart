@@ -85,7 +85,10 @@ import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_bulan
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/lihat_semua_pembayar_page_detail.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/pembayaran_tf/pembayaran_tf_page_1.dart';
 import 'package:smart_rt/screens/public_screens/keuangan/iuran/pembayaran_tf/pembayaran_tf_page_2.dart';
-import 'package:smart_rt/screens/public_screens/keuangan/iuran/riwayat_transaksi.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/riwayat_transaksi_ku.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/riwayat_transaksi_wilayah.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/tagihan_saya_page.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/tagihan_saya_page_detail.dart';
 import 'package:smart_rt/screens/public_screens/konfirmasi_request_jabatan/detail_konfirmasi_request_jabatan_page.dart';
 import 'package:smart_rt/screens/public_screens/konfirmasi_request_jabatan/konfirmasi_request_jabatan.dart';
 import 'package:smart_rt/screens/public_screens/langganan/kelebihan_dan_aturan_langganan_page.dart';
@@ -496,9 +499,22 @@ class Routes {
           return ListIuranPertemuanDetailPage(
               args: settings.arguments as ListIuranPertemuanDetailArgument);
         });
-      case RiwayatTransaksi.id:
+      case RiwayatTransaksiWilayah.id:
         return MaterialPageRoute(builder: (context) {
-          return RiwayatTransaksi();
+          return RiwayatTransaksiWilayah();
+        });
+      case RiwayatTransaksiKu.id:
+        return MaterialPageRoute(builder: (context) {
+          return RiwayatTransaksiKu();
+        });
+      case TagihanSayaPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return TagihanSayaPage();
+        });
+      case TagihanSayaPageDetail.id:
+        return MaterialPageRoute(builder: (context) {
+          return TagihanSayaPageDetail(
+              args: settings.arguments as TagihanSayaPageDetailArguments);
         });
 
       // === END
