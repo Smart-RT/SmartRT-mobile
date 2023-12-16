@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
@@ -7,6 +8,7 @@ import 'package:smart_rt/models/event/event_task_detail.dart';
 import 'package:smart_rt/models/event/event_task_detail_rating.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/event_provider.dart';
+import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/parts/explain_part.dart';
@@ -133,6 +135,10 @@ class _LihatPetugasPageRatingState extends State<LihatPetugasPageRating> {
   void beriPenilaian(String review, double rating) async {
     await context.read<EventProvider>().giveRating(
         idTaskDetail: dataPetugas!.id, rating: rating, review: review);
+    Response<dynamic> resp = await NetUtil()
+        .dioClient
+        .get('/event//task/detail/byID/${dataPetugas!.id}');
+    dataPetugas = EventTaskDetail.fromData(resp.data);
     Navigator.pop(context);
     SmartRTSnackbar.show(context,
         message: 'Berhasil memberikan rating !',

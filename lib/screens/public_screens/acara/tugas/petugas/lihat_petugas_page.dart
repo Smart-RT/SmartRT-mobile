@@ -73,7 +73,7 @@ class _LihatPetugasPageState extends State<LihatPetugasPage> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: Text(
-          'Hai Sobat Pintar,',
+          'Hai Sobat Pintar,\n\nApakah anda ingin mengeluarkan petugas ${dataPetugas.dataUser!.full_name}?',
           style: smartRTTextTitleCard,
         ),
         content: Text(
@@ -124,7 +124,7 @@ class _LihatPetugasPageState extends State<LihatPetugasPage> {
                   }
                 },
                 child: Text(
-                  'Tolak Permintaan',
+                  'Iya, Keluarkan!',
                   style: smartRTTextNormal.copyWith(
                       fontWeight: FontWeight.bold, color: smartRTErrorColor2),
                 ),
