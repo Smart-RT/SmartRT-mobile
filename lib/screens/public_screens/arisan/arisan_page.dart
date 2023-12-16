@@ -79,8 +79,9 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Daftarkan Sekarang",
-            "onTap": () {
-              Navigator.pushNamed(context, CreateArisanPage.id);
+            "onTap": () async {
+              await Navigator.pushNamed(context, CreateArisanPage.id);
+              getData();
             },
           },
         ],
@@ -97,11 +98,12 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Riwayat Arisan Saya",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'saya');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             },
           },
           {
@@ -124,23 +126,27 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Buat Periode Arisan Sekarang!",
-            "onTap": () {
-              Navigator.pushNamed(context, CreatePeriodeArisanPage1.id);
+            "onTap": () async {
+              await Navigator.pushNamed(context, CreatePeriodeArisanPage1.id);
+              getData();
             }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'wilayah');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             },
           },
           {
             "menuTitle": "Peraturan dan Tata Cara Arisan",
-            "onTap": () {
-              Navigator.pushNamed(context, PeraturanDanTataCaraArisanPage.id);
+            "onTap": () async {
+              await Navigator.pushNamed(
+                  context, PeraturanDanTataCaraArisanPage.id);
+              getData();
             }
           },
           // {
@@ -161,11 +167,12 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Riwayat Arisan Saya",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'saya');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             },
           },
           {
@@ -187,7 +194,7 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan Selanjutnya",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPertemuanDetailArguments arguments =
                   RiwayatArisanPertemuanDetailArguments(
                 dataPeriodeArisan: dataPertemuan!.lottery_club_period_id!,
@@ -196,17 +203,20 @@ class _ArisanPageState extends State<ArisanPage> {
                 periodeKe: dataPertemuan!.period_ke.toString(),
                 pertemuanKe: dataPertemuan!.pertemuan_ke.toString(),
               );
-              Navigator.pushNamed(context, RiwayatArisanPertemuanDetailPage.id,
+              await Navigator.pushNamed(
+                  context, RiwayatArisanPertemuanDetailPage.id,
                   arguments: arguments);
+              getData();
             }
           },
           {
             "menuTitle": "Riwayat Arisan Saya",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'saya');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             }
           },
           {
@@ -229,11 +239,12 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Riwayat Arisan Saya",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'saya');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             }
           },
           {
@@ -255,7 +266,7 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan Selanjutnya",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPertemuanDetailArguments arguments =
                   RiwayatArisanPertemuanDetailArguments(
                 dataPeriodeArisan: dataPertemuan!.lottery_club_period_id!,
@@ -264,17 +275,20 @@ class _ArisanPageState extends State<ArisanPage> {
                 periodeKe: dataPertemuan!.period_ke.toString(),
                 pertemuanKe: dataPertemuan!.pertemuan_ke.toString(),
               );
-              Navigator.pushNamed(context, RiwayatArisanPertemuanDetailPage.id,
+              await Navigator.pushNamed(
+                  context, RiwayatArisanPertemuanDetailPage.id,
                   arguments: arguments);
+              getData();
             }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'wilayah');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             }
           },
           {
@@ -297,11 +311,12 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'wilayah');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             }
           },
           {
@@ -324,17 +339,20 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Buat Pertemuan Selanjutnya",
-            "onTap": () {
-              Navigator.pushNamed(context, CreatePertemuanSelanjutnyaPage.id);
+            "onTap": () async {
+              await Navigator.pushNamed(
+                  context, CreatePertemuanSelanjutnyaPage.id);
+              getData();
             }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'wilayah');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             }
           },
           {
@@ -360,7 +378,7 @@ class _ArisanPageState extends State<ArisanPage> {
         "listMenu": [
           {
             "menuTitle": "Detail Pertemuan",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPertemuanDetailArguments arguments =
                   RiwayatArisanPertemuanDetailArguments(
                 dataPeriodeArisan: dataPertemuan!.lottery_club_period_id!,
@@ -369,17 +387,20 @@ class _ArisanPageState extends State<ArisanPage> {
                 periodeKe: dataPertemuan!.period_ke.toString(),
                 pertemuanKe: dataPertemuan!.pertemuan_ke.toString(),
               );
-              Navigator.pushNamed(context, RiwayatArisanPertemuanDetailPage.id,
+              await Navigator.pushNamed(
+                  context, RiwayatArisanPertemuanDetailPage.id,
                   arguments: arguments);
+              getData();
             }
           },
           {
             "menuTitle": "Riwayat Arisan Wilayah",
-            "onTap": () {
+            "onTap": () async {
               RiwayatArisanPeriodeArguments args =
                   RiwayatArisanPeriodeArguments(type: 'wilayah');
-              Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
+              await Navigator.pushNamed(context, RiwayatArisanPeriodePage.id,
                   arguments: args);
+              getData();
             }
           },
           {
