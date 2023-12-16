@@ -78,7 +78,6 @@ class _CreatePertemuanSelanjutnyaPageState
             statusPublikasi: statusPublikasi);
     if (isUpdatePertemuanSukses) {
       Navigator.pop(context);
-      Navigator.popAndPushNamed(context, ArisanPage.id);
       SmartRTSnackbar.show(context,
           message: 'Berhasil ${msg} pertemuan arisan!',
           backgroundColor: smartRTSuccessColor);

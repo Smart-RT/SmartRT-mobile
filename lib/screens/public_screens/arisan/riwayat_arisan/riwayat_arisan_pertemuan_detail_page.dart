@@ -74,14 +74,9 @@ class _RiwayatArisanPertemuanDetailPageState
     if (widget.args.typeFrom.toLowerCase() == 'riwayat') {
       Navigator.pop(context);
       Navigator.pop(context);
-      Navigator.pop(context);
-      Navigator.pop(context);
-      Navigator.pop(context);
-      Navigator.pushNamed(context, ArisanPage.id);
     } else {
       Navigator.pop(context);
       Navigator.pop(context);
-      Navigator.pushNamed(context, ArisanPage.id);
     }
   }
 
