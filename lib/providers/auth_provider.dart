@@ -122,6 +122,11 @@ class AuthProvider extends ApplicationProvider {
       required String fullName,
       required String gender,
       required DateTime bornDate,
+      required String bornPlace,
+      required String nationality,
+      required String religion,
+      required String status_perkawinan,
+      required String profession,
       required String address}) async {
     try {
       Response<dynamic> resp = await NetUtil()
@@ -130,12 +135,22 @@ class AuthProvider extends ApplicationProvider {
         "full_name": fullName,
         "gender": gender,
         "born_date": bornDate,
-        "address": address
+        "address": address,
+        "bornPlace": bornPlace,
+        "nationality": nationality,
+        "religion": religion,
+        "status_perkawinan": status_perkawinan,
+        "profession": profession,
       });
       currentUser!.full_name = fullName;
       currentUser!.gender = gender;
       currentUser!.born_date = bornDate;
       currentUser!.address = address;
+      currentUser!.born_at = bornPlace;
+      currentUser!.nationality = nationality;
+      currentUser!.religion = religion;
+      currentUser!.status_perkawinan = status_perkawinan;
+      currentUser!.profession = profession;
       notifyListeners();
       saveUserDataToStorage();
       return true;
