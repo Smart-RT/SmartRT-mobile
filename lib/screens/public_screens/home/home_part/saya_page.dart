@@ -173,7 +173,7 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              [Role.Guest, Role.Warga].contains(currentUser.user_role) &&
+              [Role.Guest, Role.Warga].contains(currentUser.user_role) ||
                       currentUser.area != null
                   ? Container()
                   : GestureDetector(
@@ -198,7 +198,7 @@ class SayaPage extends StatelessWidget {
                         ),
                       ),
                     ),
-              [Role.Guest, Role.Warga].contains(currentUser.user_role) &&
+              [Role.Guest, Role.Warga].contains(currentUser.user_role) ||
                       currentUser.area != null
                   ? Container()
                   : GestureDetector(
@@ -300,28 +300,30 @@ class SayaPage extends StatelessWidget {
                             ),
                           ),
                         ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, PerformaSayaPage.id);
-                },
-                child: Card(
-                  color: smartRTSecondaryColor,
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.analytics,
-                      color: smartRTPrimaryColor,
+              currentUser.user_role == Role.Guest
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, PerformaSayaPage.id);
+                      },
+                      child: Card(
+                        color: smartRTSecondaryColor,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.analytics,
+                            color: smartRTPrimaryColor,
+                          ),
+                          title: Text(
+                            'Performa Saya',
+                            style: smartRTTextLargeBold_Primary,
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: smartRTPrimaryColor,
+                          ),
+                        ),
+                      ),
                     ),
-                    title: Text(
-                      'Performa Saya',
-                      style: smartRTTextLargeBold_Primary,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      color: smartRTPrimaryColor,
-                    ),
-                  ),
-                ),
-              ),
               currentUser.user_role == Role.Guest
                   ? Container()
                   : GestureDetector(

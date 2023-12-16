@@ -75,8 +75,10 @@ class _DaftarKetuaPageState extends State<DaftarKetuaPage> {
   @override
   Widget build(BuildContext context) {
     user = context.watch<AuthProvider>().user!;
-    isHasUserRoleReqActive =
-        listUserRoleRequests[0].confirmater_id == null ? true : false;
+    isHasUserRoleReqActive = listUserRoleRequests.isNotEmpty &&
+            listUserRoleRequests[0].confirmater_id == null
+        ? true
+        : false;
     if (isHasUserRoleReqActive) {
       btnText = 'BATALKAN';
     }
