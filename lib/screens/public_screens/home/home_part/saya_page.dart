@@ -174,7 +174,7 @@ class SayaPage extends StatelessWidget {
                       ),
                     ),
               [Role.Guest, Role.Warga].contains(currentUser.user_role) ||
-                      currentUser.area != null
+                      currentUser.area == null
                   ? Container()
                   : GestureDetector(
                       onTap: () {
@@ -199,7 +199,7 @@ class SayaPage extends StatelessWidget {
                       ),
                     ),
               [Role.Guest, Role.Warga].contains(currentUser.user_role) ||
-                      currentUser.area != null
+                      currentUser.area == null
                   ? Container()
                   : GestureDetector(
                       onTap: () {

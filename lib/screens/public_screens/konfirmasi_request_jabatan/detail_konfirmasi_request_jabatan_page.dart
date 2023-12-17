@@ -331,7 +331,7 @@ class _DetailKonfirmasiRequestJabatanPageState
                           .toString()
                           .split('.')
                           .last
-                          .replaceAll('_', 'replace'),
+                          .replaceAll('_', ' '),
                       style: smartRTTextLarge,
                       textAlign: TextAlign.right,
                     ),
