@@ -612,131 +612,135 @@ class _LaporanRWPageState extends State<LaporanRWPage> {
               style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold),
             ),
             pw.SizedBox(height: 15),
-            ...listEvent.map((d) {
-              return [
-                pw.Row(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Expanded(
-                        child: pw.Text(
-                          'o',
-                          style: pw.TextStyle(
-                            fontSize: 15,
+            if (listEvent.isNotEmpty)
+              ...listEvent.map((d) {
+                return [
+                  pw.Row(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Expanded(
+                          child: pw.Text(
+                            'o',
+                            style: pw.TextStyle(
+                              fontSize: 15,
+                            ),
                           ),
                         ),
-                      ),
-                      pw.Expanded(
-                          flex: 10,
-                          child: pw.Column(children: [
-                            pw.Row(children: [
-                              pw.Expanded(
-                                child: pw.Text(
-                                  'Tanggal',
-                                  style: pw.TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              pw.Text(
-                                ' : ',
-                                style: pw.TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              pw.Expanded(
-                                flex: 3,
-                                child: pw.Text(
-                                  StringFormat.formatDate(
-                                      dateTime: d.event_date_start_at,
-                                      isWithTime: false),
-                                  style: pw.TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ]),
-                            pw.Row(children: [
-                              pw.Expanded(
-                                child: pw.Text(
-                                  'Waktu',
-                                  style: pw.TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              pw.Text(
-                                ' : ',
-                                style: pw.TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              pw.Expanded(
-                                flex: 3,
-                                child: pw.Text(
-                                  '${DateFormat('HH:mm', 'id_ID').format(d.event_date_start_at)} - ${DateFormat('HH:mm', 'id_ID').format(d.event_date_end_at)} WIB',
-                                  style: pw.TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ]),
-                            pw.Row(children: [
-                              pw.Expanded(
-                                child: pw.Text(
-                                  'Judul',
-                                  style: pw.TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              pw.Text(
-                                ' : ',
-                                style: pw.TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              pw.Expanded(
-                                flex: 3,
-                                child: pw.Text(
-                                  d.title,
-                                  style: pw.TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ]),
-                            pw.Row(
-                                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                children: [
-                                  pw.Expanded(
-                                    child: pw.Text(
-                                      'Detail',
-                                      style: pw.TextStyle(
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ),
-                                  pw.Text(
-                                    ' : ',
+                        pw.Expanded(
+                            flex: 10,
+                            child: pw.Column(children: [
+                              pw.Row(children: [
+                                pw.Expanded(
+                                  child: pw.Text(
+                                    'Tanggal',
                                     style: pw.TextStyle(
                                       fontSize: 15,
                                     ),
                                   ),
-                                  pw.Expanded(
-                                    flex: 3,
-                                    child: pw.Text(
-                                      d.detail,
+                                ),
+                                pw.Text(
+                                  ' : ',
+                                  style: pw.TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                pw.Expanded(
+                                  flex: 3,
+                                  child: pw.Text(
+                                    StringFormat.formatDate(
+                                        dateTime: d.event_date_start_at,
+                                        isWithTime: false),
+                                    style: pw.TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                              pw.Row(children: [
+                                pw.Expanded(
+                                  child: pw.Text(
+                                    'Waktu',
+                                    style: pw.TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                                pw.Text(
+                                  ' : ',
+                                  style: pw.TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                pw.Expanded(
+                                  flex: 3,
+                                  child: pw.Text(
+                                    '${DateFormat('HH:mm', 'id_ID').format(d.event_date_start_at)} - ${DateFormat('HH:mm', 'id_ID').format(d.event_date_end_at)} WIB',
+                                    style: pw.TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                              pw.Row(children: [
+                                pw.Expanded(
+                                  child: pw.Text(
+                                    'Judul',
+                                    style: pw.TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                                pw.Text(
+                                  ' : ',
+                                  style: pw.TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                pw.Expanded(
+                                  flex: 3,
+                                  child: pw.Text(
+                                    d.title,
+                                    style: pw.TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                              pw.Row(
+                                  crossAxisAlignment:
+                                      pw.CrossAxisAlignment.start,
+                                  children: [
+                                    pw.Expanded(
+                                      child: pw.Text(
+                                        'Detail',
+                                        style: pw.TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                    pw.Text(
+                                      ' : ',
                                       style: pw.TextStyle(
                                         fontSize: 15,
                                       ),
                                     ),
-                                  ),
-                                ]),
-                          ]))
-                    ]),
-                pw.SizedBox(height: 15),
-              ];
-            }).reduce((a, b) => [...a, ...b]),
+                                    pw.Expanded(
+                                      flex: 3,
+                                      child: pw.Text(
+                                        d.detail,
+                                        style: pw.TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                            ]))
+                      ]),
+                  pw.SizedBox(height: 15),
+                ];
+              }).reduce((a, b) => [...a, ...b])
+            else
+              pw.Text('Tidak ada kegiatan di bulan ini'),
           ];
         },
       ),
