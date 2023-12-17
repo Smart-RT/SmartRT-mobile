@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/models/health/health_task_help.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/providers/health_provider.dart';
 import 'package:smart_rt/screens/public_screens/kesehatan/riwayat_bantuan_page.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
@@ -57,26 +59,14 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
         await NetUtil().dioClient.get('/health/healthTaskHelp/$dataBantuanID');
     dataBantuan = HealthTaskHelp.fromData(resp.data);
 
-    statusID = dataBantuan!.status!.id;
-    statusName = dataBantuan!.status!.name;
-    statusColor = dataBantuan!.status!.color;
-    tingkatKepentingan =
-        dataBantuan!.urgent_level == 1 ? 'Normal' : 'Butuh Cepat';
-    detailPermintaanController.text = dataBantuan!.notes;
-    tanggalTerbuat =
-        DateFormat('d MMMM y', 'id_ID').format(dataBantuan!.created_at);
-    waktuTerbuat = '${DateFormat('HH:mm').format(dataBantuan!.created_at)} WIB';
+    int index = context
+        .read<HealthProvider>()
+        .listHealthTaskHelp
+        .indexWhere((element) => element.id == widget.args.dataBantuanID);
 
-    if (dataBantuan!.rejected_reason != null) {
-      catatanRejected = dataBantuan!.rejected_reason!;
-    }
-
-    rating = dataBantuan!.rating ?? -1;
-    debugPrint(rating.toString());
-    debugPrint(dataBantuan!.rating.toString());
-    debugPrint(dataBantuanID.toString());
-    review = dataBantuan!.review ?? '';
-    setState(() {});
+    // Update index
+    context.read<HealthProvider>().listHealthTaskHelp[index] = dataBantuan!;
+    context.read<HealthProvider>().updateListener();
   }
 
   void updatePermintaanBantuan(
@@ -89,17 +79,17 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
     });
     if (resp.statusCode.toString() == '200') {
       Navigator.pop(context);
+      getData();
+      // RiwayatBantuanArguments argsRiwayatBantuan =
+      //     RiwayatBantuanArguments(type: type);
+      // Navigator.pushNamed(context, RiwayatBantuanPage.id,
+      //     arguments: argsRiwayatBantuan);
 
-      RiwayatBantuanArguments argsRiwayatBantuan =
-          RiwayatBantuanArguments(type: type);
-      Navigator.pushNamed(context, RiwayatBantuanPage.id,
-          arguments: argsRiwayatBantuan);
-
-      DetailRiwayatBantuanPageArguments arguments =
-          DetailRiwayatBantuanPageArguments(
-              dataBantuanID: dataBantuanID!, type: type);
-      Navigator.pushNamed(context, DetailRiwayatBantuanPage.id,
-          arguments: arguments);
+      // DetailRiwayatBantuanPageArguments arguments =
+      //     DetailRiwayatBantuanPageArguments(
+      //         dataBantuanID: dataBantuanID!, type: type);
+      // Navigator.pushNamed(context, DetailRiwayatBantuanPage.id,
+      //     arguments: arguments);
       SmartRTSnackbar.show(context,
           message: resp.data, backgroundColor: smartRTSuccessColor);
     } else {
@@ -134,7 +124,7 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
               ),
               TextButton(
                 onPressed: () {
-                  updatePermintaanBantuan(1, dataBantuanID!, '');
+                  updatePermintaanBantuan(1, widget.args.dataBantuanID, '');
                 },
                 child: Text(
                   'SAYA YAKIN',
@@ -206,7 +196,7 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                         backgroundColor: smartRTErrorColor);
                   } else {
                     updatePermintaanBantuan(
-                        -1, dataBantuanID!, _alasanController.text);
+                        -1, widget.args.dataBantuanID, _alasanController.text);
                   }
                 },
                 child: Text(
@@ -337,7 +327,7 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
 
       DetailRiwayatBantuanPageArguments arguments =
           DetailRiwayatBantuanPageArguments(
-              dataBantuanID: dataBantuanID!, type: type);
+              dataBantuanID: widget.args.dataBantuanID, type: type);
       Navigator.pushNamed(context, DetailRiwayatBantuanPage.id,
           arguments: arguments);
       SmartRTSnackbar.show(context,
@@ -351,12 +341,31 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
   @override
   void initState() {
     // TODO: implement initState
-    getData();
+    // getData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    HealthTaskHelp h = context
+        .watch<HealthProvider>()
+        .listHealthTaskHelp
+        .firstWhere((element) => element.id == widget.args.dataBantuanID);
+    statusID = h.status!.id;
+    statusName = h.status!.name;
+    statusColor = h.status!.color;
+    tingkatKepentingan = h.urgent_level == 1 ? 'Normal' : 'Butuh Cepat';
+    detailPermintaanController.text = h.notes;
+    tanggalTerbuat = DateFormat('d MMMM y', 'id_ID').format(h.created_at);
+    waktuTerbuat = '${DateFormat('HH:mm').format(h.created_at)} WIB';
+
+    if (h.rejected_reason != null) {
+      catatanRejected = h.rejected_reason!;
+    }
+
+    rating = h.rating ?? -1;
+    review = h.review ?? '';
+
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -663,12 +672,13 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
               //   ],
               // ),
 
-              statusID == 0 && user.id == dataBantuan!.created_by
+              statusID == 0 && user.id == h.created_by
                   ? SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          updatePermintaanBantuan(-2, dataBantuanID!, '');
+                          updatePermintaanBantuan(
+                              -2, widget.args.dataBantuanID, '');
                         },
                         child: Text(
                           'BATALKAN',
@@ -678,9 +688,7 @@ class _DetailRiwayatBantuanPageState extends State<DetailRiwayatBantuanPage> {
                     )
                   : const SizedBox(),
 
-              statusID == 2 &&
-                      user.id == dataBantuan!.created_by &&
-                      dataBantuan!.rating == null
+              statusID == 2 && user.id == h.created_by && h.rating == null
                   ? SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
