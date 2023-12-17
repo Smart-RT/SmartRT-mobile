@@ -147,8 +147,9 @@ class _DetailKonfirmasiRequestJabatanPageState
         await NetUtil().dioClient.post('/users/role/log/add', data: {
           "user_id": widget.args.dataKonfirmasi.data_user_requester!.id,
           "before_user_role_id":
-              widget.args.dataKonfirmasi.data_user_requester!.user_role,
-          "after_user_role_id": widget.args.dataKonfirmasi.request_code,
+              widget.args.dataKonfirmasi.data_user_requester!.user_role.index +
+                  1,
+          "after_user_role_id": widget.args.dataKonfirmasi.request_role,
         });
 
         // Update halaman saya, update area id dari current user
