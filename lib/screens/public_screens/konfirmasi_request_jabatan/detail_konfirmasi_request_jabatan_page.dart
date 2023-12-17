@@ -164,7 +164,7 @@ class _DetailKonfirmasiRequestJabatanPageState
               widget.args.dataKonfirmasi.data_user_requester!;
         }
 
-        context.read<AuthProvider>().user = u;
+        AuthProvider.currentUser = u;
         context.read<AuthProvider>().saveUserDataToStorage();
         context.read<AuthProvider>().updateListener();
       } else {
