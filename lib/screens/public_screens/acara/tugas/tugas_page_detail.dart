@@ -239,6 +239,8 @@ class _TugasPageDetailState extends State<TugasPageDetail> {
               SB_height15,
               if (type != 'untuk Umum' &&
                   ctrListReq != 0 &&
+                  listPetugas.where((element) => element.status == 1).length <
+                      dataTugas.total_worker_needed &&
                   (user.user_role == Role.Ketua_RT ||
                       user.user_role == Role.Wakil_RT ||
                       user.user_role == Role.Sekretaris))
