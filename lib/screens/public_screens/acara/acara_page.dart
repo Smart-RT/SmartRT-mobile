@@ -89,7 +89,7 @@ class _AcaraPageState extends State<AcaraPage> {
       String eventName = '${listEvent[i].title}\n${listEvent[i].detail}';
 
       listEventCard.add(EventCard(eventName, startTime, endTime,
-          smartRTTertiaryColor, false, listEvent[i]));
+          smartRTPrimaryColor, false, listEvent[i]));
     }
     return Scaffold(
         appBar: AppBar(
@@ -128,18 +128,18 @@ class _AcaraPageState extends State<AcaraPage> {
                     visible: showCFDay,
                     child: SfCalendar(
                       minDate: user.created_at,
-                      todayHighlightColor: smartRTTertiaryColor,
+                      todayHighlightColor: smartRTPrimaryColor,
                       initialSelectedDate: daySelectionDate,
                       selectionDecoration: BoxDecoration(
                         border:
-                            Border.all(color: smartRTTertiaryColor, width: 2),
+                            Border.all(color: smartRTPrimaryColor, width: 2),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                         shape: BoxShape.rectangle,
                       ),
                       headerStyle: CalendarHeaderStyle(
                         textAlign: TextAlign.center,
-                        backgroundColor: smartRTTertiaryColor,
+                        backgroundColor: smartRTPrimaryColor,
                         textStyle: smartRTTextTitleCard.copyWith(
                             letterSpacing: 3, color: smartRTQuaternaryColor),
                       ),
@@ -178,26 +178,26 @@ class _AcaraPageState extends State<AcaraPage> {
                         debugPrint(daySelectionDate.toString());
                       },
                       minDate: user.created_at,
-                      todayHighlightColor: smartRTTertiaryColor,
+                      todayHighlightColor: smartRTPrimaryColor,
                       initialSelectedDate: daySelectionDate,
                       selectionDecoration: BoxDecoration(
                         border:
-                            Border.all(color: smartRTTertiaryColor, width: 2),
+                            Border.all(color: smartRTPrimaryColor, width: 2),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                         shape: BoxShape.rectangle,
                       ),
                       headerStyle: CalendarHeaderStyle(
                         textAlign: TextAlign.center,
-                        backgroundColor: smartRTTertiaryColor,
-                        textStyle: smartRTTextTitleCard.copyWith(
-                            letterSpacing: 3, color: smartRTQuaternaryColor),
+                        backgroundColor: smartRTActiveColor,
+                        textStyle:
+                            smartRTTextTitleCard.copyWith(letterSpacing: 3),
                       ),
                       viewHeaderStyle: ViewHeaderStyle(
-                          backgroundColor: smartRTSuccessColor,
+                          backgroundColor: smartRTActiveColor2,
                           dayTextStyle: smartRTTextLarge,
                           dateTextStyle: smartRTTextLarge),
-                      backgroundColor: smartRTQuaternaryColor,
+                      backgroundColor: smartRTSecondaryColor,
                       view: CalendarView.month,
                       dataSource: EventDataSource(listEventCard),
                       monthViewSettings: MonthViewSettings(
