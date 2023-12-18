@@ -130,13 +130,14 @@ class _FormAcaraPageState extends State<FormAcaraPage> {
                   locale: const Locale('id', 'ID'),
                   dateMask: 'dd MMMM yyyy HH:mm',
                   style: smartRTTextNormal_Primary,
-                  firstDate: DateTime.now().add(const Duration(days: 3)),
+                  firstDate: DateTime.now().add(const Duration(days: 1)),
                   lastDate: DateTime.now().add(const Duration(days: 90)),
-                  initialDate: DateTime.now().add(const Duration(days: 3)),
+                  initialDate: DateTime.now().add(const Duration(days: 1)),
                   dateLabelText: 'Tanggal dan Waktu Mulai',
                   onChanged: (val) {
                     isDateEndReadOnly = false;
                     dateEnd = DateTime.parse(val);
+                    _TECDateEnd.clear();
                     setState(() {});
                   },
                   onSaved: (val) {
