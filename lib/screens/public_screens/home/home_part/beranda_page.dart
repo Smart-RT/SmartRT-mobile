@@ -276,6 +276,29 @@ class _BerandaPageState extends State<BerandaPage> {
           ],
         ),
       );
+    } else if (user.user_role != Role.Ketua_RT) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Anda baru dapat menggunakan fitur ini jika anda menjadi ketua RT!',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
     } else {
       int subscribeAmount = context.read<SettingProvider>().subscribeAmount;
       if (user.area!.is_subscribe_pro == 0) {

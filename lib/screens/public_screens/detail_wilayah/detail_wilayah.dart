@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/config.dart';
 import 'package:smart_rt/models/area/area.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
 import 'package:smart_rt/widgets/circle_avatar_loader/circle_avatar_loader.dart';
+import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 
 class DetailWilayah extends StatelessWidget {
   static const String id = 'DetailWilayahPage';
@@ -58,6 +61,17 @@ class DetailWilayah extends StatelessWidget {
             subtitle: Text(area.wakil_ketua_id != null
                 ? area.wakil_ketua_id!.full_name
                 : "Belum Ada, Kode: ${area.wakil_ketua_code}"),
+            trailing: area.wakil_ketua_id == null
+                ? GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(
+                          ClipboardData(text: area.wakil_ketua_code));
+                      SmartRTSnackbar.show(context,
+                          message: 'Berhasil menyalin kode Wakil Ketua!',
+                          backgroundColor: smartRTSuccessColor);
+                    },
+                    child: Icon(Icons.copy))
+                : null,
           ),
           ListTile(
             leading: CircleAvatarLoader(
@@ -73,6 +87,17 @@ class DetailWilayah extends StatelessWidget {
             subtitle: Text(area.sekretaris_id != null
                 ? area.sekretaris_id!.full_name
                 : "Belum Ada, Kode: ${area.sekretaris_code}"),
+            trailing: area.wakil_ketua_id == null
+                ? GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(
+                          ClipboardData(text: area.sekretaris_code));
+                      SmartRTSnackbar.show(context,
+                          message: 'Berhasil menyalin kode Sekretaris!',
+                          backgroundColor: smartRTSuccessColor);
+                    },
+                    child: Icon(Icons.copy))
+                : null,
           ),
           ListTile(
             leading: CircleAvatarLoader(
@@ -89,6 +114,17 @@ class DetailWilayah extends StatelessWidget {
             subtitle: Text(area.bendahara_id != null
                 ? area.bendahara_id!.full_name
                 : "Belum Ada, Kode: ${area.bendahara_code}"),
+            trailing: area.wakil_ketua_id == null
+                ? GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(
+                          ClipboardData(text: area.bendahara_code));
+                      SmartRTSnackbar.show(context,
+                          message: 'Berhasil menyalin kode Bendahara!',
+                          backgroundColor: smartRTSuccessColor);
+                    },
+                    child: Icon(Icons.copy))
+                : null,
           ),
         ],
       )),
