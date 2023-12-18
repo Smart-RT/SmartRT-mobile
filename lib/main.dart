@@ -27,8 +27,8 @@ import 'package:smart_rt/routes/routes.dart';
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/public_screens/authentications/login_page.dart';
 import 'package:smart_rt/screens/public_screens/home/public_home.dart';
-
 import 'firebase_options.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -112,6 +112,11 @@ class _SmartRTAppState extends State<SmartRTApp> {
             GlobalWidgetsLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             MonthYearPickerLocalizations.delegate,
+            SfGlobalLocalizations.delegate
+          ],
+          locale: const Locale('id', 'ID'),
+          supportedLocales: [
+            const Locale('id', 'ID'),
           ],
         );
       },

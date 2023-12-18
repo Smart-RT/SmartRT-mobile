@@ -139,21 +139,24 @@ class _AcaraPageState extends State<AcaraPage> {
                       ),
                       headerStyle: CalendarHeaderStyle(
                         textAlign: TextAlign.center,
-                        backgroundColor: smartRTPrimaryColor,
-                        textStyle: smartRTTextTitleCard.copyWith(
-                            letterSpacing: 3, color: smartRTQuaternaryColor),
+                        backgroundColor: smartRTActiveColor2,
+                        textStyle:
+                            smartRTTextTitleCard.copyWith(letterSpacing: 3),
                       ),
                       viewHeaderStyle: ViewHeaderStyle(
-                          backgroundColor: smartRTSuccessColor,
+                          backgroundColor: smartRTActiveColor,
                           dayTextStyle: smartRTTextLarge,
                           dateTextStyle: smartRTTextLarge),
                       backgroundColor: smartRTQuaternaryColor,
                       view: CalendarView.schedule,
                       dataSource: EventDataSource(listEventCard),
-                      monthViewSettings: MonthViewSettings(
-                        showAgenda: true,
-                        agendaViewHeight: 300,
-                        agendaItemHeight: sizeAgendaItemHeight,
+                      scheduleViewSettings: ScheduleViewSettings(
+                        hideEmptyScheduleWeek: true,
+                        monthHeaderSettings: MonthHeaderSettings(
+                          height: 75,
+                          backgroundColor: smartRTActiveColor,
+                          monthTextStyle: smartRTTextTitleCard,
+                        ),
                       ),
                       onTap: (calendarTapDetails) {
                         if (calendarTapDetails.targetElement ==
