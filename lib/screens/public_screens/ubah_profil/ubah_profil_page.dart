@@ -65,7 +65,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
     _bornPlaceUser = u.born_at ?? '-';
     _religionUser = u.religion ?? '-';
     _statusMarriageUser = u.status_perkawinan ?? '-';
-    _pekerjaanUser = u.profession ?? '-';
+    _pekerjaanUser = u.profession ?? 'Belum/ Tidak Bekerja';
     _kewarganegaraanUser = u.nationality ?? '-';
 
     _genderUserSelected = u.gender;
