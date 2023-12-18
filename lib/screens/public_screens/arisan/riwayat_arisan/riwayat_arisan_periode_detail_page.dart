@@ -878,15 +878,18 @@ class _RiwayatArisanPeriodeDetailPageState
     return Scaffold(
       appBar: AppBar(
         title: const Text(''),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              _createPDF();
-            },
-            child: Icon(Icons.picture_as_pdf),
-          ),
-          SB_width15,
-        ],
+        actions: [Role.Ketua_RT, Role.Wakil_RT, Role.Sekretaris]
+                .contains(AuthProvider.currentUser!.user_role)
+            ? [
+                GestureDetector(
+                  onTap: () {
+                    _createPDF();
+                  },
+                  child: Icon(Icons.picture_as_pdf),
+                ),
+                SB_width15,
+              ]
+            : [],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
