@@ -51,9 +51,9 @@ class MeetingProvider extends ChangeNotifier {
   Future<void> getTelahBerlalu() async {
     try {
       Response<dynamic> respTelahBerlalu =
-          await NetUtil().dioClient.get('/meet/get/status/terjadwalkan');
-      listMeetingTerjadwalkan.clear();
-      listMeetingTerjadwalkan
+          await NetUtil().dioClient.get('/meet/get/status/telah-berlalu');
+      listMeetingTelahBerlalu.clear();
+      listMeetingTelahBerlalu
           .addAll((respTelahBerlalu.data).map<Meeting>((request) {
         return Meeting.fromData(request);
       }));
