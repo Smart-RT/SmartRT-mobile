@@ -90,31 +90,31 @@ class _TugasPageDetailState extends State<TugasPageDetail> {
     bool isShowKeterangan = false;
     EventTaskDetail? dataTerakhirKu;
 
-    if ((user.user_role == Role.Ketua_RT ||
-            user.user_role == Role.Wakil_RT ||
-            user.user_role == Role.Sekretaris) &&
-        !isPast) {
-      actionWidget = Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              // confirmationDeleteEvent(dataEvent: dataEvent);
-            },
-            child: Icon(Icons.delete_forever_outlined),
-          ),
-          SB_width15,
-          GestureDetector(
-            onTap: () {
-              // FormAcaraPageArgument args = FormAcaraPageArgument(
-              //     type: 'update', dataEventIdx: dataEventIdx);
-              // Navigator.pushNamed(context, FormAcaraPage.id, arguments: args);
-            },
-            child: Icon(Icons.edit_document),
-          ),
-          SB_width15,
-        ],
-      );
-    }
+    // if ((user.user_role == Role.Ketua_RT ||
+    //         user.user_role == Role.Wakil_RT ||
+    //         user.user_role == Role.Sekretaris) &&
+    //     !isPast) {
+    //   actionWidget = Row(
+    //     children: [
+    //       GestureDetector(
+    //         onTap: () {
+    //           // confirmationDeleteEvent(dataEvent: dataEvent);
+    //         },
+    //         child: Icon(Icons.delete_forever_outlined),
+    //       ),
+    //       SB_width15,
+    //       GestureDetector(
+    //         onTap: () {
+    //           // FormAcaraPageArgument args = FormAcaraPageArgument(
+    //           //     type: 'update', dataEventIdx: dataEventIdx);
+    //           // Navigator.pushNamed(context, FormAcaraPage.id, arguments: args);
+    //         },
+    //         child: Icon(Icons.edit_document),
+    //       ),
+    //       SB_width15,
+    //     ],
+    //   );
+    // }
     getData(dataTugas);
 
     if ((totalWorkerNeeded == totalWorkerNow) || isPast) {
