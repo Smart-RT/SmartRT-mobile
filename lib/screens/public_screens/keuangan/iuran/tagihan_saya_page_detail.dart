@@ -201,7 +201,9 @@ class _TagihanSayaPageDetailState extends State<TagihanSayaPageDetail> {
                       onPressed: () async {
                         Navigator.pushNamed(context, PembayaranTfPage1.id,
                             arguments: PembayaranTfPage1Arguments(
-                                index: index, dataAreaBill: dataAreaBill));
+                                index: index,
+                                dataAreaBill: dataAreaBill,
+                                fromTagihanSaya: true));
                       },
                       child: Text(
                         'BAYAR TAGIHAN SEKARANG',

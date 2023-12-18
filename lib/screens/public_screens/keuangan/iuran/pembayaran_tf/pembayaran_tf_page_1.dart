@@ -14,10 +14,11 @@ import 'package:smart_rt/widgets/list_tile/list_tile_arisan.dart';
 class PembayaranTfPage1Arguments {
   int index;
   AreaBill dataAreaBill;
-  PembayaranTfPage1Arguments({
-    required this.index,
-    required this.dataAreaBill,
-  });
+  bool fromTagihanSaya;
+  PembayaranTfPage1Arguments(
+      {required this.index,
+      required this.dataAreaBill,
+      required this.fromTagihanSaya});
 }
 
 class PembayaranTfPage1 extends StatefulWidget {
@@ -40,8 +41,9 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
   Widget build(BuildContext context) {
     int index = widget.args.index;
     AreaBill dataAreaBill = widget.args.dataAreaBill;
-    AreaBillTransaction dataTagihan =
-        context.watch<AreaBillProvider>().listPembayar[index];
+    AreaBillTransaction dataTagihan = widget.args.fromTagihanSaya
+        ? context.watch<AreaBillProvider>().listTagihanKu[index]
+        : context.watch<AreaBillProvider>().listPembayar[index];
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
@@ -121,7 +123,9 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
 
                         Navigator.pushNamed(context, PembayaranTfPage2.id,
                             arguments: PembayaranTfPage2Arguments(
-                                index: index, dataAreaBill: dataAreaBill));
+                                index: index,
+                                dataAreaBill: dataAreaBill,
+                                fromTagihanSaya: widget.args.fromTagihanSaya));
                       } else {
                         // ignore: use_build_context_synchronously
                         SmartRTSnackbar.show(context,

@@ -14,10 +14,11 @@ import 'package:smart_rt/utilities/string/currency_format.dart';
 class PembayaranTfPage2Arguments {
   int index;
   AreaBill dataAreaBill;
-  PembayaranTfPage2Arguments({
-    required this.index,
-    required this.dataAreaBill,
-  });
+  bool fromTagihanSaya;
+  PembayaranTfPage2Arguments(
+      {required this.index,
+      required this.dataAreaBill,
+      required this.fromTagihanSaya});
 }
 
 class PembayaranTfPage2 extends StatefulWidget {
@@ -56,9 +57,9 @@ class _PembayaranTfPage2State extends State<PembayaranTfPage2> {
   Widget build(BuildContext context) {
     int index = widget.args.index;
     AreaBill dataAreaBill = widget.args.dataAreaBill;
-    AreaBillTransaction dataTagihan =
-        context.watch<AreaBillProvider>().listPembayar[index];
-
+    AreaBillTransaction dataTagihan = widget.args.fromTagihanSaya
+        ? context.watch<AreaBillProvider>().listTagihanKu[index]
+        : context.watch<AreaBillProvider>().listPembayar[index];
     return Scaffold(
       appBar: AppBar(
         title: Text(''),

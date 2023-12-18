@@ -204,7 +204,9 @@ class _LihatSemuaPembayarPageDetailState
                       onPressed: () async {
                         Navigator.pushNamed(context, PembayaranTfPage1.id,
                             arguments: PembayaranTfPage1Arguments(
-                                index: index, dataAreaBill: dataAreaBill));
+                                index: index,
+                                dataAreaBill: dataAreaBill,
+                                fromTagihanSaya: false));
                       },
                       child: Text(
                         'BAYAR TAGIHAN SEKARANG',
