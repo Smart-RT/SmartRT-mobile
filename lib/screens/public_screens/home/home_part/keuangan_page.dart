@@ -33,7 +33,6 @@ class _KeuanganPageState extends State<KeuanganPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getData();
     super.initState();
   }
@@ -71,8 +70,9 @@ class _KeuanganPageState extends State<KeuanganPage> {
             children: <Widget>[
               ListTileArisan(
                 title: 'Tagihan Saya',
-                onTap: () {
-                  Navigator.pushNamed(context, TagihanSayaPage.id);
+                onTap: () async {
+                  await Navigator.pushNamed(context, TagihanSayaPage.id);
+                  getData();
                 },
               ),
               Divider(
@@ -82,8 +82,9 @@ class _KeuanganPageState extends State<KeuanganPage> {
                   user.user_role == Role.Bendahara)
                 ListTileArisan(
                   title: 'Buat Iuran',
-                  onTap: () {
-                    Navigator.pushNamed(context, BuatIuranPage.id);
+                  onTap: () async {
+                    await Navigator.pushNamed(context, BuatIuranPage.id);
+                    getData();
                   },
                 ),
               if (user.user_role == Role.Ketua_RT ||
@@ -93,8 +94,9 @@ class _KeuanganPageState extends State<KeuanganPage> {
                 ),
               ListTileArisan(
                 title: 'Lihat Semua Iuran',
-                onTap: () {
-                  Navigator.pushNamed(context, LihatListIuranPage.id);
+                onTap: () async {
+                  await Navigator.pushNamed(context, LihatListIuranPage.id);
+                  getData();
                 },
               ),
               Divider(
@@ -102,8 +104,9 @@ class _KeuanganPageState extends State<KeuanganPage> {
               ),
               ListTileArisan(
                 title: 'Riwayat Transaksiku',
-                onTap: () {
-                  Navigator.pushNamed(context, RiwayatTransaksiKu.id);
+                onTap: () async {
+                  await Navigator.pushNamed(context, RiwayatTransaksiKu.id);
+                  getData();
                 },
               ),
               Divider(
@@ -113,8 +116,10 @@ class _KeuanganPageState extends State<KeuanganPage> {
                   user.user_role == Role.Bendahara)
                 ListTileArisan(
                   title: 'Riwayat Transaksi Wilayah',
-                  onTap: () {
-                    Navigator.pushNamed(context, RiwayatTransaksiWilayah.id);
+                  onTap: () async {
+                    await Navigator.pushNamed(
+                        context, RiwayatTransaksiWilayah.id);
+                    getData();
                   },
                 ),
               if (user.user_role == Role.Ketua_RT ||
