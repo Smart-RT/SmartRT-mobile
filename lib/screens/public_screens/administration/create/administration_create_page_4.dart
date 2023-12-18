@@ -45,11 +45,13 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
   String _TECCreatorReligion = '';
   String _TECCreatorWeddingStatus = '';
   String _TECCreatorNationality = '';
-  final _TECCreatorJob = TextEditingController();
+  String _TECCreatorJob = '';
+  // final _TECCreatorJob = TextEditingController();
   int idxNationality = 0;
   int idxGender = 0;
   int idxReligion = 0;
   int idxWeddingStatus = 0;
+  int idxJob = 0;
   AdministrationType? admType;
   String titleExplain = '';
   String detailExplain = '';
@@ -75,6 +77,96 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
     'Cerai Hidup',
     'Cerai Mati',
   ];
+  final List<String> jobItems = [
+    'Belum/ Tidak Bekerja',
+    'Mengurus Rumah Tangga',
+    'Pelajar/ Mahasiswa',
+    'Pensiunan',
+    'Pewagai Negeri Sipil',
+    'Tentara Nasional Indonesia',
+    'Kepolisisan RI',
+    'Perdagangan',
+    'Petani/ Pekebun',
+    'Peternak',
+    'Nelayan/ Perikanan',
+    'Industri',
+    'Konstruksi',
+    'Transportasi',
+    'Karyawan Swasta',
+    'Karyawan BUMN',
+    'Karyawan BUMD',
+    'Karyawan Honorer',
+    'Buruh Harian Lepas',
+    'Buruh Tani/ Perkebunan',
+    'Buruh Nelayan/ Perikanan',
+    'Buruh Peternakan',
+    'Pembantu Rumah Tangga',
+    'Tukang Cukur',
+    'Tukang Listrik',
+    'Tukang Batu',
+    'Tukang Kayu',
+    'Tukang Sol Sepatu',
+    'Tukang Las/ Pandai Besi',
+    'Tukang Jahit',
+    'Tukang Gigi',
+    'Penata Rias',
+    'Penata Busana',
+    'Penata Rambut',
+    'Mekanik',
+    'Seniman',
+    'Tabib',
+    'Paraji',
+    'Perancang Busana',
+    'Penterjemah',
+    'Imam Masjid',
+    'Pendeta',
+    'Pastor',
+    'Wartawan',
+    'Ustadz/ Mubaligh',
+    'Juru Masak',
+    'Promotor Acara',
+    'Anggota DPR-RI',
+    'Anggota DPD',
+    'Anggota BPK',
+    'Presiden',
+    'Wakil Presiden',
+    'Anggota Mahkamah Konstitusi',
+    'Anggota Kabinet/ Kementerian',
+    'Duta Besar',
+    'Gubernur',
+    'Wakil Gubernur',
+    'Bupati',
+    'Wakil Bupati',
+    'Walikota',
+    'Wakil Walikota',
+    'Anggota DPRD Provinsi',
+    'Anggota DPRD Kabupaten/ Kota',
+    'Dosen',
+    'Guru',
+    'Pilot',
+    'Pengacara',
+    'Notaris',
+    'Arsitek',
+    'Akuntan',
+    'Konsultan',
+    'Dokter',
+    'Bidan',
+    'Perawat',
+    'Apoteker',
+    'Psikiater/ Psikolog',
+    'Penyiar Televisi',
+    'Penyiar Radio',
+    'Pelaut',
+    'Peneliti',
+    'Sopir',
+    'Pialang',
+    'Paranormal',
+    'Pedagang',
+    'Perangkat Desa',
+    'Kepala Desa',
+    'Biarawati',
+    'Wiraswasta',
+  ];
 
   void selanjutnya() async {
     if (cekData()) {
@@ -90,7 +182,7 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
         creatorGender: _TECCreatorGender,
         creatorReligion: _TECCreatorReligion,
         creatorWeddingStatus: _TECCreatorWeddingStatus,
-        creatorJob: _TECCreatorJob.text,
+        creatorJob: _TECCreatorJob,
         creatorNationality: _TECCreatorNationality,
       );
       Navigator.pushNamed(context, AdministrationCreatePage5.id,
@@ -99,7 +191,7 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
   }
 
   bool cekData() {
-    if (_TECCreatorJob.text.isEmpty) {
+    if (_TECCreatorJob.isEmpty) {
       SmartRTSnackbar.show(context,
           message: 'Pastikan semua data terisi !',
           backgroundColor: smartRTErrorColor);
@@ -127,6 +219,7 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
       _TECCreatorReligion = user.religion ?? religionItems[0];
       _TECCreatorWeddingStatus =
           user.status_perkawinan ?? weddingStatusItems[0];
+      _TECCreatorJob = user.profession ?? jobItems[0];
       if (genderItems.contains(_TECCreatorGender)) {
         idxGender = genderItems.indexOf(_TECCreatorGender);
       }
@@ -134,7 +227,13 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
         idxReligion = religionItems.indexOf(_TECCreatorReligion);
       }
       if (weddingStatusItems.contains(_TECCreatorWeddingStatus)) {
-        idxGender = weddingStatusItems.indexOf(_TECCreatorWeddingStatus);
+        idxWeddingStatus = weddingStatusItems.indexOf(_TECCreatorWeddingStatus);
+      }
+      if (nationalityItems.contains(_TECCreatorNationality)) {
+        idxNationality = nationalityItems.indexOf(_TECCreatorNationality);
+      }
+      if (jobItems.contains(_TECCreatorJob)) {
+        idxJob = jobItems.indexOf(_TECCreatorJob);
       }
     }
     setState(() {});
@@ -365,13 +464,48 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
                 },
               ),
               SB_height30,
-              TextFormField(
-                controller: _TECCreatorJob,
-                autocorrect: false,
-                style: smartRTTextNormal_Primary,
-                decoration: const InputDecoration(
-                  labelText: 'Pekerjaan',
+              DropdownButtonFormField2(
+                value: jobItems[idxJob],
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+                decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.zero,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
+                isExpanded: true,
+                hint: Text(
+                  'Pekerjaan',
+                  style: smartRTTextLargeBold_Primary,
+                ),
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: smartRTPrimaryColor,
+                ),
+                iconSize: 30,
+                buttonHeight: 60,
+                buttonPadding: const EdgeInsets.only(left: 10, right: 10),
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                items: jobItems
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: smartRTTextNormal_Primary,
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _TECCreatorJob = value.toString();
+                  });
+                },
+                onSaved: (value) {
+                  _TECCreatorJob = value.toString();
+                },
               ),
             ],
           ),
