@@ -1002,6 +1002,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "20.4.44"
+  syncfusion_localizations:
+    dependency: "direct main"
+    description:
+      name: syncfusion_localizations
+      sha256: "46c7cf0ec0da29ce0307818ac2130344c9b6a3ec2c91a9b1fcadb67e0decbdea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "20.4.52"
   synchronized:
     dependency: transitive
     description:
