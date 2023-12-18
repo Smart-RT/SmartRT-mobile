@@ -132,26 +132,6 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                             message: 'Gagal! Cobalah beberapa saat lagi!',
                             backgroundColor: smartRTErrorColor);
                       }
-                      // Response<dynamic> resp = await NetUtil()
-                      //     .dioClient
-                      //     .post('/lotteryClubs/payment', data: {
-                      //   'payment_type': 'bank_transfer',
-                      //   'bank': 'bca',
-                      //   'id_bill': dataPembayaran!.id,
-                      // });
-                      // LotteryClubPeriodDetailBill data =
-                      //     LotteryClubPeriodDetailBill.fromData(resp.data);
-                      // PembayaranIuranArisanPage2Arguments args =
-                      //     PembayaranIuranArisanPage2Arguments(
-                      //         typeFrom: widget.args.typeFrom,
-                      //         periodeKe: periodeKe,
-                      //         pertemuanKe: pertemuanKe,
-                      //         dataPembayaran: data,
-                      //         dataPertemuan: dataPertemuan!);
-
-                      // Navigator.popAndPushNamed(
-                      //     context, PembayaranIuranArisanPage2.id,
-                      //     arguments: args);
                     },
                   ),
                   Divider(
@@ -162,26 +142,26 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                   ListTileArisan(
                     title: 'BNI',
                     onTap: () async {
-                      // Response<dynamic> resp = await NetUtil()
-                      //     .dioClient
-                      //     .post('/lotteryClubs/payment', data: {
-                      //   'payment_type': 'bank_transfer',
-                      //   'bank': 'bni',
-                      //   'id_bill': dataPembayaran!.id,
-                      // });
-                      // LotteryClubPeriodDetailBill data =
-                      //     LotteryClubPeriodDetailBill.fromData(resp.data);
-                      // PembayaranIuranArisanPage2Arguments args =
-                      //     PembayaranIuranArisanPage2Arguments(
-                      //         typeFrom: widget.args.typeFrom,
-                      //         periodeKe: periodeKe,
-                      //         pertemuanKe: pertemuanKe,
-                      //         dataPembayaran: data,
-                      //         dataPertemuan: dataPertemuan!);
+                      bool isSuccess = await context
+                          .read<AreaBillProvider>()
+                          .bayarTF(
+                              areaBillID: dataTagihan.area_bill_id,
+                              areaBillTransactionID: dataTagihan.id,
+                              areaID: dataAreaBill.area_id,
+                              bank: 'bni',
+                              paymentType: 'bank_transfer');
+                      if (isSuccess) {
+                        Navigator.pop(context);
 
-                      // Navigator.popAndPushNamed(
-                      //     context, PembayaranIuranArisanPage2.id,
-                      //     arguments: args);
+                        Navigator.pushNamed(context, PembayaranTfPage2.id,
+                            arguments: PembayaranTfPage2Arguments(
+                                index: index, dataAreaBill: dataAreaBill));
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        SmartRTSnackbar.show(context,
+                            message: 'Gagal! Cobalah beberapa saat lagi!',
+                            backgroundColor: smartRTErrorColor);
+                      }
                     },
                   ),
                   Divider(
@@ -192,26 +172,26 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                   ListTileArisan(
                     title: 'BRI',
                     onTap: () async {
-                      // Response<dynamic> resp = await NetUtil()
-                      //     .dioClient
-                      //     .post('/lotteryClubs/payment', data: {
-                      //   'payment_type': 'bank_transfer',
-                      //   'bank': 'bri',
-                      //   'id_bill': dataPembayaran!.id,
-                      // });
-                      // LotteryClubPeriodDetailBill data =
-                      //     LotteryClubPeriodDetailBill.fromData(resp.data);
-                      // PembayaranIuranArisanPage2Arguments args =
-                      //     PembayaranIuranArisanPage2Arguments(
-                      //         typeFrom: widget.args.typeFrom,
-                      //         periodeKe: periodeKe,
-                      //         pertemuanKe: pertemuanKe,
-                      //         dataPembayaran: data,
-                      //         dataPertemuan: dataPertemuan!);
+                      bool isSuccess = await context
+                          .read<AreaBillProvider>()
+                          .bayarTF(
+                              areaBillID: dataTagihan.area_bill_id,
+                              areaBillTransactionID: dataTagihan.id,
+                              areaID: dataAreaBill.area_id,
+                              bank: 'bri',
+                              paymentType: 'bank_transfer');
+                      if (isSuccess) {
+                        Navigator.pop(context);
 
-                      // Navigator.popAndPushNamed(
-                      //     context, PembayaranIuranArisanPage2.id,
-                      //     arguments: args);
+                        Navigator.pushNamed(context, PembayaranTfPage2.id,
+                            arguments: PembayaranTfPage2Arguments(
+                                index: index, dataAreaBill: dataAreaBill));
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        SmartRTSnackbar.show(context,
+                            message: 'Gagal! Cobalah beberapa saat lagi!',
+                            backgroundColor: smartRTErrorColor);
+                      }
                     },
                   ),
                   Divider(
