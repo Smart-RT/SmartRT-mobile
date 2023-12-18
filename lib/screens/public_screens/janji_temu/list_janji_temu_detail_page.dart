@@ -669,7 +669,7 @@ class _ListJanjiTemuDetailPageState extends State<ListJanjiTemuDetailPage> {
         respondenKelurahan =
             'Kel. ${dataJanjiTemu!.origin_respondent_by!.area!.data_kelurahan!.name.substring(10)}';
         respondenRTRW =
-            '${StringFormat.numFormatRTRW(dataJanjiTemu!.origin_respondent_by!.area!.rt_num.toString())}/${StringFormat.numFormatRTRW(dataJanjiTemu!.created_by!.area!.rw_num.toString())}';
+            '${StringFormat.numFormatRTRW(dataJanjiTemu!.origin_respondent_by!.area!.rt_num.toString())}/${StringFormat.numFormatRTRW(dataJanjiTemu!.origin_respondent_by!.area!.rw_num.toString())}';
       }
       if (dataJanjiTemu!.origin_respondent_by!.id == user.id) {
         titleDataResponden = 'DATA RESPONDEN (SAYA)';
@@ -684,7 +684,7 @@ class _ListJanjiTemuDetailPageState extends State<ListJanjiTemuDetailPage> {
         respondenKelurahan =
             'Kel. ${dataJanjiTemu!.new_respondent_by!.area!.data_kelurahan!.name.substring(10)}';
         respondenRTRW =
-            '${StringFormat.numFormatRTRW(dataJanjiTemu!.new_respondent_by!.area!.rt_num.toString())}/${StringFormat.numFormatRTRW(dataJanjiTemu!.created_by!.area!.rw_num.toString())}';
+            '${StringFormat.numFormatRTRW(dataJanjiTemu!.new_respondent_by!.area!.rt_num.toString())}/${StringFormat.numFormatRTRW(dataJanjiTemu!.new_respondent_by!.area!.rw_num.toString())}';
       }
       if (dataJanjiTemu!.new_respondent_by!.id == user.id) {
         titleDataResponden = 'DATA RESPONDEN (SAYA)';
