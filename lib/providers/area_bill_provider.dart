@@ -60,9 +60,7 @@ class AreaBillProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getAreaBillByAreaID({
-    required int areaID,
-  }) async {
+  Future<void> getAreaBillByAreaID({required int areaID}) async {
     try {
       Response<dynamic> resp =
           await NetUtil().dioClient.get('/iuran/get/all/by-area/$areaID');
@@ -222,6 +220,7 @@ class AreaBillProvider extends ChangeNotifier {
       {required int areaID,
       required int areaBillTransactionID,
       required int areaBillID,
+      required bool fromTagihanSaya,
       int? areaBillRepeatDetailID}) async {
     try {
       Response<dynamic> resp = await NetUtil()
@@ -234,6 +233,16 @@ class AreaBillProvider extends ChangeNotifier {
       if (resp.statusCode.toString() == '200') {
         getAreaBillByAreaID(areaID: areaID);
         getAreaBillTransactionByAreaBillID(areaBillID: areaBillID);
+        if (fromTagihanSaya) {
+          // Check listpembayar untuk areaBillTransactionID, terus copy kalau dari tagihan Syaa
+          AreaBillTransaction temp =
+              listPembayar.firstWhere((p) => p.id == areaBillTransactionID);
+          int index =
+              listTagihanKu.indexWhere((e) => e.id == areaBillTransactionID);
+          AreaBill temp2 = listTagihanKu[index].dataAreaBill!;
+          listTagihanKu[index] = temp;
+          listTagihanKu[index].dataAreaBill = temp2;
+        }
         notifyListeners();
         return true;
       } else {
@@ -247,13 +256,13 @@ class AreaBillProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> bayarTF({
-    required int areaID,
-    required int areaBillID,
-    required int areaBillTransactionID,
-    required String paymentType,
-    required String bank,
-  }) async {
+  Future<bool> bayarTF(
+      {required int areaID,
+      required int areaBillID,
+      required int areaBillTransactionID,
+      required String paymentType,
+      required String bank,
+      required bool fromTagihanSaya}) async {
     try {
       Response<dynamic> resp = await NetUtil()
           .dioClient
@@ -263,8 +272,18 @@ class AreaBillProvider extends ChangeNotifier {
         'id_bill': areaBillTransactionID,
       });
       if (resp.statusCode.toString() == '200') {
-        getAreaBillByAreaID(areaID: areaID);
-        getAreaBillTransactionByAreaBillID(areaBillID: areaBillID);
+        await getAreaBillByAreaID(areaID: areaID);
+        await getAreaBillTransactionByAreaBillID(areaBillID: areaBillID);
+        if (fromTagihanSaya) {
+          // Check listpembayar untuk areaBillTransactionID, terus copy kalau dari tagihan Syaa
+          AreaBillTransaction temp =
+              listPembayar.firstWhere((p) => p.id == areaBillTransactionID);
+          int index =
+              listTagihanKu.indexWhere((e) => e.id == areaBillTransactionID);
+          AreaBill temp2 = listTagihanKu[index].dataAreaBill!;
+          listTagihanKu[index] = temp;
+          listTagihanKu[index].dataAreaBill = temp2;
+        }
         notifyListeners();
         return true;
       } else {
@@ -278,10 +297,10 @@ class AreaBillProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> batalkanMetodeTF({
-    required int areaID,
-    required int areaBillID,
-  }) async {
+  Future<bool> batalkanMetodeTF(
+      {required int areaID,
+      required int areaBillID,
+      required bool fromTagihanSaya}) async {
     try {
       Response<dynamic> resp = await NetUtil()
           .dioClient

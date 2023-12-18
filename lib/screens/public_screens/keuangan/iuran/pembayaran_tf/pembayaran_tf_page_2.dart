@@ -34,9 +34,9 @@ class _PembayaranTfPage2State extends State<PembayaranTfPage2> {
   void batalkanPembayaran(
       {required AreaBillTransaction dataTagihan, required int areaID}) async {
     bool isSuccess = await context.read<AreaBillProvider>().batalkanMetodeTF(
-          areaBillID: dataTagihan.area_bill_id,
-          areaID: areaID,
-        );
+        areaBillID: dataTagihan.area_bill_id,
+        areaID: areaID,
+        fromTagihanSaya: widget.args.fromTagihanSaya);
     if (isSuccess) {
       Navigator.pop(context);
     } else {
@@ -89,8 +89,10 @@ class _PembayaranTfPage2State extends State<PembayaranTfPage2> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    StringFormat.formatDate(
-                        dateTime: dataTagihan.midtrans_expired_at!),
+                    dataTagihan.midtrans_expired_at != null
+                        ? StringFormat.formatDate(
+                            dateTime: dataTagihan.midtrans_expired_at!)
+                        : '',
                     style: smartRTTextTitleCard,
                     textAlign: TextAlign.center,
                   ),

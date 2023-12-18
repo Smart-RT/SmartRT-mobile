@@ -117,7 +117,8 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                               areaBillTransactionID: dataTagihan.id,
                               areaID: dataAreaBill.area_id,
                               bank: 'bca',
-                              paymentType: 'bank_transfer');
+                              paymentType: 'bank_transfer',
+                              fromTagihanSaya: widget.args.fromTagihanSaya);
                       if (isSuccess) {
                         Navigator.pop(context);
 
@@ -149,7 +150,8 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                               areaBillTransactionID: dataTagihan.id,
                               areaID: dataAreaBill.area_id,
                               bank: 'bni',
-                              paymentType: 'bank_transfer');
+                              paymentType: 'bank_transfer',
+                              fromTagihanSaya: widget.args.fromTagihanSaya);
                       if (isSuccess) {
                         Navigator.pop(context);
 
@@ -181,7 +183,8 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
                               areaBillTransactionID: dataTagihan.id,
                               areaID: dataAreaBill.area_id,
                               bank: 'bri',
-                              paymentType: 'bank_transfer');
+                              paymentType: 'bank_transfer',
+                              fromTagihanSaya: widget.args.fromTagihanSaya);
                       if (isSuccess) {
                         Navigator.pop(context);
 

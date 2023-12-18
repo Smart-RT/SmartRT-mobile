@@ -73,7 +73,8 @@ class _TagihanSayaPageDetailState extends State<TagihanSayaPageDetail> {
                               widget.args.areaBillRepeatDetailID,
                           areaBillID: dataTagihan.area_bill_id,
                           areaBillTransactionID: dataTagihan.id,
-                          areaID: dataAreaBill.area_id);
+                          areaID: dataAreaBill.area_id,
+                          fromTagihanSaya: true);
                   if (isSuccess) {
                     Navigator.pop(context);
                     // ignore: use_build_context_synchronously
