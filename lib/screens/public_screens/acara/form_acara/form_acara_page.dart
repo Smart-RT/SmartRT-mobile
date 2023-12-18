@@ -204,7 +204,7 @@ class _FormAcaraPageState extends State<FormAcaraPage> {
           },
           child: Text(
             txtBtn,
-            style: smartRTTextLargeBold_Secondary,
+            style: smartRTTextLarge.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
       ),

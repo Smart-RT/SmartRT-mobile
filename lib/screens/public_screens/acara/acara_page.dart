@@ -48,7 +48,10 @@ class _AcaraPageState extends State<AcaraPage> {
           shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),
       )),
-      child: const Icon(Icons.date_range),
+      child: Icon(
+        Icons.date_range,
+        color: smartRTPrimaryColor,
+      ),
     );
     setState(() {});
   }
@@ -64,7 +67,10 @@ class _AcaraPageState extends State<AcaraPage> {
           shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),
       )),
-      child: const Icon(Icons.list_alt_outlined),
+      child: Icon(
+        Icons.list_alt_outlined,
+        color: smartRTPrimaryColor,
+      ),
     );
     setState(() {});
   }
