@@ -337,7 +337,7 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
                         'Batal',
                         style: smartRTTextNormal.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: smartRTTertiaryColor),
+                            color: smartRTPrimaryColor),
                       ),
                     ),
                     TextButton(
@@ -475,24 +475,23 @@ class _RiwayatKesehatanPageState extends State<RiwayatKesehatanPage> {
             SfCalendar(
               minDate: user.created_at,
               maxDate: DateTime.now(),
-              todayHighlightColor: smartRTTertiaryColor,
+              todayHighlightColor: smartRTPrimaryColor,
               initialSelectedDate: DateTime.now(),
               selectionDecoration: BoxDecoration(
-                border: Border.all(color: smartRTTertiaryColor, width: 2),
+                border: Border.all(color: smartRTPrimaryColor, width: 2),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 shape: BoxShape.rectangle,
               ),
               headerStyle: CalendarHeaderStyle(
                 textAlign: TextAlign.center,
-                backgroundColor: smartRTTertiaryColor,
-                textStyle: smartRTTextTitleCard.copyWith(
-                    letterSpacing: 3, color: smartRTQuaternaryColor),
+                backgroundColor: smartRTActiveColor,
+                textStyle: smartRTTextTitleCard.copyWith(letterSpacing: 3),
               ),
               viewHeaderStyle: ViewHeaderStyle(
-                  backgroundColor: smartRTSuccessColor,
+                  backgroundColor: smartRTActiveColor2,
                   dayTextStyle: smartRTTextLarge,
                   dateTextStyle: smartRTTextLarge),
-              backgroundColor: smartRTQuaternaryColor,
+              backgroundColor: smartRTSecondaryColor,
               view: CalendarView.month,
               dataSource: HealthyDataSource(listSakit),
               monthViewSettings: MonthViewSettings(
