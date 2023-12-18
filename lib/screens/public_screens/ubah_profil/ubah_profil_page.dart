@@ -571,7 +571,9 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                               ),
                               Expanded(
                                 child: Text(
-                                  '${StringFormat.numFormatRTRW(user.rt_num.toString())} / ${StringFormat.numFormatRTRW(user.rw_num.toString())}',
+                                  user.rt_num == null || user.rw_num == null
+                                      ? '-'
+                                      : '${StringFormat.numFormatRTRW(user.rt_num.toString())} / ${StringFormat.numFormatRTRW(user.rw_num.toString())}',
                                   style: smartRTTextLarge_Primary.copyWith(
                                       fontWeight: FontWeight.normal,
                                       color: smartRTDisabledColor),
