@@ -155,7 +155,9 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
 
                         Navigator.pushNamed(context, PembayaranTfPage2.id,
                             arguments: PembayaranTfPage2Arguments(
-                                index: index, dataAreaBill: dataAreaBill));
+                                index: index,
+                                dataAreaBill: dataAreaBill,
+                                fromTagihanSaya: widget.args.fromTagihanSaya));
                       } else {
                         // ignore: use_build_context_synchronously
                         SmartRTSnackbar.show(context,
@@ -185,7 +187,9 @@ class _PembayaranTfPage1State extends State<PembayaranTfPage1> {
 
                         Navigator.pushNamed(context, PembayaranTfPage2.id,
                             arguments: PembayaranTfPage2Arguments(
-                                index: index, dataAreaBill: dataAreaBill));
+                                index: index,
+                                dataAreaBill: dataAreaBill,
+                                fromTagihanSaya: widget.args.fromTagihanSaya));
                       } else {
                         // ignore: use_build_context_synchronously
                         SmartRTSnackbar.show(context,
