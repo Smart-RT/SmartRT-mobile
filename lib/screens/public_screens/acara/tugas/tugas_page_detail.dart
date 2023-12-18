@@ -44,6 +44,7 @@ class _TugasPageDetailState extends State<TugasPageDetail> {
   String type = '';
   List<EventTaskDetail> dataListReq = [];
   int ctrListReq = 0;
+  Widget actionWidget = SizedBox();
 
   void getData(EventTask dataTugas) async {
     title = dataTugas.title;
@@ -89,6 +90,31 @@ class _TugasPageDetailState extends State<TugasPageDetail> {
     bool isShowKeterangan = false;
     EventTaskDetail? dataTerakhirKu;
 
+    if ((user.user_role == Role.Ketua_RT ||
+            user.user_role == Role.Wakil_RT ||
+            user.user_role == Role.Sekretaris) &&
+        !isPast) {
+      actionWidget = Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              // confirmationDeleteEvent(dataEvent: dataEvent);
+            },
+            child: Icon(Icons.delete_forever_outlined),
+          ),
+          SB_width15,
+          GestureDetector(
+            onTap: () {
+              // FormAcaraPageArgument args = FormAcaraPageArgument(
+              //     type: 'update', dataEventIdx: dataEventIdx);
+              // Navigator.pushNamed(context, FormAcaraPage.id, arguments: args);
+            },
+            child: Icon(Icons.edit_document),
+          ),
+          SB_width15,
+        ],
+      );
+    }
     getData(dataTugas);
 
     if ((totalWorkerNeeded == totalWorkerNow) || isPast) {
@@ -127,7 +153,7 @@ class _TugasPageDetailState extends State<TugasPageDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [],
+        actions: [actionWidget],
       ),
       body: SingleChildScrollView(
         child: Padding(
