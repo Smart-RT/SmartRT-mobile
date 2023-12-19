@@ -838,388 +838,298 @@ class _BerandaPageState extends State<BerandaPage> {
       'assets/img/carousel/3.png',
     ];
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              CarouselSlider(
-                  options: CarouselOptions(autoPlay: true, viewportFraction: 1),
-                  items: karosel
-                      .map((item) => Container(
-                            child: Image.network(
-                              '${backendURL}/public/uploads/carousel-home/${item["detail"]}',
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ))
-                      .toList()
-                  // items: list
-                  //     .map((item) => Container(
-                  //           child: Image.asset(
-                  //             item,
-                  //             fit: BoxFit.fitWidth,
-                  //           ),
-                  //         ))
-                  //     .toList(),
-                  ),
-              Divider(
-                color: smartRTPrimaryColor,
-                thickness: 10,
-                height: 0,
-              ),
-              Padding(
-                padding: paddingScreen,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Text(
-                    //   'Halo,',
-                    //   style: smartRTTextTitleCard,
-                    // ),
-                    // Text(
-                    //   StringFormat.convertMax2Words(user.full_name),
-                    //   style: smartRTTextTitle,
-                    //   overflow: TextOverflow.ellipsis,
-                    // ),
-                    // Text(
-                    //   '${user.is_committe == 1 ? 'Panitia Pemilihan Calon Pengurus RT\n' : ''}${user.user_role.name.replaceAll("_", " ")}',
-                    //   style: smartRTTextLarge,
-                    // ),
-                    // SB_height30,
-
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: CardIconWithText(
-                                icon: Icons.calendar_month,
-                                iconColor: smartRTPrimaryColor,
-                                title: 'Acara',
-                                onTap: () async {
-                                  acara();
-                                },
+    return RefreshIndicator(
+      onRefresh: () => context
+          .read<AuthProvider>()
+          .refreshDataUser(userId: AuthProvider.currentUser!.id),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                CarouselSlider(
+                    options:
+                        CarouselOptions(autoPlay: true, viewportFraction: 1),
+                    items: karosel
+                        .map((item) => Container(
+                              child: Image.network(
+                                '${backendURL}/public/uploads/carousel-home/${item["detail"]}',
+                                fit: BoxFit.fitWidth,
                               ),
-                            ),
-                            Expanded(
-                              child: CardIconWithText(
-                                icon: Icons.handshake,
-                                iconColor: smartRTPrimaryColor,
-                                title: 'Janji Temu',
-                                onTap: () async {
-                                  janjiTemu();
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: CardIconWithText(
-                                icon: Icons.article,
-                                iconColor: smartRTPrimaryColor,
-                                title: 'ADM',
-                                onTap: () async {
-                                  administrasi();
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: CardIconWithText(
-                                icon: Icons.group,
-                                iconColor: smartRTPrimaryColor,
-                                title: 'Arisan',
-                                onTap: () async {
-                                  arisan();
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        SB_height15,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: CardIconWithText(
-                                icon: Icons.analytics,
-                                iconColor: smartRTPrimaryColor,
-                                title: 'Performa Saya',
-                                onTap: () async {
-                                  performaSaya();
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: CardIconWithText(
-                                icon: Icons.health_and_safety,
-                                iconColor: smartRTPrimaryColor,
-                                title: 'Kesehatan',
-                                onTap: () async {
-                                  kesehatan();
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: CardIconWithText(
-                                icon: Icons.diamond,
-                                iconColor: smartRTPrimaryColor,
-                                title: 'Langganan Pro',
-                                onTap: () async {
-                                  langgananPro();
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: CardIconWithText(
-                                icon: Icons.question_mark,
-                                iconColor: smartRTPrimaryColor,
-                                title: 'Pusat Bantuan',
-                                onTap: () async {
-                                  ApplicationProvider.showNotification(
-                                      hashCode: 1,
-                                      notificationBody: "Test VBoasdas",
-                                      notificationTitle: "ASDASD");
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ))
+                        .toList()
+                    // items: list
+                    //     .map((item) => Container(
+                    //           child: Image.asset(
+                    //             item,
+                    //             fit: BoxFit.fitWidth,
+                    //           ),
+                    //         ))
+                    //     .toList(),
                     ),
-                    if (user.user_role == Role.Ketua_RT ||
-                        user.user_role == Role.Guest)
-                      SB_height30,
-                    if (user.user_role == Role.Ketua_RT)
-                      Row(
-                        children: [
-                          CardBigIconAndText(
-                            icon: Icons.domain_add,
-                            title: 'Konfirmasi Gabung Wilayah',
-                            onTap: () async {
-                              Navigator.pushNamed(
-                                  context, KonfirmasiGabungWilayahPage.id);
-                            },
-                          ),
-                        ],
-                      ),
-                    if (user.user_role == Role.Guest)
-                      Row(
-                        children: [
-                          CardBigIconAndText(
-                            icon: Icons.domain_add,
-                            title: 'Gabung Wilayah',
-                            onTap: () async {
-                              gabungWilayah();
-                            },
-                          ),
-                        ],
-                      ),
-                  ],
+                Divider(
+                  color: smartRTPrimaryColor,
+                  thickness: 10,
+                  height: 0,
                 ),
-              ),
-            ],
-          ),
-          Divider(
-            color: smartRTPrimaryColor,
-            thickness: 10,
-            height: 0,
-          ),
-          Column(
-            children: [
-              Container(
-                padding: paddingCard,
-                color: smartRTActiveColor,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
+                Padding(
+                  padding: paddingScreen,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Text(
+                      //   'Halo,',
+                      //   style: smartRTTextTitleCard,
+                      // ),
+                      // Text(
+                      //   StringFormat.convertMax2Words(user.full_name),
+                      //   style: smartRTTextTitle,
+                      //   overflow: TextOverflow.ellipsis,
+                      // ),
+                      // Text(
+                      //   '${user.is_committe == 1 ? 'Panitia Pemilihan Calon Pengurus RT\n' : ''}${user.user_role.name.replaceAll("_", " ")}',
+                      //   style: smartRTTextLarge,
+                      // ),
+                      // SB_height30,
+
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'SEBENTAR LAGI !',
-                                style: smartRTTextLarge.copyWith(
-                                    fontWeight: FontWeight.bold),
+                              Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.calendar_month,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'Acara',
+                                  onTap: () async {
+                                    acara();
+                                  },
+                                ),
                               ),
-                              SB_height5,
-                              Text(
-                                'SAATNYA UNTUK PERGANTIAN PENGURUS RT',
-                                style: smartRTTextNormal,
+                              Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.handshake,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'Janji Temu',
+                                  onTap: () async {
+                                    janjiTemu();
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.article,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'ADM',
+                                  onTap: () async {
+                                    administrasi();
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.group,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'Arisan',
+                                  onTap: () async {
+                                    arisan();
+                                  },
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        Expanded(
-                          child: Lottie.asset(
-                              'assets/lotties/decoration/team-jump.json',
-                              fit: BoxFit.fitWidth),
-                        ),
-                      ],
-                    ),
-                    SB_height15,
-                    if (isShowJadwal)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'JADWAL',
-                            style: smartRTTextLarge.copyWith(
-                                fontWeight: FontWeight.bold, letterSpacing: 5),
+                          SB_height15,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.analytics,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'Performa Saya',
+                                  onTap: () async {
+                                    performaSaya();
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.health_and_safety,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'Kesehatan',
+                                  onTap: () async {
+                                    kesehatan();
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.diamond,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'Langganan Pro',
+                                  onTap: () async {
+                                    langgananPro();
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: CardIconWithText(
+                                  icon: Icons.question_mark,
+                                  iconColor: smartRTPrimaryColor,
+                                  title: 'Pusat Bantuan',
+                                  onTap: () async {
+                                    ApplicationProvider.showNotification(
+                                        hashCode: 1,
+                                        notificationBody: "Test VBoasdas",
+                                        notificationTitle: "ASDASD");
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                          Divider(thickness: 2, color: smartRTSecondaryColor),
-                          SB_height5,
-                          ListTileData4(
-                              title: 'Pendaftaran Panitia',
-                              subTitle:
-                                  '$_dateTenureEndMin60DaysString - $_dateTenureEndMin45DaysString'),
-                          ListTileData4(
-                              title: 'Pendaftaran Calon Pengurus RT',
-                              subTitle:
-                                  '$_dateTenureEndMin44DaysString - $_dateTenureEndMin30DaysString'),
-                          ListTileData4(
-                              title: 'Seleksi dan Kampanye',
-                              subTitle:
-                                  '$_dateTenureEndMin29DaysString - $_dateTenureEndMin15DaysString'),
-                          ListTileData4(
-                              title: 'Pemilihan Pengurus RT Baru',
-                              subTitle: _dateTenureEndMin14DaysString),
-                          ListTileData4(
-                              title: 'Pengumuman Pengurus RT Baru',
-                              subTitle: _dateTenureEndMin13DaysString),
-                          ListTileData4(
-                              title: 'Pergantian Jabatan',
-                              subTitle: _dateTenureEndString),
                         ],
                       ),
-                    if (isShowJadwal) SB_height15,
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (isShowJadwal) {
-                            isShowJadwal = false;
-                          } else {
-                            isShowJadwal = true;
-                          }
-                        });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            (isShowJadwal) ? 'TUTUP JADWAL' : 'LIHAT JADWAL',
-                            style: smartRTTextSmall.copyWith(
-                                color: smartRTTertiaryColor),
-                          ),
-                          Icon(
-                              (isShowJadwal)
-                                  ? Icons.keyboard_arrow_up
-                                  : Icons.keyboard_arrow_down,
-                              color: smartRTTertiaryColor)
-                        ],
-                      ),
-                    )
-                  ],
+                      if (user.user_role == Role.Ketua_RT ||
+                          user.user_role == Role.Guest)
+                        SB_height30,
+                      if (user.user_role == Role.Ketua_RT)
+                        Row(
+                          children: [
+                            CardBigIconAndText(
+                              icon: Icons.domain_add,
+                              title: 'Konfirmasi Gabung Wilayah',
+                              onTap: () async {
+                                Navigator.pushNamed(
+                                    context, KonfirmasiGabungWilayahPage.id);
+                              },
+                            ),
+                          ],
+                        ),
+                      if (user.user_role == Role.Guest)
+                        Row(
+                          children: [
+                            CardBigIconAndText(
+                              icon: Icons.domain_add,
+                              title: 'Gabung Wilayah',
+                              onTap: () async {
+                                gabungWilayah();
+                              },
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              SB_height5,
-              SB_height5,
-            ],
-          ),
-          if (isShowPollingCard)
+              ],
+            ),
             Divider(
               color: smartRTPrimaryColor,
               thickness: 10,
               height: 0,
             ),
-          if (isShowPollingCard)
             Column(
               children: [
                 Container(
                   padding: paddingCard,
                   color: smartRTActiveColor,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Row(
                         children: [
-                          Expanded(
-                            child: Lottie.asset(
-                                'assets/lotties/decoration/vote.json',
-                                fit: BoxFit.fitWidth),
-                          ),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'WAKTUNYA TIBA !',
+                                  'SEBENTAR LAGI !',
                                   style: smartRTTextLarge.copyWith(
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SB_height5,
                                 Text(
-                                  'YUK VOTING KANDIDAT PENGURUS RT SEKARANG !',
+                                  'SAATNYA UNTUK PERGANTIAN PENGURUS RT',
                                   style: smartRTTextNormal,
                                 ),
                               ],
                             ),
                           ),
+                          Expanded(
+                            child: Lottie.asset(
+                                'assets/lotties/decoration/team-jump.json',
+                                fit: BoxFit.fitWidth),
+                          ),
                         ],
                       ),
-                      const Divider(
-                        thickness: 1,
-                        height: 15,
-                      ),
+                      SB_height15,
+                      if (isShowJadwal)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              'JADWAL',
+                              style: smartRTTextLarge.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 5),
+                            ),
+                            Divider(thickness: 2, color: smartRTSecondaryColor),
+                            SB_height5,
+                            ListTileData4(
+                                title: 'Pendaftaran Panitia',
+                                subTitle:
+                                    '$_dateTenureEndMin60DaysString - $_dateTenureEndMin45DaysString'),
+                            ListTileData4(
+                                title: 'Pendaftaran Calon Pengurus RT',
+                                subTitle:
+                                    '$_dateTenureEndMin44DaysString - $_dateTenureEndMin30DaysString'),
+                            ListTileData4(
+                                title: 'Seleksi dan Kampanye',
+                                subTitle:
+                                    '$_dateTenureEndMin29DaysString - $_dateTenureEndMin15DaysString'),
+                            ListTileData4(
+                                title: 'Pemilihan Pengurus RT Baru',
+                                subTitle: _dateTenureEndMin14DaysString),
+                            ListTileData4(
+                                title: 'Pengumuman Pengurus RT Baru',
+                                subTitle: _dateTenureEndMin13DaysString),
+                            ListTileData4(
+                                title: 'Pergantian Jabatan',
+                                subTitle: _dateTenureEndString),
+                          ],
+                        ),
+                      if (isShowJadwal) SB_height15,
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, VotingAbsensiPage.id);
+                          setState(() {
+                            if (isShowJadwal) {
+                              isShowJadwal = false;
+                            } else {
+                              isShowJadwal = true;
+                            }
+                          });
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'LIHAT ABSENSI',
+                              (isShowJadwal) ? 'TUTUP JADWAL' : 'LIHAT JADWAL',
                               style: smartRTTextSmall.copyWith(
                                   color: smartRTTertiaryColor),
                             ),
-                            Icon(Icons.keyboard_arrow_right,
+                            Icon(
+                                (isShowJadwal)
+                                    ? Icons.keyboard_arrow_up
+                                    : Icons.keyboard_arrow_down,
                                 color: smartRTTertiaryColor)
                           ],
                         ),
-                      ),
-                      const Divider(
-                        thickness: 1,
-                        height: 15,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          if (myVoteData.id == -1) {
-                            Navigator.pushNamed(context, VotingPage1.id);
-                          } else {
-                            String dateTime =
-                                DateFormat('d MMMM y HH:mm', 'id_ID')
-                                    .format(myVoteData.created_at);
-                            showVoteDone(dateTime);
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'VOTING SEKARANG',
-                              style: smartRTTextSmall.copyWith(
-                                  color: smartRTTertiaryColor),
-                            ),
-                            Icon(Icons.keyboard_arrow_right,
-                                color: smartRTTertiaryColor)
-                          ],
-                        ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -1227,47 +1137,144 @@ class _BerandaPageState extends State<BerandaPage> {
                 SB_height5,
               ],
             ),
-          if (isShowWidgetCommitte)
-            Divider(
-              color: smartRTPrimaryColor,
-              thickness: 10,
-              height: 0,
-            ),
-          if (isShowWidgetCommitte)
-            Padding(
-              padding: paddingScreen,
-              child: CardListTileWithButton(
-                title: titleWidgetCommitte,
-                subtitle: detailWidgetCommitte,
-                buttonText: committeTxtBtn1,
-                onTapButton: committeFuncBtn1,
-                buttonText2: 'LIHAT PANITIA',
-                onTapButton2: () {
-                  Navigator.pushNamed(context, LihatPanitiaPage.id);
-                },
+            if (isShowPollingCard)
+              Divider(
+                color: smartRTPrimaryColor,
+                thickness: 10,
+                height: 0,
               ),
-            ),
-          if (isShowWidgetPengurusRT)
-            Divider(
-              color: smartRTPrimaryColor,
-              thickness: 10,
-              height: 0,
-            ),
-          if (isShowWidgetPengurusRT)
-            Padding(
-              padding: paddingScreen,
-              child: CardListTileWithButton(
-                title: titleWidgetPengurusRT,
-                subtitle: detailWidgetPengurusRT,
-                buttonText: txtBtn1WidgetPengurusRT,
-                onTapButton: funcBtn1WidgetPengurusRT,
-                buttonText2: 'LIHAT SEMUA KANDIDAT',
-                onTapButton2: () {
-                  Navigator.pushNamed(context, LihatSemuaKandidatPage.id);
-                },
+            if (isShowPollingCard)
+              Column(
+                children: [
+                  Container(
+                    padding: paddingCard,
+                    color: smartRTActiveColor,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Lottie.asset(
+                                  'assets/lotties/decoration/vote.json',
+                                  fit: BoxFit.fitWidth),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'WAKTUNYA TIBA !',
+                                    style: smartRTTextLarge.copyWith(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SB_height5,
+                                  Text(
+                                    'YUK VOTING KANDIDAT PENGURUS RT SEKARANG !',
+                                    style: smartRTTextNormal,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          height: 15,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, VotingAbsensiPage.id);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'LIHAT ABSENSI',
+                                style: smartRTTextSmall.copyWith(
+                                    color: smartRTTertiaryColor),
+                              ),
+                              Icon(Icons.keyboard_arrow_right,
+                                  color: smartRTTertiaryColor)
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          height: 15,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (myVoteData.id == -1) {
+                              Navigator.pushNamed(context, VotingPage1.id);
+                            } else {
+                              String dateTime =
+                                  DateFormat('d MMMM y HH:mm', 'id_ID')
+                                      .format(myVoteData.created_at);
+                              showVoteDone(dateTime);
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'VOTING SEKARANG',
+                                style: smartRTTextSmall.copyWith(
+                                    color: smartRTTertiaryColor),
+                              ),
+                              Icon(Icons.keyboard_arrow_right,
+                                  color: smartRTTertiaryColor)
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SB_height5,
+                  SB_height5,
+                ],
               ),
-            ),
-        ],
+            if (isShowWidgetCommitte)
+              Divider(
+                color: smartRTPrimaryColor,
+                thickness: 10,
+                height: 0,
+              ),
+            if (isShowWidgetCommitte)
+              Padding(
+                padding: paddingScreen,
+                child: CardListTileWithButton(
+                  title: titleWidgetCommitte,
+                  subtitle: detailWidgetCommitte,
+                  buttonText: committeTxtBtn1,
+                  onTapButton: committeFuncBtn1,
+                  buttonText2: 'LIHAT PANITIA',
+                  onTapButton2: () {
+                    Navigator.pushNamed(context, LihatPanitiaPage.id);
+                  },
+                ),
+              ),
+            if (isShowWidgetPengurusRT)
+              Divider(
+                color: smartRTPrimaryColor,
+                thickness: 10,
+                height: 0,
+              ),
+            if (isShowWidgetPengurusRT)
+              Padding(
+                padding: paddingScreen,
+                child: CardListTileWithButton(
+                  title: titleWidgetPengurusRT,
+                  subtitle: detailWidgetPengurusRT,
+                  buttonText: txtBtn1WidgetPengurusRT,
+                  onTapButton: funcBtn1WidgetPengurusRT,
+                  buttonText2: 'LIHAT SEMUA KANDIDAT',
+                  onTapButton2: () {
+                    Navigator.pushNamed(context, LihatSemuaKandidatPage.id);
+                  },
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

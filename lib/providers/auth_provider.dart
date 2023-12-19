@@ -82,6 +82,7 @@ class AuthProvider extends ApplicationProvider {
       ApplicationProvider.currentUserJWT = user.token;
       ApplicationProvider.currentUserRefreshToken = user.refresh_token;
       saveUserDataToStorage();
+      notifyListeners();
     } on DioError catch (e) {
       if (e.response != null) {
         debugPrint(e.response!.data.toString());
