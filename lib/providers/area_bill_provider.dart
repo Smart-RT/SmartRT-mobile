@@ -325,6 +325,23 @@ class AreaBillProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> cekStatusPembayaran(
+      {required int areaID,
+      required int areaBillID,
+      required int areaBillTransID,
+      required bool fromTagihanSaya}) async {
+    try {
+      getAreaBillByAreaID(areaID: areaID);
+      getAreaBillTransactionByAreaBillID(areaBillID: areaBillID);
+      getMyAllTagihan(yearMonth: '');
+      notifyListeners();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        debugPrint(e.response!.data.toString());
+      }
+    }
+  }
+
   Future<bool> nonAktifkanIuran({required AreaBill bill}) async {
     try {
       Response<dynamic> resp = await NetUtil()
