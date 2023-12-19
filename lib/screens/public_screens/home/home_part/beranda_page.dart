@@ -32,6 +32,7 @@ import 'package:smart_rt/screens/public_screens/acara/acara_page.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_semua_kandidat/lihat_semua_kandidat_page.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/lihat_status_kandidat_calon_pengurus_rt_saya_page.dart';
 import 'package:smart_rt/screens/public_screens/neighbourhood_head/rekomendasikan_kandidat_page.dart';
+import 'package:smart_rt/screens/public_screens/voting/voting_result_page.dart';
 import 'package:smart_rt/utilities/bool/checker_return_bool.dart';
 import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
@@ -754,6 +755,20 @@ class _BerandaPageState extends State<BerandaPage> {
 
 // === END PENGURUS RT
 
+  bool isShowResult() {
+    DateTime _dateTenureEndMin13Days =
+        user.area!.tenure_end_at.add(const Duration(days: -13));
+    DateTime _dateNow = DateTime.now();
+    DateTime _dateTenureEnd =
+        user.area!.tenure_end_at.add(const Duration(days: -1));
+
+    if (CheckerReturnBool.isDate1BetweenDate2AndDate3(
+        dt1: _dateNow, dt2: _dateTenureEndMin13Days, dt3: _dateTenureEnd)) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -1048,13 +1063,13 @@ class _BerandaPageState extends State<BerandaPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'SEBENTAR LAGI !',
+                                  'JANGAN LUPA !',
                                   style: smartRTTextLarge.copyWith(
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SB_height5,
                                 Text(
-                                  'SAATNYA UNTUK PERGANTIAN PENGURUS RT',
+                                  'MENGECEK JADWAL PERGANTIAN PENGURUS RT',
                                   style: smartRTTextNormal,
                                 ),
                               ],
@@ -1137,6 +1152,102 @@ class _BerandaPageState extends State<BerandaPage> {
                 SB_height5,
               ],
             ),
+            if (isShowResult())
+              Divider(
+                color: smartRTPrimaryColor,
+                thickness: 10,
+                height: 0,
+              ),
+            if (isShowResult())
+              Column(
+                children: [
+                  Container(
+                    padding: paddingCard,
+                    color: smartRTActiveColor,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Lottie.asset(
+                                  'assets/lotties/decoration/vote.json',
+                                  fit: BoxFit.fitWidth),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'YUK CEK HASILNYA !',
+                                    style: smartRTTextLarge.copyWith(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SB_height5,
+                                  Text(
+                                    'Anda dapat melihat hasil voting hingga tanggal $_dateTenureEndString',
+                                    style: smartRTTextNormal,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          height: 15,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, VotingAbsensiPage.id);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'LIHAT ABSENSI',
+                                style: smartRTTextSmall.copyWith(
+                                    color: smartRTTertiaryColor),
+                              ),
+                              Icon(Icons.keyboard_arrow_right,
+                                  color: smartRTTertiaryColor)
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          height: 15,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (myVoteData.id == -1) {
+                              Navigator.pushNamed(context, VotingResultPage.id);
+                            } else {
+                              String dateTime =
+                                  DateFormat('d MMMM y HH:mm', 'id_ID')
+                                      .format(myVoteData.created_at);
+                              showVoteDone(dateTime);
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'LIHAT HASIL VOTING',
+                                style: smartRTTextSmall.copyWith(
+                                    color: smartRTTertiaryColor),
+                              ),
+                              Icon(Icons.keyboard_arrow_right,
+                                  color: smartRTTertiaryColor)
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SB_height5,
+                  SB_height5,
+                ],
+              ),
             if (isShowPollingCard)
               Divider(
                 color: smartRTPrimaryColor,

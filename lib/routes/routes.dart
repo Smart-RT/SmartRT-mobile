@@ -135,6 +135,7 @@ import 'package:smart_rt/screens/public_screens/committe/lihat_panitia/lihat_pan
 import 'package:smart_rt/screens/public_screens/voting/voting_absensi_page.dart';
 
 import 'package:smart_rt/screens/public_screens/voting/voting_page_1.dart';
+import 'package:smart_rt/screens/public_screens/voting/voting_result_page.dart';
 
 class Routes {
   static Route<dynamic> Function(RouteSettings) generateRoute =
@@ -219,6 +220,10 @@ class Routes {
           return const PerformaSayaPage();
         });
 
+      case VotingResultPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return const VotingResultPage();
+        });
       case DaftarKetuaPage.id:
         return MaterialPageRoute(builder: (context) {
           return const DaftarKetuaPage();
