@@ -52,6 +52,7 @@ class _PublicHomeState extends State<PublicHome> {
 
   @override
   Widget build(BuildContext context) {
+    user = context.watch<AuthProvider>().user!;
     return Scaffold(
       appBar: AppBar(
         title: _selectedIndex == 0
