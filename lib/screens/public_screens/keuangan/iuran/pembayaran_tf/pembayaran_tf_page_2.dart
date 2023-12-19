@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/constants/size.dart';
@@ -48,6 +49,78 @@ class _PembayaranTfPage2State extends State<PembayaranTfPage2> {
       SmartRTSnackbar.show(context,
           message: 'Gagal! Cobalah beberapa saat lagi!',
           backgroundColor: smartRTErrorColor);
+    }
+  }
+
+  void cekStatusPembayaran(
+      {required AreaBillTransaction dataTagihan, required int areaID}) async {
+    await context.read<AreaBillProvider>().cekStatusPembayaran(
+        areaBillID: dataTagihan.area_bill_id,
+        areaBillTransID: dataTagihan.id,
+        areaID: areaID,
+        fromTagihanSaya: widget.args.fromTagihanSaya);
+
+    int index = widget.args.index;
+    AreaBillTransaction dataTagihanBaru = widget.args.fromTagihanSaya
+        ? context.read<AreaBillProvider>().listTagihanKu[index]
+        : context.read<AreaBillProvider>().listPembayar[index];
+
+    if (dataTagihanBaru.midtrans_transaction_status == 'settlement') {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Pembayaran anda telah berhasil dan lunas pada tanggal ${DateFormat('d MMMM y HH:mm', 'id_ID').format(dataTagihanBaru.updated_at!)}',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                if (widget.args.fromTagihanSaya) {
+                  Navigator.pop(context);
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(
+            'Hai Sobat Pintar,',
+            style: smartRTTextTitleCard,
+          ),
+          content: Text(
+            'Pembayaran anda belum diterima! Segera bayarkan tagihan anda!',
+            style: smartRTTextNormal.copyWith(fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'OK',
+                style: smartRTTextNormal.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -170,7 +243,8 @@ class _PembayaranTfPage2State extends State<PembayaranTfPage2> {
                     ),
                   ),
                   onPressed: () async {
-                    // cekStatusPembayaran();
+                    cekStatusPembayaran(
+                        dataTagihan: dataTagihan, areaID: dataAreaBill.area_id);
                   },
                   child: Text(
                     'CEK STATUS PEMBAYARAN',

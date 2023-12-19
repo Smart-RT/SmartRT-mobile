@@ -7,6 +7,7 @@ import 'package:smart_rt/models/area/area_bill/area_bill_transaction.dart';
 import 'package:smart_rt/models/user/user.dart';
 import 'package:smart_rt/providers/area_bill_provider.dart';
 import 'package:smart_rt/providers/auth_provider.dart';
+import 'package:smart_rt/screens/public_screens/keuangan/iuran/pembayaran_tf/pembayaran_tf_page_2.dart';
 import 'package:smart_rt/utilities/string/currency_format.dart';
 import 'package:smart_rt/utilities/string/string_format.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
@@ -200,11 +201,20 @@ class _TagihanSayaPageDetailState extends State<TagihanSayaPageDetail> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        Navigator.pushNamed(context, PembayaranTfPage1.id,
-                            arguments: PembayaranTfPage1Arguments(
-                                index: index,
-                                dataAreaBill: dataAreaBill,
-                                fromTagihanSaya: true));
+                        if (dataTagihan.midtrans_transaction_status ==
+                            'pending') {
+                          Navigator.pushNamed(context, PembayaranTfPage2.id,
+                              arguments: PembayaranTfPage2Arguments(
+                                  index: index,
+                                  dataAreaBill: dataAreaBill,
+                                  fromTagihanSaya: true));
+                        } else {
+                          Navigator.pushNamed(context, PembayaranTfPage1.id,
+                              arguments: PembayaranTfPage1Arguments(
+                                  index: index,
+                                  dataAreaBill: dataAreaBill,
+                                  fromTagihanSaya: true));
+                        }
                       },
                       child: Text(
                         'BAYAR TAGIHAN SEKARANG',
