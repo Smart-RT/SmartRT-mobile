@@ -22,7 +22,18 @@ class VotingProvider extends ChangeNotifier {
           await NetUtil().dioClient.get('/vote/data/my/period/$periode');
 
       if (resp.statusCode.toString() == '200') {
-        myVoteData = Voting.fromData(resp.data);
+        if (resp.data != "") {
+          myVoteData = Voting.fromData({
+            "id": resp.data['id'],
+            "voter_id": resp.data['voter_id'],
+            "neighbourhood_head_candidate_id":
+                resp.data['neighbourhood_head_candidate_id'],
+            "created_at": resp.data['created_at'],
+            "periode": resp.data['periode'],
+            "dataVoter": resp.data['dataVoter'],
+            "dataKandidat": resp.data['dataKandidat']
+          });
+        }
       }
       notifyListeners();
     } on DioError catch (e) {
