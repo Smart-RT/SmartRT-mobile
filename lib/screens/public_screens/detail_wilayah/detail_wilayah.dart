@@ -114,7 +114,7 @@ class DetailWilayah extends StatelessWidget {
             subtitle: Text(area.bendahara_id != null
                 ? area.bendahara_id!.full_name
                 : "Belum Ada, Kode: ${area.bendahara_code}"),
-            trailing: area.wakil_ketua_id == null
+            trailing: area.bendahara_id == null
                 ? GestureDetector(
                     onTap: () {
                       Clipboard.setData(
