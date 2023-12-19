@@ -1219,14 +1219,7 @@ class _BerandaPageState extends State<BerandaPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            if (myVoteData.id == -1) {
-                              Navigator.pushNamed(context, VotingResultPage.id);
-                            } else {
-                              String dateTime =
-                                  DateFormat('d MMMM y HH:mm', 'id_ID')
-                                      .format(myVoteData.created_at);
-                              showVoteDone(dateTime);
-                            }
+                            Navigator.pushNamed(context, VotingResultPage.id);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

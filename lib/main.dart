@@ -33,7 +33,7 @@ import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  bool isDebugging = true;
+  bool isDebugging = false;
   if (isDebugging) {
     debugPrint = (String? message, {int? wrapWidth}) => log('Debug: $message');
     debugPrint('[Main.Dart] => loadApp');
