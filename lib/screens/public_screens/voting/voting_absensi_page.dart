@@ -62,14 +62,14 @@ class VotingAbsensiPageState extends State<VotingAbsensiPage> {
 
     for (var i = 0; i < listUserWilayah.length; i++) {
       if (listUserWilayah[i].is_committe == 1) {
-        isDisabled[i] = true;
+        // isDisabled[i] = true;
       } else {
-        for (var i2 = 0; i2 < listKandidat.length; i2++) {
-          if (listUserWilayah[i].id == listKandidat[i2].dataUser!.id &&
-              listKandidat[i2].status == 1) {
-            isDisabled[i] = true;
-          }
-        }
+        // for (var i2 = 0; i2 < listKandidat.length; i2++) {
+        //   if (listUserWilayah[i].id == listKandidat[i2].dataUser!.id &&
+        //       listKandidat[i2].status == 1) {
+        //     isDisabled[i] = true;
+        //   }
+        // }
         for (var i2 = 0; i2 < listVoting.length; i2++) {
           if (listUserWilayah[i].id == listVoting[i2].voter_id) {
             isChecked[i] = true;
