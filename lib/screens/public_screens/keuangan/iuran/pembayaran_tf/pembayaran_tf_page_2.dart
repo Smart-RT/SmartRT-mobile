@@ -33,8 +33,12 @@ class PembayaranTfPage2 extends StatefulWidget {
 class _PembayaranTfPage2State extends State<PembayaranTfPage2> {
   void batalkanPembayaran(
       {required AreaBillTransaction dataTagihan, required int areaID}) async {
+    debugPrint('================');
+    debugPrint(dataTagihan.id.toString());
+    debugPrint('================');
     bool isSuccess = await context.read<AreaBillProvider>().batalkanMetodeTF(
         areaBillID: dataTagihan.area_bill_id,
+        areaBillTransID: dataTagihan.id,
         areaID: areaID,
         fromTagihanSaya: widget.args.fromTagihanSaya);
     if (isSuccess) {
