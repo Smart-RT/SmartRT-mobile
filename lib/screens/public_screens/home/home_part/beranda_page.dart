@@ -756,6 +756,7 @@ class _BerandaPageState extends State<BerandaPage> {
 // === END PENGURUS RT
 
   bool isShowResult() {
+    if (user.area == null) return false;
     DateTime _dateTenureEndMin13Days =
         user.area!.tenure_end_at.add(const Duration(days: -13));
     DateTime _dateNow = DateTime.now();
