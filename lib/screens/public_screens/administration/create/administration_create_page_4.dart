@@ -210,7 +210,7 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
       _TECCreatorNationality = nationalityItems[0];
       _TECCreatorReligion = religionItems[0];
       _TECCreatorWeddingStatus = weddingStatusItems[0];
-    } else {
+    } else if (user.user_role != Role.Ketua_RT) {
       titleExplain = 'DATA DIRI (3)';
       detailExplain =
           'Isilah semua form dibawah ini! Pastikan data diri anda sesuai dengan KTP atau KK !';
@@ -220,6 +220,30 @@ class _AdministrationCreatePage4State extends State<AdministrationCreatePage4> {
       _TECCreatorWeddingStatus =
           user.status_perkawinan ?? weddingStatusItems[0];
       _TECCreatorJob = user.profession ?? jobItems[0];
+      if (genderItems.contains(_TECCreatorGender)) {
+        idxGender = genderItems.indexOf(_TECCreatorGender);
+      }
+      if (religionItems.contains(_TECCreatorReligion)) {
+        idxReligion = religionItems.indexOf(_TECCreatorReligion);
+      }
+      if (weddingStatusItems.contains(_TECCreatorWeddingStatus)) {
+        idxWeddingStatus = weddingStatusItems.indexOf(_TECCreatorWeddingStatus);
+      }
+      if (nationalityItems.contains(_TECCreatorNationality)) {
+        idxNationality = nationalityItems.indexOf(_TECCreatorNationality);
+      }
+      if (jobItems.contains(_TECCreatorJob)) {
+        idxJob = jobItems.indexOf(_TECCreatorJob);
+      }
+    } else {
+      titleExplain = 'DATA DIRI (3)';
+      detailExplain =
+          'Isilah semua form dibawah ini! Pastikan data diri sesuai dengan KTP atau KK  orang yang ingin dibuatkan Surat Keterangan atau Pengantar!';
+      _TECCreatorGender = genderItems[0];
+      _TECCreatorNationality = nationalityItems[0];
+      _TECCreatorReligion = religionItems[0];
+      _TECCreatorWeddingStatus = weddingStatusItems[0];
+      _TECCreatorJob = jobItems[0];
       if (genderItems.contains(_TECCreatorGender)) {
         idxGender = genderItems.indexOf(_TECCreatorGender);
       }

@@ -70,19 +70,18 @@ class _AdministrationPageState extends State<AdministrationPage> {
         appBar: AppBar(
           title: Text('Administrasi'),
           actions: [
-            if (user.user_role != Role.Ketua_RT)
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, AdministrationCreatePage1.id);
-                    },
-                    child: const Icon(Icons.add),
-                  ),
-                  SB_width25,
-                ],
-              )
+            // if (user.user_role != Role.Ketua_RT)
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, AdministrationCreatePage1.id);
+                  },
+                  child: const Icon(Icons.add),
+                ),
+                SB_width25,
+              ],
+            )
           ],
           bottom: const TabBar(
             tabs: <Widget>[

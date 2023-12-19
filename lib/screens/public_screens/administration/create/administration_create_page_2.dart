@@ -41,7 +41,7 @@ class _AdministrationCreatePage2State extends State<AdministrationCreatePage2> {
       titleExplain = 'DATA ORANG YANG MENINGGAL (1)';
       detailExplain =
           'Isilah semua form dibawah ini! Pastikan data orang yang meninggal sesuai dengan KTP atau KK !';
-    } else {
+    } else if (user.user_role != Role.Ketua_RT) {
       titleExplain = 'DATA DIRI (1)';
       detailExplain =
           'Isilah semua form dibawah ini! Pastikan data diri anda sesuai dengan KTP atau KK !';
@@ -49,6 +49,14 @@ class _AdministrationCreatePage2State extends State<AdministrationCreatePage2> {
       _TECCreatorAddress.text = user.address ?? '';
       _TECCreatorNoKTP.text = user.nik ?? '';
       _TECCreatorNoKK.text = user.kk_num ?? '';
+    } else {
+      titleExplain = 'DATA DIRI (1)';
+      detailExplain =
+          'Isilah semua form dibawah ini! Pastikan data diri sesuai dengan KTP atau KK orang yang ingin dibuatkan Surat Keterangan atau Pengantar!';
+      _TECCreatorFullname.text = '';
+      _TECCreatorAddress.text = '';
+      _TECCreatorNoKTP.text = '';
+      _TECCreatorNoKK.text = '';
     }
     setState(() {});
   }
