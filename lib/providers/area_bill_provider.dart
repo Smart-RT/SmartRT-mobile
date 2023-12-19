@@ -333,7 +333,16 @@ class AreaBillProvider extends ChangeNotifier {
     try {
       getAreaBillByAreaID(areaID: areaID);
       getAreaBillTransactionByAreaBillID(areaBillID: areaBillID);
-      getMyAllTagihan(yearMonth: '');
+      // getMyAllTagihan(yearMonth: '');
+      if (fromTagihanSaya) {
+        // Check listpembayar untuk areaBillTransactionID, terus copy kalau dari tagihan Syaa
+        AreaBillTransaction temp =
+            listPembayar.firstWhere((p) => p.id == areaBillTransID);
+        int index = listTagihanKu.indexWhere((e) => e.id == areaBillTransID);
+        AreaBill temp2 = listTagihanKu[index].dataAreaBill!;
+        listTagihanKu[index] = temp;
+        listTagihanKu[index].dataAreaBill = temp2;
+      }
       notifyListeners();
     } on DioError catch (e) {
       if (e.response != null) {
