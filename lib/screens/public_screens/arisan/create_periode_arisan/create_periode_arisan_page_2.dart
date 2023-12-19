@@ -1,4 +1,5 @@
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:dio/dio.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import 'package:smart_rt/constants/size.dart';
 import 'package:smart_rt/constants/style.dart';
 import 'package:smart_rt/providers/arisan_provider.dart';
 import 'package:smart_rt/screens/public_screens/arisan/arisan_page.dart';
+import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:smart_rt/widgets/parts/explain_part.dart';
 
@@ -36,6 +38,13 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
   int _listMemberIDLength = 6;
   List<String> _panjangPeriode = [];
   String _panjangPeriodeSelectedValue = '';
+  String periodeNext = '0';
+
+  void getData() async {
+    Response<dynamic> resp =
+        await NetUtil().dioClient.get('/lotteryClubs/getLastPeriode');
+    periodeNext = resp.data.toString();
+  }
 
   void clearAll() {
     _listMemberID.clear();
@@ -155,7 +164,7 @@ class _CreatePeriodeArisanPage2State extends State<CreatePeriodeArisanPage2> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const ExplainPart(title: 'Periode Ke-X', notes: ''),
+                    ExplainPart(title: 'Periode Ke-$periodeNext', notes: ''),
                     SB_height15,
                     TextFormField(
                       controller: _jumlahAnggotaController,

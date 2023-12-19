@@ -15,6 +15,7 @@ import 'package:smart_rt/utilities/net_util.dart';
 import 'package:smart_rt/widgets/dialogs/smart_rt_snackbar.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_rt/constants/colors.dart';
+import 'package:smart_rt/widgets/list_tile/list_tile_data_1.dart';
 
 import '../riwayat_arisan/riwayat_arisan_pertemuan_page.dart';
 
@@ -280,129 +281,33 @@ class _ListIuranPertemuanDetailPageState
                   thickness: 1,
                   height: 50,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Iuran Pertemuan Ke',
-                      style: smartRTTextLarge,
-                    ),
-                    Text(
-                      pertemuanKe,
-                      style: smartRTTextLarge,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Nama Anggota',
-                        style: smartRTTextLarge,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        namaAnggota,
-                        style: smartRTTextLarge,
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '',
-                        style: smartRTTextLarge,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        alamatAnggota,
-                        style: smartRTTextLarge,
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                  ],
-                ),
+                ListTileData1(txtLeft: 'Pertemuan Ke-', txtRight: pertemuanKe),
+                ListTileData1(txtLeft: 'Nama Anggota', txtRight: namaAnggota),
+                ListTileData1(txtLeft: 'Alamat', txtRight: alamatAnggota),
                 Divider(
                   color: smartRTPrimaryColor,
                   thickness: 1,
                   height: 50,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Status Pembayaran',
-                      style: smartRTTextLarge,
-                    ),
-                    Text(
-                      statusPembayaran,
-                      style: smartRTTextLarge.copyWith(
-                          color: statusPembayaranColor),
-                    ),
-                  ],
+                ListTileData1(
+                  txtLeft: 'Status',
+                  txtRight: statusPembayaran,
+                  txtStyleRight:
+                      smartRTTextLarge.copyWith(color: statusPembayaranColor),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Total Tagihan',
-                      style: smartRTTextLarge,
-                    ),
-                    Text(
-                      totalTagihan,
-                      style: smartRTTextLarge,
-                    ),
-                  ],
-                ),
+                ListTileData1(txtLeft: 'Total Tagihan', txtRight: totalTagihan),
                 pembayaranVia != ''
                     ? Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Pembayaran VIA',
-                                style: smartRTTextLarge,
-                              ),
-                              Text(
-                                pembayaranVia,
-                                style: smartRTTextLarge,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Tanggal Pembayaran',
-                                style: smartRTTextLarge,
-                              ),
-                              Text(
-                                tanggalPembayaran,
-                                style: smartRTTextLarge,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Dikonfirmasi Oleh',
-                                style: smartRTTextLarge,
-                              ),
-                              Text(
-                                dikonfirmasiOleh,
-                                style: smartRTTextLarge,
-                              ),
-                            ],
-                          ),
+                          ListTileData1(
+                              txtLeft: 'Pembayaran VIA',
+                              txtRight: pembayaranVia),
+                          ListTileData1(
+                              txtLeft: 'Tanggal Pembayaran',
+                              txtRight: tanggalPembayaran),
+                          ListTileData1(
+                              txtLeft: 'Dikonfirmasi Oleh',
+                              txtRight: dikonfirmasiOleh),
                         ],
                       )
                     : const SizedBox(),
