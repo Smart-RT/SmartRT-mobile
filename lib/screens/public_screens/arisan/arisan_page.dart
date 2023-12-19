@@ -450,7 +450,7 @@ class _ArisanPageState extends State<ArisanPage> {
           tanggalPertemuan =
               DateFormat('d MMMM y', 'id_ID').format(dataPertemuan!.meet_date);
           waktuPertemuan =
-              DateFormat('H:m', 'id_ID').format(dataPertemuan!.meet_date);
+              DateFormat('HH:mm', 'id_ID').format(dataPertemuan!.meet_date);
           tempatPertemuan = dataPertemuan!.meet_at.toString();
         } else if (status == 10) {
           Response<dynamic> respPertemuan = await NetUtil().dioClient.get(
