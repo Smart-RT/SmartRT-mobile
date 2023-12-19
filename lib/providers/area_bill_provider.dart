@@ -300,16 +300,18 @@ class AreaBillProvider extends ChangeNotifier {
   Future<bool> batalkanMetodeTF(
       {required int areaID,
       required int areaBillID,
+      required int areaBillTransID,
       required bool fromTagihanSaya}) async {
     try {
       Response<dynamic> resp = await NetUtil()
           .dioClient
           .patch('/iuran/transaction/payment/cancel', data: {
-        "id_bill": areaBillID,
+        "id_bill": areaBillTransID,
       });
       if (resp.statusCode.toString() == '200') {
         getAreaBillByAreaID(areaID: areaID);
         getAreaBillTransactionByAreaBillID(areaBillID: areaBillID);
+        getMyAllTagihan(yearMonth: '');
         notifyListeners();
         return true;
       } else {
