@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_rt/constants/colors.dart';
 import 'package:smart_rt/models/event/event_task.dart';
 import 'package:smart_rt/providers/event_provider.dart';
+import 'package:smart_rt/screens/public_screens/acara/acara_dokumentasi_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/form_acara/form_acara_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/tugas/form_tugas/form_tugas_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/tugas/tugas_page_detail.dart';
@@ -650,6 +651,21 @@ class _AcaraPageDetailState extends State<AcaraPageDetail> {
                 height: 50,
                 thickness: 1,
               ),
+              if (isPast && user.user_role == Role.Ketua_RT)
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, AcaraDokumentasiPage.id,
+                          arguments: AcaraDokumentasiPageArgument(
+                              dataEventIdx: dataEventIdx));
+                    },
+                    child: Text(
+                      'LIHAT DOKUMENTASI',
+                      style: smartRTTextLargeBold_Secondary,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

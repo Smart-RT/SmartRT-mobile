@@ -15,6 +15,7 @@ import 'package:smart_rt/screens/admin_screens/daftar_wilayah_surabaya/lihat_war
 import 'package:smart_rt/screens/admin_screens/home/beranda_admin_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/detail_request_role_page.dart';
 import 'package:smart_rt/screens/admin_screens/request_role/list_request_role_page.dart';
+import 'package:smart_rt/screens/public_screens/acara/acara_dokumentasi_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/tugas/form_tugas/form_tugas_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/tugas/petugas/beri_tugas_warga_page.dart';
 import 'package:smart_rt/screens/public_screens/acara/tugas/petugas/konfirmasi_petugas_page.dart';
@@ -539,6 +540,12 @@ class Routes {
         return MaterialPageRoute(builder: (context) {
           return AcaraPageDetail(
             args: settings.arguments as AcaraPageDetailArgument,
+          );
+        });
+      case AcaraDokumentasiPage.id:
+        return MaterialPageRoute(builder: (context) {
+          return AcaraDokumentasiPage(
+            args: settings.arguments as AcaraDokumentasiPageArgument,
           );
         });
       case FormTugasPage.id:
