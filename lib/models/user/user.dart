@@ -49,6 +49,9 @@ class User {
   UrbanVillage? data_urban_village;
   String? nationality;
   int is_committe = 0;
+  int is_temporary_inhabitant = 0;
+  String? ktp_photo;
+  String? kk_photo;
 
   User.fromData(Map<String, dynamic> data) {
     Map<String, dynamic> userData = data;
@@ -155,6 +158,16 @@ class User {
     if (userData['area_id'] != null && userData['area_id'] != "null") {
       area_id = int.parse(userData['area_id'].toString());
     }
+    if (userData['is_temporary_inhabitant'] != null) {
+      is_temporary_inhabitant =
+          int.parse(userData['is_temporary_inhabitant'].toString());
+    }
+    if (userData['ktp_photo'] != null) {
+      ktp_photo = userData['ktp_photo'].toString();
+    }
+    if (userData['kk_photo'] != null) {
+      kk_photo = userData['kk_photo'].toString();
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -192,6 +205,9 @@ class User {
         "nationality": nationality,
         "is_committe": is_committe.toString(),
         "area_id": area_id.toString(),
+        "is_temporary_inhabitant": is_temporary_inhabitant.toString(),
+        "ktp_photo": ktp_photo.toString(),
+        "kk_photo": kk_photo.toString(),
       },
       "token": token,
       "refreshToken": refresh_token

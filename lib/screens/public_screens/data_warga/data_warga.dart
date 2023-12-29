@@ -499,12 +499,14 @@ class _DataWargaPageState extends State<DataWargaPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(dataWarga[index].address ?? '-'),
-                  Text(dataWarga[index]
-                      .user_role
-                      .toString()
-                      .split('.')
-                      .last
-                      .replaceAll('_', ' '))
+                  Text(dataWarga[index].user_role != Role.Warga
+                      ? dataWarga[index]
+                          .user_role
+                          .toString()
+                          .split('.')
+                          .last
+                          .replaceAll('_', ' ')
+                      : 'Warga (${dataWarga[index].is_temporary_inhabitant == 0 ? 'Tetap' : 'Sementara'})')
                 ],
               ),
               onTap: () {

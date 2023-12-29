@@ -24,6 +24,7 @@ class ListTileData5 extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
+          flex: 10,
           child: Text(
             txtLeft,
             style: txtStyleLeft ?? smartRTTextLarge,
@@ -32,22 +33,19 @@ class ListTileData5 extends StatelessWidget {
         ),
         SB_width15,
         Expanded(
+          flex: 10,
           child: GestureDetector(
             onTap: onTap ?? () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  txtRight,
-                  style: txtStyleRight ?? smartRTTextLarge,
-                  textAlign: TextAlign.right,
-                ),
-                SB_width15,
-                Icon(Icons.arrow_forward_ios),
-              ],
+            child: Text(
+              txtRight,
+              style: txtStyleRight ?? smartRTTextLarge,
+              textAlign: TextAlign.right,
             ),
           ),
         ),
+        SB_width15,
+        Expanded(
+            child: onTap == null ? SizedBox() : Icon(Icons.arrow_forward_ios)),
       ],
     );
   }

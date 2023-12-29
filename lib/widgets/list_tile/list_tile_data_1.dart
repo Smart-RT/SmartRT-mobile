@@ -11,6 +11,7 @@ class ListTileData1 extends StatelessWidget {
     this.txtStyleColon,
     this.onTap,
     this.crossAxisAlignment,
+    this.isShowIconArrow,
   }) : super(key: key);
 
   final String txtLeft;
@@ -19,6 +20,7 @@ class ListTileData1 extends StatelessWidget {
   final TextStyle? txtStyleRight;
   final TextStyle? txtStyleColon;
   final GestureTapCallback? onTap;
+  final bool? isShowIconArrow;
   final CrossAxisAlignment? crossAxisAlignment;
 
   @override
@@ -49,6 +51,13 @@ class ListTileData1 extends StatelessWidget {
             ),
           ),
         ),
+        Expanded(
+            child: isShowIconArrow == null
+                ? SizedBox()
+                : !isShowIconArrow!
+                    ? SizedBox()
+                    : GestureDetector(
+                        onTap: onTap, child: Icon(Icons.arrow_forward_ios))),
       ],
     );
   }
